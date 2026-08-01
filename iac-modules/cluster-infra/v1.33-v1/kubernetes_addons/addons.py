@@ -13,17 +13,16 @@ import pulumi_kubernetes as k8s
 import yaml
 
 
+# Fallback used only when iac-modules/extensions/cilium/v1.18.3-v1/base/release.yaml
+# cannot be read. Keep in sync with that file.
 _DEFAULT_CILIUM_VALUES_BASE: Dict[str, Any] = {
-    "autoDirectNodeRoutes": True,
     "bpf": {
-        "datapathMode": "netkit",
         "masquerade": True,
     },
     "cluster": {
         "name": "",
     },
     "enableIPv4Masquerade": True,
-    "enableIPv6Masquerade": True,
     "hubble": {
         "enabled": True,
         "relay": {
@@ -50,10 +49,6 @@ _DEFAULT_CILIUM_VALUES_BASE: Dict[str, Any] = {
         },
     },
     "tolerations": [{"operator": "Exists"}],
-    "image": {
-        "repository": "quay.io/cilium/cilium",
-        "tag": "v1.16.4",
-    },
     # --- ENI IPAM configuration (commented out) ---
     # "ipam": {
     #     "eni": {
@@ -72,20 +67,14 @@ _DEFAULT_CILIUM_VALUES_BASE: Dict[str, Any] = {
         },
     },
     "k8sServiceHost": "",
-    "k8sServicePort": 443,
     "kubeProxyReplacement": True,
     "loadBalancer": {
         "algorithm": "maglev",
-        "mode": "dsr",
     },
     "nodePort": {
         "enabled": True,
     },
     "operator": {
-        "image": {
-            "repository": "quay.io/cilium/operator",
-            "tag": "v1.16.4",
-        },
         "prometheus": {
             "enabled": True,
         },
@@ -102,7 +91,31 @@ _DEFAULT_CILIUM_VALUES_BASE: Dict[str, Any] = {
     "prometheus": {
         "enabled": True,
     },
-    "routingMode": "native",
+}
+
+# EKS-specific settings applied unconditionally on top of base values.
+# Must stay in sync with iac-modules/extensions/cilium/v1.18.3-v1/eks/release.yaml.
+_EKS_CILIUM_OVERRIDES: Dict[str, Any] = {
+    "bpf": {
+        "datapathMode": "netkit",
+    },
+    "enableIPv6Masquerade": True,
+    "image": {
+        "repository": "quay.io/cilium/cilium",
+        "tag": "v1.16.4",
+    },
+    "k8sServicePort": 443,
+    "loadBalancer": {
+        "mode": "snat",
+    },
+    "operator": {
+        "image": {
+            "repository": "quay.io/cilium/operator",
+            "tag": "v1.16.4",
+        },
+    },
+    "routingMode": "tunnel",
+    "tunnelProtocol": "vxlan",
 }
 
 
@@ -308,6 +321,16 @@ def _load_yaml_mapping(file_path: str, component_name: str) -> Dict[str, Any]:
     return data
 
 
+def _deep_merge(base: Dict[str, Any], override: Dict[str, Any]) -> Dict[str, Any]:
+    """Recursively merge override into base, returning base (mutated in place)."""
+    for key, val in override.items():
+        if key in base and isinstance(base[key], dict) and isinstance(val, dict):
+            _deep_merge(base[key], val)
+        else:
+            base[key] = val
+    return base
+
+
 def _set_nested_value(target: Dict[str, Any], keys: List[str], value: Any) -> None:
     current: Dict[str, Any] = target
     for key in keys[:-1]:
@@ -450,6 +473,11 @@ users:
 
             values = deepcopy(cilium_values_base) if cilium_values_base else deepcopy(_DEFAULT_CILIUM_VALUES_BASE)
 
+            # Apply EKS-specific static overrides unconditionally so the
+            # bootstrap install always matches what Flux reconciles from
+            # iac-modules/extensions/cilium/v1.18.3-v1/eks/release.yaml.
+            values = _deep_merge(values, deepcopy(_EKS_CILIUM_OVERRIDES))
+
             # --- ENI tag injection (commented out) ---
             # cluster_tag_value = {f"kubernetes.io/cluster/{cluster_name_value}": "owned"}
             # _set_nested_value(values, ["ipam", "eni", "subnetTags"], cluster_tag_value)
@@ -457,7 +485,6 @@ users:
             # _set_nested_value(values, ["eni", "subnetTags"], cluster_tag_value)
             # _set_nested_value(values, ["eni", "securityGroupTags"], cluster_tag_value)
 
-            _set_nested_value(values, ["ipv4NativeRoutingCIDR"], pod_cidr_value)
             _set_nested_value(values, ["k8sServiceHost"], cluster_host_value)
             _set_nested_value(values, ["cluster", "name"], cluster_name_value)
 

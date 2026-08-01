@@ -1,0 +1,17 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  finalizers:
+  - finalizers.fluxcd.io
+  generation: 2
+  name: flux-system
+  namespace: flux-system
+  resourceVersion: "5301"
+spec:
+  interval: 1m0s
+  ref:
+    branch: main
+  secretRef:
+    name: flux-system
+  timeout: 60s
+  url: https://github.com/hrishin/kube-clusters

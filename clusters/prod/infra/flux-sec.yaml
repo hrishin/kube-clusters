@@ -1,0 +1,12 @@
+apiVersion: v1
+data:
+  password: Z2l0aHViX3BhdF8xMUFHMktINlEwUHBydWQ2SkMwcFZwX0xXbzhrcktuN2xIWGw4R3hVRkJwNlRvVG9STWtqYkhKV3pXcHdMTmRFSmNCTUNWSVgyWkxkRXp0eG5XCg==
+  username: aHJpc2hpbg==
+kind: Secret
+metadata:
+  creationTimestamp: "2026-08-01T16:29:19Z"
+  name: flux-system
+  namespace: flux-system
+  resourceVersion: "1019"
+  uid: 25853c37-18d5-49d8-8050-5fec17141a43
+type: Opaque

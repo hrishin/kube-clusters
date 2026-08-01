@@ -14,7 +14,7 @@ enable_coredns: true
 enable_flux: true
 environment: production
 project: scw-cluster
-flux_git_url: https://github.com/hrishin/eks-infra
+flux_git_url: https://github.com/hrishin/kube-clusters
 flux_git_branch: main
 flux_git_path: clusters/prod-scw/extensions
 flux_git_secret_name: flux-system

@@ -57,7 +57,7 @@ def get_pulumi_config() -> Dict[str, Any]:
     environment = config.get("environment") or "production"
     project = config.get("project") or "eks-cluster"
     
-    flux_git_url = config.get("flux_git_url") or "https://github.com/hrishin/eks-infra"
+    flux_git_url = config.get("flux_git_url") or "https://github.com/hrishin/kube-clusters"
     flux_git_branch = config.get("flux_git_branch") or "main"
     flux_git_path = config.get("flux_git_path") or "clusters/prod/extensions"
     flux_git_secret_name = config.get("flux_git_secret_name") or "flux-system"

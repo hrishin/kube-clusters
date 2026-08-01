@@ -40,7 +40,7 @@ config:
     default: eks-cluster
   eks-pulumi:flux_git_url:
     description: Git repository URL for Flux source
-    default: https://github.com/hrishin/eks-infra
+    default: https://github.com/hrishin/kube-clusters
   eks-pulumi:flux_git_branch:
     description: Git branch for Flux source
     default: main

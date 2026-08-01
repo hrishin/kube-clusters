@@ -77,7 +77,7 @@ kubernetes_version: v1.34.3
 scw_region: fr-par
 private_network_cidr: 172.16.0.0/22   # must match cilium ipv4NativeRoutingCIDR
 pod_cidr_range: 192.168.0.0/16
-flux_git_url: https://github.com/hrishin/eks-infra
+flux_git_url: https://github.com/hrishin/kube-clusters
 flux_git_branch: main
 flux_git_path: clusters/prod-scw/extensions
 ```

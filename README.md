@@ -49,26 +49,36 @@ docs/            # Provider-specific setup guides
 
 ## Quick Start
 
+| Provider | Guide |
+|---|---|
+| AWS EKS | [docs/eks.md](docs/eks.md) |
+| Scaleway CAPS | [docs/scaleway.md](docs/scaleway.md) |
+
 ### AWS EKS
 
 ```bash
 source venv/bin/activate
-./setup-pulumi.sh
-pulumi -C clusters/prod/infra up
+aws configure
+cd clusters/prod/infra
+pulumi stack init prod
+pulumi up
 ```
 
-### Scaleway
+See [docs/eks.md](docs/eks.md) for the full setup guide.
 
-See [docs/scaleway.md](docs/scaleway.md) for the full setup guide.
+### Scaleway
 
 ```bash
 source venv/bin/activate
 cd clusters/prod-scw/infra
+pulumi stack init prod-scw
 pulumi config set --secret scw_project_id <id>
 pulumi config set --secret scw_access_key <key>
 pulumi config set --secret scw_secret_key <secret>
 pulumi up
 ```
+
+See [docs/scaleway.md](docs/scaleway.md) for the full setup guide.
 
 ## Prerequisites
 

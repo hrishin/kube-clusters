@@ -20,7 +20,7 @@ CLUSTER_ROOT = Path(__file__).resolve().parents[1]
 MODULE_ROOT = REPO_ROOT / "iac-modules" / "cluster-infra" / "caps-v1"
 
 CONFIG_PATH = CLUSTER_ROOT / "config.yaml"
-CILIUM_VALUES_PATH = REPO_ROOT / "iac-modules" / "extensions" / "cilium" / "caps-v1.18.3-v1" / "release.yaml"
+CILIUM_VALUES_PATH = REPO_ROOT / "iac-modules" / "extensions" / "cilium" / "v1.18.3-v1" / "scaleway" / "release.yaml"
 COREDNS_VALUES_PATH = REPO_ROOT / "iac-modules" / "extensions" / "coredns" / "v1.18.3-v1" / "release.yaml"
 FLUX_VALUES_PATH = REPO_ROOT / "iac-modules" / "extensions" / "fluxcd" / "v2.17.1-v1" / "release.yaml"
 

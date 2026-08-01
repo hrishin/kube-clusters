@@ -39,8 +39,7 @@ spec:
       enabled: false
 
     # Tolerations applied to ALL GPU Operator DaemonSets (driver, toolkit,
-    # dcgm-exporter, gpu-feature-discovery). Extend the default nvidia.com/gpu
-    # toleration with the workload taint used on g4-training nodes.
+    # dcgm-exporter, gpu-feature-discovery).
     daemonsets:
       tolerations:
         - key: nvidia.com/gpu
@@ -50,3 +49,35 @@ spec:
           operator: Equal
           value: inference
           effect: NoSchedule
+
+    # NFD is included as a sub-chart. gc and master are Deployments that must
+    # run on the core node. worker is a DaemonSet that must reach every node
+    # (including mimir/logging/gpu) to discover hardware features.
+    node-feature-discovery:
+      gc:
+        nodeSelector:
+          node-type: core
+        tolerations:
+          - key: node-type
+            operator: Equal
+            value: core
+            effect: NoSchedule
+      master:
+        nodeSelector:
+          node-type: core
+        tolerations:
+          - key: node-type
+            operator: Equal
+            value: core
+            effect: NoSchedule
+      worker:
+        tolerations:
+          - key: node-type
+            operator: Exists
+            effect: NoSchedule
+          - key: nvidia.com/gpu
+            operator: Exists
+            effect: NoSchedule
+          - key: workload
+            operator: Exists
+            effect: NoSchedule

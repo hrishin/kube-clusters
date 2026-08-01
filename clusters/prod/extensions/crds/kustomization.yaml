@@ -4,3 +4,5 @@ resources:
   - ../../../../iac-modules/extensions/crds/cert-manager/v1.17.0/
   - ../../../../iac-modules/extensions/crds/karpenter/v1.3.3/
   - ../../../../iac-modules/extensions/crds/kgateway/v2.3.0/
+  - ../../../../iac-modules/extensions/crds/nvidia-gpu-operator/v26.3.3/
+  - ../../../../iac-modules/extensions/crds/nvidia-dra-driver/v25.12.0/

@@ -6,3 +6,4 @@ resources:
   - ./cert-manager
   - ./local-path-provisioner
   - ./karpenter
+  - ./nvidia-gpu-operator

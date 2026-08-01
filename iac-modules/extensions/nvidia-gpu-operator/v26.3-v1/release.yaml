@@ -26,7 +26,10 @@ spec:
           effect: NoSchedule
     driver:
       enabled: true
-      # driver installs to /run/nvidia/driver — DRA driver reads from the same path
+      # precompiled: skips DKMS/kernel-version resolution and pulls a pre-built
+      # module image for the exact kernel (e.g. 6.14.0-1016-aws). Required for
+      # AWS-specific kernels where 'auto' mode fails to resolve the version string.
+      kernelModuleType: precompiled
 
     toolkit:
       enabled: true

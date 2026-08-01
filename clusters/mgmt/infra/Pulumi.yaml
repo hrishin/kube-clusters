@@ -1,0 +1,19 @@
+name: caps-mgmt
+runtime:
+  name: python
+  options:
+    virtualenv: ../../../venv
+description: Scaleway CAPS management cluster
+
+config:
+  caps-mgmt:scw_project_id:
+    description: Scaleway project ID (secret)
+    secret: true
+
+  caps-mgmt:scw_access_key:
+    description: Scaleway IAM access key (secret)
+    secret: true
+
+  caps-mgmt:scw_secret_key:
+    description: Scaleway IAM secret key (secret)
+    secret: true

@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: cilium
-      version: "1.18.3" 
+      version: "1.18.3"
       sourceRef:
         kind: HelmRepository
         name: cilium
@@ -16,14 +16,10 @@ spec:
   interval: 2m
   values:
     bpf:
-      datapathMode: netkit
       masquerade: true
     cluster:
       name: "${CLUSTER_NAME}"
     enableIPv4Masquerade: true
-    enableIPv6Masquerade: true
-    routingMode: tunnel
-    tunnelProtocol: vxlan
 
     hubble:
       enabled: true
@@ -43,36 +39,22 @@ spec:
             value: core
     tolerations:
       - operator: Exists
-    image:
-      repository: quay.io/cilium/cilium
-      tag: v1.16.4
-    # --- ENI IPAM configuration (commented out) ---
-    # ipam:
-    #   eni:
-    #     enabled: true
-    #     securityGroupTags: {}
-    #     subnetTags: {}
-    #   mode: eni
 
-    # --- Cluster Scope IPAM mode ---
     ipam:
       mode: cluster-pool
       operator:
         clusterPoolIPv4PodCIDRList:
           - 192.168.0.0/16
         clusterPoolIPv4MaskSize: 24
+
     k8sServiceHost: "${CLUSTER_ENDPOINT}"
-    k8sServicePort: 443
     kubeProxyReplacement: true
     loadBalancer:
       algorithm: maglev
-      mode: snat
     nodePort:
       enabled: true
+
     operator:
-      image:
-        repository: quay.io/cilium/operator
-        tag: v1.16.4
       prometheus:
         enabled: true
       replicas: 1

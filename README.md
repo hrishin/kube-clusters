@@ -1,23 +1,78 @@
-## EKS Pulumi Infrastructure
+## Kubernetes Infrastructure
 
-This repository contains a Pulumi program and supporting configuration for provisioning and managing an Amazon EKS cluster along with common add-ons.
+This repository contains Pulumi programs and GitOps configuration for provisioning and managing Kubernetes clusters on **AWS EKS** and **Scaleway** (via Cluster API Provider Scaleway — CAPS).
 
-## Infrastructure Provisions
-- Netowrking stack - VPC to subnets
-- EKS cluster and node groups
-- Bootstraps the flux for the gitops as put the cluster configuration `clusters/prod/extensions`
+## Supported Providers
 
-### Prerequisites
-- Install the Pulumi CLI and configure AWS credentials with sufficient permissions.
-- Optionally create and activate a Python virtual environment, then run `pip install -r requirements.txt`.
+| Provider | Cluster | Module |
+|---|---|---|
+| AWS EKS | `clusters/prod`, `clusters/mgmt` | `iac-modules/cluster-infra/eks-*` |
+| Scaleway CAPS | `clusters/prod-scw` | `iac-modules/cluster-infra/caps-v1` |
 
-### Quick Start
-1. Bootstrap environment-specific secrets and configuration with `./setup-pulumi.sh`.
-2. Preview the cluster deployment and its extensions with `./quick-start.sh`.
-3. Deploy the cluster `pulumi -C clusters/prod/infra up`
+## What Gets Provisioned
 
-### Repository Layout
-- `clusters/`: Environment-specific cluster definitions.
-- `iac-modules/`: Reusable Pulumi components for cluster infrastructure and extensions.
-- `config/`: Encrypted configuration values for supported environments.
+**AWS EKS**
+- VPC, subnets, and networking stack
+- EKS cluster and managed node groups
+- Flux bootstrapped from `clusters/prod/extensions`
 
+**Scaleway CAPS**
+- Local `kind` management cluster running CAPI + CAPS controllers
+- Scaleway private network, control plane, and worker MachineDeployments
+- Cilium CNI, CoreDNS, Flux bootstrapped from `clusters/prod-scw/extensions`
+- Post-bootstrap: Scaleway CCM, CSI, Cluster Autoscaler via GitOps
+
+## Extensions (both providers)
+
+Extensions are managed by Flux using a base/overlay Kustomize pattern under `iac-modules/extensions/`:
+
+- **Cilium** — CNI with provider-specific routing config (`eks/` or `scaleway/` overlay)
+- **cert-manager** — TLS certificate management
+- **kgateway** — Kubernetes Gateway API implementation
+- **Cluster Autoscaler** — node scaling
+
+## Repository Layout
+
+```
+clusters/
+  mgmt/          # AWS EKS management cluster
+  prod/          # AWS EKS workload cluster
+  prod-scw/      # Scaleway CAPS workload cluster
+
+iac-modules/
+  cluster-infra/ # Pulumi cluster provisioning modules
+  extensions/    # Helm/Flux extension definitions (base + provider overlays)
+
+config/          # SOPS-encrypted configuration values
+docs/            # Provider-specific setup guides
+```
+
+## Quick Start
+
+### AWS EKS
+
+```bash
+source venv/bin/activate
+./setup-pulumi.sh
+pulumi -C clusters/prod/infra up
+```
+
+### Scaleway
+
+See [docs/scaleway.md](docs/scaleway.md) for the full setup guide.
+
+```bash
+source venv/bin/activate
+cd clusters/prod-scw/infra
+pulumi config set --secret scw_project_id <id>
+pulumi config set --secret scw_access_key <key>
+pulumi config set --secret scw_secret_key <secret>
+pulumi up
+```
+
+## Prerequisites
+
+- `pulumi` CLI
+- `python3` with dependencies: `pip install -r requirements.txt`
+- **AWS:** configured AWS credentials with EKS permissions
+- **Scaleway:** `kind`, `clusterctl`, `sops`, `age`

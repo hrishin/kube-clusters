@@ -1,0 +1,5 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: kgateway-system
+resources:
+  - ../../../../iac-modules/extensions/kgateway/v2.3.0-v1/crs/

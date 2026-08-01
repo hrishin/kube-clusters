@@ -1,8 +1,9 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: kube-system
+namespace: flux-system
 resources:
-  - ../../../../../iac-modules/extensions/cilium/v1.18.3-v1/eks/
+  - ../../../../../iac-modules/extensions/namespace/v1/
+  - ../../../../../iac-modules/extensions/fluxcd/v2.17.1-v1/
 # patches:
 #   - path: values.yaml
 #     target:

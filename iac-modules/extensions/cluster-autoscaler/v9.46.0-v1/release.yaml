@@ -1,0 +1,59 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: cluster-autoscaler
+  namespace: kube-system
+spec:
+  releaseName: cluster-autoscaler
+  chart:
+    spec:
+      chart: cluster-autoscaler
+      version: "9.46.0"
+      sourceRef:
+        kind: HelmRepository
+        name: cluster-autoscaler
+        namespace: kube-system
+  interval: 30m
+  values:
+    # CAPI cloud provider configuration.
+    # CA runs on the workload cluster and scales MachineDeployments on the
+    # management cluster via a kubeconfig stored in the mgmt-cluster-kubeconfig
+    # Secret (created by Pulumi during bootstrap).
+    cloudProvider: clusterapi
+
+    # inclusterconfig-kubeconfig means:
+    #   - workload cluster access: in-cluster config (CA runs on workload cluster)
+    #   - management cluster access: kubeconfig file mounted from a Secret
+    clusterAPIMode: inclusterconfig-kubeconfig
+    clusterAPIKubeconfigSecret: mgmt-cluster-kubeconfig
+
+    autoDiscovery:
+      # MachineDeployments tagged with this cluster name are auto-discovered.
+      clusterName: "${CLUSTER_NAME}"
+      labels:
+        - clusterName: "${CLUSTER_NAME}"
+
+    extraArgs:
+      cloud-provider: clusterapi
+      # Emit events when scaling decisions are made
+      record-duplicated-events: "false"
+      balance-similar-node-groups: "true"
+      skip-nodes-with-local-storage: "false"
+      # Avoid terminating nodes that run system pods unnecessarily
+      skip-nodes-with-system-pods: "true"
+      scale-down-enabled: "true"
+      scale-down-utilization-threshold: "0.7"
+      # Wait 10 min after a scale-up before considering scale-down
+      scale-down-delay-after-add: "10m"
+
+    tolerations:
+      - effect: NoSchedule
+        key: node-type
+        operator: Equal
+        value: core
+    resources:
+      requests:
+        cpu: 100m
+        memory: 300Mi
+      limits:
+        memory: 300Mi

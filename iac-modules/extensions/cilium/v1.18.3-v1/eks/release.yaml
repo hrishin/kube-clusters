@@ -1,0 +1,30 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: cilium
+  namespace: kube-system
+spec:
+  values:
+    bpf:
+      datapathMode: netkit
+    enableIPv6Masquerade: true
+    # EKS control-plane listens on 443
+    k8sServicePort: 443
+    loadBalancer:
+      mode: snat
+    routingMode: tunnel
+    tunnelProtocol: vxlan
+    image:
+      repository: quay.io/cilium/cilium
+      tag: v1.16.4
+    operator:
+      image:
+        repository: quay.io/cilium/operator
+        tag: v1.16.4
+    # --- ENI IPAM configuration (commented out) ---
+    # ipam:
+    #   eni:
+    #     enabled: true
+    #     securityGroupTags: {}
+    #     subnetTags: {}
+    #   mode: eni

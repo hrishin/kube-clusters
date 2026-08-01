@@ -1,0 +1,19 @@
+name: caps-pulumi
+runtime:
+  name: python
+  options:
+    virtualenv: ../../../venv
+description: Scaleway CAPS workload cluster infrastructure
+
+config:
+  caps-pulumi:scw_project_id:
+    description: Scaleway project ID (secret)
+    secret: true
+
+  caps-pulumi:scw_access_key:
+    description: Scaleway IAM access key (secret)
+    secret: true
+
+  caps-pulumi:scw_secret_key:
+    description: Scaleway IAM secret key (secret)
+    secret: true

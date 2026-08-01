@@ -1,0 +1,76 @@
+# Workload cluster configuration.
+# Secrets (scw_project_id, scw_access_key, scw_secret_key) are stored in Pulumi encrypted state.
+cluster_name: prod-scw
+kubernetes_version: v1.34.3
+scw_region: fr-par
+control_plane_machine_type: DEV1-M
+control_plane_machine_image: cluster-api-ubuntu-2404-v1.34.3
+control_plane_count: 3
+pod_cidr_range: 192.168.0.0/16
+service_cidr_range: 10.96.0.0/12
+private_network_cidr: 172.16.0.0/22
+enable_cilium: true
+enable_coredns: true
+enable_flux: true
+environment: production
+project: scw-cluster
+flux_git_url: https://github.com/hrishin/eks-infra
+flux_git_branch: main
+flux_git_path: clusters/prod-scw/extensions
+flux_git_secret_name: flux-system
+flux_git_secret_values_path: config/config.enc.yaml
+flux_sops_secret_name: sops-age
+flux_git_interval: 1m0s
+flux_kustomization_interval: 10m0s
+
+node_groups:
+  # General-purpose compute: system workloads, controllers
+  core:
+    commercial_type: DEV1-M
+    machine_image: cluster-api-ubuntu-2404-v1.34.3
+    desired_size: 1
+    min_size: 1
+    max_size: 3
+    disk_size: 20
+    labels:
+      node-type: "core"
+      workload: "system"
+      environment: "production"
+    taints:
+      - key: "node-type"
+        value: "core"
+        effect: "NoSchedule"
+
+  # Memory-optimised: Mimir (metrics), Grafana
+  mimir:
+    commercial_type: DEV1-L
+    machine_image: cluster-api-ubuntu-2404-v1.34.3
+    desired_size: 1
+    min_size: 1
+    max_size: 3
+    disk_size: 50
+    labels:
+      node-type: "mimir"
+      workload: "monitoring"
+      environment: "production"
+    taints:
+      - key: "node-type"
+        value: "mimir"
+        effect: "NoSchedule"
+
+  # Logging nodes: Elasticsearch / Kibana
+  logging:
+    commercial_type: DEV1-L
+    machine_image: cluster-api-ubuntu-2404-v1.34.3
+    desired_size: 1
+    min_size: 1
+    max_size: 3
+    disk_size: 50
+    labels:
+      node-type: "logging"
+      workload: "monitoring"
+      environment: "production"
+    taints:
+      - key: "node-type"
+        value: "logging"
+        effect: "NoSchedule"

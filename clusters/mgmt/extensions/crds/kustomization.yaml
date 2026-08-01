@@ -1,0 +1,6 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../../../iac-modules/extensions/crds/cert-manager/v1.17.0/
+  - ../../../../iac-modules/extensions/crds/karpenter/v1.3.3/
+  - ../../../../iac-modules/extensions/crds/kgateway/v2.3.0/

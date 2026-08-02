@@ -9,10 +9,6 @@ spec:
   hostnames:
   - "inference.prod.internal"
   rules:
-  - matches:
-    - path:
-        type: PathPrefix
-        value: /v1
-    backendRefs:
+  - backendRefs:
     - name: vllm-qwen2-5-7b
       port: 8000

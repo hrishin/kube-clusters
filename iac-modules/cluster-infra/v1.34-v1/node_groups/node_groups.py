@@ -549,7 +549,7 @@ def create_node_groups(
             instance_type=ng_config.get("instance_types", ["t3.medium"])[0],
             block_device_mappings=[
                 aws.ec2.LaunchTemplateBlockDeviceMappingArgs(
-                    device_name="/dev/xvda",
+                    device_name="/dev/sda1",
                     ebs=aws.ec2.LaunchTemplateBlockDeviceMappingEbsArgs(
                         volume_size=ng_config.get("disk_size", 20),
                         volume_type="gp3",

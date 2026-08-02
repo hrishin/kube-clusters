@@ -9,3 +9,4 @@ resources:
   - ./otel-collector
   - ./node-lifecycle-tracer
   - ./vllm
+  - ./vllm-32b

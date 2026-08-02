@@ -1,0 +1,158 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: vllm-32b
+  namespace: vllm-32b
+spec:
+  serviceName: vllm-32b-headless
+  replicas: 2
+  selector:
+    matchLabels:
+      app: vllm-32b
+  template:
+    metadata:
+      labels:
+        app: vllm-32b
+    spec:
+      nodeSelector:
+        node-type: gpu-large
+      tolerations:
+        - key: nvidia.com/gpu
+          operator: Exists
+          effect: NoSchedule
+        - key: workload
+          operator: Equal
+          value: inference-32b
+          effect: NoSchedule
+
+      # hostNetwork so NCCL can discover peer IPs via EFA without NAT
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+
+      # Each pod gets 4 GPUs via DRA ResourceClaimTemplate
+      resourceClaims:
+        - name: gpu
+          resourceClaimTemplateName: vllm-32b-gpu
+
+      # Request 1 EFA interface per pod for NCCL transport
+      initContainers:
+        - name: wait-for-head
+          image: busybox:1.36
+          # Worker (ordinal 1+) waits until Ray on the head pod is ready
+          command:
+            - sh
+            - -c
+            - |
+              if [ "${POD_NAME##*-}" = "0" ]; then
+                echo "Head pod — no wait needed"; exit 0
+              fi
+              echo "Waiting for Ray head at vllm-32b-0.vllm-32b-headless.vllm-32b.svc.cluster.local:6379"
+              until nc -z vllm-32b-0.vllm-32b-headless.vllm-32b.svc.cluster.local 6379; do
+                sleep 5
+              done
+              echo "Ray head is ready"
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+
+      containers:
+        - name: vllm
+          image: vllm/vllm-openai:v0.9.1
+          imagePullPolicy: IfNotPresent
+          command:
+            - sh
+            - -c
+            - |
+              ORDINAL="${POD_NAME##*-}"
+              HEAD_ADDR="vllm-32b-0.vllm-32b-headless.vllm-32b.svc.cluster.local"
+
+              if [ "$ORDINAL" = "0" ]; then
+                # Head: start Ray then serve the model
+                ray start --head \
+                  --port=6379 \
+                  --node-ip-address="$(hostname -i)" \
+                  --disable-usage-stats \
+                  --block &
+                sleep 15  # wait for Ray to initialise
+                exec vllm serve Qwen/Qwen2.5-32B-Instruct \
+                  --dtype=half \
+                  --tensor-parallel-size=4 \
+                  --pipeline-parallel-size=2 \
+                  --distributed-executor-backend=ray \
+                  --max-model-len=8192 \
+                  --gpu-memory-utilization=0.90 \
+                  --port=8000 \
+                  --served-model-name=qwen2.5-32b \
+                  --otlp-traces-endpoint=http://otel-collector.monitoring.svc.cluster.local:4317 \
+                  --collect-detailed-traces=all
+              else
+                # Worker: join the Ray cluster and block
+                exec ray start \
+                  --address="${HEAD_ADDR}:6379" \
+                  --node-ip-address="$(hostname -i)" \
+                  --disable-usage-stats \
+                  --block
+              fi
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: HF_HOME
+              value: /data/huggingface
+            - name: OTEL_SERVICE_NAME
+              value: vllm-32b
+            - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+              value: http://otel-collector.monitoring.svc.cluster.local:4317
+            # NCCL over EFA
+            - name: NCCL_NET
+              value: AWS_EFA
+            - name: FI_PROVIDER
+              value: efa
+            - name: FI_EFA_USE_DEVICE_RDMA
+              value: "1"
+            - name: FI_EFA_FORK_SAFE
+              value: "1"
+            - name: NCCL_SOCKET_IFNAME
+              value: eth0
+            - name: NCCL_DEBUG
+              value: WARN
+          ports:
+            - name: http
+              containerPort: 8000
+            - name: ray
+              containerPort: 6379
+            - name: ray-dashboard
+              containerPort: 8265
+          resources:
+            claims:
+              - name: gpu
+            requests:
+              vpc.amazonaws.com/efa: "1"
+            limits:
+              vpc.amazonaws.com/efa: "1"
+              cpu: "40"
+              memory: 160Gi
+          volumeMounts:
+            - name: model-cache
+              mountPath: /data/huggingface
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 600
+            periodSeconds: 30
+            failureThreshold: 40
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 900
+            periodSeconds: 30
+            failureThreshold: 5
+
+      volumes:
+        - name: model-cache
+          emptyDir: {}

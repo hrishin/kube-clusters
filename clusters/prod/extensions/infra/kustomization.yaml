@@ -7,3 +7,4 @@ resources:
   - ./local-path-provisioner
   - ./karpenter
   - ./nvidia-gpu-operator
+  - ./aws-efa-device-plugin

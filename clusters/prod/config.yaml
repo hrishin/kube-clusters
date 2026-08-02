@@ -87,6 +87,37 @@ node_groups:
         value: "inference"
         effect: "NoSchedule"
 
+  # G4dn.12xlarge — 4x T4 per node, 2 nodes, spot
+  # Runs Qwen2.5-32B-Instruct fp16 with tensor-parallel-size=4, pipeline-parallel-size=2
+  # Placement group + EFA required for NCCL all-reduce latency between the two nodes
+  g4-inference-32b:
+    instance_types: ["g4dn.12xlarge"]
+    capacity_type: "SPOT"
+    desired_size: 2
+    min_size: 0
+    max_size: 2
+    disk_size: 100
+    ami_id: "ami-0f31c5cb273c78706"  # ubuntu-eks/k8s_1.36 ubuntu-noble-24.04-amd64-server-20260714
+    ami_type: "CUSTOM"
+    availability_zones: ["eu-west-2a"]   # single AZ required for cluster placement group
+    placement_group: true                # cluster placement group for EFA low-latency
+    efa_enabled: true                    # EFA network interface for NCCL
+    kubelet_feature_gates:
+      DynamicResourceAllocation: true
+    labels:
+      node-type: "gpu-large"
+      workload: "inference-32b"
+      environment: "production"
+      accelerator: "nvidia-t4"
+      gpu-type: "g4"
+    taints:
+      - key: "nvidia.com/gpu"
+        value: "true"
+        effect: "NoSchedule"
+      - key: "workload"
+        value: "inference-32b"
+        effect: "NoSchedule"
+
 # Karpenter NodePool definitions — mirror the node_groups above.
 # Pulumi reads this to create the IRSA role; Flux manifests in
 # iac-modules/extensions/karpenter/v1.3.3-v1/crs/ implement the NodePools.

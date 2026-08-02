@@ -1,0 +1,30 @@
+# Headless service — gives pods stable DNS: vllm-32b-0.vllm-32b-headless.vllm-32b.svc.cluster.local
+apiVersion: v1
+kind: Service
+metadata:
+  name: vllm-32b-headless
+  namespace: vllm-32b
+spec:
+  clusterIP: None
+  selector:
+    app: vllm-32b
+  ports:
+    - name: http
+      port: 8000
+    - name: ray
+      port: 6379
+---
+# ClusterIP service — exposes only the head pod (ordinal 0) for inference traffic
+apiVersion: v1
+kind: Service
+metadata:
+  name: vllm-32b
+  namespace: vllm-32b
+spec:
+  selector:
+    app: vllm-32b
+    statefulset.kubernetes.io/pod-name: vllm-32b-0
+  ports:
+    - name: http
+      port: 8000
+      targetPort: 8000

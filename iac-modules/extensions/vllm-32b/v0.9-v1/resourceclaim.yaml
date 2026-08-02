@@ -1,0 +1,13 @@
+# ResourceClaimTemplate: each vLLM pod gets its own claim binding 4 T4 GPUs
+apiVersion: resource.k8s.io/v1
+kind: ResourceClaimTemplate
+metadata:
+  name: vllm-32b-gpu
+  namespace: vllm-32b
+spec:
+  spec:
+    devices:
+      requests:
+        - name: gpu
+          deviceClassName: gpu.nvidia.com
+          count: 4

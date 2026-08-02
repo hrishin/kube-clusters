@@ -536,17 +536,61 @@ def create_node_groups(
             cluster_security_group_id,
             worker_node_security_group_id
         ).apply(lambda args: [args[0], args[1]])
-        
+
+        # Cluster placement group — required for EFA low-latency multi-node
+        placement_group = None
+        if ng_config.get("placement_group"):
+            placement_group = aws.ec2.PlacementGroup(
+                f"{cluster_name}-{ng_name}-pg",
+                strategy="cluster",
+                tags={**tags, "Name": f"{cluster_name}-{ng_name}-pg"},
+            )
+
+        # Spot: instance_market_options on the launch template
+        instance_market_options = (
+            aws.ec2.LaunchTemplateInstanceMarketOptionsArgs(market_type="spot")
+            if ng_config.get("capacity_type") == "SPOT"
+            else None
+        )
+
+        # EFA: network interface replaces vpc_security_group_ids at the LT level.
+        # Both cannot coexist in the same launch template.
+        efa_enabled = ng_config.get("efa_enabled", False)
+        lt_security_group_ids = None if efa_enabled else security_group_ids
+        efa_network_interfaces = (
+            [
+                aws.ec2.LaunchTemplateNetworkInterfaceArgs(
+                    device_index=0,
+                    network_card_index=0,
+                    interface_type="efa",
+                    security_groups=security_group_ids,
+                )
+            ]
+            if efa_enabled
+            else None
+        )
+
+        # Placement: group_name (placement group) and/or tenancy
+        lt_placement = None
+        if placement_group or ng_config.get("tenancy"):
+            pg_name = placement_group.name if placement_group else None
+            lt_placement = aws.ec2.LaunchTemplatePlacementArgs(
+                group_name=pg_name,
+                tenancy=ng_config.get("tenancy"),
+            )
+
         # Create Launch Template
         lt = aws.ec2.LaunchTemplate(
             f"{cluster_name}_{ng_name}_lt",
             name_prefix=f"{cluster_name}_{ng_name}_",
-            vpc_security_group_ids=security_group_ids,
+            vpc_security_group_ids=lt_security_group_ids,
+            network_interfaces=efa_network_interfaces,
             image_id=ng_config.get("ami_id"),
             iam_instance_profile=aws.ec2.LaunchTemplateIamInstanceProfileArgs(
                 name=node_instance_profile_name,
             ),
             instance_type=ng_config.get("instance_types", ["t3.medium"])[0],
+            instance_market_options=instance_market_options,
             block_device_mappings=[
                 aws.ec2.LaunchTemplateBlockDeviceMappingArgs(
                     device_name="/dev/sda1",
@@ -562,9 +606,7 @@ def create_node_groups(
                 http_tokens="required",
                 http_put_response_hop_limit=2,
             ),
-            placement=aws.ec2.LaunchTemplatePlacementArgs(
-                tenancy=ng_config.get("tenancy")
-            ) if ng_config.get("tenancy") else None,
+            placement=lt_placement,
             user_data=user_data,
             tag_specifications=[
                 aws.ec2.LaunchTemplateTagSpecificationArgs(
@@ -589,17 +631,19 @@ def create_node_groups(
         
         launch_templates[ng_name] = lt
         
-        # Determine subnets for this node group
-        # If availability_zones is specified, filter subnets
-        # For now, we'll use all private subnets
-        # In production, you'd need to filter based on AZ
-        ng_subnet_ids = private_subnet_ids
-        
-        # If availability_zones is specified in config, we need to filter
-        # This would require looking up subnet AZs, which we'll handle with Output.all
-        if ng_config.get("availability_zones"):
-            # For simplicity, using all subnets. In production, filter by AZ
-            pass
+        # Determine subnets — filter by AZ when availability_zones is set.
+        # Required for placement groups (cluster PG must be single-AZ).
+        target_azs = ng_config.get("availability_zones")
+        if target_azs:
+            ec2_client = boto3.client("ec2", region_name=region)
+            def _filter_subnets(ids: List[str], azs: List[str] = target_azs) -> List[str]:
+                if pulumi.runtime.is_dry_run():
+                    return ids  # can't filter during preview without resolved IDs
+                resp = ec2_client.describe_subnets(SubnetIds=ids)
+                return [s["SubnetId"] for s in resp["Subnets"] if s["AvailabilityZone"] in azs]
+            ng_subnet_ids = pulumi.Output.all(*private_subnet_ids).apply(_filter_subnets)
+        else:
+            ng_subnet_ids = private_subnet_ids
         
         # Create Auto Scaling Group
         asg = aws.autoscaling.Group(

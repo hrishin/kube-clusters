@@ -1,0 +1,237 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: node-lifecycle-tracer-script
+data:
+  tracer.py: |
+    #!/usr/bin/env python3
+    """
+    Reconstructs the full GPU node cold-start timeline and emits OTel spans:
+
+      EC2 launch → K8s registered → Node Ready → GPU plugin ready
+      → vLLM scheduled → container started → model loaded (health OK)
+
+    Timestamps are read from EC2 IMDS, K8s node/pod conditions, and health
+    polling — no IAM permissions required beyond in-cluster RBAC.
+    """
+
+    import logging
+    import os
+    import time
+    from datetime import datetime, timezone
+
+    import requests
+    from kubernetes import client as k8s
+    from kubernetes import config as k8sconfig
+    from opentelemetry import context as otel_context
+    from opentelemetry import trace
+    from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
+    from opentelemetry.sdk.trace import TracerProvider
+    from opentelemetry.sdk.trace.export import BatchSpanProcessor
+    from opentelemetry.trace import set_span_in_context
+
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
+    log = logging.getLogger("node-lifecycle-tracer")
+
+
+    def to_ns(dt) -> int:
+        if isinstance(dt, str):
+            dt = datetime.fromisoformat(dt.replace("Z", "+00:00"))
+        return int(dt.timestamp() * 1e9)
+
+
+    def imds_launch_time() -> datetime:
+        token = requests.put(
+            "http://169.254.169.254/latest/api/token",
+            headers={"X-aws-ec2-metadata-token-ttl-seconds": "60"},
+            timeout=3,
+        ).text
+        doc = requests.get(
+            "http://169.254.169.254/latest/dynamic/instance-identity/document",
+            headers={"X-aws-ec2-metadata-token": token},
+            timeout=3,
+        ).json()
+        # pendingTime = when EC2 started launching this instance
+        return datetime.fromisoformat(doc["pendingTime"].replace("Z", "+00:00"))
+
+
+    def node_ready_time(node) -> datetime | None:
+        for cond in node.status.conditions or []:
+            if cond.type == "Ready" and cond.status == "True":
+                return cond.last_transition_time
+        return None
+
+
+    def gpu_plugin_ready_time(v1, node_name: str) -> datetime | None:
+        """Use nvidia-device-plugin pod Ready time as proxy for GPU advertised."""
+        for selector in [
+            "app.kubernetes.io/name=nvidia-device-plugin",
+            "app=nvidia-device-plugin",
+            "name=nvidia-device-plugin",
+        ]:
+            pods = v1.list_pod_for_all_namespaces(
+                label_selector=selector,
+                field_selector=f"spec.nodeName={node_name}",
+            ).items
+            if pods:
+                for cond in pods[0].status.conditions or []:
+                    if cond.type == "Ready" and cond.status == "True":
+                        return cond.last_transition_time
+        return None
+
+
+    def vllm_pod_times(v1, node_name: str):
+        """Return (scheduled_at, container_started_at) for the vLLM pod on this node."""
+        pods = v1.list_pod_for_all_namespaces(
+            label_selector="app=vllm-qwen2-5-7b",
+            field_selector=f"spec.nodeName={node_name}",
+        ).items
+        if not pods:
+            return None, None
+        pod = pods[0]
+        scheduled_at = None
+        for cond in pod.status.conditions or []:
+            if cond.type == "PodScheduled":
+                scheduled_at = cond.last_transition_time
+        started_at = None
+        for cs in pod.status.container_statuses or []:
+            if cs.name == "vllm" and cs.state and cs.state.running:
+                started_at = cs.state.running.started_at
+        return scheduled_at, started_at
+
+
+    def poll_vllm_health(url: str, timeout: int = 900) -> tuple[datetime, datetime | None]:
+        """Poll until /health returns 200. Returns (poll_start, ready_time)."""
+        poll_start = datetime.now(timezone.utc)
+        deadline = time.time() + timeout
+        while time.time() < deadline:
+            try:
+                r = requests.get(f"{url}/health", timeout=5)
+                if r.status_code == 200:
+                    log.info("vLLM health OK")
+                    return poll_start, datetime.now(timezone.utc)
+            except Exception:
+                pass
+            time.sleep(5)
+        log.warning("Timed out waiting for vLLM health")
+        return poll_start, None
+
+
+    def emit(tracer, attrs: dict, spans: list[tuple]):
+        """
+        Emit a root span with child spans.
+        spans = [(name, start_dt, end_dt, extra_attrs_dict), ...]
+        """
+        if not spans:
+            return
+        root_start = spans[0][1]
+        root_end = spans[-1][2] or spans[-1][1]
+
+        root = tracer.start_span("gpu-node-cold-start", start_time=to_ns(root_start))
+        for k, v in attrs.items():
+            root.set_attribute(k, v)
+        root_ctx = set_span_in_context(root)
+
+        for name, start, end, extra in spans:
+            if start is None:
+                continue
+            end = end or start
+            s = tracer.start_span(name, context=root_ctx, start_time=to_ns(start))
+            for k, v in (extra or {}).items():
+                s.set_attribute(k, v)
+            s.end(end_time=to_ns(end))
+
+        root.end(end_time=to_ns(root_end))
+
+
+    def main():
+        endpoint = os.environ.get("OTEL_EXPORTER_OTLP_ENDPOINT", "http://otel-collector.monitoring:4317")
+        node_name = os.environ["NODE_NAME"]
+        vllm_url = os.environ.get("VLLM_SERVICE_URL", "http://vllm-qwen2-5-7b.vllm.svc.cluster.local:8000")
+
+        provider = TracerProvider()
+        provider.add_span_processor(
+            BatchSpanProcessor(OTLPSpanExporter(endpoint=endpoint, insecure=True))
+        )
+        trace.set_tracer_provider(provider)
+        tracer = trace.get_tracer("node-lifecycle-tracer", "1.0.0")
+
+        k8sconfig.load_incluster_config()
+        v1 = k8s.CoreV1Api()
+
+        log.info(f"Tracing lifecycle for node {node_name}")
+
+        # --- gather timestamps ---
+        try:
+            launch_time = imds_launch_time()
+            log.info(f"EC2 pendingTime (launch): {launch_time}")
+        except Exception as e:
+            log.warning(f"IMDS unavailable: {e}")
+            launch_time = None
+
+        node = v1.read_node(node_name)
+        instance_type = node.metadata.labels.get("node.kubernetes.io/instance-type", "unknown")
+        node_created = node.metadata.creation_timestamp    # kubelet registered
+        ready_time = node_ready_time(node)
+        log.info(f"Node created={node_created} ready={ready_time}")
+
+        gpu_ready = gpu_plugin_ready_time(v1, node_name)
+        log.info(f"GPU plugin ready: {gpu_ready}")
+
+        vllm_scheduled, vllm_started = vllm_pod_times(v1, node_name)
+        log.info(f"vLLM scheduled={vllm_scheduled} started={vllm_started}")
+
+        _, vllm_ready = poll_vllm_health(vllm_url)
+
+        if launch_time is None:
+            launch_time = node_created
+
+        # --- emit spans ---
+        root_attrs = {
+            "node.name": node_name,
+            "node.instance_type": instance_type,
+        }
+
+        ref = ready_time or node_created
+        spans = [
+            (
+                "ec2-launch-to-k8s-registered",
+                launch_time, node_created,
+                {"phase": "infrastructure", "description": "userdata execution, kubelet start"},
+            ),
+            (
+                "k8s-registered-to-node-ready",
+                node_created, ready_time,
+                {"phase": "kubelet", "description": "CNI, kube-proxy, node conditions"},
+            ),
+            (
+                "node-ready-to-gpu-plugin-ready",
+                ready_time, gpu_ready,
+                {"phase": "gpu-operator", "description": "driver install, device plugin DaemonSet"},
+            ),
+            (
+                "gpu-ready-to-vllm-scheduled",
+                gpu_ready or ref, vllm_scheduled,
+                {"phase": "scheduler", "description": "DRA ResourceClaim binding, pod placement"},
+            ),
+            (
+                "vllm-scheduled-to-container-start",
+                vllm_scheduled, vllm_started,
+                {"phase": "runtime", "description": "image pull, container creation"},
+            ),
+            (
+                "vllm-container-start-to-model-ready",
+                vllm_started, vllm_ready,
+                {"phase": "model-load", "description": "weight download from HuggingFace, GPU load"},
+            ),
+        ]
+
+        emit(tracer, root_attrs, [(n, s, e, a) for n, s, e, a in spans if s is not None])
+        provider.force_flush(timeout_millis=10_000)
+        log.info("Trace emitted. Sleeping to prevent restart loop.")
+        while True:
+            time.sleep(3600)
+
+
+    if __name__ == "__main__":
+        main()

@@ -5,4 +5,7 @@ resources:
   - ./kgateway
   - ./mimir
   - ./grafana
+  - ./tempo
+  - ./otel-collector
+  - ./node-lifecycle-tracer
   - ./vllm

@@ -36,6 +36,13 @@ spec:
             url: http://main-gateway.kgateway-system.svc.cluster.local:3080/mimir/prometheus
             access: proxy
             isDefault: true
+          - name: Tempo
+            type: tempo
+            url: http://tempo.monitoring.svc.cluster.local:3100
+            access: proxy
+
+    initChownData:
+      enabled: false
 
     persistence:
       enabled: true

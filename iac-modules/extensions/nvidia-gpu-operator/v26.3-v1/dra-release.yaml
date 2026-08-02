@@ -28,6 +28,8 @@ spec:
     nvidiaDriverRoot: /run/nvidia/driver
 
     # Controller is a Deployment — run it on core nodes alongside the operator.
+    # affinity overrides the chart's default requiredAffinity for control-plane
+    # nodes, which don't exist in EKS (managed control plane).
     controller:
       nodeSelector:
         node-type: core
@@ -36,6 +38,15 @@ spec:
           operator: Equal
           value: core
           effect: NoSchedule
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: node-type
+                    operator: In
+                    values:
+                      - core
 
     # kubeletPlugin is a DaemonSet that must run on every GPU node to register
     # the DRA driver with the kubelet and publish ResourceSlices.

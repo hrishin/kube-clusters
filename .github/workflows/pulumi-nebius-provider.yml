@@ -1,0 +1,173 @@
+name: pulumi-nebius provider
+
+on:
+  # Re-generate SDK whenever the upstream Terraform provider releases a new version
+  schedule:
+    - cron: "0 6 * * 1"   # Every Monday 06:00 UTC
+
+  # Manual trigger — used for one-off bumps: Actions → Run workflow → VERSION=x.y.z
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Nebius Terraform provider version (e.g. 0.6.36)"
+        required: false
+        default: ""
+
+  # Re-run on changes to the bridge code itself
+  push:
+    paths:
+      - "providers/pulumi-nebius/**"
+    branches: [main]
+
+jobs:
+  # ── Check latest upstream version ─────────────────────────────────────────
+  check-version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.resolve.outputs.version }}
+      changed: ${{ steps.compare.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve target version
+        id: resolve
+        run: |
+          if [ -n "${{ github.event.inputs.version }}" ]; then
+            echo "version=${{ github.event.inputs.version }}" >> "$GITHUB_OUTPUT"
+          else
+            LATEST=$(curl -s https://registry.terraform.io/v1/providers/nebius/nebius \
+              | python3 -c "import sys,json; print(json.load(sys.stdin)['version'])")
+            echo "version=${LATEST}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Compare with checked-in version
+        id: compare
+        run: |
+          CURRENT=$(grep 'PROVIDER_VERSION' providers/pulumi-nebius/Makefile \
+            | head -1 | awk -F'= ' '{print $2}')
+          TARGET="${{ steps.resolve.outputs.version }}"
+          if [ "$CURRENT" = "$TARGET" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true"  >> "$GITHUB_OUTPUT"
+          fi
+
+  # ── Regenerate SDK ────────────────────────────────────────────────────────
+  generate-sdk:
+    needs: check-version
+    if: needs.check-version.outputs.changed == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: providers/pulumi-nebius/go.mod
+          cache-dependency-path: providers/pulumi-nebius/go.sum
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Pulumi CLI
+        uses: pulumi/actions@v5
+        with:
+          pulumi-version: latest
+
+      - name: Install pulumi-terraform-bridge
+        run: |
+          cd providers/pulumi-nebius
+          go install github.com/pulumi/pulumi-terraform-bridge/v3/cmd/pulumi-tfgen-nebius@latest
+
+      - name: Bump provider version in go.mod + Makefile
+        working-directory: providers/pulumi-nebius
+        run: |
+          VERSION="${{ needs.check-version.outputs.version }}"
+          make bump VERSION=${VERSION}
+          go get github.com/nebius/terraform-provider-nebius@v${VERSION}
+          go mod tidy
+
+      - name: Generate schema.json
+        working-directory: providers/pulumi-nebius
+        run: make generate
+
+      - name: Generate Python SDK
+        working-directory: providers/pulumi-nebius
+        run: |
+          pulumi package gen-sdk --language python schema.json --out sdk/python
+          # Restore our hand-written extras that gen-sdk may overwrite
+          git checkout -- sdk/python/pulumi_nebius/_inputs.py || true
+
+      - name: Build provider binary
+        working-directory: providers/pulumi-nebius
+        run: make provider
+
+      - name: Lint Python SDK
+        working-directory: providers/pulumi-nebius/sdk/python
+        run: |
+          pip install -e . pulumi
+          python -c "import pulumi_nebius; print(pulumi_nebius.__version__)"
+
+      - name: Open PR with updated SDK
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: "chore/pulumi-nebius-${{ needs.check-version.outputs.version }}"
+          title: "chore(provider): bump pulumi-nebius to ${{ needs.check-version.outputs.version }}"
+          body: |
+            ## Automated SDK update
+
+            Bumps the Nebius Terraform provider from the current version to
+            `${{ needs.check-version.outputs.version }}` and regenerates the
+            Pulumi Python SDK from the new schema.
+
+            ### Files changed
+            - `providers/pulumi-nebius/go.mod` — Go dependency bump
+            - `providers/pulumi-nebius/schema.json` — regenerated provider schema
+            - `providers/pulumi-nebius/sdk/python/pulumi_nebius/` — regenerated SDK
+            - `providers/pulumi-nebius/Makefile` — version pin updated
+
+            ### How to test
+            ```bash
+            pip install -e providers/pulumi-nebius/sdk/python
+            cd clusters/nebius-prod/infra && pulumi preview
+            ```
+          commit-message: "chore(provider): bump pulumi-nebius to ${{ needs.check-version.outputs.version }}"
+          labels: provider-update, automated
+
+  # ── Validate on every PR that touches the provider ───────────────────────
+  validate:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: providers/pulumi-nebius/go.mod
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Go vet
+        working-directory: providers/pulumi-nebius
+        run: go vet ./...
+
+      - name: Install and import SDK
+        run: |
+          pip install pulumi
+          pip install -e providers/pulumi-nebius/sdk/python
+          python -c "
+          import pulumi_nebius as nebius
+          print('Provider:', nebius.Provider)
+          print('Cluster: ', nebius.mk8s.Cluster)
+          print('NodeGroup:', nebius.mk8s.NodeGroup)
+          print('Subnet:  ', nebius.vpc.Subnet)
+          print('OK')
+          "

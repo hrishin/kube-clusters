@@ -19,6 +19,10 @@ spec:
     - name: nvidia-gpu-operator
       namespace: gpu-operator
   values:
+    # Required when devicePlugin is disabled — confirms no collision with the
+    # standard GPU device plugin (guarded by chart validation until KEP-5004 GA).
+    gpuResourcesEnabledOverride: true
+
     # GPU Operator installs the driver at /run/nvidia/driver (driverInstallDir default).
     # The DRA driver reads device information from the same path via CDI.
     nvidiaDriverRoot: /run/nvidia/driver

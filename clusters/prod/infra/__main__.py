@@ -12,7 +12,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[3]
 CLUSTER_INFRA_DIR = Path(__file__).resolve().parent
 CLUSTER_ROOT = CLUSTER_INFRA_DIR.parent
-MODULE_ROOT = REPO_ROOT / "iac-modules" / "cluster-infra" / "v1.33-v1"
+MODULE_ROOT = REPO_ROOT / "iac-modules" / "cluster-infra" / "v1.36-v1"
 NODE_GROUPS_CONFIG_PATH = CLUSTER_ROOT / "config.yaml"
 CILIUM_VALUES_PATH = REPO_ROOT / "iac-modules" / "extensions" / "cilium" / "v1.18.3-v1" / "base" / "release.yaml"
 COREDNS_VALUES_PATH = REPO_ROOT / "iac-modules" / "extensions" / "coredns" / "current" / "release.yaml"

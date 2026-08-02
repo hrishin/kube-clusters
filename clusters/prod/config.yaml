@@ -8,7 +8,7 @@ node_groups:
     max_size: 2
     disk_size: 20
     max_pods: 110
-    ami_id: "ami-060bb37b943ff8d8e"
+    ami_id: "ami-0f31c5cb273c78706"  # ubuntu-eks/k8s_1.36 ubuntu-noble-24.04-amd64-server-20260714
     ami_type: "CUSTOM"
     labels:
       node-type: "core"
@@ -28,7 +28,7 @@ node_groups:
     max_size: 3
     disk_size: 50
     max_pods: 110
-    ami_id: "ami-060bb37b943ff8d8e"
+    ami_id: "ami-0f31c5cb273c78706"  # ubuntu-eks/k8s_1.36 ubuntu-noble-24.04-amd64-server-20260714
     ami_type: "CUSTOM"
     labels:
       node-type: "mimir"
@@ -47,7 +47,7 @@ node_groups:
     max_size: 3
     disk_size: 50
     max_pods: 110
-    ami_id: "ami-060bb37b943ff8d8e"
+    ami_id: "ami-0f31c5cb273c78706"  # ubuntu-eks/k8s_1.36 ubuntu-noble-24.04-amd64-server-20260714
     ami_type: "CUSTOM"
     labels:
       node-type: "logging"
@@ -67,10 +67,12 @@ node_groups:
     desired_size: 1
     min_size: 0
     max_size: 3
-    disk_size: 50
-    ami_id: "ami-060bb37b943ff8d8e"
+    disk_size: 100
+    ami_id: "ami-0f31c5cb273c78706"  # ubuntu-eks/k8s_1.36 ubuntu-noble-24.04-amd64-server-20260714
     ami_type: "CUSTOM"
     availability_zones: ["eu-west-2a", "eu-west-2c"]  # Exclude eu-west-2b due to g4dn.xlarge capacity issues
+    kubelet_feature_gates:
+      DynamicResourceAllocation: true  # Required for DRA GPU (gpu.nvidia.com DeviceClass)
     labels:
       node-type: "gpu"
       workload: "inference"

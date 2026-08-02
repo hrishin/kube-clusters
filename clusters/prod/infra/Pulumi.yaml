@@ -10,7 +10,7 @@ config:
     default: infra-cluster
   eks-pulumi:cluster_version:
     description: Kubernetes version for the EKS cluster
-    default: "1.33"
+    default: "1.36"
   eks-pulumi:vpc_cidr:
     description: CIDR block for VPC
     default: "10.0.0.0/16"

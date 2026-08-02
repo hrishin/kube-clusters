@@ -1,0 +1,4 @@
+"""
+EKS authentication module
+"""
+

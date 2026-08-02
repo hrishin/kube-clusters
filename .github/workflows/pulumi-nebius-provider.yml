@@ -78,33 +78,28 @@ jobs:
         with:
           pulumi-version: latest
 
-      - name: Install pulumi-terraform-bridge
-        run: |
-          cd providers/pulumi-nebius
-          go install github.com/pulumi/pulumi-terraform-bridge/v3/cmd/pulumi-tfgen-nebius@latest
-
-      - name: Bump provider version in go.mod + Makefile
+      - name: Bump provider version
         working-directory: providers/pulumi-nebius
-        run: |
-          VERSION="${{ needs.check-version.outputs.version }}"
-          make bump VERSION=${VERSION}
-          go get github.com/nebius/terraform-provider-nebius@v${VERSION}
-          go mod tidy
+        run: make bump VERSION="${{ needs.check-version.outputs.version }}"
+
+      - name: Build tfgen binary
+        working-directory: providers/pulumi-nebius
+        run: go build -trimpath -o bin/pulumi-tfgen-nebius ./cmd/pulumi-tfgen-nebius
 
       - name: Generate schema.json
         working-directory: providers/pulumi-nebius
         run: make generate
 
-      - name: Generate Python SDK
+      - name: Generate Python SDK from schema
         working-directory: providers/pulumi-nebius
         run: |
           pulumi package gen-sdk --language python schema.json --out sdk/python
-          # Restore our hand-written extras that gen-sdk may overwrite
+          # Restore hand-written _inputs.py if gen-sdk overwrites it
           git checkout -- sdk/python/pulumi_nebius/_inputs.py || true
 
-      - name: Build provider binary
+      - name: Build provider runtime binary
         working-directory: providers/pulumi-nebius
-        run: make provider
+        run: go build -trimpath -o bin/pulumi-resource-nebius ./cmd/pulumi-resource-nebius
 
       - name: Lint Python SDK
         working-directory: providers/pulumi-nebius/sdk/python

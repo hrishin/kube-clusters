@@ -1,67 +1,83 @@
 PROVIDER_VERSION ?= 0.6.35
 PROVIDER_NAME    := nebius
-TFGEN            := pulumi-tfgen-$(PROVIDER_NAME)
-PROVIDER_BIN     := pulumi-resource-$(PROVIDER_NAME)
+TFGEN_BIN        := pulumi-tfgen-$(PROVIDER_NAME)
+RESOURCE_BIN     := pulumi-resource-$(PROVIDER_NAME)
+PLUGIN_DIR       := $(HOME)/.pulumi/plugins/resource-$(PROVIDER_NAME)-v$(PROVIDER_VERSION)
 
 .DEFAULT_GOAL := build
 
 # ── Build ─────────────────────────────────────────────────────────────────────
+# Produces two binaries:
+#   bin/pulumi-tfgen-nebius       — schema generator (dev-time)
+#   bin/pulumi-resource-nebius    — provider binary  (runtime, called by pulumi up)
 
 .PHONY: build
-build: provider sdk/python
+build: bin/$(TFGEN_BIN) bin/$(RESOURCE_BIN)
 
-.PHONY: provider
-provider:
-	go build -trimpath -o bin/$(PROVIDER_BIN) .
+bin/$(TFGEN_BIN):
+	go build -trimpath -o $@ ./cmd/$(TFGEN_BIN)
+
+bin/$(RESOURCE_BIN):
+	go build -trimpath -o $@ ./cmd/$(RESOURCE_BIN)
 
 # ── Schema generation ─────────────────────────────────────────────────────────
-# Runs the bridge generator to produce schema.json from the Terraform provider.
-# Requires: pulumi-terraform-bridge and Go toolchain.
+# Runs pulumi-tfgen-nebius to introspect the Terraform provider and write
+# sdk/schema.json. Must run before `make sdk/python`.
 
 .PHONY: generate
-generate: install_tfgen
-	$(TFGEN) all --out sdk/
+generate: bin/$(TFGEN_BIN)
+	./bin/$(TFGEN_BIN) all --out sdk/
 	cp sdk/schema.json schema.json
 
-.PHONY: install_tfgen
-install_tfgen:
-	go install github.com/pulumi/pulumi-terraform-bridge/v3/cmd/$(TFGEN)@latest
-
 # ── Python SDK ────────────────────────────────────────────────────────────────
-# Generates the Python package from schema.json produced by `make generate`.
+# Generates pulumi_nebius Python package from schema.json.
 
 .PHONY: sdk/python
 sdk/python: schema.json
 	pulumi package gen-sdk --language python schema.json --out sdk/python
-	cd sdk/python && pip install -e .
 
-# ── Install into shared venv ──────────────────────────────────────────────────
+# ── Install provider binary into ~/.pulumi/plugins/ ──────────────────────────
+# This is what `pulumi up` resolves when it looks for resource-nebius-vX.Y.Z.
+# Run once after `make build`, or after every `make bump`.
 
 .PHONY: install
-install: sdk/python
+install: bin/$(RESOURCE_BIN)
+	mkdir -p $(PLUGIN_DIR)
+	cp bin/$(RESOURCE_BIN) $(PLUGIN_DIR)/$(RESOURCE_BIN)
+	@echo "Installed: $(PLUGIN_DIR)/$(RESOURCE_BIN)"
+
+# ── Full pipeline (generate → build → install → sdk/python) ──────────────────
+
+.PHONY: all
+all: generate build install sdk/python
 	pip install -e sdk/python
+	@echo "Done. pulumi_nebius $(PROVIDER_VERSION) ready."
+
+# ── Version bump ─────────────────────────────────────────────────────────────
+# Usage: make bump VERSION=0.6.36
+# Updates Makefile pin, go.mod dep, and schema.json version string.
+
+.PHONY: bump
+bump:
+	@[ -n "$(VERSION)" ] || (echo "Usage: make bump VERSION=x.y.z"; exit 1)
+	sed -i 's/^PROVIDER_VERSION ?= .*/PROVIDER_VERSION ?= $(VERSION)/' Makefile
+	go get github.com/nebius/terraform-provider-nebius@v$(VERSION)
+	go mod tidy
+	@if [ -f schema.json ]; then \
+	  python3 -c "import json,sys; d=json.load(open('schema.json')); d['version']='$(VERSION)'; json.dump(d,open('schema.json','w'),indent=2)"; \
+	fi
+	@sed -i 's/__version__ = ".*"/__version__ = "$(VERSION)"/' \
+	  sdk/python/pulumi_nebius/__init__.py
 
 # ── Lint / test ───────────────────────────────────────────────────────────────
 
 .PHONY: lint
 lint:
 	go vet ./...
-	cd sdk/python && python -m mypy pulumi_nebius --ignore-missing-imports
 
 .PHONY: test
 test:
 	go test ./...
-
-# ── Version bump ─────────────────────────────────────────────────────────────
-# Usage: make bump VERSION=0.6.36
-
-.PHONY: bump
-bump:
-	@[ -n "$(VERSION)" ] || (echo "Usage: make bump VERSION=x.y.z"; exit 1)
-	sed -i 's/PROVIDER_VERSION ?= .*/PROVIDER_VERSION ?= $(VERSION)/' Makefile
-	sed -i 's/nebius v.*/nebius v$(VERSION)/' go.mod
-	sed -i 's/"version": ".*"/"version": "$(VERSION)"/' schema.json
-	go mod tidy
 
 .PHONY: clean
 clean:

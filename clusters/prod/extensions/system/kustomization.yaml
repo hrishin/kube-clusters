@@ -5,3 +5,4 @@ resources:
   - ./kgateway
   - ./mimir
   - ./grafana
+  - ./vllm

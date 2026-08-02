@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vllm-qwen2-5-7b
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vllm-qwen2-5-7b
+  template:
+    metadata:
+      labels:
+        app: vllm-qwen2-5-7b
+    spec:
+      nodeSelector:
+        node-type: gpu
+      tolerations:
+      - key: nvidia.com/gpu
+        operator: Exists
+        effect: NoSchedule
+      - key: workload
+        operator: Equal
+        value: inference
+        effect: NoSchedule
+      resourceClaims:
+      - name: gpu
+        resourceClaimTemplateName: vllm-gpu
+      # Model weights are large (~4 GB AWQ); mount a cache so restarts skip re-download.
+      # Replace with a PVC backed by EFS/EBS for persistence across pod restarts.
+      volumes:
+      - name: hf-cache
+        emptyDir: {}
+      containers:
+      - name: vllm
+        image: vllm/vllm-openai:v0.9.1
+        command: ["vllm", "serve"]
+        args:
+        - "Qwen/Qwen2.5-7B-Instruct-AWQ"
+        - "--quantization=awq"
+        - "--dtype=half"
+        - "--max-model-len=8192"
+        - "--gpu-memory-utilization=0.90"
+        - "--port=8000"
+        - "--served-model-name=qwen2.5-7b"
+        ports:
+        - name: http
+          containerPort: 8000
+          protocol: TCP
+        env:
+        - name: HF_HOME
+          value: /data/huggingface
+        resources:
+          requests:
+            cpu: "2"
+            memory: "12Gi"
+          limits:
+            cpu: "4"
+            memory: "14Gi"
+          claims:
+          - name: gpu
+        volumeMounts:
+        - name: hf-cache
+          mountPath: /data/huggingface
+        # vLLM takes 5-15 min on first start to download and load the model
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 60
+          periodSeconds: 15
+          timeoutSeconds: 10
+          failureThreshold: 40
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 300
+          periodSeconds: 30
+          timeoutSeconds: 10
+          failureThreshold: 5

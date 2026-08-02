@@ -9,10 +9,27 @@ import importlib
 import sys
 from pathlib import Path
 
+import pulumi
+
 REPO_ROOT = Path(__file__).resolve().parents[3]
 CLUSTER_INFRA_DIR = Path(__file__).resolve().parent
 CLUSTER_ROOT = CLUSTER_INFRA_DIR.parent
-MODULE_ROOT = REPO_ROOT / "iac-modules" / "cluster-infra" / "v1.36-v1"
+
+_cluster_version = pulumi.Config().get("cluster_version") or "1.36"
+_infra_dir = REPO_ROOT / "iac-modules" / "cluster-infra"
+
+# Pick the highest vN for the given k8s version: v1.36-v1, v1.36-v2 → v1.36-v2
+_candidates = sorted(
+    (p for p in _infra_dir.iterdir() if p.is_dir() and p.name.startswith(f"v{_cluster_version}-v")),
+    key=lambda p: int(p.name.rsplit("-v", 1)[-1]),
+)
+if not _candidates:
+    _available = [p.name for p in _infra_dir.iterdir() if p.is_dir()]
+    raise RuntimeError(
+        f"No cluster-infra module for Kubernetes {_cluster_version}. "
+        f"Available: {_available}"
+    )
+MODULE_ROOT = _candidates[-1]
 NODE_GROUPS_CONFIG_PATH = CLUSTER_ROOT / "config.yaml"
 CILIUM_VALUES_PATH = REPO_ROOT / "iac-modules" / "extensions" / "cilium" / "v1.18.3-v1" / "base" / "release.yaml"
 COREDNS_VALUES_PATH = REPO_ROOT / "iac-modules" / "extensions" / "coredns" / "current" / "release.yaml"

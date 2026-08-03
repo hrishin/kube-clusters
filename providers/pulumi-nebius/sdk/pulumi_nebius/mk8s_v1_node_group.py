@@ -21,20 +21,19 @@ __all__ = ['Mk8sV1NodeGroupArgs', 'Mk8sV1NodeGroup']
 @pulumi.input_type
 class Mk8sV1NodeGroupArgs:
     def __init__(__self__, *,
-                 parent_id: pulumi.Input[_builtins.str],
                  template: pulumi.Input['Mk8sV1NodeGroupTemplateArgs'],
-                 auto_repair: Optional[pulumi.Input['Mk8sV1NodeGroupAutoRepairArgs']] = None,
-                 autoscaling: Optional[pulumi.Input['Mk8sV1NodeGroupAutoscalingArgs']] = None,
-                 fixed_node_count: Optional[pulumi.Input[_builtins.float]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 metadata: Optional[pulumi.Input['Mk8sV1NodeGroupMetadataArgs']] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 strategy: Optional[pulumi.Input['Mk8sV1NodeGroupStrategyArgs']] = None,
-                 version: Optional[pulumi.Input[_builtins.str]] = None):
+                 auto_repair: pulumi.Input[Optional['Mk8sV1NodeGroupAutoRepairArgs']] = None,
+                 autoscaling: pulumi.Input[Optional['Mk8sV1NodeGroupAutoscalingArgs']] = None,
+                 fixed_node_count: pulumi.Input[Optional[_builtins.float]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 metadata: pulumi.Input[Optional['Mk8sV1NodeGroupMetadataArgs']] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 strategy: pulumi.Input[Optional['Mk8sV1NodeGroupStrategyArgs']] = None,
+                 version: pulumi.Input[Optional[_builtins.str]] = None):
         """
         The set of arguments for constructing a Mk8sV1NodeGroup resource.
 
-        :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
         :param pulumi.Input['Mk8sV1NodeGroupTemplateArgs'] template: :
                
                   Parameters for Kubernetes Node object and Nebius Compute Instance
@@ -44,20 +43,21 @@ class Mk8sV1NodeGroupArgs:
                
                   Enables [Kubernetes Cluster Autoscaler](https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler)
                   for that NodeGroup, and defines autoscaling parameters.
-                  
+               
                   *Cannot be set alongside fixed_node_count.*
         :param pulumi.Input[_builtins.float] fixed_node_count: :
                
                   Number of nodes in the group. Can be changed manually at any time, except for a node group with NVLink.
-                  
+               
                   *Cannot be set alongside autoscaling.*
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels associated with the resource.
         :param pulumi.Input['Mk8sV1NodeGroupMetadataArgs'] metadata: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
+        :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
         :param pulumi.Input['Mk8sV1NodeGroupStrategyArgs'] strategy: :
                
                   Defines deployment - roll-out, or nodes re-creation during configuration change.
@@ -68,7 +68,6 @@ class Mk8sV1NodeGroupArgs:
                   `<major>.<minor>` like "1.31". Option for patch version update will be added later.
                   By default the cluster control plane `<major>.<minor>` version will be used.
         """
-        pulumi.set(__self__, "parent_id", parent_id)
         pulumi.set(__self__, "template", template)
         if auto_repair is not None:
             pulumi.set(__self__, "auto_repair", auto_repair)
@@ -82,22 +81,12 @@ class Mk8sV1NodeGroupArgs:
             pulumi.set(__self__, "metadata", metadata)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if parent_id is not None:
+            pulumi.set(__self__, "parent_id", parent_id)
         if strategy is not None:
             pulumi.set(__self__, "strategy", strategy)
         if version is not None:
             pulumi.set(__self__, "version", version)
-
-    @_builtins.property
-    @pulumi.getter(name="parentId")
-    def parent_id(self) -> pulumi.Input[_builtins.str]:
-        """
-        Identifier of the parent resource to which the resource belongs.
-        """
-        return pulumi.get(self, "parent_id")
-
-    @parent_id.setter
-    def parent_id(self, value: pulumi.Input[_builtins.str]):
-        pulumi.set(self, "parent_id", value)
 
     @_builtins.property
     @pulumi.getter
@@ -116,92 +105,104 @@ class Mk8sV1NodeGroupArgs:
 
     @_builtins.property
     @pulumi.getter(name="autoRepair")
-    def auto_repair(self) -> Optional[pulumi.Input['Mk8sV1NodeGroupAutoRepairArgs']]:
+    def auto_repair(self) -> pulumi.Input[Optional['Mk8sV1NodeGroupAutoRepairArgs']]:
         """
         Parameters for nodes auto repair.
         """
         return pulumi.get(self, "auto_repair")
 
     @auto_repair.setter
-    def auto_repair(self, value: Optional[pulumi.Input['Mk8sV1NodeGroupAutoRepairArgs']]):
+    def auto_repair(self, value: pulumi.Input[Optional['Mk8sV1NodeGroupAutoRepairArgs']]):
         pulumi.set(self, "auto_repair", value)
 
     @_builtins.property
     @pulumi.getter
-    def autoscaling(self) -> Optional[pulumi.Input['Mk8sV1NodeGroupAutoscalingArgs']]:
+    def autoscaling(self) -> pulumi.Input[Optional['Mk8sV1NodeGroupAutoscalingArgs']]:
         """
         :
 
            Enables [Kubernetes Cluster Autoscaler](https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler)
            for that NodeGroup, and defines autoscaling parameters.
-           
+
            *Cannot be set alongside fixed_node_count.*
         """
         return pulumi.get(self, "autoscaling")
 
     @autoscaling.setter
-    def autoscaling(self, value: Optional[pulumi.Input['Mk8sV1NodeGroupAutoscalingArgs']]):
+    def autoscaling(self, value: pulumi.Input[Optional['Mk8sV1NodeGroupAutoscalingArgs']]):
         pulumi.set(self, "autoscaling", value)
 
     @_builtins.property
     @pulumi.getter(name="fixedNodeCount")
-    def fixed_node_count(self) -> Optional[pulumi.Input[_builtins.float]]:
+    def fixed_node_count(self) -> pulumi.Input[Optional[_builtins.float]]:
         """
         :
 
            Number of nodes in the group. Can be changed manually at any time, except for a node group with NVLink.
-           
+
            *Cannot be set alongside autoscaling.*
         """
         return pulumi.get(self, "fixed_node_count")
 
     @fixed_node_count.setter
-    def fixed_node_count(self, value: Optional[pulumi.Input[_builtins.float]]):
+    def fixed_node_count(self, value: pulumi.Input[Optional[_builtins.float]]):
         pulumi.set(self, "fixed_node_count", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels associated with the resource.
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
     @pulumi.getter
-    def metadata(self) -> Optional[pulumi.Input['Mk8sV1NodeGroupMetadataArgs']]:
+    def metadata(self) -> pulumi.Input[Optional['Mk8sV1NodeGroupMetadataArgs']]:
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Common resource metadata.
         """
         return pulumi.get(self, "metadata")
 
     @metadata.setter
-    def metadata(self, value: Optional[pulumi.Input['Mk8sV1NodeGroupMetadataArgs']]):
+    def metadata(self, value: pulumi.Input[Optional['Mk8sV1NodeGroupMetadataArgs']]):
         pulumi.set(self, "metadata", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Human readable name for the resource.
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
+    @pulumi.getter(name="parentId")
+    def parent_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Identifier of the parent resource to which the resource belongs.
+        """
+        return pulumi.get(self, "parent_id")
+
+    @parent_id.setter
+    def parent_id(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "parent_id", value)
+
+    @_builtins.property
     @pulumi.getter
-    def strategy(self) -> Optional[pulumi.Input['Mk8sV1NodeGroupStrategyArgs']]:
+    def strategy(self) -> pulumi.Input[Optional['Mk8sV1NodeGroupStrategyArgs']]:
         """
         :
 
@@ -211,12 +212,12 @@ class Mk8sV1NodeGroupArgs:
         return pulumi.get(self, "strategy")
 
     @strategy.setter
-    def strategy(self, value: Optional[pulumi.Input['Mk8sV1NodeGroupStrategyArgs']]):
+    def strategy(self, value: pulumi.Input[Optional['Mk8sV1NodeGroupStrategyArgs']]):
         pulumi.set(self, "strategy", value)
 
     @_builtins.property
     @pulumi.getter
-    def version(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def version(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
@@ -227,27 +228,28 @@ class Mk8sV1NodeGroupArgs:
         return pulumi.get(self, "version")
 
     @version.setter
-    def version(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def version(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "version", value)
 
 
 @pulumi.input_type
 class _Mk8sV1NodeGroupState:
     def __init__(__self__, *,
-                 auto_repair: Optional[pulumi.Input['Mk8sV1NodeGroupAutoRepairArgs']] = None,
-                 autoscaling: Optional[pulumi.Input['Mk8sV1NodeGroupAutoscalingArgs']] = None,
-                 created_at: Optional[pulumi.Input[_builtins.str]] = None,
-                 fixed_node_count: Optional[pulumi.Input[_builtins.float]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 metadata: Optional[pulumi.Input['Mk8sV1NodeGroupMetadataArgs']] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 resource_version: Optional[pulumi.Input[_builtins.float]] = None,
-                 status: Optional[pulumi.Input['Mk8sV1NodeGroupStatusArgs']] = None,
-                 strategy: Optional[pulumi.Input['Mk8sV1NodeGroupStrategyArgs']] = None,
-                 template: Optional[pulumi.Input['Mk8sV1NodeGroupTemplateArgs']] = None,
-                 updated_at: Optional[pulumi.Input[_builtins.str]] = None,
-                 version: Optional[pulumi.Input[_builtins.str]] = None):
+                 auto_repair: pulumi.Input[Optional['Mk8sV1NodeGroupAutoRepairArgs']] = None,
+                 autoscaling: pulumi.Input[Optional['Mk8sV1NodeGroupAutoscalingArgs']] = None,
+                 created_at: pulumi.Input[Optional[_builtins.str]] = None,
+                 fixed_node_count: pulumi.Input[Optional[_builtins.float]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 labels_all: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 metadata: pulumi.Input[Optional['Mk8sV1NodeGroupMetadataArgs']] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 resource_version: pulumi.Input[Optional[_builtins.float]] = None,
+                 status: pulumi.Input[Optional['Mk8sV1NodeGroupStatusArgs']] = None,
+                 strategy: pulumi.Input[Optional['Mk8sV1NodeGroupStrategyArgs']] = None,
+                 template: pulumi.Input[Optional['Mk8sV1NodeGroupTemplateArgs']] = None,
+                 updated_at: pulumi.Input[Optional[_builtins.str]] = None,
+                 version: pulumi.Input[Optional[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering Mk8sV1NodeGroup resources.
 
@@ -256,23 +258,24 @@ class _Mk8sV1NodeGroupState:
                
                   Enables [Kubernetes Cluster Autoscaler](https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler)
                   for that NodeGroup, and defines autoscaling parameters.
-                  
+               
                   *Cannot be set alongside fixed_node_count.*
         :param pulumi.Input[_builtins.str] created_at: :
                
                   Timestamp indicating when the resource was created.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param pulumi.Input[_builtins.float] fixed_node_count: :
                
                   Number of nodes in the group. Can be changed manually at any time, except for a node group with NVLink.
-                  
+               
                   *Cannot be set alongside autoscaling.*
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels associated with the resource.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels_all: Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
         :param pulumi.Input['Mk8sV1NodeGroupMetadataArgs'] metadata: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
         :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
@@ -293,7 +296,7 @@ class _Mk8sV1NodeGroupState:
         :param pulumi.Input[_builtins.str] updated_at: :
                
                   Timestamp indicating when the resource was last updated.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param pulumi.Input[_builtins.str] version: :
                
@@ -311,6 +314,8 @@ class _Mk8sV1NodeGroupState:
             pulumi.set(__self__, "fixed_node_count", fixed_node_count)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
+        if labels_all is not None:
+            pulumi.set(__self__, "labels_all", labels_all)
         if metadata is not None:
             pulumi.set(__self__, "metadata", metadata)
         if name is not None:
@@ -332,120 +337,132 @@ class _Mk8sV1NodeGroupState:
 
     @_builtins.property
     @pulumi.getter(name="autoRepair")
-    def auto_repair(self) -> Optional[pulumi.Input['Mk8sV1NodeGroupAutoRepairArgs']]:
+    def auto_repair(self) -> pulumi.Input[Optional['Mk8sV1NodeGroupAutoRepairArgs']]:
         """
         Parameters for nodes auto repair.
         """
         return pulumi.get(self, "auto_repair")
 
     @auto_repair.setter
-    def auto_repair(self, value: Optional[pulumi.Input['Mk8sV1NodeGroupAutoRepairArgs']]):
+    def auto_repair(self, value: pulumi.Input[Optional['Mk8sV1NodeGroupAutoRepairArgs']]):
         pulumi.set(self, "auto_repair", value)
 
     @_builtins.property
     @pulumi.getter
-    def autoscaling(self) -> Optional[pulumi.Input['Mk8sV1NodeGroupAutoscalingArgs']]:
+    def autoscaling(self) -> pulumi.Input[Optional['Mk8sV1NodeGroupAutoscalingArgs']]:
         """
         :
 
            Enables [Kubernetes Cluster Autoscaler](https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler)
            for that NodeGroup, and defines autoscaling parameters.
-           
+
            *Cannot be set alongside fixed_node_count.*
         """
         return pulumi.get(self, "autoscaling")
 
     @autoscaling.setter
-    def autoscaling(self, value: Optional[pulumi.Input['Mk8sV1NodeGroupAutoscalingArgs']]):
+    def autoscaling(self, value: pulumi.Input[Optional['Mk8sV1NodeGroupAutoscalingArgs']]):
         pulumi.set(self, "autoscaling", value)
 
     @_builtins.property
     @pulumi.getter(name="createdAt")
-    def created_at(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def created_at(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
            Timestamp indicating when the resource was created.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "created_at")
 
     @created_at.setter
-    def created_at(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def created_at(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "created_at", value)
 
     @_builtins.property
     @pulumi.getter(name="fixedNodeCount")
-    def fixed_node_count(self) -> Optional[pulumi.Input[_builtins.float]]:
+    def fixed_node_count(self) -> pulumi.Input[Optional[_builtins.float]]:
         """
         :
 
            Number of nodes in the group. Can be changed manually at any time, except for a node group with NVLink.
-           
+
            *Cannot be set alongside autoscaling.*
         """
         return pulumi.get(self, "fixed_node_count")
 
     @fixed_node_count.setter
-    def fixed_node_count(self, value: Optional[pulumi.Input[_builtins.float]]):
+    def fixed_node_count(self, value: pulumi.Input[Optional[_builtins.float]]):
         pulumi.set(self, "fixed_node_count", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels associated with the resource.
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
+    @pulumi.getter(name="labelsAll")
+    def labels_all(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
+        """
+        return pulumi.get(self, "labels_all")
+
+    @labels_all.setter
+    def labels_all(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "labels_all", value)
+
+    @_builtins.property
     @pulumi.getter
-    def metadata(self) -> Optional[pulumi.Input['Mk8sV1NodeGroupMetadataArgs']]:
+    def metadata(self) -> pulumi.Input[Optional['Mk8sV1NodeGroupMetadataArgs']]:
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Common resource metadata.
         """
         return pulumi.get(self, "metadata")
 
     @metadata.setter
-    def metadata(self, value: Optional[pulumi.Input['Mk8sV1NodeGroupMetadataArgs']]):
+    def metadata(self, value: pulumi.Input[Optional['Mk8sV1NodeGroupMetadataArgs']]):
         pulumi.set(self, "metadata", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Human readable name for the resource.
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="parentId")
-    def parent_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def parent_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Identifier of the parent resource to which the resource belongs.
         """
         return pulumi.get(self, "parent_id")
 
     @parent_id.setter
-    def parent_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def parent_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "parent_id", value)
 
     @_builtins.property
     @pulumi.getter(name="resourceVersion")
-    def resource_version(self) -> Optional[pulumi.Input[_builtins.float]]:
+    def resource_version(self) -> pulumi.Input[Optional[_builtins.float]]:
         """
         :
 
@@ -457,21 +474,21 @@ class _Mk8sV1NodeGroupState:
         return pulumi.get(self, "resource_version")
 
     @resource_version.setter
-    def resource_version(self, value: Optional[pulumi.Input[_builtins.float]]):
+    def resource_version(self, value: pulumi.Input[Optional[_builtins.float]]):
         pulumi.set(self, "resource_version", value)
 
     @_builtins.property
     @pulumi.getter
-    def status(self) -> Optional[pulumi.Input['Mk8sV1NodeGroupStatusArgs']]:
+    def status(self) -> pulumi.Input[Optional['Mk8sV1NodeGroupStatusArgs']]:
         return pulumi.get(self, "status")
 
     @status.setter
-    def status(self, value: Optional[pulumi.Input['Mk8sV1NodeGroupStatusArgs']]):
+    def status(self, value: pulumi.Input[Optional['Mk8sV1NodeGroupStatusArgs']]):
         pulumi.set(self, "status", value)
 
     @_builtins.property
     @pulumi.getter
-    def strategy(self) -> Optional[pulumi.Input['Mk8sV1NodeGroupStrategyArgs']]:
+    def strategy(self) -> pulumi.Input[Optional['Mk8sV1NodeGroupStrategyArgs']]:
         """
         :
 
@@ -481,12 +498,12 @@ class _Mk8sV1NodeGroupState:
         return pulumi.get(self, "strategy")
 
     @strategy.setter
-    def strategy(self, value: Optional[pulumi.Input['Mk8sV1NodeGroupStrategyArgs']]):
+    def strategy(self, value: pulumi.Input[Optional['Mk8sV1NodeGroupStrategyArgs']]):
         pulumi.set(self, "strategy", value)
 
     @_builtins.property
     @pulumi.getter
-    def template(self) -> Optional[pulumi.Input['Mk8sV1NodeGroupTemplateArgs']]:
+    def template(self) -> pulumi.Input[Optional['Mk8sV1NodeGroupTemplateArgs']]:
         """
         :
 
@@ -496,28 +513,28 @@ class _Mk8sV1NodeGroupState:
         return pulumi.get(self, "template")
 
     @template.setter
-    def template(self, value: Optional[pulumi.Input['Mk8sV1NodeGroupTemplateArgs']]):
+    def template(self, value: pulumi.Input[Optional['Mk8sV1NodeGroupTemplateArgs']]):
         pulumi.set(self, "template", value)
 
     @_builtins.property
     @pulumi.getter(name="updatedAt")
-    def updated_at(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def updated_at(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
            Timestamp indicating when the resource was last updated.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "updated_at")
 
     @updated_at.setter
-    def updated_at(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def updated_at(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "updated_at", value)
 
     @_builtins.property
     @pulumi.getter
-    def version(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def version(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
@@ -528,7 +545,7 @@ class _Mk8sV1NodeGroupState:
         return pulumi.get(self, "version")
 
     @version.setter
-    def version(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def version(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "version", value)
 
 
@@ -538,16 +555,16 @@ class Mk8sV1NodeGroup(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 auto_repair: Optional[pulumi.Input[Union['Mk8sV1NodeGroupAutoRepairArgs', 'Mk8sV1NodeGroupAutoRepairArgsDict']]] = None,
-                 autoscaling: Optional[pulumi.Input[Union['Mk8sV1NodeGroupAutoscalingArgs', 'Mk8sV1NodeGroupAutoscalingArgsDict']]] = None,
-                 fixed_node_count: Optional[pulumi.Input[_builtins.float]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 metadata: Optional[pulumi.Input[Union['Mk8sV1NodeGroupMetadataArgs', 'Mk8sV1NodeGroupMetadataArgsDict']]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 strategy: Optional[pulumi.Input[Union['Mk8sV1NodeGroupStrategyArgs', 'Mk8sV1NodeGroupStrategyArgsDict']]] = None,
-                 template: Optional[pulumi.Input[Union['Mk8sV1NodeGroupTemplateArgs', 'Mk8sV1NodeGroupTemplateArgsDict']]] = None,
-                 version: Optional[pulumi.Input[_builtins.str]] = None,
+                 auto_repair: pulumi.Input[Optional[Union['Mk8sV1NodeGroupAutoRepairArgs', 'Mk8sV1NodeGroupAutoRepairArgsDict']]] = None,
+                 autoscaling: pulumi.Input[Optional[Union['Mk8sV1NodeGroupAutoscalingArgs', 'Mk8sV1NodeGroupAutoscalingArgsDict']]] = None,
+                 fixed_node_count: pulumi.Input[Optional[_builtins.float]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 metadata: pulumi.Input[Optional[Union['Mk8sV1NodeGroupMetadataArgs', 'Mk8sV1NodeGroupMetadataArgsDict']]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 strategy: pulumi.Input[Optional[Union['Mk8sV1NodeGroupStrategyArgs', 'Mk8sV1NodeGroupStrategyArgsDict']]] = None,
+                 template: pulumi.Input[Optional[Union['Mk8sV1NodeGroupTemplateArgs', 'Mk8sV1NodeGroupTemplateArgsDict']]] = None,
+                 version: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         """
         Create a Mk8sV1NodeGroup resource with the given unique name, props, and options.
@@ -559,18 +576,18 @@ class Mk8sV1NodeGroup(pulumi.CustomResource):
                
                   Enables [Kubernetes Cluster Autoscaler](https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler)
                   for that NodeGroup, and defines autoscaling parameters.
-                  
+               
                   *Cannot be set alongside fixed_node_count.*
         :param pulumi.Input[_builtins.float] fixed_node_count: :
                
                   Number of nodes in the group. Can be changed manually at any time, except for a node group with NVLink.
-                  
+               
                   *Cannot be set alongside autoscaling.*
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels associated with the resource.
         :param pulumi.Input[Union['Mk8sV1NodeGroupMetadataArgs', 'Mk8sV1NodeGroupMetadataArgsDict']] metadata: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
         :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
@@ -612,16 +629,16 @@ class Mk8sV1NodeGroup(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 auto_repair: Optional[pulumi.Input[Union['Mk8sV1NodeGroupAutoRepairArgs', 'Mk8sV1NodeGroupAutoRepairArgsDict']]] = None,
-                 autoscaling: Optional[pulumi.Input[Union['Mk8sV1NodeGroupAutoscalingArgs', 'Mk8sV1NodeGroupAutoscalingArgsDict']]] = None,
-                 fixed_node_count: Optional[pulumi.Input[_builtins.float]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 metadata: Optional[pulumi.Input[Union['Mk8sV1NodeGroupMetadataArgs', 'Mk8sV1NodeGroupMetadataArgsDict']]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 strategy: Optional[pulumi.Input[Union['Mk8sV1NodeGroupStrategyArgs', 'Mk8sV1NodeGroupStrategyArgsDict']]] = None,
-                 template: Optional[pulumi.Input[Union['Mk8sV1NodeGroupTemplateArgs', 'Mk8sV1NodeGroupTemplateArgsDict']]] = None,
-                 version: Optional[pulumi.Input[_builtins.str]] = None,
+                 auto_repair: pulumi.Input[Optional[Union['Mk8sV1NodeGroupAutoRepairArgs', 'Mk8sV1NodeGroupAutoRepairArgsDict']]] = None,
+                 autoscaling: pulumi.Input[Optional[Union['Mk8sV1NodeGroupAutoscalingArgs', 'Mk8sV1NodeGroupAutoscalingArgsDict']]] = None,
+                 fixed_node_count: pulumi.Input[Optional[_builtins.float]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 metadata: pulumi.Input[Optional[Union['Mk8sV1NodeGroupMetadataArgs', 'Mk8sV1NodeGroupMetadataArgsDict']]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 strategy: pulumi.Input[Optional[Union['Mk8sV1NodeGroupStrategyArgs', 'Mk8sV1NodeGroupStrategyArgsDict']]] = None,
+                 template: pulumi.Input[Optional[Union['Mk8sV1NodeGroupTemplateArgs', 'Mk8sV1NodeGroupTemplateArgsDict']]] = None,
+                 version: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -637,8 +654,6 @@ class Mk8sV1NodeGroup(pulumi.CustomResource):
             __props__.__dict__["labels"] = labels
             __props__.__dict__["metadata"] = metadata
             __props__.__dict__["name"] = name
-            if parent_id is None and not opts.urn:
-                raise TypeError("Missing required property 'parent_id'")
             __props__.__dict__["parent_id"] = parent_id
             __props__.__dict__["strategy"] = strategy
             if template is None and not opts.urn:
@@ -646,6 +661,7 @@ class Mk8sV1NodeGroup(pulumi.CustomResource):
             __props__.__dict__["template"] = template
             __props__.__dict__["version"] = version
             __props__.__dict__["created_at"] = None
+            __props__.__dict__["labels_all"] = None
             __props__.__dict__["resource_version"] = None
             __props__.__dict__["status"] = None
             __props__.__dict__["updated_at"] = None
@@ -660,20 +676,21 @@ class Mk8sV1NodeGroup(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            auto_repair: Optional[pulumi.Input[Union['Mk8sV1NodeGroupAutoRepairArgs', 'Mk8sV1NodeGroupAutoRepairArgsDict']]] = None,
-            autoscaling: Optional[pulumi.Input[Union['Mk8sV1NodeGroupAutoscalingArgs', 'Mk8sV1NodeGroupAutoscalingArgsDict']]] = None,
-            created_at: Optional[pulumi.Input[_builtins.str]] = None,
-            fixed_node_count: Optional[pulumi.Input[_builtins.float]] = None,
-            labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            metadata: Optional[pulumi.Input[Union['Mk8sV1NodeGroupMetadataArgs', 'Mk8sV1NodeGroupMetadataArgsDict']]] = None,
-            name: Optional[pulumi.Input[_builtins.str]] = None,
-            parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-            resource_version: Optional[pulumi.Input[_builtins.float]] = None,
-            status: Optional[pulumi.Input[Union['Mk8sV1NodeGroupStatusArgs', 'Mk8sV1NodeGroupStatusArgsDict']]] = None,
-            strategy: Optional[pulumi.Input[Union['Mk8sV1NodeGroupStrategyArgs', 'Mk8sV1NodeGroupStrategyArgsDict']]] = None,
-            template: Optional[pulumi.Input[Union['Mk8sV1NodeGroupTemplateArgs', 'Mk8sV1NodeGroupTemplateArgsDict']]] = None,
-            updated_at: Optional[pulumi.Input[_builtins.str]] = None,
-            version: Optional[pulumi.Input[_builtins.str]] = None) -> 'Mk8sV1NodeGroup':
+            auto_repair: pulumi.Input[Optional[Union['Mk8sV1NodeGroupAutoRepairArgs', 'Mk8sV1NodeGroupAutoRepairArgsDict']]] = None,
+            autoscaling: pulumi.Input[Optional[Union['Mk8sV1NodeGroupAutoscalingArgs', 'Mk8sV1NodeGroupAutoscalingArgsDict']]] = None,
+            created_at: pulumi.Input[Optional[_builtins.str]] = None,
+            fixed_node_count: pulumi.Input[Optional[_builtins.float]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            labels_all: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            metadata: pulumi.Input[Optional[Union['Mk8sV1NodeGroupMetadataArgs', 'Mk8sV1NodeGroupMetadataArgsDict']]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+            resource_version: pulumi.Input[Optional[_builtins.float]] = None,
+            status: pulumi.Input[Optional[Union['Mk8sV1NodeGroupStatusArgs', 'Mk8sV1NodeGroupStatusArgsDict']]] = None,
+            strategy: pulumi.Input[Optional[Union['Mk8sV1NodeGroupStrategyArgs', 'Mk8sV1NodeGroupStrategyArgsDict']]] = None,
+            template: pulumi.Input[Optional[Union['Mk8sV1NodeGroupTemplateArgs', 'Mk8sV1NodeGroupTemplateArgsDict']]] = None,
+            updated_at: pulumi.Input[Optional[_builtins.str]] = None,
+            version: pulumi.Input[Optional[_builtins.str]] = None) -> 'Mk8sV1NodeGroup':
         """
         Get an existing Mk8sV1NodeGroup resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -686,23 +703,24 @@ class Mk8sV1NodeGroup(pulumi.CustomResource):
                
                   Enables [Kubernetes Cluster Autoscaler](https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler)
                   for that NodeGroup, and defines autoscaling parameters.
-                  
+               
                   *Cannot be set alongside fixed_node_count.*
         :param pulumi.Input[_builtins.str] created_at: :
                
                   Timestamp indicating when the resource was created.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param pulumi.Input[_builtins.float] fixed_node_count: :
                
                   Number of nodes in the group. Can be changed manually at any time, except for a node group with NVLink.
-                  
+               
                   *Cannot be set alongside autoscaling.*
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels associated with the resource.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels_all: Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
         :param pulumi.Input[Union['Mk8sV1NodeGroupMetadataArgs', 'Mk8sV1NodeGroupMetadataArgsDict']] metadata: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
         :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
@@ -723,7 +741,7 @@ class Mk8sV1NodeGroup(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] updated_at: :
                
                   Timestamp indicating when the resource was last updated.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param pulumi.Input[_builtins.str] version: :
                
@@ -740,6 +758,7 @@ class Mk8sV1NodeGroup(pulumi.CustomResource):
         __props__.__dict__["created_at"] = created_at
         __props__.__dict__["fixed_node_count"] = fixed_node_count
         __props__.__dict__["labels"] = labels
+        __props__.__dict__["labels_all"] = labels_all
         __props__.__dict__["metadata"] = metadata
         __props__.__dict__["name"] = name
         __props__.__dict__["parent_id"] = parent_id
@@ -767,7 +786,7 @@ class Mk8sV1NodeGroup(pulumi.CustomResource):
 
            Enables [Kubernetes Cluster Autoscaler](https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler)
            for that NodeGroup, and defines autoscaling parameters.
-           
+
            *Cannot be set alongside fixed_node_count.*
         """
         return pulumi.get(self, "autoscaling")
@@ -779,7 +798,7 @@ class Mk8sV1NodeGroup(pulumi.CustomResource):
         :
 
            Timestamp indicating when the resource was created.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "created_at")
@@ -791,7 +810,7 @@ class Mk8sV1NodeGroup(pulumi.CustomResource):
         :
 
            Number of nodes in the group. Can be changed manually at any time, except for a node group with NVLink.
-           
+
            *Cannot be set alongside autoscaling.*
         """
         return pulumi.get(self, "fixed_node_count")
@@ -805,13 +824,21 @@ class Mk8sV1NodeGroup(pulumi.CustomResource):
         return pulumi.get(self, "labels")
 
     @_builtins.property
+    @pulumi.getter(name="labelsAll")
+    def labels_all(self) -> pulumi.Output[Mapping[str, _builtins.str]]:
+        """
+        Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
+        """
+        return pulumi.get(self, "labels_all")
+
+    @_builtins.property
     @pulumi.getter
     def metadata(self) -> pulumi.Output['outputs.Mk8sV1NodeGroupMetadata']:
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Common resource metadata.
         """
         return pulumi.get(self, "metadata")
@@ -879,7 +906,7 @@ class Mk8sV1NodeGroup(pulumi.CustomResource):
         :
 
            Timestamp indicating when the resource was last updated.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "updated_at")

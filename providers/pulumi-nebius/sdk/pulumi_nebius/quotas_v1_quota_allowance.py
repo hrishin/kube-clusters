@@ -21,30 +21,29 @@ __all__ = ['QuotasV1QuotaAllowanceArgs', 'QuotasV1QuotaAllowance']
 @pulumi.input_type
 class QuotasV1QuotaAllowanceArgs:
     def __init__(__self__, *,
-                 parent_id: pulumi.Input[_builtins.str],
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 limit: Optional[pulumi.Input[_builtins.float]] = None,
-                 metadata: Optional[pulumi.Input['QuotasV1QuotaAllowanceMetadataArgs']] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 region: Optional[pulumi.Input[_builtins.str]] = None):
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 limit: pulumi.Input[Optional[_builtins.float]] = None,
+                 metadata: pulumi.Input[Optional['QuotasV1QuotaAllowanceMetadataArgs']] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 region: pulumi.Input[Optional[_builtins.str]] = None):
         """
         The set of arguments for constructing a QuotasV1QuotaAllowance resource.
 
-        :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels associated with the resource.
         :param pulumi.Input[_builtins.float] limit: Total amount of resources allocated.
         :param pulumi.Input['QuotasV1QuotaAllowanceMetadataArgs'] metadata: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
+        :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
         :param pulumi.Input[_builtins.str] region: :
                
                   Name of the region where the quota is allocated.
                   Example: "eu-north1".
         """
-        pulumi.set(__self__, "parent_id", parent_id)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
         if limit is not None:
@@ -53,76 +52,78 @@ class QuotasV1QuotaAllowanceArgs:
             pulumi.set(__self__, "metadata", metadata)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if parent_id is not None:
+            pulumi.set(__self__, "parent_id", parent_id)
         if region is not None:
             pulumi.set(__self__, "region", region)
 
     @_builtins.property
-    @pulumi.getter(name="parentId")
-    def parent_id(self) -> pulumi.Input[_builtins.str]:
-        """
-        Identifier of the parent resource to which the resource belongs.
-        """
-        return pulumi.get(self, "parent_id")
-
-    @parent_id.setter
-    def parent_id(self, value: pulumi.Input[_builtins.str]):
-        pulumi.set(self, "parent_id", value)
-
-    @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels associated with the resource.
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
     @pulumi.getter
-    def limit(self) -> Optional[pulumi.Input[_builtins.float]]:
+    def limit(self) -> pulumi.Input[Optional[_builtins.float]]:
         """
         Total amount of resources allocated.
         """
         return pulumi.get(self, "limit")
 
     @limit.setter
-    def limit(self, value: Optional[pulumi.Input[_builtins.float]]):
+    def limit(self, value: pulumi.Input[Optional[_builtins.float]]):
         pulumi.set(self, "limit", value)
 
     @_builtins.property
     @pulumi.getter
-    def metadata(self) -> Optional[pulumi.Input['QuotasV1QuotaAllowanceMetadataArgs']]:
+    def metadata(self) -> pulumi.Input[Optional['QuotasV1QuotaAllowanceMetadataArgs']]:
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Common resource metadata.
         """
         return pulumi.get(self, "metadata")
 
     @metadata.setter
-    def metadata(self, value: Optional[pulumi.Input['QuotasV1QuotaAllowanceMetadataArgs']]):
+    def metadata(self, value: pulumi.Input[Optional['QuotasV1QuotaAllowanceMetadataArgs']]):
         pulumi.set(self, "metadata", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Human readable name for the resource.
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
+    @pulumi.getter(name="parentId")
+    def parent_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Identifier of the parent resource to which the resource belongs.
+        """
+        return pulumi.get(self, "parent_id")
+
+    @parent_id.setter
+    def parent_id(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "parent_id", value)
+
+    @_builtins.property
     @pulumi.getter
-    def region(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def region(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
@@ -132,37 +133,39 @@ class QuotasV1QuotaAllowanceArgs:
         return pulumi.get(self, "region")
 
     @region.setter
-    def region(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def region(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "region", value)
 
 
 @pulumi.input_type
 class _QuotasV1QuotaAllowanceState:
     def __init__(__self__, *,
-                 created_at: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 limit: Optional[pulumi.Input[_builtins.float]] = None,
-                 metadata: Optional[pulumi.Input['QuotasV1QuotaAllowanceMetadataArgs']] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 region: Optional[pulumi.Input[_builtins.str]] = None,
-                 resource_version: Optional[pulumi.Input[_builtins.float]] = None,
-                 status: Optional[pulumi.Input['QuotasV1QuotaAllowanceStatusArgs']] = None,
-                 updated_at: Optional[pulumi.Input[_builtins.str]] = None):
+                 created_at: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 labels_all: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 limit: pulumi.Input[Optional[_builtins.float]] = None,
+                 metadata: pulumi.Input[Optional['QuotasV1QuotaAllowanceMetadataArgs']] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 region: pulumi.Input[Optional[_builtins.str]] = None,
+                 resource_version: pulumi.Input[Optional[_builtins.float]] = None,
+                 status: pulumi.Input[Optional['QuotasV1QuotaAllowanceStatusArgs']] = None,
+                 updated_at: pulumi.Input[Optional[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering QuotasV1QuotaAllowance resources.
 
         :param pulumi.Input[_builtins.str] created_at: :
                
                   Timestamp indicating when the resource was created.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels associated with the resource.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels_all: Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
         :param pulumi.Input[_builtins.float] limit: Total amount of resources allocated.
         :param pulumi.Input['QuotasV1QuotaAllowanceMetadataArgs'] metadata: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
         :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
@@ -179,13 +182,15 @@ class _QuotasV1QuotaAllowanceState:
         :param pulumi.Input[_builtins.str] updated_at: :
                
                   Timestamp indicating when the resource was last updated.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         if created_at is not None:
             pulumi.set(__self__, "created_at", created_at)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
+        if labels_all is not None:
+            pulumi.set(__self__, "labels_all", labels_all)
         if limit is not None:
             pulumi.set(__self__, "limit", limit)
         if metadata is not None:
@@ -205,87 +210,99 @@ class _QuotasV1QuotaAllowanceState:
 
     @_builtins.property
     @pulumi.getter(name="createdAt")
-    def created_at(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def created_at(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
            Timestamp indicating when the resource was created.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "created_at")
 
     @created_at.setter
-    def created_at(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def created_at(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "created_at", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels associated with the resource.
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
+    @pulumi.getter(name="labelsAll")
+    def labels_all(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
+        """
+        return pulumi.get(self, "labels_all")
+
+    @labels_all.setter
+    def labels_all(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "labels_all", value)
+
+    @_builtins.property
     @pulumi.getter
-    def limit(self) -> Optional[pulumi.Input[_builtins.float]]:
+    def limit(self) -> pulumi.Input[Optional[_builtins.float]]:
         """
         Total amount of resources allocated.
         """
         return pulumi.get(self, "limit")
 
     @limit.setter
-    def limit(self, value: Optional[pulumi.Input[_builtins.float]]):
+    def limit(self, value: pulumi.Input[Optional[_builtins.float]]):
         pulumi.set(self, "limit", value)
 
     @_builtins.property
     @pulumi.getter
-    def metadata(self) -> Optional[pulumi.Input['QuotasV1QuotaAllowanceMetadataArgs']]:
+    def metadata(self) -> pulumi.Input[Optional['QuotasV1QuotaAllowanceMetadataArgs']]:
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Common resource metadata.
         """
         return pulumi.get(self, "metadata")
 
     @metadata.setter
-    def metadata(self, value: Optional[pulumi.Input['QuotasV1QuotaAllowanceMetadataArgs']]):
+    def metadata(self, value: pulumi.Input[Optional['QuotasV1QuotaAllowanceMetadataArgs']]):
         pulumi.set(self, "metadata", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Human readable name for the resource.
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="parentId")
-    def parent_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def parent_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Identifier of the parent resource to which the resource belongs.
         """
         return pulumi.get(self, "parent_id")
 
     @parent_id.setter
-    def parent_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def parent_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "parent_id", value)
 
     @_builtins.property
     @pulumi.getter
-    def region(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def region(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
@@ -295,12 +312,12 @@ class _QuotasV1QuotaAllowanceState:
         return pulumi.get(self, "region")
 
     @region.setter
-    def region(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def region(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "region", value)
 
     @_builtins.property
     @pulumi.getter(name="resourceVersion")
-    def resource_version(self) -> Optional[pulumi.Input[_builtins.float]]:
+    def resource_version(self) -> pulumi.Input[Optional[_builtins.float]]:
         """
         :
 
@@ -312,32 +329,32 @@ class _QuotasV1QuotaAllowanceState:
         return pulumi.get(self, "resource_version")
 
     @resource_version.setter
-    def resource_version(self, value: Optional[pulumi.Input[_builtins.float]]):
+    def resource_version(self, value: pulumi.Input[Optional[_builtins.float]]):
         pulumi.set(self, "resource_version", value)
 
     @_builtins.property
     @pulumi.getter
-    def status(self) -> Optional[pulumi.Input['QuotasV1QuotaAllowanceStatusArgs']]:
+    def status(self) -> pulumi.Input[Optional['QuotasV1QuotaAllowanceStatusArgs']]:
         return pulumi.get(self, "status")
 
     @status.setter
-    def status(self, value: Optional[pulumi.Input['QuotasV1QuotaAllowanceStatusArgs']]):
+    def status(self, value: pulumi.Input[Optional['QuotasV1QuotaAllowanceStatusArgs']]):
         pulumi.set(self, "status", value)
 
     @_builtins.property
     @pulumi.getter(name="updatedAt")
-    def updated_at(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def updated_at(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
            Timestamp indicating when the resource was last updated.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "updated_at")
 
     @updated_at.setter
-    def updated_at(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def updated_at(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "updated_at", value)
 
 
@@ -347,12 +364,12 @@ class QuotasV1QuotaAllowance(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 limit: Optional[pulumi.Input[_builtins.float]] = None,
-                 metadata: Optional[pulumi.Input[Union['QuotasV1QuotaAllowanceMetadataArgs', 'QuotasV1QuotaAllowanceMetadataArgsDict']]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 region: Optional[pulumi.Input[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 limit: pulumi.Input[Optional[_builtins.float]] = None,
+                 metadata: pulumi.Input[Optional[Union['QuotasV1QuotaAllowanceMetadataArgs', 'QuotasV1QuotaAllowanceMetadataArgsDict']]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 region: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         """
         Create a QuotasV1QuotaAllowance resource with the given unique name, props, and options.
@@ -363,8 +380,8 @@ class QuotasV1QuotaAllowance(pulumi.CustomResource):
         :param pulumi.Input[_builtins.float] limit: Total amount of resources allocated.
         :param pulumi.Input[Union['QuotasV1QuotaAllowanceMetadataArgs', 'QuotasV1QuotaAllowanceMetadataArgsDict']] metadata: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
         :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
@@ -377,7 +394,7 @@ class QuotasV1QuotaAllowance(pulumi.CustomResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: QuotasV1QuotaAllowanceArgs,
+                 args: Optional[QuotasV1QuotaAllowanceArgs] = None,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Create a QuotasV1QuotaAllowance resource with the given unique name, props, and options.
@@ -397,12 +414,12 @@ class QuotasV1QuotaAllowance(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 limit: Optional[pulumi.Input[_builtins.float]] = None,
-                 metadata: Optional[pulumi.Input[Union['QuotasV1QuotaAllowanceMetadataArgs', 'QuotasV1QuotaAllowanceMetadataArgsDict']]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 region: Optional[pulumi.Input[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 limit: pulumi.Input[Optional[_builtins.float]] = None,
+                 metadata: pulumi.Input[Optional[Union['QuotasV1QuotaAllowanceMetadataArgs', 'QuotasV1QuotaAllowanceMetadataArgsDict']]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 region: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -416,11 +433,10 @@ class QuotasV1QuotaAllowance(pulumi.CustomResource):
             __props__.__dict__["limit"] = limit
             __props__.__dict__["metadata"] = metadata
             __props__.__dict__["name"] = name
-            if parent_id is None and not opts.urn:
-                raise TypeError("Missing required property 'parent_id'")
             __props__.__dict__["parent_id"] = parent_id
             __props__.__dict__["region"] = region
             __props__.__dict__["created_at"] = None
+            __props__.__dict__["labels_all"] = None
             __props__.__dict__["resource_version"] = None
             __props__.__dict__["status"] = None
             __props__.__dict__["updated_at"] = None
@@ -435,16 +451,17 @@ class QuotasV1QuotaAllowance(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            created_at: Optional[pulumi.Input[_builtins.str]] = None,
-            labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            limit: Optional[pulumi.Input[_builtins.float]] = None,
-            metadata: Optional[pulumi.Input[Union['QuotasV1QuotaAllowanceMetadataArgs', 'QuotasV1QuotaAllowanceMetadataArgsDict']]] = None,
-            name: Optional[pulumi.Input[_builtins.str]] = None,
-            parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-            region: Optional[pulumi.Input[_builtins.str]] = None,
-            resource_version: Optional[pulumi.Input[_builtins.float]] = None,
-            status: Optional[pulumi.Input[Union['QuotasV1QuotaAllowanceStatusArgs', 'QuotasV1QuotaAllowanceStatusArgsDict']]] = None,
-            updated_at: Optional[pulumi.Input[_builtins.str]] = None) -> 'QuotasV1QuotaAllowance':
+            created_at: pulumi.Input[Optional[_builtins.str]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            labels_all: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            limit: pulumi.Input[Optional[_builtins.float]] = None,
+            metadata: pulumi.Input[Optional[Union['QuotasV1QuotaAllowanceMetadataArgs', 'QuotasV1QuotaAllowanceMetadataArgsDict']]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+            region: pulumi.Input[Optional[_builtins.str]] = None,
+            resource_version: pulumi.Input[Optional[_builtins.float]] = None,
+            status: pulumi.Input[Optional[Union['QuotasV1QuotaAllowanceStatusArgs', 'QuotasV1QuotaAllowanceStatusArgsDict']]] = None,
+            updated_at: pulumi.Input[Optional[_builtins.str]] = None) -> 'QuotasV1QuotaAllowance':
         """
         Get an existing QuotasV1QuotaAllowance resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -455,14 +472,15 @@ class QuotasV1QuotaAllowance(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] created_at: :
                
                   Timestamp indicating when the resource was created.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels associated with the resource.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels_all: Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
         :param pulumi.Input[_builtins.float] limit: Total amount of resources allocated.
         :param pulumi.Input[Union['QuotasV1QuotaAllowanceMetadataArgs', 'QuotasV1QuotaAllowanceMetadataArgsDict']] metadata: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
         :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
@@ -479,7 +497,7 @@ class QuotasV1QuotaAllowance(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] updated_at: :
                
                   Timestamp indicating when the resource was last updated.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
@@ -488,6 +506,7 @@ class QuotasV1QuotaAllowance(pulumi.CustomResource):
 
         __props__.__dict__["created_at"] = created_at
         __props__.__dict__["labels"] = labels
+        __props__.__dict__["labels_all"] = labels_all
         __props__.__dict__["limit"] = limit
         __props__.__dict__["metadata"] = metadata
         __props__.__dict__["name"] = name
@@ -505,7 +524,7 @@ class QuotasV1QuotaAllowance(pulumi.CustomResource):
         :
 
            Timestamp indicating when the resource was created.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "created_at")
@@ -517,6 +536,14 @@ class QuotasV1QuotaAllowance(pulumi.CustomResource):
         Labels associated with the resource.
         """
         return pulumi.get(self, "labels")
+
+    @_builtins.property
+    @pulumi.getter(name="labelsAll")
+    def labels_all(self) -> pulumi.Output[Mapping[str, _builtins.str]]:
+        """
+        Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
+        """
+        return pulumi.get(self, "labels_all")
 
     @_builtins.property
     @pulumi.getter
@@ -532,8 +559,8 @@ class QuotasV1QuotaAllowance(pulumi.CustomResource):
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Common resource metadata.
         """
         return pulumi.get(self, "metadata")
@@ -590,7 +617,7 @@ class QuotasV1QuotaAllowance(pulumi.CustomResource):
         :
 
            Timestamp indicating when the resource was last updated.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "updated_at")

@@ -183,9 +183,9 @@ def get_vpc_v1_pool(id: Optional[_builtins.str] = None,
         updated_at=pulumi.get(__ret__, 'updated_at'),
         version=pulumi.get(__ret__, 'version'),
         visibility=pulumi.get(__ret__, 'visibility'))
-def get_vpc_v1_pool_output(id: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
-                           name: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
-                           parent_id: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
+def get_vpc_v1_pool_output(id: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
+                           name: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
+                           parent_id: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
                            opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetVpcV1PoolResult]:
     """
     Use this data source to access information about an existing resource.

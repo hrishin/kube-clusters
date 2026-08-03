@@ -159,7 +159,7 @@ def get_registry_v1_registry(id: Optional[_builtins.str] = None,
         resource_version=pulumi.get(__ret__, 'resource_version'),
         status=pulumi.get(__ret__, 'status'),
         updated_at=pulumi.get(__ret__, 'updated_at'))
-def get_registry_v1_registry_output(id: Optional[pulumi.Input[_builtins.str]] = None,
+def get_registry_v1_registry_output(id: pulumi.Input[Optional[_builtins.str]] = None,
                                     opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetRegistryV1RegistryResult]:
     """
     Use this data source to access information about an existing resource.

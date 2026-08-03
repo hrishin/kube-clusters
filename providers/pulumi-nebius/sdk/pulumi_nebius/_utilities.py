@@ -13,12 +13,10 @@ import os
 import sys
 import typing
 import warnings
-import base64
 
 import pulumi
 import pulumi.runtime
 from pulumi.runtime.sync_await import _sync_await
-from pulumi.runtime.proto import resource_pb2
 
 from semver import VersionInfo as SemverVersion
 from parver import Version as PEP440Version
@@ -325,33 +323,15 @@ def get_plugin_download_url():
 	return None
 
 def get_version():
-    return "0.6.35"
+    return "0.6.36"
 
-_package_lock = asyncio.Lock()
-_package_ref = ...
-async def get_package():
-	global _package_ref
-	if _package_ref is ...:
-		if pulumi.runtime.settings._sync_monitor_supports_parameterization():
-			async with _package_lock:
-				if _package_ref is ...:
-					monitor = pulumi.runtime.settings.get_monitor()
-					parameterization = resource_pb2.Parameterization(
-						name="nebius",
-						version=get_version(),
-						value=base64.b64decode("eyJyZW1vdGUiOnsidXJsIjoicmVnaXN0cnkudGVycmFmb3JtLmlvL25lYml1cy9uZWJpdXMiLCJ2ZXJzaW9uIjoiMC42LjM1In19"),
-					)
-					registerPackageResponse = monitor.RegisterPackage(
-						resource_pb2.RegisterPackageRequest(
-							name="terraform-provider",
-							version="1.2.1",
-							download_url=get_plugin_download_url(),
-							parameterization=parameterization,
-						))
-					_package_ref = registerPackageResponse.ref
-	# TODO: This check is only needed for parameterized providers, normal providers can return None for get_package when we start
-	# using package with them.
-	if _package_ref is None or _package_ref is ...:
-		raise Exception("The Pulumi CLI does not support parameterization. Please update the Pulumi CLI.")
-	return _package_ref
+async def get_package() -> str:
+	return await pulumi.runtime.register_package(
+		base_provider_name="terraform-provider",
+		base_provider_version="1.2.1",
+		base_provider_download_url=get_plugin_download_url() or "",
+		package_name="nebius",
+		package_version=get_version(),
+		base64_parameter="eyJyZW1vdGUiOnsidXJsIjoicmVnaXN0cnkudGVycmFmb3JtLmlvL25lYml1cy9uZWJpdXMiLCJ2ZXJzaW9uIjoiMC42LjM2In19",
+	)
 	

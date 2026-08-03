@@ -193,9 +193,9 @@ def get_dns_v1_record(id: Optional[_builtins.str] = None,
         ttl=pulumi.get(__ret__, 'ttl'),
         type=pulumi.get(__ret__, 'type'),
         updated_at=pulumi.get(__ret__, 'updated_at'))
-def get_dns_v1_record_output(id: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
-                             name: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
-                             parent_id: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
+def get_dns_v1_record_output(id: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
+                             name: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
+                             parent_id: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
                              opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetDnsV1RecordResult]:
     """
     Use this data source to access information about an existing resource.

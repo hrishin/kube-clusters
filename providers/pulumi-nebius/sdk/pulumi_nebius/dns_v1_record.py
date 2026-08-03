@@ -22,25 +22,24 @@ __all__ = ['DnsV1RecordArgs', 'DnsV1Record']
 class DnsV1RecordArgs:
     def __init__(__self__, *,
                  data: pulumi.Input[_builtins.str],
-                 parent_id: pulumi.Input[_builtins.str],
                  relative_name: pulumi.Input[_builtins.str],
                  type: pulumi.Input[_builtins.str],
-                 deletion_protection: Optional[pulumi.Input[_builtins.bool]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 metadata: Optional[pulumi.Input['DnsV1RecordMetadataArgs']] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 ttl: Optional[pulumi.Input[_builtins.float]] = None):
+                 deletion_protection: pulumi.Input[Optional[_builtins.bool]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 metadata: pulumi.Input[Optional['DnsV1RecordMetadataArgs']] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 ttl: pulumi.Input[Optional[_builtins.float]] = None):
         """
         The set of arguments for constructing a DnsV1Record resource.
 
         :param pulumi.Input[_builtins.str] data: :
                
                   Record data in text format
-                  
+               
                   This should be the RDATA part of this Resource Record's
                   [presentation (zonefile) format](https://datatracker.ietf.org/doc/html/rfc9499#name-resource-records).
                   E.g., `10 xyz.tuv` for a `@ 600 IN MX 10 xyz.tuv.` resource record in a zonefile
-        :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
         :param pulumi.Input[_builtins.str] relative_name: :
                
                   Zone-relative name of this record (e.g., <span pulumi-lang-nodejs="`www`" pulumi-lang-dotnet="`Www`" pulumi-lang-go="`www`" pulumi-lang-python="`www`" pulumi-lang-yaml="`www`" pulumi-lang-java="`www`" pulumi-lang-hcl="`www`">`www`</span> for `www.<parent zone's domain name>`)
@@ -49,12 +48,12 @@ class DnsV1RecordArgs:
         :param pulumi.Input[_builtins.str] type: :
                
                   Record type
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   DNS Record type
                   Possible values:
-                  
+               
                   - `RECORD_TYPE_UNSPECIFIED` - Record type is not specified
                   - `A` - `A` record: IPv4 address
                   - `AAAA` - `AAAA` record: IPv6 address
@@ -79,15 +78,15 @@ class DnsV1RecordArgs:
                
                   DNS record metadata
                   `metadata.parent_id` must be a DNS zone ID
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
+        :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
         :param pulumi.Input[_builtins.float] ttl: Record TTL. If absent or negative, will be assumed to be the default value (<span pulumi-lang-nodejs="`600`" pulumi-lang-dotnet="`600`" pulumi-lang-go="`600`" pulumi-lang-python="`600`" pulumi-lang-yaml="`600`" pulumi-lang-java="`600`" pulumi-lang-hcl="`600`">`600`</span>)
         """
         pulumi.set(__self__, "data", data)
-        pulumi.set(__self__, "parent_id", parent_id)
         pulumi.set(__self__, "relative_name", relative_name)
         pulumi.set(__self__, "type", type)
         if deletion_protection is not None:
@@ -98,6 +97,8 @@ class DnsV1RecordArgs:
             pulumi.set(__self__, "metadata", metadata)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if parent_id is not None:
+            pulumi.set(__self__, "parent_id", parent_id)
         if ttl is not None:
             pulumi.set(__self__, "ttl", ttl)
 
@@ -108,7 +109,7 @@ class DnsV1RecordArgs:
         :
 
            Record data in text format
-           
+
            This should be the RDATA part of this Resource Record's
            [presentation (zonefile) format](https://datatracker.ietf.org/doc/html/rfc9499#name-resource-records).
            E.g., `10 xyz.tuv` for a `@ 600 IN MX 10 xyz.tuv.` resource record in a zonefile
@@ -118,18 +119,6 @@ class DnsV1RecordArgs:
     @data.setter
     def data(self, value: pulumi.Input[_builtins.str]):
         pulumi.set(self, "data", value)
-
-    @_builtins.property
-    @pulumi.getter(name="parentId")
-    def parent_id(self) -> pulumi.Input[_builtins.str]:
-        """
-        Identifier of the parent resource to which the resource belongs.
-        """
-        return pulumi.get(self, "parent_id")
-
-    @parent_id.setter
-    def parent_id(self, value: pulumi.Input[_builtins.str]):
-        pulumi.set(self, "parent_id", value)
 
     @_builtins.property
     @pulumi.getter(name="relativeName")
@@ -154,12 +143,12 @@ class DnsV1RecordArgs:
         :
 
            Record type
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            DNS Record type
            Possible values:
-           
+
            - `RECORD_TYPE_UNSPECIFIED` - Record type is not specified
            - `A` - `A` record: IPv4 address
            - `AAAA` - `AAAA` record: IPv6 address
@@ -184,7 +173,7 @@ class DnsV1RecordArgs:
 
     @_builtins.property
     @pulumi.getter(name="deletionProtection")
-    def deletion_protection(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def deletion_protection(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         :
 
@@ -194,93 +183,106 @@ class DnsV1RecordArgs:
         return pulumi.get(self, "deletion_protection")
 
     @deletion_protection.setter
-    def deletion_protection(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def deletion_protection(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "deletion_protection", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels associated with the resource.
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
     @pulumi.getter
-    def metadata(self) -> Optional[pulumi.Input['DnsV1RecordMetadataArgs']]:
+    def metadata(self) -> pulumi.Input[Optional['DnsV1RecordMetadataArgs']]:
         """
         :
 
            DNS record metadata
            `metadata.parent_id` must be a DNS zone ID
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Common resource metadata.
         """
         return pulumi.get(self, "metadata")
 
     @metadata.setter
-    def metadata(self, value: Optional[pulumi.Input['DnsV1RecordMetadataArgs']]):
+    def metadata(self, value: pulumi.Input[Optional['DnsV1RecordMetadataArgs']]):
         pulumi.set(self, "metadata", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Human readable name for the resource.
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
+    @pulumi.getter(name="parentId")
+    def parent_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Identifier of the parent resource to which the resource belongs.
+        """
+        return pulumi.get(self, "parent_id")
+
+    @parent_id.setter
+    def parent_id(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "parent_id", value)
+
+    @_builtins.property
     @pulumi.getter
-    def ttl(self) -> Optional[pulumi.Input[_builtins.float]]:
+    def ttl(self) -> pulumi.Input[Optional[_builtins.float]]:
         """
         Record TTL. If absent or negative, will be assumed to be the default value (<span pulumi-lang-nodejs="`600`" pulumi-lang-dotnet="`600`" pulumi-lang-go="`600`" pulumi-lang-python="`600`" pulumi-lang-yaml="`600`" pulumi-lang-java="`600`" pulumi-lang-hcl="`600`">`600`</span>)
         """
         return pulumi.get(self, "ttl")
 
     @ttl.setter
-    def ttl(self, value: Optional[pulumi.Input[_builtins.float]]):
+    def ttl(self, value: pulumi.Input[Optional[_builtins.float]]):
         pulumi.set(self, "ttl", value)
 
 
 @pulumi.input_type
 class _DnsV1RecordState:
     def __init__(__self__, *,
-                 created_at: Optional[pulumi.Input[_builtins.str]] = None,
-                 data: Optional[pulumi.Input[_builtins.str]] = None,
-                 deletion_protection: Optional[pulumi.Input[_builtins.bool]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 metadata: Optional[pulumi.Input['DnsV1RecordMetadataArgs']] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 relative_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 resource_version: Optional[pulumi.Input[_builtins.float]] = None,
-                 status: Optional[pulumi.Input['DnsV1RecordStatusArgs']] = None,
-                 ttl: Optional[pulumi.Input[_builtins.float]] = None,
-                 type: Optional[pulumi.Input[_builtins.str]] = None,
-                 updated_at: Optional[pulumi.Input[_builtins.str]] = None):
+                 created_at: pulumi.Input[Optional[_builtins.str]] = None,
+                 data: pulumi.Input[Optional[_builtins.str]] = None,
+                 deletion_protection: pulumi.Input[Optional[_builtins.bool]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 labels_all: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 metadata: pulumi.Input[Optional['DnsV1RecordMetadataArgs']] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 relative_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 resource_version: pulumi.Input[Optional[_builtins.float]] = None,
+                 status: pulumi.Input[Optional['DnsV1RecordStatusArgs']] = None,
+                 ttl: pulumi.Input[Optional[_builtins.float]] = None,
+                 type: pulumi.Input[Optional[_builtins.str]] = None,
+                 updated_at: pulumi.Input[Optional[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering DnsV1Record resources.
 
         :param pulumi.Input[_builtins.str] created_at: :
                
                   Timestamp indicating when the resource was created.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param pulumi.Input[_builtins.str] data: :
                
                   Record data in text format
-                  
+               
                   This should be the RDATA part of this Resource Record's
                   [presentation (zonefile) format](https://datatracker.ietf.org/doc/html/rfc9499#name-resource-records).
                   E.g., `10 xyz.tuv` for a `@ 600 IN MX 10 xyz.tuv.` resource record in a zonefile
@@ -289,13 +291,14 @@ class _DnsV1RecordState:
                   Mark this record as delete-protected
                   Delete-protected records can *only* be deleted by explicitly calling `RecordService/Delete` API with <span pulumi-lang-nodejs="`force`" pulumi-lang-dotnet="`Force`" pulumi-lang-go="`force`" pulumi-lang-python="`force`" pulumi-lang-yaml="`force`" pulumi-lang-java="`force`" pulumi-lang-hcl="`force`">`force`</span> flag set to <span pulumi-lang-nodejs="`true`" pulumi-lang-dotnet="`True`" pulumi-lang-go="`true`" pulumi-lang-python="`true`" pulumi-lang-yaml="`true`" pulumi-lang-java="`true`" pulumi-lang-hcl="`true`">`true`</span>
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels associated with the resource.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels_all: Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
         :param pulumi.Input['DnsV1RecordMetadataArgs'] metadata: :
                
                   DNS record metadata
                   `metadata.parent_id` must be a DNS zone ID
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
         :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
@@ -313,20 +316,20 @@ class _DnsV1RecordState:
         :param pulumi.Input['DnsV1RecordStatusArgs'] status: :
                
                   DNS record status, including e.g. its effective FQDN (fully-qualified domain name)
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   DNS record status
         :param pulumi.Input[_builtins.float] ttl: Record TTL. If absent or negative, will be assumed to be the default value (<span pulumi-lang-nodejs="`600`" pulumi-lang-dotnet="`600`" pulumi-lang-go="`600`" pulumi-lang-python="`600`" pulumi-lang-yaml="`600`" pulumi-lang-java="`600`" pulumi-lang-hcl="`600`">`600`</span>)
         :param pulumi.Input[_builtins.str] type: :
                
                   Record type
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   DNS Record type
                   Possible values:
-                  
+               
                   - `RECORD_TYPE_UNSPECIFIED` - Record type is not specified
                   - `A` - `A` record: IPv4 address
                   - `AAAA` - `AAAA` record: IPv6 address
@@ -345,7 +348,7 @@ class _DnsV1RecordState:
         :param pulumi.Input[_builtins.str] updated_at: :
                
                   Timestamp indicating when the resource was last updated.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         if created_at is not None:
@@ -356,6 +359,8 @@ class _DnsV1RecordState:
             pulumi.set(__self__, "deletion_protection", deletion_protection)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
+        if labels_all is not None:
+            pulumi.set(__self__, "labels_all", labels_all)
         if metadata is not None:
             pulumi.set(__self__, "metadata", metadata)
         if name is not None:
@@ -377,28 +382,28 @@ class _DnsV1RecordState:
 
     @_builtins.property
     @pulumi.getter(name="createdAt")
-    def created_at(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def created_at(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
            Timestamp indicating when the resource was created.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "created_at")
 
     @created_at.setter
-    def created_at(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def created_at(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "created_at", value)
 
     @_builtins.property
     @pulumi.getter
-    def data(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def data(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
            Record data in text format
-           
+
            This should be the RDATA part of this Resource Record's
            [presentation (zonefile) format](https://datatracker.ietf.org/doc/html/rfc9499#name-resource-records).
            E.g., `10 xyz.tuv` for a `@ 600 IN MX 10 xyz.tuv.` resource record in a zonefile
@@ -406,12 +411,12 @@ class _DnsV1RecordState:
         return pulumi.get(self, "data")
 
     @data.setter
-    def data(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def data(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "data", value)
 
     @_builtins.property
     @pulumi.getter(name="deletionProtection")
-    def deletion_protection(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def deletion_protection(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         :
 
@@ -421,67 +426,79 @@ class _DnsV1RecordState:
         return pulumi.get(self, "deletion_protection")
 
     @deletion_protection.setter
-    def deletion_protection(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def deletion_protection(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "deletion_protection", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels associated with the resource.
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
+    @pulumi.getter(name="labelsAll")
+    def labels_all(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
+        """
+        return pulumi.get(self, "labels_all")
+
+    @labels_all.setter
+    def labels_all(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "labels_all", value)
+
+    @_builtins.property
     @pulumi.getter
-    def metadata(self) -> Optional[pulumi.Input['DnsV1RecordMetadataArgs']]:
+    def metadata(self) -> pulumi.Input[Optional['DnsV1RecordMetadataArgs']]:
         """
         :
 
            DNS record metadata
            `metadata.parent_id` must be a DNS zone ID
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Common resource metadata.
         """
         return pulumi.get(self, "metadata")
 
     @metadata.setter
-    def metadata(self, value: Optional[pulumi.Input['DnsV1RecordMetadataArgs']]):
+    def metadata(self, value: pulumi.Input[Optional['DnsV1RecordMetadataArgs']]):
         pulumi.set(self, "metadata", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Human readable name for the resource.
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="parentId")
-    def parent_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def parent_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Identifier of the parent resource to which the resource belongs.
         """
         return pulumi.get(self, "parent_id")
 
     @parent_id.setter
-    def parent_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def parent_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "parent_id", value)
 
     @_builtins.property
     @pulumi.getter(name="relativeName")
-    def relative_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def relative_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
@@ -492,12 +509,12 @@ class _DnsV1RecordState:
         return pulumi.get(self, "relative_name")
 
     @relative_name.setter
-    def relative_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def relative_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "relative_name", value)
 
     @_builtins.property
     @pulumi.getter(name="resourceVersion")
-    def resource_version(self) -> Optional[pulumi.Input[_builtins.float]]:
+    def resource_version(self) -> pulumi.Input[Optional[_builtins.float]]:
         """
         :
 
@@ -509,52 +526,52 @@ class _DnsV1RecordState:
         return pulumi.get(self, "resource_version")
 
     @resource_version.setter
-    def resource_version(self, value: Optional[pulumi.Input[_builtins.float]]):
+    def resource_version(self, value: pulumi.Input[Optional[_builtins.float]]):
         pulumi.set(self, "resource_version", value)
 
     @_builtins.property
     @pulumi.getter
-    def status(self) -> Optional[pulumi.Input['DnsV1RecordStatusArgs']]:
+    def status(self) -> pulumi.Input[Optional['DnsV1RecordStatusArgs']]:
         """
         :
 
            DNS record status, including e.g. its effective FQDN (fully-qualified domain name)
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            DNS record status
         """
         return pulumi.get(self, "status")
 
     @status.setter
-    def status(self, value: Optional[pulumi.Input['DnsV1RecordStatusArgs']]):
+    def status(self, value: pulumi.Input[Optional['DnsV1RecordStatusArgs']]):
         pulumi.set(self, "status", value)
 
     @_builtins.property
     @pulumi.getter
-    def ttl(self) -> Optional[pulumi.Input[_builtins.float]]:
+    def ttl(self) -> pulumi.Input[Optional[_builtins.float]]:
         """
         Record TTL. If absent or negative, will be assumed to be the default value (<span pulumi-lang-nodejs="`600`" pulumi-lang-dotnet="`600`" pulumi-lang-go="`600`" pulumi-lang-python="`600`" pulumi-lang-yaml="`600`" pulumi-lang-java="`600`" pulumi-lang-hcl="`600`">`600`</span>)
         """
         return pulumi.get(self, "ttl")
 
     @ttl.setter
-    def ttl(self, value: Optional[pulumi.Input[_builtins.float]]):
+    def ttl(self, value: pulumi.Input[Optional[_builtins.float]]):
         pulumi.set(self, "ttl", value)
 
     @_builtins.property
     @pulumi.getter
-    def type(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def type(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
            Record type
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            DNS Record type
            Possible values:
-           
+
            - `RECORD_TYPE_UNSPECIFIED` - Record type is not specified
            - `A` - `A` record: IPv4 address
            - `AAAA` - `AAAA` record: IPv6 address
@@ -574,23 +591,23 @@ class _DnsV1RecordState:
         return pulumi.get(self, "type")
 
     @type.setter
-    def type(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def type(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "type", value)
 
     @_builtins.property
     @pulumi.getter(name="updatedAt")
-    def updated_at(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def updated_at(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
            Timestamp indicating when the resource was last updated.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "updated_at")
 
     @updated_at.setter
-    def updated_at(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def updated_at(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "updated_at", value)
 
 
@@ -600,15 +617,15 @@ class DnsV1Record(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 data: Optional[pulumi.Input[_builtins.str]] = None,
-                 deletion_protection: Optional[pulumi.Input[_builtins.bool]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 metadata: Optional[pulumi.Input[Union['DnsV1RecordMetadataArgs', 'DnsV1RecordMetadataArgsDict']]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 relative_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 ttl: Optional[pulumi.Input[_builtins.float]] = None,
-                 type: Optional[pulumi.Input[_builtins.str]] = None,
+                 data: pulumi.Input[Optional[_builtins.str]] = None,
+                 deletion_protection: pulumi.Input[Optional[_builtins.bool]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 metadata: pulumi.Input[Optional[Union['DnsV1RecordMetadataArgs', 'DnsV1RecordMetadataArgsDict']]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 relative_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 ttl: pulumi.Input[Optional[_builtins.float]] = None,
+                 type: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         """
         Create a DnsV1Record resource with the given unique name, props, and options.
@@ -618,7 +635,7 @@ class DnsV1Record(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] data: :
                
                   Record data in text format
-                  
+               
                   This should be the RDATA part of this Resource Record's
                   [presentation (zonefile) format](https://datatracker.ietf.org/doc/html/rfc9499#name-resource-records).
                   E.g., `10 xyz.tuv` for a `@ 600 IN MX 10 xyz.tuv.` resource record in a zonefile
@@ -631,9 +648,9 @@ class DnsV1Record(pulumi.CustomResource):
                
                   DNS record metadata
                   `metadata.parent_id` must be a DNS zone ID
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
         :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
@@ -646,12 +663,12 @@ class DnsV1Record(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] type: :
                
                   Record type
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   DNS Record type
                   Possible values:
-                  
+               
                   - `RECORD_TYPE_UNSPECIFIED` - Record type is not specified
                   - `A` - `A` record: IPv4 address
                   - `AAAA` - `AAAA` record: IPv6 address
@@ -692,15 +709,15 @@ class DnsV1Record(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 data: Optional[pulumi.Input[_builtins.str]] = None,
-                 deletion_protection: Optional[pulumi.Input[_builtins.bool]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 metadata: Optional[pulumi.Input[Union['DnsV1RecordMetadataArgs', 'DnsV1RecordMetadataArgsDict']]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 relative_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 ttl: Optional[pulumi.Input[_builtins.float]] = None,
-                 type: Optional[pulumi.Input[_builtins.str]] = None,
+                 data: pulumi.Input[Optional[_builtins.str]] = None,
+                 deletion_protection: pulumi.Input[Optional[_builtins.bool]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 metadata: pulumi.Input[Optional[Union['DnsV1RecordMetadataArgs', 'DnsV1RecordMetadataArgsDict']]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 relative_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 ttl: pulumi.Input[Optional[_builtins.float]] = None,
+                 type: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -717,8 +734,6 @@ class DnsV1Record(pulumi.CustomResource):
             __props__.__dict__["labels"] = labels
             __props__.__dict__["metadata"] = metadata
             __props__.__dict__["name"] = name
-            if parent_id is None and not opts.urn:
-                raise TypeError("Missing required property 'parent_id'")
             __props__.__dict__["parent_id"] = parent_id
             if relative_name is None and not opts.urn:
                 raise TypeError("Missing required property 'relative_name'")
@@ -728,6 +743,7 @@ class DnsV1Record(pulumi.CustomResource):
                 raise TypeError("Missing required property 'type'")
             __props__.__dict__["type"] = type
             __props__.__dict__["created_at"] = None
+            __props__.__dict__["labels_all"] = None
             __props__.__dict__["resource_version"] = None
             __props__.__dict__["status"] = None
             __props__.__dict__["updated_at"] = None
@@ -742,19 +758,20 @@ class DnsV1Record(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            created_at: Optional[pulumi.Input[_builtins.str]] = None,
-            data: Optional[pulumi.Input[_builtins.str]] = None,
-            deletion_protection: Optional[pulumi.Input[_builtins.bool]] = None,
-            labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            metadata: Optional[pulumi.Input[Union['DnsV1RecordMetadataArgs', 'DnsV1RecordMetadataArgsDict']]] = None,
-            name: Optional[pulumi.Input[_builtins.str]] = None,
-            parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-            relative_name: Optional[pulumi.Input[_builtins.str]] = None,
-            resource_version: Optional[pulumi.Input[_builtins.float]] = None,
-            status: Optional[pulumi.Input[Union['DnsV1RecordStatusArgs', 'DnsV1RecordStatusArgsDict']]] = None,
-            ttl: Optional[pulumi.Input[_builtins.float]] = None,
-            type: Optional[pulumi.Input[_builtins.str]] = None,
-            updated_at: Optional[pulumi.Input[_builtins.str]] = None) -> 'DnsV1Record':
+            created_at: pulumi.Input[Optional[_builtins.str]] = None,
+            data: pulumi.Input[Optional[_builtins.str]] = None,
+            deletion_protection: pulumi.Input[Optional[_builtins.bool]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            labels_all: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            metadata: pulumi.Input[Optional[Union['DnsV1RecordMetadataArgs', 'DnsV1RecordMetadataArgsDict']]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+            relative_name: pulumi.Input[Optional[_builtins.str]] = None,
+            resource_version: pulumi.Input[Optional[_builtins.float]] = None,
+            status: pulumi.Input[Optional[Union['DnsV1RecordStatusArgs', 'DnsV1RecordStatusArgsDict']]] = None,
+            ttl: pulumi.Input[Optional[_builtins.float]] = None,
+            type: pulumi.Input[Optional[_builtins.str]] = None,
+            updated_at: pulumi.Input[Optional[_builtins.str]] = None) -> 'DnsV1Record':
         """
         Get an existing DnsV1Record resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -765,12 +782,12 @@ class DnsV1Record(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] created_at: :
                
                   Timestamp indicating when the resource was created.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param pulumi.Input[_builtins.str] data: :
                
                   Record data in text format
-                  
+               
                   This should be the RDATA part of this Resource Record's
                   [presentation (zonefile) format](https://datatracker.ietf.org/doc/html/rfc9499#name-resource-records).
                   E.g., `10 xyz.tuv` for a `@ 600 IN MX 10 xyz.tuv.` resource record in a zonefile
@@ -779,13 +796,14 @@ class DnsV1Record(pulumi.CustomResource):
                   Mark this record as delete-protected
                   Delete-protected records can *only* be deleted by explicitly calling `RecordService/Delete` API with <span pulumi-lang-nodejs="`force`" pulumi-lang-dotnet="`Force`" pulumi-lang-go="`force`" pulumi-lang-python="`force`" pulumi-lang-yaml="`force`" pulumi-lang-java="`force`" pulumi-lang-hcl="`force`">`force`</span> flag set to <span pulumi-lang-nodejs="`true`" pulumi-lang-dotnet="`True`" pulumi-lang-go="`true`" pulumi-lang-python="`true`" pulumi-lang-yaml="`true`" pulumi-lang-java="`true`" pulumi-lang-hcl="`true`">`true`</span>
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels associated with the resource.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels_all: Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
         :param pulumi.Input[Union['DnsV1RecordMetadataArgs', 'DnsV1RecordMetadataArgsDict']] metadata: :
                
                   DNS record metadata
                   `metadata.parent_id` must be a DNS zone ID
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
         :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
@@ -803,20 +821,20 @@ class DnsV1Record(pulumi.CustomResource):
         :param pulumi.Input[Union['DnsV1RecordStatusArgs', 'DnsV1RecordStatusArgsDict']] status: :
                
                   DNS record status, including e.g. its effective FQDN (fully-qualified domain name)
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   DNS record status
         :param pulumi.Input[_builtins.float] ttl: Record TTL. If absent or negative, will be assumed to be the default value (<span pulumi-lang-nodejs="`600`" pulumi-lang-dotnet="`600`" pulumi-lang-go="`600`" pulumi-lang-python="`600`" pulumi-lang-yaml="`600`" pulumi-lang-java="`600`" pulumi-lang-hcl="`600`">`600`</span>)
         :param pulumi.Input[_builtins.str] type: :
                
                   Record type
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   DNS Record type
                   Possible values:
-                  
+               
                   - `RECORD_TYPE_UNSPECIFIED` - Record type is not specified
                   - `A` - `A` record: IPv4 address
                   - `AAAA` - `AAAA` record: IPv6 address
@@ -835,7 +853,7 @@ class DnsV1Record(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] updated_at: :
                
                   Timestamp indicating when the resource was last updated.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
@@ -846,6 +864,7 @@ class DnsV1Record(pulumi.CustomResource):
         __props__.__dict__["data"] = data
         __props__.__dict__["deletion_protection"] = deletion_protection
         __props__.__dict__["labels"] = labels
+        __props__.__dict__["labels_all"] = labels_all
         __props__.__dict__["metadata"] = metadata
         __props__.__dict__["name"] = name
         __props__.__dict__["parent_id"] = parent_id
@@ -864,7 +883,7 @@ class DnsV1Record(pulumi.CustomResource):
         :
 
            Timestamp indicating when the resource was created.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "created_at")
@@ -876,7 +895,7 @@ class DnsV1Record(pulumi.CustomResource):
         :
 
            Record data in text format
-           
+
            This should be the RDATA part of this Resource Record's
            [presentation (zonefile) format](https://datatracker.ietf.org/doc/html/rfc9499#name-resource-records).
            E.g., `10 xyz.tuv` for a `@ 600 IN MX 10 xyz.tuv.` resource record in a zonefile
@@ -903,6 +922,14 @@ class DnsV1Record(pulumi.CustomResource):
         return pulumi.get(self, "labels")
 
     @_builtins.property
+    @pulumi.getter(name="labelsAll")
+    def labels_all(self) -> pulumi.Output[Mapping[str, _builtins.str]]:
+        """
+        Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
+        """
+        return pulumi.get(self, "labels_all")
+
+    @_builtins.property
     @pulumi.getter
     def metadata(self) -> pulumi.Output['outputs.DnsV1RecordMetadata']:
         """
@@ -910,9 +937,9 @@ class DnsV1Record(pulumi.CustomResource):
 
            DNS record metadata
            `metadata.parent_id` must be a DNS zone ID
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Common resource metadata.
         """
         return pulumi.get(self, "metadata")
@@ -965,9 +992,9 @@ class DnsV1Record(pulumi.CustomResource):
         :
 
            DNS record status, including e.g. its effective FQDN (fully-qualified domain name)
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            DNS record status
         """
         return pulumi.get(self, "status")
@@ -987,12 +1014,12 @@ class DnsV1Record(pulumi.CustomResource):
         :
 
            Record type
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            DNS Record type
            Possible values:
-           
+
            - `RECORD_TYPE_UNSPECIFIED` - Record type is not specified
            - `A` - `A` record: IPv4 address
            - `AAAA` - `AAAA` record: IPv6 address
@@ -1018,7 +1045,7 @@ class DnsV1Record(pulumi.CustomResource):
         :
 
            Timestamp indicating when the resource was last updated.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "updated_at")

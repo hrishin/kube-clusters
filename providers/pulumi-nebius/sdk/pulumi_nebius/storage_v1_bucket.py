@@ -21,45 +21,44 @@ __all__ = ['StorageV1BucketArgs', 'StorageV1Bucket']
 @pulumi.input_type
 class StorageV1BucketArgs:
     def __init__(__self__, *,
-                 parent_id: pulumi.Input[_builtins.str],
-                 bucket_policy: Optional[pulumi.Input['StorageV1BucketBucketPolicyArgs']] = None,
-                 cors: Optional[pulumi.Input['StorageV1BucketCorsArgs']] = None,
-                 default_storage_class: Optional[pulumi.Input[_builtins.str]] = None,
-                 force_storage_class: Optional[pulumi.Input[_builtins.bool]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 lifecycle_configuration: Optional[pulumi.Input['StorageV1BucketLifecycleConfigurationArgs']] = None,
-                 max_size_bytes: Optional[pulumi.Input[_builtins.float]] = None,
-                 metadata: Optional[pulumi.Input['StorageV1BucketMetadataArgs']] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 object_audit_logging: Optional[pulumi.Input[_builtins.str]] = None,
-                 versioning_policy: Optional[pulumi.Input[_builtins.str]] = None):
+                 bucket_policy: pulumi.Input[Optional['StorageV1BucketBucketPolicyArgs']] = None,
+                 cors: pulumi.Input[Optional['StorageV1BucketCorsArgs']] = None,
+                 default_storage_class: pulumi.Input[Optional[_builtins.str]] = None,
+                 force_storage_class: pulumi.Input[Optional[_builtins.bool]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 lifecycle_configuration: pulumi.Input[Optional['StorageV1BucketLifecycleConfigurationArgs']] = None,
+                 max_size_bytes: pulumi.Input[Optional[_builtins.float]] = None,
+                 metadata: pulumi.Input[Optional['StorageV1BucketMetadataArgs']] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 object_audit_logging: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 versioning_policy: pulumi.Input[Optional[_builtins.str]] = None):
         """
         The set of arguments for constructing a StorageV1Bucket resource.
 
-        :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
         :param pulumi.Input['StorageV1BucketBucketPolicyArgs'] bucket_policy: :
                
                   Bucket policy specifies granular permissions for a bucket.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Bucket policy specifies granular permissions for a bucket.
         :param pulumi.Input['StorageV1BucketCorsArgs'] cors: :
                
                   Cross-origin resource sharing configuration.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Cross-origin resource sharing (CORS) configuration.
         :param pulumi.Input[_builtins.str] default_storage_class: :
                
                   Storage class to use by default for uploads to the bucket. It may be overridden by `x-amz-storage-class` header.
                   If not set - STANDARD is used as a default storage class.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STORAGE_CLASS_UNSPECIFIED`
                   - `STANDARD`
                   - `ENHANCED_THROUGHPUT`
@@ -69,8 +68,8 @@ class StorageV1BucketArgs:
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels associated with the resource.
         :param pulumi.Input['StorageV1BucketLifecycleConfigurationArgs'] lifecycle_configuration: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   The lifecycle configuration consists of one or more rules.
                   An Lifecycle configuration can have up to 1,000 rules.
                   Each rule consists of the following:
@@ -90,39 +89,39 @@ class StorageV1BucketArgs:
                   Real bucket size can go a little higher if customer writes too fast.
         :param pulumi.Input['StorageV1BucketMetadataArgs'] metadata: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
         :param pulumi.Input[_builtins.str] object_audit_logging: :
                
                   Object audit logging specifies which requests must be logged - none, all or mutational only.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `OBJECT_AUDIT_LOGGING_UNSPECIFIED`
                   - `NONE` - Logging is disabled.
                   - `MUTATE_ONLY` - Logging enabled only for mutating requests.
                   - `ALL` - Logging enabled for all requests.
+        :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
         :param pulumi.Input[_builtins.str] versioning_policy: :
                
                   Supports transitions:
                    * disabled -\\> enabled
                    * disabled -\\> suspended
                    * enabled \\<-\\> suspended
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `VERSIONING_POLICY_UNSPECIFIED`
                   - `DISABLED`
                   - `ENABLED`
                   - `SUSPENDED`
         """
-        pulumi.set(__self__, "parent_id", parent_id)
         if bucket_policy is not None:
             pulumi.set(__self__, "bucket_policy", bucket_policy)
         if cors is not None:
@@ -143,70 +142,60 @@ class StorageV1BucketArgs:
             pulumi.set(__self__, "name", name)
         if object_audit_logging is not None:
             pulumi.set(__self__, "object_audit_logging", object_audit_logging)
+        if parent_id is not None:
+            pulumi.set(__self__, "parent_id", parent_id)
         if versioning_policy is not None:
             pulumi.set(__self__, "versioning_policy", versioning_policy)
 
     @_builtins.property
-    @pulumi.getter(name="parentId")
-    def parent_id(self) -> pulumi.Input[_builtins.str]:
-        """
-        Identifier of the parent resource to which the resource belongs.
-        """
-        return pulumi.get(self, "parent_id")
-
-    @parent_id.setter
-    def parent_id(self, value: pulumi.Input[_builtins.str]):
-        pulumi.set(self, "parent_id", value)
-
-    @_builtins.property
     @pulumi.getter(name="bucketPolicy")
-    def bucket_policy(self) -> Optional[pulumi.Input['StorageV1BucketBucketPolicyArgs']]:
+    def bucket_policy(self) -> pulumi.Input[Optional['StorageV1BucketBucketPolicyArgs']]:
         """
         :
 
            Bucket policy specifies granular permissions for a bucket.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Bucket policy specifies granular permissions for a bucket.
         """
         return pulumi.get(self, "bucket_policy")
 
     @bucket_policy.setter
-    def bucket_policy(self, value: Optional[pulumi.Input['StorageV1BucketBucketPolicyArgs']]):
+    def bucket_policy(self, value: pulumi.Input[Optional['StorageV1BucketBucketPolicyArgs']]):
         pulumi.set(self, "bucket_policy", value)
 
     @_builtins.property
     @pulumi.getter
-    def cors(self) -> Optional[pulumi.Input['StorageV1BucketCorsArgs']]:
+    def cors(self) -> pulumi.Input[Optional['StorageV1BucketCorsArgs']]:
         """
         :
 
            Cross-origin resource sharing configuration.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Cross-origin resource sharing (CORS) configuration.
         """
         return pulumi.get(self, "cors")
 
     @cors.setter
-    def cors(self, value: Optional[pulumi.Input['StorageV1BucketCorsArgs']]):
+    def cors(self, value: pulumi.Input[Optional['StorageV1BucketCorsArgs']]):
         pulumi.set(self, "cors", value)
 
     @_builtins.property
     @pulumi.getter(name="defaultStorageClass")
-    def default_storage_class(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def default_storage_class(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
            Storage class to use by default for uploads to the bucket. It may be overridden by `x-amz-storage-class` header.
            If not set - STANDARD is used as a default storage class.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `STORAGE_CLASS_UNSPECIFIED`
            - `STANDARD`
            - `ENHANCED_THROUGHPUT`
@@ -216,41 +205,41 @@ class StorageV1BucketArgs:
         return pulumi.get(self, "default_storage_class")
 
     @default_storage_class.setter
-    def default_storage_class(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def default_storage_class(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "default_storage_class", value)
 
     @_builtins.property
     @pulumi.getter(name="forceStorageClass")
-    def force_storage_class(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def force_storage_class(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Flag to force usage of default_storage_class, ignoring `x-amz-storage-class` header.
         """
         return pulumi.get(self, "force_storage_class")
 
     @force_storage_class.setter
-    def force_storage_class(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def force_storage_class(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "force_storage_class", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels associated with the resource.
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
     @pulumi.getter(name="lifecycleConfiguration")
-    def lifecycle_configuration(self) -> Optional[pulumi.Input['StorageV1BucketLifecycleConfigurationArgs']]:
+    def lifecycle_configuration(self) -> pulumi.Input[Optional['StorageV1BucketLifecycleConfigurationArgs']]:
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            The lifecycle configuration consists of one or more rules.
            An Lifecycle configuration can have up to 1,000 rules.
            Each rule consists of the following:
@@ -266,12 +255,12 @@ class StorageV1BucketArgs:
         return pulumi.get(self, "lifecycle_configuration")
 
     @lifecycle_configuration.setter
-    def lifecycle_configuration(self, value: Optional[pulumi.Input['StorageV1BucketLifecycleConfigurationArgs']]):
+    def lifecycle_configuration(self, value: pulumi.Input[Optional['StorageV1BucketLifecycleConfigurationArgs']]):
         pulumi.set(self, "lifecycle_configuration", value)
 
     @_builtins.property
     @pulumi.getter(name="maxSizeBytes")
-    def max_size_bytes(self) -> Optional[pulumi.Input[_builtins.float]]:
+    def max_size_bytes(self) -> pulumi.Input[Optional[_builtins.float]]:
         """
         :
 
@@ -283,49 +272,49 @@ class StorageV1BucketArgs:
         return pulumi.get(self, "max_size_bytes")
 
     @max_size_bytes.setter
-    def max_size_bytes(self, value: Optional[pulumi.Input[_builtins.float]]):
+    def max_size_bytes(self, value: pulumi.Input[Optional[_builtins.float]]):
         pulumi.set(self, "max_size_bytes", value)
 
     @_builtins.property
     @pulumi.getter
-    def metadata(self) -> Optional[pulumi.Input['StorageV1BucketMetadataArgs']]:
+    def metadata(self) -> pulumi.Input[Optional['StorageV1BucketMetadataArgs']]:
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Common resource metadata.
         """
         return pulumi.get(self, "metadata")
 
     @metadata.setter
-    def metadata(self, value: Optional[pulumi.Input['StorageV1BucketMetadataArgs']]):
+    def metadata(self, value: pulumi.Input[Optional['StorageV1BucketMetadataArgs']]):
         pulumi.set(self, "metadata", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Human readable name for the resource.
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="objectAuditLogging")
-    def object_audit_logging(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def object_audit_logging(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
            Object audit logging specifies which requests must be logged - none, all or mutational only.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `OBJECT_AUDIT_LOGGING_UNSPECIFIED`
            - `NONE` - Logging is disabled.
            - `MUTATE_ONLY` - Logging enabled only for mutating requests.
@@ -334,12 +323,24 @@ class StorageV1BucketArgs:
         return pulumi.get(self, "object_audit_logging")
 
     @object_audit_logging.setter
-    def object_audit_logging(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def object_audit_logging(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "object_audit_logging", value)
 
     @_builtins.property
+    @pulumi.getter(name="parentId")
+    def parent_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Identifier of the parent resource to which the resource belongs.
+        """
+        return pulumi.get(self, "parent_id")
+
+    @parent_id.setter
+    def parent_id(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "parent_id", value)
+
+    @_builtins.property
     @pulumi.getter(name="versioningPolicy")
-    def versioning_policy(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def versioning_policy(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
@@ -347,11 +348,11 @@ class StorageV1BucketArgs:
             * disabled -\\> enabled
             * disabled -\\> suspended
             * enabled \\<-\\> suspended
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `VERSIONING_POLICY_UNSPECIFIED`
            - `DISABLED`
            - `ENABLED`
@@ -360,60 +361,61 @@ class StorageV1BucketArgs:
         return pulumi.get(self, "versioning_policy")
 
     @versioning_policy.setter
-    def versioning_policy(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def versioning_policy(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "versioning_policy", value)
 
 
 @pulumi.input_type
 class _StorageV1BucketState:
     def __init__(__self__, *,
-                 bucket_policy: Optional[pulumi.Input['StorageV1BucketBucketPolicyArgs']] = None,
-                 cors: Optional[pulumi.Input['StorageV1BucketCorsArgs']] = None,
-                 created_at: Optional[pulumi.Input[_builtins.str]] = None,
-                 default_storage_class: Optional[pulumi.Input[_builtins.str]] = None,
-                 force_storage_class: Optional[pulumi.Input[_builtins.bool]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 lifecycle_configuration: Optional[pulumi.Input['StorageV1BucketLifecycleConfigurationArgs']] = None,
-                 max_size_bytes: Optional[pulumi.Input[_builtins.float]] = None,
-                 metadata: Optional[pulumi.Input['StorageV1BucketMetadataArgs']] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 object_audit_logging: Optional[pulumi.Input[_builtins.str]] = None,
-                 parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 resource_version: Optional[pulumi.Input[_builtins.float]] = None,
-                 status: Optional[pulumi.Input['StorageV1BucketStatusArgs']] = None,
-                 updated_at: Optional[pulumi.Input[_builtins.str]] = None,
-                 versioning_policy: Optional[pulumi.Input[_builtins.str]] = None):
+                 bucket_policy: pulumi.Input[Optional['StorageV1BucketBucketPolicyArgs']] = None,
+                 cors: pulumi.Input[Optional['StorageV1BucketCorsArgs']] = None,
+                 created_at: pulumi.Input[Optional[_builtins.str]] = None,
+                 default_storage_class: pulumi.Input[Optional[_builtins.str]] = None,
+                 force_storage_class: pulumi.Input[Optional[_builtins.bool]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 labels_all: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 lifecycle_configuration: pulumi.Input[Optional['StorageV1BucketLifecycleConfigurationArgs']] = None,
+                 max_size_bytes: pulumi.Input[Optional[_builtins.float]] = None,
+                 metadata: pulumi.Input[Optional['StorageV1BucketMetadataArgs']] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 object_audit_logging: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 resource_version: pulumi.Input[Optional[_builtins.float]] = None,
+                 status: pulumi.Input[Optional['StorageV1BucketStatusArgs']] = None,
+                 updated_at: pulumi.Input[Optional[_builtins.str]] = None,
+                 versioning_policy: pulumi.Input[Optional[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering StorageV1Bucket resources.
 
         :param pulumi.Input['StorageV1BucketBucketPolicyArgs'] bucket_policy: :
                
                   Bucket policy specifies granular permissions for a bucket.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Bucket policy specifies granular permissions for a bucket.
         :param pulumi.Input['StorageV1BucketCorsArgs'] cors: :
                
                   Cross-origin resource sharing configuration.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Cross-origin resource sharing (CORS) configuration.
         :param pulumi.Input[_builtins.str] created_at: :
                
                   Timestamp indicating when the resource was created.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param pulumi.Input[_builtins.str] default_storage_class: :
                
                   Storage class to use by default for uploads to the bucket. It may be overridden by `x-amz-storage-class` header.
                   If not set - STANDARD is used as a default storage class.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STORAGE_CLASS_UNSPECIFIED`
                   - `STANDARD`
                   - `ENHANCED_THROUGHPUT`
@@ -421,10 +423,11 @@ class _StorageV1BucketState:
                   - `FILESYSTEM` - Special storage class only for filesystem buckets.
         :param pulumi.Input[_builtins.bool] force_storage_class: Flag to force usage of default_storage_class, ignoring `x-amz-storage-class` header.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels associated with the resource.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels_all: Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
         :param pulumi.Input['StorageV1BucketLifecycleConfigurationArgs'] lifecycle_configuration: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   The lifecycle configuration consists of one or more rules.
                   An Lifecycle configuration can have up to 1,000 rules.
                   Each rule consists of the following:
@@ -444,18 +447,18 @@ class _StorageV1BucketState:
                   Real bucket size can go a little higher if customer writes too fast.
         :param pulumi.Input['StorageV1BucketMetadataArgs'] metadata: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
         :param pulumi.Input[_builtins.str] object_audit_logging: :
                
                   Object audit logging specifies which requests must be logged - none, all or mutational only.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `OBJECT_AUDIT_LOGGING_UNSPECIFIED`
                   - `NONE` - Logging is disabled.
                   - `MUTATE_ONLY` - Logging enabled only for mutating requests.
@@ -470,7 +473,7 @@ class _StorageV1BucketState:
         :param pulumi.Input[_builtins.str] updated_at: :
                
                   Timestamp indicating when the resource was last updated.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param pulumi.Input[_builtins.str] versioning_policy: :
                
@@ -478,11 +481,11 @@ class _StorageV1BucketState:
                    * disabled -\\> enabled
                    * disabled -\\> suspended
                    * enabled \\<-\\> suspended
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `VERSIONING_POLICY_UNSPECIFIED`
                   - `DISABLED`
                   - `ENABLED`
@@ -500,6 +503,8 @@ class _StorageV1BucketState:
             pulumi.set(__self__, "force_storage_class", force_storage_class)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
+        if labels_all is not None:
+            pulumi.set(__self__, "labels_all", labels_all)
         if lifecycle_configuration is not None:
             pulumi.set(__self__, "lifecycle_configuration", lifecycle_configuration)
         if max_size_bytes is not None:
@@ -523,69 +528,69 @@ class _StorageV1BucketState:
 
     @_builtins.property
     @pulumi.getter(name="bucketPolicy")
-    def bucket_policy(self) -> Optional[pulumi.Input['StorageV1BucketBucketPolicyArgs']]:
+    def bucket_policy(self) -> pulumi.Input[Optional['StorageV1BucketBucketPolicyArgs']]:
         """
         :
 
            Bucket policy specifies granular permissions for a bucket.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Bucket policy specifies granular permissions for a bucket.
         """
         return pulumi.get(self, "bucket_policy")
 
     @bucket_policy.setter
-    def bucket_policy(self, value: Optional[pulumi.Input['StorageV1BucketBucketPolicyArgs']]):
+    def bucket_policy(self, value: pulumi.Input[Optional['StorageV1BucketBucketPolicyArgs']]):
         pulumi.set(self, "bucket_policy", value)
 
     @_builtins.property
     @pulumi.getter
-    def cors(self) -> Optional[pulumi.Input['StorageV1BucketCorsArgs']]:
+    def cors(self) -> pulumi.Input[Optional['StorageV1BucketCorsArgs']]:
         """
         :
 
            Cross-origin resource sharing configuration.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Cross-origin resource sharing (CORS) configuration.
         """
         return pulumi.get(self, "cors")
 
     @cors.setter
-    def cors(self, value: Optional[pulumi.Input['StorageV1BucketCorsArgs']]):
+    def cors(self, value: pulumi.Input[Optional['StorageV1BucketCorsArgs']]):
         pulumi.set(self, "cors", value)
 
     @_builtins.property
     @pulumi.getter(name="createdAt")
-    def created_at(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def created_at(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
            Timestamp indicating when the resource was created.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "created_at")
 
     @created_at.setter
-    def created_at(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def created_at(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "created_at", value)
 
     @_builtins.property
     @pulumi.getter(name="defaultStorageClass")
-    def default_storage_class(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def default_storage_class(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
            Storage class to use by default for uploads to the bucket. It may be overridden by `x-amz-storage-class` header.
            If not set - STANDARD is used as a default storage class.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `STORAGE_CLASS_UNSPECIFIED`
            - `STANDARD`
            - `ENHANCED_THROUGHPUT`
@@ -595,41 +600,53 @@ class _StorageV1BucketState:
         return pulumi.get(self, "default_storage_class")
 
     @default_storage_class.setter
-    def default_storage_class(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def default_storage_class(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "default_storage_class", value)
 
     @_builtins.property
     @pulumi.getter(name="forceStorageClass")
-    def force_storage_class(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def force_storage_class(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Flag to force usage of default_storage_class, ignoring `x-amz-storage-class` header.
         """
         return pulumi.get(self, "force_storage_class")
 
     @force_storage_class.setter
-    def force_storage_class(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def force_storage_class(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "force_storage_class", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels associated with the resource.
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
+    @pulumi.getter(name="labelsAll")
+    def labels_all(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
+        """
+        return pulumi.get(self, "labels_all")
+
+    @labels_all.setter
+    def labels_all(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "labels_all", value)
+
+    @_builtins.property
     @pulumi.getter(name="lifecycleConfiguration")
-    def lifecycle_configuration(self) -> Optional[pulumi.Input['StorageV1BucketLifecycleConfigurationArgs']]:
+    def lifecycle_configuration(self) -> pulumi.Input[Optional['StorageV1BucketLifecycleConfigurationArgs']]:
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            The lifecycle configuration consists of one or more rules.
            An Lifecycle configuration can have up to 1,000 rules.
            Each rule consists of the following:
@@ -645,12 +662,12 @@ class _StorageV1BucketState:
         return pulumi.get(self, "lifecycle_configuration")
 
     @lifecycle_configuration.setter
-    def lifecycle_configuration(self, value: Optional[pulumi.Input['StorageV1BucketLifecycleConfigurationArgs']]):
+    def lifecycle_configuration(self, value: pulumi.Input[Optional['StorageV1BucketLifecycleConfigurationArgs']]):
         pulumi.set(self, "lifecycle_configuration", value)
 
     @_builtins.property
     @pulumi.getter(name="maxSizeBytes")
-    def max_size_bytes(self) -> Optional[pulumi.Input[_builtins.float]]:
+    def max_size_bytes(self) -> pulumi.Input[Optional[_builtins.float]]:
         """
         :
 
@@ -662,49 +679,49 @@ class _StorageV1BucketState:
         return pulumi.get(self, "max_size_bytes")
 
     @max_size_bytes.setter
-    def max_size_bytes(self, value: Optional[pulumi.Input[_builtins.float]]):
+    def max_size_bytes(self, value: pulumi.Input[Optional[_builtins.float]]):
         pulumi.set(self, "max_size_bytes", value)
 
     @_builtins.property
     @pulumi.getter
-    def metadata(self) -> Optional[pulumi.Input['StorageV1BucketMetadataArgs']]:
+    def metadata(self) -> pulumi.Input[Optional['StorageV1BucketMetadataArgs']]:
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Common resource metadata.
         """
         return pulumi.get(self, "metadata")
 
     @metadata.setter
-    def metadata(self, value: Optional[pulumi.Input['StorageV1BucketMetadataArgs']]):
+    def metadata(self, value: pulumi.Input[Optional['StorageV1BucketMetadataArgs']]):
         pulumi.set(self, "metadata", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Human readable name for the resource.
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="objectAuditLogging")
-    def object_audit_logging(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def object_audit_logging(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
            Object audit logging specifies which requests must be logged - none, all or mutational only.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `OBJECT_AUDIT_LOGGING_UNSPECIFIED`
            - `NONE` - Logging is disabled.
            - `MUTATE_ONLY` - Logging enabled only for mutating requests.
@@ -713,24 +730,24 @@ class _StorageV1BucketState:
         return pulumi.get(self, "object_audit_logging")
 
     @object_audit_logging.setter
-    def object_audit_logging(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def object_audit_logging(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "object_audit_logging", value)
 
     @_builtins.property
     @pulumi.getter(name="parentId")
-    def parent_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def parent_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Identifier of the parent resource to which the resource belongs.
         """
         return pulumi.get(self, "parent_id")
 
     @parent_id.setter
-    def parent_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def parent_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "parent_id", value)
 
     @_builtins.property
     @pulumi.getter(name="resourceVersion")
-    def resource_version(self) -> Optional[pulumi.Input[_builtins.float]]:
+    def resource_version(self) -> pulumi.Input[Optional[_builtins.float]]:
         """
         :
 
@@ -742,37 +759,37 @@ class _StorageV1BucketState:
         return pulumi.get(self, "resource_version")
 
     @resource_version.setter
-    def resource_version(self, value: Optional[pulumi.Input[_builtins.float]]):
+    def resource_version(self, value: pulumi.Input[Optional[_builtins.float]]):
         pulumi.set(self, "resource_version", value)
 
     @_builtins.property
     @pulumi.getter
-    def status(self) -> Optional[pulumi.Input['StorageV1BucketStatusArgs']]:
+    def status(self) -> pulumi.Input[Optional['StorageV1BucketStatusArgs']]:
         return pulumi.get(self, "status")
 
     @status.setter
-    def status(self, value: Optional[pulumi.Input['StorageV1BucketStatusArgs']]):
+    def status(self, value: pulumi.Input[Optional['StorageV1BucketStatusArgs']]):
         pulumi.set(self, "status", value)
 
     @_builtins.property
     @pulumi.getter(name="updatedAt")
-    def updated_at(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def updated_at(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
            Timestamp indicating when the resource was last updated.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "updated_at")
 
     @updated_at.setter
-    def updated_at(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def updated_at(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "updated_at", value)
 
     @_builtins.property
     @pulumi.getter(name="versioningPolicy")
-    def versioning_policy(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def versioning_policy(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
@@ -780,11 +797,11 @@ class _StorageV1BucketState:
             * disabled -\\> enabled
             * disabled -\\> suspended
             * enabled \\<-\\> suspended
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `VERSIONING_POLICY_UNSPECIFIED`
            - `DISABLED`
            - `ENABLED`
@@ -793,7 +810,7 @@ class _StorageV1BucketState:
         return pulumi.get(self, "versioning_policy")
 
     @versioning_policy.setter
-    def versioning_policy(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def versioning_policy(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "versioning_policy", value)
 
 
@@ -803,18 +820,18 @@ class StorageV1Bucket(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 bucket_policy: Optional[pulumi.Input[Union['StorageV1BucketBucketPolicyArgs', 'StorageV1BucketBucketPolicyArgsDict']]] = None,
-                 cors: Optional[pulumi.Input[Union['StorageV1BucketCorsArgs', 'StorageV1BucketCorsArgsDict']]] = None,
-                 default_storage_class: Optional[pulumi.Input[_builtins.str]] = None,
-                 force_storage_class: Optional[pulumi.Input[_builtins.bool]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 lifecycle_configuration: Optional[pulumi.Input[Union['StorageV1BucketLifecycleConfigurationArgs', 'StorageV1BucketLifecycleConfigurationArgsDict']]] = None,
-                 max_size_bytes: Optional[pulumi.Input[_builtins.float]] = None,
-                 metadata: Optional[pulumi.Input[Union['StorageV1BucketMetadataArgs', 'StorageV1BucketMetadataArgsDict']]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 object_audit_logging: Optional[pulumi.Input[_builtins.str]] = None,
-                 parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 versioning_policy: Optional[pulumi.Input[_builtins.str]] = None,
+                 bucket_policy: pulumi.Input[Optional[Union['StorageV1BucketBucketPolicyArgs', 'StorageV1BucketBucketPolicyArgsDict']]] = None,
+                 cors: pulumi.Input[Optional[Union['StorageV1BucketCorsArgs', 'StorageV1BucketCorsArgsDict']]] = None,
+                 default_storage_class: pulumi.Input[Optional[_builtins.str]] = None,
+                 force_storage_class: pulumi.Input[Optional[_builtins.bool]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 lifecycle_configuration: pulumi.Input[Optional[Union['StorageV1BucketLifecycleConfigurationArgs', 'StorageV1BucketLifecycleConfigurationArgsDict']]] = None,
+                 max_size_bytes: pulumi.Input[Optional[_builtins.float]] = None,
+                 metadata: pulumi.Input[Optional[Union['StorageV1BucketMetadataArgs', 'StorageV1BucketMetadataArgsDict']]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 object_audit_logging: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 versioning_policy: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         """
         Create a StorageV1Bucket resource with the given unique name, props, and options.
@@ -824,26 +841,26 @@ class StorageV1Bucket(pulumi.CustomResource):
         :param pulumi.Input[Union['StorageV1BucketBucketPolicyArgs', 'StorageV1BucketBucketPolicyArgsDict']] bucket_policy: :
                
                   Bucket policy specifies granular permissions for a bucket.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Bucket policy specifies granular permissions for a bucket.
         :param pulumi.Input[Union['StorageV1BucketCorsArgs', 'StorageV1BucketCorsArgsDict']] cors: :
                
                   Cross-origin resource sharing configuration.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Cross-origin resource sharing (CORS) configuration.
         :param pulumi.Input[_builtins.str] default_storage_class: :
                
                   Storage class to use by default for uploads to the bucket. It may be overridden by `x-amz-storage-class` header.
                   If not set - STANDARD is used as a default storage class.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STORAGE_CLASS_UNSPECIFIED`
                   - `STANDARD`
                   - `ENHANCED_THROUGHPUT`
@@ -853,8 +870,8 @@ class StorageV1Bucket(pulumi.CustomResource):
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels associated with the resource.
         :param pulumi.Input[Union['StorageV1BucketLifecycleConfigurationArgs', 'StorageV1BucketLifecycleConfigurationArgsDict']] lifecycle_configuration: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   The lifecycle configuration consists of one or more rules.
                   An Lifecycle configuration can have up to 1,000 rules.
                   Each rule consists of the following:
@@ -874,18 +891,18 @@ class StorageV1Bucket(pulumi.CustomResource):
                   Real bucket size can go a little higher if customer writes too fast.
         :param pulumi.Input[Union['StorageV1BucketMetadataArgs', 'StorageV1BucketMetadataArgsDict']] metadata: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
         :param pulumi.Input[_builtins.str] object_audit_logging: :
                
                   Object audit logging specifies which requests must be logged - none, all or mutational only.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `OBJECT_AUDIT_LOGGING_UNSPECIFIED`
                   - `NONE` - Logging is disabled.
                   - `MUTATE_ONLY` - Logging enabled only for mutating requests.
@@ -897,11 +914,11 @@ class StorageV1Bucket(pulumi.CustomResource):
                    * disabled -\\> enabled
                    * disabled -\\> suspended
                    * enabled \\<-\\> suspended
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `VERSIONING_POLICY_UNSPECIFIED`
                   - `DISABLED`
                   - `ENABLED`
@@ -911,7 +928,7 @@ class StorageV1Bucket(pulumi.CustomResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: StorageV1BucketArgs,
+                 args: Optional[StorageV1BucketArgs] = None,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Create a StorageV1Bucket resource with the given unique name, props, and options.
@@ -931,18 +948,18 @@ class StorageV1Bucket(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 bucket_policy: Optional[pulumi.Input[Union['StorageV1BucketBucketPolicyArgs', 'StorageV1BucketBucketPolicyArgsDict']]] = None,
-                 cors: Optional[pulumi.Input[Union['StorageV1BucketCorsArgs', 'StorageV1BucketCorsArgsDict']]] = None,
-                 default_storage_class: Optional[pulumi.Input[_builtins.str]] = None,
-                 force_storage_class: Optional[pulumi.Input[_builtins.bool]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 lifecycle_configuration: Optional[pulumi.Input[Union['StorageV1BucketLifecycleConfigurationArgs', 'StorageV1BucketLifecycleConfigurationArgsDict']]] = None,
-                 max_size_bytes: Optional[pulumi.Input[_builtins.float]] = None,
-                 metadata: Optional[pulumi.Input[Union['StorageV1BucketMetadataArgs', 'StorageV1BucketMetadataArgsDict']]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 object_audit_logging: Optional[pulumi.Input[_builtins.str]] = None,
-                 parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 versioning_policy: Optional[pulumi.Input[_builtins.str]] = None,
+                 bucket_policy: pulumi.Input[Optional[Union['StorageV1BucketBucketPolicyArgs', 'StorageV1BucketBucketPolicyArgsDict']]] = None,
+                 cors: pulumi.Input[Optional[Union['StorageV1BucketCorsArgs', 'StorageV1BucketCorsArgsDict']]] = None,
+                 default_storage_class: pulumi.Input[Optional[_builtins.str]] = None,
+                 force_storage_class: pulumi.Input[Optional[_builtins.bool]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 lifecycle_configuration: pulumi.Input[Optional[Union['StorageV1BucketLifecycleConfigurationArgs', 'StorageV1BucketLifecycleConfigurationArgsDict']]] = None,
+                 max_size_bytes: pulumi.Input[Optional[_builtins.float]] = None,
+                 metadata: pulumi.Input[Optional[Union['StorageV1BucketMetadataArgs', 'StorageV1BucketMetadataArgsDict']]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 object_audit_logging: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 versioning_policy: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -962,11 +979,10 @@ class StorageV1Bucket(pulumi.CustomResource):
             __props__.__dict__["metadata"] = metadata
             __props__.__dict__["name"] = name
             __props__.__dict__["object_audit_logging"] = object_audit_logging
-            if parent_id is None and not opts.urn:
-                raise TypeError("Missing required property 'parent_id'")
             __props__.__dict__["parent_id"] = parent_id
             __props__.__dict__["versioning_policy"] = versioning_policy
             __props__.__dict__["created_at"] = None
+            __props__.__dict__["labels_all"] = None
             __props__.__dict__["resource_version"] = None
             __props__.__dict__["status"] = None
             __props__.__dict__["updated_at"] = None
@@ -981,22 +997,23 @@ class StorageV1Bucket(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            bucket_policy: Optional[pulumi.Input[Union['StorageV1BucketBucketPolicyArgs', 'StorageV1BucketBucketPolicyArgsDict']]] = None,
-            cors: Optional[pulumi.Input[Union['StorageV1BucketCorsArgs', 'StorageV1BucketCorsArgsDict']]] = None,
-            created_at: Optional[pulumi.Input[_builtins.str]] = None,
-            default_storage_class: Optional[pulumi.Input[_builtins.str]] = None,
-            force_storage_class: Optional[pulumi.Input[_builtins.bool]] = None,
-            labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            lifecycle_configuration: Optional[pulumi.Input[Union['StorageV1BucketLifecycleConfigurationArgs', 'StorageV1BucketLifecycleConfigurationArgsDict']]] = None,
-            max_size_bytes: Optional[pulumi.Input[_builtins.float]] = None,
-            metadata: Optional[pulumi.Input[Union['StorageV1BucketMetadataArgs', 'StorageV1BucketMetadataArgsDict']]] = None,
-            name: Optional[pulumi.Input[_builtins.str]] = None,
-            object_audit_logging: Optional[pulumi.Input[_builtins.str]] = None,
-            parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-            resource_version: Optional[pulumi.Input[_builtins.float]] = None,
-            status: Optional[pulumi.Input[Union['StorageV1BucketStatusArgs', 'StorageV1BucketStatusArgsDict']]] = None,
-            updated_at: Optional[pulumi.Input[_builtins.str]] = None,
-            versioning_policy: Optional[pulumi.Input[_builtins.str]] = None) -> 'StorageV1Bucket':
+            bucket_policy: pulumi.Input[Optional[Union['StorageV1BucketBucketPolicyArgs', 'StorageV1BucketBucketPolicyArgsDict']]] = None,
+            cors: pulumi.Input[Optional[Union['StorageV1BucketCorsArgs', 'StorageV1BucketCorsArgsDict']]] = None,
+            created_at: pulumi.Input[Optional[_builtins.str]] = None,
+            default_storage_class: pulumi.Input[Optional[_builtins.str]] = None,
+            force_storage_class: pulumi.Input[Optional[_builtins.bool]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            labels_all: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            lifecycle_configuration: pulumi.Input[Optional[Union['StorageV1BucketLifecycleConfigurationArgs', 'StorageV1BucketLifecycleConfigurationArgsDict']]] = None,
+            max_size_bytes: pulumi.Input[Optional[_builtins.float]] = None,
+            metadata: pulumi.Input[Optional[Union['StorageV1BucketMetadataArgs', 'StorageV1BucketMetadataArgsDict']]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            object_audit_logging: pulumi.Input[Optional[_builtins.str]] = None,
+            parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+            resource_version: pulumi.Input[Optional[_builtins.float]] = None,
+            status: pulumi.Input[Optional[Union['StorageV1BucketStatusArgs', 'StorageV1BucketStatusArgsDict']]] = None,
+            updated_at: pulumi.Input[Optional[_builtins.str]] = None,
+            versioning_policy: pulumi.Input[Optional[_builtins.str]] = None) -> 'StorageV1Bucket':
         """
         Get an existing StorageV1Bucket resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -1007,31 +1024,31 @@ class StorageV1Bucket(pulumi.CustomResource):
         :param pulumi.Input[Union['StorageV1BucketBucketPolicyArgs', 'StorageV1BucketBucketPolicyArgsDict']] bucket_policy: :
                
                   Bucket policy specifies granular permissions for a bucket.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Bucket policy specifies granular permissions for a bucket.
         :param pulumi.Input[Union['StorageV1BucketCorsArgs', 'StorageV1BucketCorsArgsDict']] cors: :
                
                   Cross-origin resource sharing configuration.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Cross-origin resource sharing (CORS) configuration.
         :param pulumi.Input[_builtins.str] created_at: :
                
                   Timestamp indicating when the resource was created.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param pulumi.Input[_builtins.str] default_storage_class: :
                
                   Storage class to use by default for uploads to the bucket. It may be overridden by `x-amz-storage-class` header.
                   If not set - STANDARD is used as a default storage class.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STORAGE_CLASS_UNSPECIFIED`
                   - `STANDARD`
                   - `ENHANCED_THROUGHPUT`
@@ -1039,10 +1056,11 @@ class StorageV1Bucket(pulumi.CustomResource):
                   - `FILESYSTEM` - Special storage class only for filesystem buckets.
         :param pulumi.Input[_builtins.bool] force_storage_class: Flag to force usage of default_storage_class, ignoring `x-amz-storage-class` header.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels associated with the resource.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels_all: Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
         :param pulumi.Input[Union['StorageV1BucketLifecycleConfigurationArgs', 'StorageV1BucketLifecycleConfigurationArgsDict']] lifecycle_configuration: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   The lifecycle configuration consists of one or more rules.
                   An Lifecycle configuration can have up to 1,000 rules.
                   Each rule consists of the following:
@@ -1062,18 +1080,18 @@ class StorageV1Bucket(pulumi.CustomResource):
                   Real bucket size can go a little higher if customer writes too fast.
         :param pulumi.Input[Union['StorageV1BucketMetadataArgs', 'StorageV1BucketMetadataArgsDict']] metadata: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
         :param pulumi.Input[_builtins.str] object_audit_logging: :
                
                   Object audit logging specifies which requests must be logged - none, all or mutational only.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `OBJECT_AUDIT_LOGGING_UNSPECIFIED`
                   - `NONE` - Logging is disabled.
                   - `MUTATE_ONLY` - Logging enabled only for mutating requests.
@@ -1088,7 +1106,7 @@ class StorageV1Bucket(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] updated_at: :
                
                   Timestamp indicating when the resource was last updated.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param pulumi.Input[_builtins.str] versioning_policy: :
                
@@ -1096,11 +1114,11 @@ class StorageV1Bucket(pulumi.CustomResource):
                    * disabled -\\> enabled
                    * disabled -\\> suspended
                    * enabled \\<-\\> suspended
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `VERSIONING_POLICY_UNSPECIFIED`
                   - `DISABLED`
                   - `ENABLED`
@@ -1116,6 +1134,7 @@ class StorageV1Bucket(pulumi.CustomResource):
         __props__.__dict__["default_storage_class"] = default_storage_class
         __props__.__dict__["force_storage_class"] = force_storage_class
         __props__.__dict__["labels"] = labels
+        __props__.__dict__["labels_all"] = labels_all
         __props__.__dict__["lifecycle_configuration"] = lifecycle_configuration
         __props__.__dict__["max_size_bytes"] = max_size_bytes
         __props__.__dict__["metadata"] = metadata
@@ -1135,9 +1154,9 @@ class StorageV1Bucket(pulumi.CustomResource):
         :
 
            Bucket policy specifies granular permissions for a bucket.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Bucket policy specifies granular permissions for a bucket.
         """
         return pulumi.get(self, "bucket_policy")
@@ -1149,9 +1168,9 @@ class StorageV1Bucket(pulumi.CustomResource):
         :
 
            Cross-origin resource sharing configuration.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Cross-origin resource sharing (CORS) configuration.
         """
         return pulumi.get(self, "cors")
@@ -1163,7 +1182,7 @@ class StorageV1Bucket(pulumi.CustomResource):
         :
 
            Timestamp indicating when the resource was created.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "created_at")
@@ -1176,11 +1195,11 @@ class StorageV1Bucket(pulumi.CustomResource):
 
            Storage class to use by default for uploads to the bucket. It may be overridden by `x-amz-storage-class` header.
            If not set - STANDARD is used as a default storage class.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `STORAGE_CLASS_UNSPECIFIED`
            - `STANDARD`
            - `ENHANCED_THROUGHPUT`
@@ -1206,13 +1225,21 @@ class StorageV1Bucket(pulumi.CustomResource):
         return pulumi.get(self, "labels")
 
     @_builtins.property
+    @pulumi.getter(name="labelsAll")
+    def labels_all(self) -> pulumi.Output[Mapping[str, _builtins.str]]:
+        """
+        Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
+        """
+        return pulumi.get(self, "labels_all")
+
+    @_builtins.property
     @pulumi.getter(name="lifecycleConfiguration")
     def lifecycle_configuration(self) -> pulumi.Output['outputs.StorageV1BucketLifecycleConfiguration']:
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            The lifecycle configuration consists of one or more rules.
            An Lifecycle configuration can have up to 1,000 rules.
            Each rule consists of the following:
@@ -1246,8 +1273,8 @@ class StorageV1Bucket(pulumi.CustomResource):
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Common resource metadata.
         """
         return pulumi.get(self, "metadata")
@@ -1267,11 +1294,11 @@ class StorageV1Bucket(pulumi.CustomResource):
         :
 
            Object audit logging specifies which requests must be logged - none, all or mutational only.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `OBJECT_AUDIT_LOGGING_UNSPECIFIED`
            - `NONE` - Logging is disabled.
            - `MUTATE_ONLY` - Logging enabled only for mutating requests.
@@ -1312,7 +1339,7 @@ class StorageV1Bucket(pulumi.CustomResource):
         :
 
            Timestamp indicating when the resource was last updated.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "updated_at")
@@ -1327,11 +1354,11 @@ class StorageV1Bucket(pulumi.CustomResource):
             * disabled -\\> enabled
             * disabled -\\> suspended
             * enabled \\<-\\> suspended
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `VERSIONING_POLICY_UNSPECIFIED`
            - `DISABLED`
            - `ENABLED`

@@ -44,14 +44,10 @@ node_groups:
         value: mimir
         effect: NoSchedule
 
-dns:
-  # Public Nebius DNS zone for this cluster.
-  # After phase-1 `pulumi up`, discover nameservers with:
-  #   nebius dns zone get --id $(pulumi stack output dns_zone_id)
-  # Then set them in Pulumi.prod.yaml (nebius_dns_nameservers) and re-run.
-  zone_domain: "nebius.kube.hrishi.dev."
-  cluster_subdomain: "cluster1.eu-north-1"
-  lb_ip: "89.169.102.151"   # kgateway main-gateway LoadBalancer IP
+# DNS note: Nebius DNS v1 only supports VPC (private) zones via API.
+# Public DNS for cluster1.eu-north-1.kube.nebius.hrishi.dev is managed
+# in Cloudflare via scripts/cf-dns.sh.
+# lb_ip for the A record: 89.169.102.151 (kgateway main-gateway LoadBalancer)
 
   # gpu-inference:
   #   platform: gpu-l40s-d

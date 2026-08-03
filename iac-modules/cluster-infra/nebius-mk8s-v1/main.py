@@ -11,7 +11,6 @@ import pulumi_nebius as nebius
 
 from node_groups.node_groups import create_node_groups
 from flux import bootstrap_flux
-from dns import setup_dns
 
 
 def main(
@@ -30,9 +29,6 @@ def main(
     flux_sops_secret_name: Optional[str] = None,
     flux_git_interval: str = "1m0s",
     flux_kustomization_interval: str = "10m0s",
-    dns_zone_domain: Optional[str] = None,
-    dns_cluster_subdomain: Optional[str] = None,
-    dns_lb_ip: Optional[str] = None,
 ) -> None:
     """
     Provision Nebius VPC, MK8s cluster, and node groups.
@@ -115,19 +111,6 @@ def main(
             flux_git_interval=flux_git_interval,
             flux_kustomization_interval=flux_kustomization_interval,
             additional_dependencies=list(ng_result["node_groups"].values()),
-        )
-
-    # ── DNS zone ──────────────────────────────────────────────────────────────
-
-    if dns_zone_domain and dns_cluster_subdomain and dns_lb_ip:
-        pulumi.log.info("Creating DNS zone...")
-        setup_dns(
-            cluster_name=cluster_name,
-            project_id=project_id,
-            zone_domain=dns_zone_domain,
-            cluster_subdomain=dns_cluster_subdomain,
-            lb_ip=dns_lb_ip,
-            provider=provider,
         )
 
     # ── Exports ───────────────────────────────────────────────────────────────

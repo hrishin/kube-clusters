@@ -1,6 +1,6 @@
 # Nebius MK8s cluster configuration.
 cluster_name: nebius-prod
-project_id: "project-e03xkrk0pr00gds7bjssam"
+project_id: "project-e00s6kp7pr00pxcs1xc9m4"
 kubernetes_version: "1.34"
 
 node_groups:
@@ -44,21 +44,20 @@ node_groups:
         value: mimir
         effect: NoSchedule
 
-  # GPU inference — NVIDIA L40S, preemptible
-  # gpu-inference:
-  #   platform: gpu-l40s-a
-  #   preset: 8gpu-128vcpu-1600gb
-  #   drivers_preset: cuda12
-  #   desired_size: 1
-  #   min_size: 0
-  #   max_size: 2
-  #   preemptible: true
-  #   labels:
-  #     node-type: gpu
-  #     workload: inference
-  #     environment: production
-  #     accelerator: nvidia-l40s
-  #   taints:
-  #     - key: nvidia.com/gpu
-  #       value: "true"
-  #       effect: NoSchedule
+  gpu-inference:
+    platform: gpu-l40s-a
+    preset: 8gpu-128vcpu-1600gb
+    drivers_preset: cuda12
+    desired_size: 1
+    min_size: 0
+    max_size: 2
+    preemptible: true
+    labels:
+      node-type: gpu
+      workload: inference
+      environment: production
+      accelerator: nvidia-l40s
+    taints:
+      - key: nvidia.com/gpu
+        value: "true"
+        effect: NoSchedule

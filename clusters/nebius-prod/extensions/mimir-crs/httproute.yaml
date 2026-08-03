@@ -10,8 +10,6 @@ spec:
   parentRefs:
     - name: main-gateway
       namespace: kgateway-system
-  hostnames:
-    - "mimir.nebius-prod.internal"   # override with your real domain or remove
   rules:
     # Prometheus remote-write → Mimir distributor
     - matches:

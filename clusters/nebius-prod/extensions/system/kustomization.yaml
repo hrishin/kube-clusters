@@ -8,4 +8,3 @@ resources:
   - ./tempo
   - ./otel-collector
   - ./node-lifecycle-tracer
-  - ./vllm

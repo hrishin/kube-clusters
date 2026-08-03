@@ -5,10 +5,12 @@ Mirrors clusters/prod/infra/__main__.py → delegates to the nebius-mk8s-v1 modu
 
 import sys
 from pathlib import Path
+from typing import List
 
 import yaml
 import pulumi
 import pulumi_nebius as nebius
+import pulumi_cloudflare as cloudflare
 
 REPO_ROOT    = Path(__file__).resolve().parents[3]
 CLUSTER_ROOT = Path(__file__).resolve().parent.parent
@@ -44,9 +46,23 @@ flux_kustomization_interval = stack_cfg.get("flux_kustomization_interval") or "1
 
 FLUX_VALUES_PATH = str(REPO_ROOT / "iac-modules" / "extensions" / "fluxcd" / "v2.17.1-v1" / "release.yaml")
 
-# ── Provider ────────────────────────────────────────────────────────────────
+# ── DNS config (from config.yaml dns: section) ──────────────────────────────
 
-provider = nebius.Provider(
+dns_cfg              = cfg.get("dns", {})
+dns_zone_domain      = dns_cfg.get("zone_domain")        # "nebius.kube.hrishi.dev."
+dns_cluster_subdomain = dns_cfg.get("cluster_subdomain") # "cluster1.eu-north-1"
+dns_lb_ip            = dns_cfg.get("lb_ip")              # "89.169.102.151"
+
+# Nebius zone nameservers — populated AFTER phase-1 pulumi up by querying:
+#   nebius dns zone get --id $(pulumi stack output dns_zone_id)
+# Then set in stack config:
+#   pulumi config set --path nebius_dns_nameservers[0] "ns1.example."
+#   pulumi config set --path nebius_dns_nameservers[1] "ns2.example."
+nebius_dns_nameservers: List[str] = stack_cfg.get_object("nebius_dns_nameservers") or []
+
+# ── Providers ────────────────────────────────────────────────────────────────
+
+nebius_provider = nebius.Provider(
     "nebius",
     service_account=nebius.ProviderServiceAccountArgs(
         account_id=account_id,
@@ -55,6 +71,8 @@ provider = nebius.Provider(
     ),
 )
 
+cf_api_token = pulumi.Config("cloudflare").get_secret("apiToken")
+
 # ── Cluster ─────────────────────────────────────────────────────────────────
 
 main(
@@ -62,7 +80,7 @@ main(
     project_id=cfg["project_id"],
     kubernetes_version=cfg["kubernetes_version"],
     node_groups_config=cfg["node_groups"],
-    provider=provider,
+    provider=nebius_provider,
     flux_values_path=FLUX_VALUES_PATH,
     flux_git_url=flux_git_url,
     flux_git_branch=flux_git_branch,
@@ -72,4 +90,35 @@ main(
     flux_sops_secret_name=flux_sops_secret_name,
     flux_git_interval=flux_git_interval,
     flux_kustomization_interval=flux_kustomization_interval,
+    dns_zone_domain=dns_zone_domain,
+    dns_cluster_subdomain=dns_cluster_subdomain,
+    dns_lb_ip=dns_lb_ip,
 )
+
+# ── Cloudflare NS delegation (phase 2 — after Nebius NS servers are known) ──
+
+if nebius_dns_nameservers and cf_api_token:
+    cf_provider = cloudflare.Provider(
+        "cloudflare",
+        api_token=cf_api_token,
+    )
+
+    # Look up the hrishi.dev zone in Cloudflare
+    cf_zone = cloudflare.get_zone_output(
+        name="hrishi.dev",
+        opts=pulumi.InvokeOptions(provider=cf_provider),
+    )
+
+    # nebius.kube.hrishi.dev → NS records pointing to Nebius zone nameservers
+    for i, ns_server in enumerate(nebius_dns_nameservers):
+        cloudflare.Record(
+            f"nebius-kube-ns-{i}",
+            zone_id=cf_zone.id,
+            name="nebius.kube",
+            type="NS",
+            content=ns_server,
+            ttl=300,
+            opts=pulumi.ResourceOptions(provider=cf_provider),
+        )
+
+    pulumi.export("cloudflare_ns_records", nebius_dns_nameservers)

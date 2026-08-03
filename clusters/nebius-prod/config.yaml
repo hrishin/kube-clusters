@@ -44,19 +44,28 @@ node_groups:
         value: mimir
         effect: NoSchedule
 
-  gpu-inference:
-    platform: gpu-l40s-d
-    preset: 1gpu-32vcpu-192gb
-    desired_size: 1
-    min_size: 1
-    max_size: 4
-    preemptible: true
-    labels:
-      node-type: gpu
-      workload: inference
-      environment: production
-      accelerator: nvidia-l40s
-    taints:
-      - key: nvidia.com/gpu
-        value: "true"
-        effect: NoSchedule
+dns:
+  # Public Nebius DNS zone for this cluster.
+  # After phase-1 `pulumi up`, discover nameservers with:
+  #   nebius dns zone get --id $(pulumi stack output dns_zone_id)
+  # Then set them in Pulumi.prod.yaml (nebius_dns_nameservers) and re-run.
+  zone_domain: "nebius.kube.hrishi.dev."
+  cluster_subdomain: "cluster1.eu-north-1"
+  lb_ip: "89.169.102.151"   # kgateway main-gateway LoadBalancer IP
+
+  # gpu-inference:
+  #   platform: gpu-l40s-d
+  #   preset: 1gpu-32vcpu-192gb
+  #   desired_size: 1
+  #   min_size: 1
+  #   max_size: 4
+  #   preemptible: true
+  #   labels:
+  #     node-type: gpu
+  #     workload: inference
+  #     environment: production
+  #     accelerator: nvidia-l40s
+  #   taints:
+  #     - key: nvidia.com/gpu
+  #       value: "true"
+  #       effect: NoSchedule

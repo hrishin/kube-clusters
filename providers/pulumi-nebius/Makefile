@@ -1,84 +1,59 @@
 PROVIDER_VERSION ?= 0.6.35
 PROVIDER_NAME    := nebius
-TFGEN_BIN        := pulumi-tfgen-$(PROVIDER_NAME)
-RESOURCE_BIN     := pulumi-resource-$(PROVIDER_NAME)
-PLUGIN_DIR       := $(HOME)/.pulumi/plugins/resource-$(PROVIDER_NAME)-v$(PROVIDER_VERSION)
+TF_REGISTRY      := registry.terraform.io/nebius/nebius
+PYTHON           := python3
 
-.DEFAULT_GOAL := build
+# Scratch project used to drive `pulumi package add`
+SCRATCH_DIR := /tmp/pulumi-nebius-scratch
 
-# ── Build ─────────────────────────────────────────────────────────────────────
-# Produces two binaries:
-#   bin/pulumi-tfgen-nebius       — schema generator (dev-time)
-#   bin/pulumi-resource-nebius    — provider binary  (runtime, called by pulumi up)
+.DEFAULT_GOAL := sdk
 
-.PHONY: build
-build: bin/$(TFGEN_BIN) bin/$(RESOURCE_BIN)
+# ── Generate Python SDK ────────────────────────────────────────────────────────
+# Downloads the Terraform provider binary at runtime via pulumi-terraform-provider
+# (no Go compilation required) and generates sdk/ from its embedded schema.
+#
+# Usage:  make sdk              — regenerate from current PROVIDER_VERSION
+#         make sdk VERSION=x.y.z
 
-bin/$(TFGEN_BIN):
-	go build -trimpath -o $@ ./cmd/$(TFGEN_BIN)
+.PHONY: sdk
+sdk:
+	@[ -n "$(VERSION)" ] && $(MAKE) _bump VERSION=$(VERSION) || true
+	rm -rf $(SCRATCH_DIR)
+	mkdir -p $(SCRATCH_DIR)
+	printf 'name: nebius-scratch\nruntime: python\n' > $(SCRATCH_DIR)/Pulumi.yaml
+	cd $(SCRATCH_DIR) && pulumi package add terraform-provider \
+	    $(TF_REGISTRY) $(PROVIDER_VERSION) 2>&1 \
+	    | grep -v "^warning:" | grep -v "^error: linking package" || true
+	rm -rf sdk
+	cp -r $(SCRATCH_DIR)/sdks/nebius sdk
+	rm -rf $(SCRATCH_DIR)
+	@echo "SDK generated: sdk/pulumi_nebius/  (version $(PROVIDER_VERSION))"
 
-bin/$(RESOURCE_BIN):
-	go build -trimpath -o $@ ./cmd/$(RESOURCE_BIN)
-
-# ── Schema generation ─────────────────────────────────────────────────────────
-# Runs pulumi-tfgen-nebius to introspect the Terraform provider and write
-# sdk/schema.json. Must run before `make sdk/python`.
-
-.PHONY: generate
-generate: bin/$(TFGEN_BIN)
-	./bin/$(TFGEN_BIN) all --out sdk/
-	cp sdk/schema.json schema.json
-
-# ── Python SDK ────────────────────────────────────────────────────────────────
-# Generates pulumi_nebius Python package from schema.json.
-
-.PHONY: sdk/python
-sdk/python: schema.json
-	pulumi package gen-sdk --language python schema.json --out sdk/python
-
-# ── Install provider binary into ~/.pulumi/plugins/ ──────────────────────────
-# This is what `pulumi up` resolves when it looks for resource-nebius-vX.Y.Z.
-# Run once after `make build`, or after every `make bump`.
+# ── Install Python SDK into the active venv ────────────────────────────────────
 
 .PHONY: install
-install: bin/$(RESOURCE_BIN)
-	mkdir -p $(PLUGIN_DIR)
-	cp bin/$(RESOURCE_BIN) $(PLUGIN_DIR)/$(RESOURCE_BIN)
-	@echo "Installed: $(PLUGIN_DIR)/$(RESOURCE_BIN)"
+install: sdk
+	$(PYTHON) -m pip install -e sdk
+	@echo "pulumi_nebius $(PROVIDER_VERSION) installed."
 
-# ── Full pipeline (generate → build → install → sdk/python) ──────────────────
+# ── Full pipeline ──────────────────────────────────────────────────────────────
 
 .PHONY: all
-all: generate build install sdk/python
-	pip install -e sdk/python
+all: install
 	@echo "Done. pulumi_nebius $(PROVIDER_VERSION) ready."
 
-# ── Version bump ─────────────────────────────────────────────────────────────
-# Usage: make bump VERSION=0.6.36
-# Updates Makefile pin, go.mod dep, and schema.json version string.
+# ── Version bump (internal) ───────────────────────────────────────────────────
+# Updates Makefile pin and pyproject.toml version string.
+
+.PHONY: _bump
+_bump:
+	@[ -n "$(VERSION)" ] || (echo "Usage: make sdk VERSION=x.y.z"; exit 1)
+	sed -i 's/^PROVIDER_VERSION ?= .*/PROVIDER_VERSION ?= $(VERSION)/' Makefile
+
+# ── Convenience target for CI ─────────────────────────────────────────────────
 
 .PHONY: bump
 bump:
 	@[ -n "$(VERSION)" ] || (echo "Usage: make bump VERSION=x.y.z"; exit 1)
-	sed -i 's/^PROVIDER_VERSION ?= .*/PROVIDER_VERSION ?= $(VERSION)/' Makefile
-	go get github.com/nebius/terraform-provider-nebius@v$(VERSION)
-	go mod tidy
-	@if [ -f schema.json ]; then \
-	  python3 -c "import json,sys; d=json.load(open('schema.json')); d['version']='$(VERSION)'; json.dump(d,open('schema.json','w'),indent=2)"; \
-	fi
-	@sed -i 's/__version__ = ".*"/__version__ = "$(VERSION)"/' \
-	  sdk/python/pulumi_nebius/__init__.py
-
-# ── Lint / test ───────────────────────────────────────────────────────────────
-
-.PHONY: lint
-lint:
-	go vet ./...
-
-.PHONY: test
-test:
-	go test ./...
-
-.PHONY: clean
-clean:
-	rm -rf bin/ sdk/python/build sdk/python/*.egg-info
+	$(MAKE) _bump VERSION=$(VERSION)
+	@echo "Version pinned to $(VERSION). Run 'make sdk' to regenerate."

@@ -45,18 +45,17 @@ node_groups:
         effect: NoSchedule
 
   gpu-inference:
-    platform: gpu-l40s-a
-    preset: 8gpu-128vcpu-1600gb
-    drivers_preset: cuda12
+    platform: gpu-h100-sxm
+    preset: 1gpu-16vcpu-200gb
     desired_size: 1
     min_size: 0
-    max_size: 2
+    max_size: 4
     preemptible: true
     labels:
       node-type: gpu
       workload: inference
       environment: production
-      accelerator: nvidia-l40s
+      accelerator: nvidia-h100
     taints:
       - key: nvidia.com/gpu
         value: "true"

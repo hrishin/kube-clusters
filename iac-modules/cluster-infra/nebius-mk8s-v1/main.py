@@ -4,12 +4,13 @@ Mirrors the structure of iac-modules/cluster-infra/v1.36-v1/main.py.
 """
 
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 import pulumi
 import pulumi_nebius as nebius
 
 from node_groups.node_groups import create_node_groups
+from flux import bootstrap_flux
 
 
 def main(
@@ -19,6 +20,15 @@ def main(
     kubernetes_version: str,
     node_groups_config: Dict[str, Any],
     provider: nebius.Provider,
+    flux_values_path: Optional[str] = None,
+    flux_git_url: Optional[str] = None,
+    flux_git_branch: str = "main",
+    flux_git_path: Optional[str] = None,
+    flux_git_secret_name: str = "flux-system",
+    flux_git_secret_values_path: Optional[str] = None,
+    flux_sops_secret_name: Optional[str] = None,
+    flux_git_interval: str = "1m0s",
+    flux_kustomization_interval: str = "10m0s",
 ) -> None:
     """
     Provision Nebius VPC, MK8s cluster, and node groups.
@@ -84,6 +94,25 @@ def main(
         provider=provider,
     )
 
+    # ── Flux bootstrap ────────────────────────────────────────────────────────
+
+    if flux_git_url:
+        pulumi.log.info("Bootstrapping Flux...")
+        bootstrap_flux(
+            cluster_name=cluster_name,
+            cluster=cluster,
+            flux_values_path=flux_values_path,
+            flux_git_url=flux_git_url,
+            flux_git_branch=flux_git_branch,
+            flux_git_path=flux_git_path or f"./clusters/{cluster_name}/extensions",
+            flux_git_secret_name=flux_git_secret_name,
+            flux_git_secret_values_path=flux_git_secret_values_path,
+            flux_sops_secret_name=flux_sops_secret_name,
+            flux_git_interval=flux_git_interval,
+            flux_kustomization_interval=flux_kustomization_interval,
+            additional_dependencies=list(ng_result["node_groups"].values()),
+        )
+
     # ── Exports ───────────────────────────────────────────────────────────────
 
     pulumi.export("cluster_id",   cluster.id)
@@ -93,3 +122,7 @@ def main(
     pulumi.export("node_group_ids", {
         name: ng.id for name, ng in ng_result["node_groups"].items()
     })
+    pulumi.export(
+        "cluster_endpoint",
+        cluster.status.control_plane.endpoints.public_endpoint,
+    )

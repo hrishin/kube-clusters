@@ -1,0 +1,63 @@
+---
+# GatewayParameters: tells kgateway to provision a Nebius L4 load balancer
+# for the proxy service (CCM picks this up automatically).
+apiVersion: gateway.kgateway.dev/v1alpha1
+kind: GatewayParameters
+metadata:
+  name: nebius-lb-gw-params
+  namespace: kgateway-system
+spec:
+  kube:
+    service:
+      type: LoadBalancer
+    deployment:
+      replicas: 2
+    deploymentOverlay:
+      spec:
+        template:
+          spec:
+            nodeSelector:
+              node-type: core
+            tolerations:
+              - key: node-type
+                operator: Equal
+                value: core
+                effect: NoSchedule
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: GatewayClass
+metadata:
+  name: kgateway-lb
+spec:
+  controllerName: kgateway.dev/kgateway
+  parametersRef:
+    group: gateway.kgateway.dev
+    kind: GatewayParameters
+    name: nebius-lb-gw-params
+    namespace: kgateway-system
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: main-gateway
+  namespace: kgateway-system
+spec:
+  gatewayClassName: kgateway-lb
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 80
+      allowedRoutes:
+        namespaces:
+          from: All
+    - name: https
+      protocol: HTTPS
+      port: 443
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: main-gateway-tls
+            namespace: kgateway-system

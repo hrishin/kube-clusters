@@ -4,3 +4,11 @@ namespace: monitoring
 resources:
   - ../../../../../iac-modules/extensions/namespace/v1/
   - ../../../../../iac-modules/extensions/grafana/v11.0.0-v1/
+patches:
+  - patch: |
+      - op: replace
+        path: /spec/values/env/GF_SERVER_ROOT_URL
+        value: "http://89.169.102.151/grafana"
+    target:
+      kind: HelmRelease
+      name: grafana

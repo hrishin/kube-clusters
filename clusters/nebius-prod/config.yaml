@@ -45,7 +45,7 @@ node_groups:
         effect: NoSchedule
 
   gpu-inference:
-    platform: gpu-h100-sxm
+    platform: gpu-l40s-a
     preset: 1gpu-16vcpu-200gb
     desired_size: 1
     min_size: 0
@@ -55,7 +55,7 @@ node_groups:
       node-type: gpu
       workload: inference
       environment: production
-      accelerator: nvidia-h100
+      accelerator: nvidia-l40s
     taints:
       - key: nvidia.com/gpu
         value: "true"

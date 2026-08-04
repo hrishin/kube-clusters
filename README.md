@@ -78,9 +78,6 @@ iac-modules/
     nebius-mk8s-v1/ # Nebius MK8s provisioning module
   extensions/      # Helm/Flux extension definitions (base + provider overlays)
 
-providers/
-  pulumi-nebius/   # Auto-generated Pulumi Python SDK for Nebius (from TF provider)
-
 config/            # SOPS-encrypted configuration values
 docs/              # Provider-specific setup guides
 ```
@@ -139,7 +136,7 @@ See [docs/scaleway.md](docs/scaleway.md) for the full setup guide.
 ```bash
 source venv/bin/activate
 pulumi plugin install resource terraform-provider 1.2.1
-pip install -e providers/pulumi-nebius/sdk
+pip install pulumi-nebius
 ```
 
 **2. Set credentials**
@@ -176,10 +173,8 @@ nodeSelector:
   node-type: mimir
 ```
 
-**Regenerating the Nebius SDK** (after a provider version bump):
+**Upgrading the Nebius SDK** (after a new provider version is published):
 
 ```bash
-cd providers/pulumi-nebius
-make sdk VERSION=0.6.36   # or just `make sdk` to use the pinned version
-pip install -e sdk
+pip install --upgrade pulumi-nebius
 ```

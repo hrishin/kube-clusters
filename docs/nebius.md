@@ -1,6 +1,6 @@
 # Nebius MK8s Cluster Setup
 
-This document covers provisioning the `nebius-prod` Nebius Managed Kubernetes cluster using Pulumi.
+This document covers provisioning the `nebius-alpha` Nebius Managed Kubernetes cluster using Pulumi.
 
 ## Prerequisites
 
@@ -44,8 +44,8 @@ This gives you:
 
 ```bash
 pulumi login          # or: pulumi login --local for local state
-cd clusters/nebius-prod/infra
-pulumi stack init prod   # skip if stack already exists
+cd clusters/nebius-alpha/infra
+pulumi stack init nebius-alpha   # skip if stack already exists
 ```
 
 ## 4. Stack configuration
@@ -56,7 +56,7 @@ pulumi config set --secret nebius:public_key_id <public-key-id>
 pulumi config set --secret nebius:private_key_file /path/to/prod-sa.pem
 ```
 
-Set the Nebius project ID in `clusters/nebius-prod/config.yaml`:
+Set the Nebius project ID in `clusters/nebius-alpha/config.yaml`:
 
 ```yaml
 project_id: "project-<id>"   # from Nebius console: IAM → Projects
@@ -77,7 +77,7 @@ The age public key must be in `.sops.yaml` at the repo root. If setting up fresh
 
 ## 6. Review node groups
 
-Node group definitions are in `clusters/nebius-prod/config.yaml`:
+Node group definitions are in `clusters/nebius-alpha/config.yaml`:
 
 ```yaml
 node_groups:
@@ -118,7 +118,7 @@ nodeSelector:
 ## 7. Deploy
 
 ```bash
-cd clusters/nebius-prod/infra
+cd clusters/nebius-alpha/infra
 pulumi preview   # inspect the plan first
 pulumi up
 ```
@@ -147,7 +147,7 @@ kubectl get nodes
 
 ## What Flux manages after bootstrap
 
-Once Flux is running it reconciles everything under `clusters/nebius-prod/extensions/`:
+Once Flux is running it reconciles everything under `clusters/nebius-alpha/extensions/`:
 
 | Component | Layer |
 |---|---|
@@ -161,7 +161,7 @@ Once Flux is running it reconciles everything under `clusters/nebius-prod/extens
 | Output | Description |
 |---|---|
 | `cluster_id` | MK8s cluster resource ID |
-| `cluster_name` | Cluster name (`nebius-prod`) |
+| `cluster_name` | Cluster name (`nebius-alpha`) |
 | `cluster_endpoint` | Public API server URL |
 | `network_id` | VPC network ID |
 | `subnet_id` | Subnet ID |
@@ -170,7 +170,7 @@ Once Flux is running it reconciles everything under `clusters/nebius-prod/extens
 ## Teardown
 
 ```bash
-cd clusters/nebius-prod/infra
+cd clusters/nebius-alpha/infra
 pulumi destroy
 ```
 

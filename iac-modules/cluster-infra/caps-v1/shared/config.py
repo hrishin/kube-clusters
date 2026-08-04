@@ -38,7 +38,7 @@ def load_cluster_config(config_path: Path | str) -> Dict[str, Any]:
         "project": data.get("project", "scw-cluster"),
         "flux_git_url": data.get("flux_git_url", "https://github.com/hrishin/kube-clusters"),
         "flux_git_branch": data.get("flux_git_branch", "main"),
-        "flux_git_path": data.get("flux_git_path", "clusters/prod-scw/extensions"),
+        "flux_git_path": data.get("flux_git_path", "clusters/scw-alpha/extensions"),
         "flux_git_secret_name": data.get("flux_git_secret_name", "flux-system"),
         "flux_git_secret_values_path": data.get("flux_git_secret_values_path", "config/config.enc.yaml"),
         "flux_sops_secret_name": data.get("flux_sops_secret_name", "sops-age"),

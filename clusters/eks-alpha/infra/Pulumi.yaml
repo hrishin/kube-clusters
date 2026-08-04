@@ -1,0 +1,65 @@
+name: eks-pulumi
+runtime:
+  name: python
+  options:
+    virtualenv: ../../../venv
+description: EKS cluster infrastructure
+config:
+  eks-pulumi:cluster_name:
+    description: Name of the EKS cluster
+    default: infra-cluster
+  eks-pulumi:cluster_version:
+    description: Kubernetes version for the EKS cluster
+    default: "1.36"
+  eks-pulumi:vpc_cidr:
+    description: CIDR block for VPC
+    default: "10.0.0.0/16"
+  eks-pulumi:pod_cidr_range:
+    description: CIDR range for pods (must not overlap with vpc_cidr)
+    default: "192.168.0.0/16"
+  eks-pulumi:availability_zones:
+    description: List of availability zones (comma-separated)
+    default: "eu-west-2a,eu-west-2c"
+  eks-pulumi:cluster_admin_user_arns:
+    description: List of IAM user ARNs to grant cluster admin (comma-separated)
+    default: "arn:aws:iam::203070858830:user/hrishi"
+  eks-pulumi:enable_cilium:
+    description: Enable Cilium CNI
+    default: "true"
+  eks-pulumi:enable_coredns:
+    description: Enable CoreDNS
+    default: "true"
+  eks-pulumi:enable_flux:
+    description: Enable Flux
+    default: "true"
+  eks-pulumi:environment:
+    description: Environment name
+    default: production
+  eks-pulumi:project:
+    description: Project name
+    default: eks-cluster
+  eks-pulumi:flux_git_url:
+    description: Git repository URL for Flux source
+    default: https://github.com/hrishin/kube-clusters
+  eks-pulumi:flux_git_branch:
+    description: Git branch for Flux source
+    default: main
+  eks-pulumi:flux_git_path:
+    description: Repository path for Flux Kustomization
+    default: clusters/eks-alpha/extensions
+  eks-pulumi:flux_git_secret_name:
+    description: Kubernetes secret containing Git credentials for Flux
+    default: flux-system
+  eks-pulumi:flux_git_secret_values_path:
+    description: Path to the SOPS-encrypted values file for the Flux Git secret
+    default: config/config.enc.yaml
+  eks-pulumi:flux_sops_secret_name:
+    description: Kubernetes secret containing SOPS keys for Flux decryption
+    default: sops-age
+  eks-pulumi:flux_git_interval:
+    description: Reconciliation interval for Flux GitRepository
+    default: 1m0s
+  eks-pulumi:flux_kustomization_interval:
+    description: Reconciliation interval for Flux Kustomization
+    default: 10m0s
+

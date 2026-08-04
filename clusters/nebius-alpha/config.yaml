@@ -1,0 +1,67 @@
+# Nebius MK8s cluster configuration.
+cluster_name: nebius-alpha
+project_id: "project-e00s6kp7pr00pxcs1xc9m4"
+kubernetes_version: "1.34"
+
+node_groups:
+  default:
+    platform: cpu-d3
+    preset: 16vcpu-64gb
+    desired_size: 1
+    min_size: 1
+    max_size: 2
+    preemptible: false
+    labels:
+      node-type: core
+      workload: system
+      environment: production
+
+  core:
+    platform: cpu-d3
+    preset: 16vcpu-64gb
+    desired_size: 1
+    min_size: 1
+    max_size: 2
+    preemptible: false
+    labels:
+      node-type: core
+      workload: system
+      environment: production
+
+  mimir:
+    platform: cpu-d3
+    preset: 16vcpu-64gb
+    desired_size: 1
+    min_size: 1
+    max_size: 3
+    preemptible: false
+    labels:
+      node-type: mimir
+      workload: monitoring
+      environment: production
+    taints:
+      - key: node-type
+        value: mimir
+        effect: NoSchedule
+
+# DNS note: Nebius DNS v1 only supports VPC (private) zones via API.
+# Public DNS for cluster1.eu-north-1.kube.nebius.hrishi.dev is managed
+# in Cloudflare via scripts/cf-dns.sh.
+# lb_ip for the A record: 89.169.102.151 (kgateway main-gateway LoadBalancer)
+
+  # gpu-inference:
+  #   platform: gpu-l40s-d
+  #   preset: 1gpu-32vcpu-192gb
+  #   desired_size: 1
+  #   min_size: 1
+  #   max_size: 4
+  #   preemptible: true
+  #   labels:
+  #     node-type: gpu
+  #     workload: inference
+  #     environment: production
+  #     accelerator: nvidia-l40s
+  #   taints:
+  #     - key: nvidia.com/gpu
+  #       value: "true"
+  #       effect: NoSchedule

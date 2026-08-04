@@ -26,7 +26,7 @@ NS_TTL=300
 ZONE_ID=$(pulumi stack output dns_zone_id 2>/dev/null || true)
 if [ -z "$ZONE_ID" ]; then
   echo "ERROR: could not read dns_zone_id from Pulumi stack output." >&2
-  echo "  Run: pulumi up  (in clusters/nebius-prod/infra/)" >&2
+  echo "  Run: pulumi up  (in clusters/nebius-alpha/infra/)" >&2
   exit 1
 fi
 

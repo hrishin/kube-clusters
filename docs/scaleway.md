@@ -1,6 +1,6 @@
 # Scaleway CAPS Cluster Setup
 
-This document covers provisioning the `prod-scw` Scaleway cluster using Pulumi and Cluster API Provider Scaleway (CAPS).
+This document covers provisioning the `scw-alpha` Scaleway cluster using Pulumi and Cluster API Provider Scaleway (CAPS).
 
 ## Prerequisites
 
@@ -38,8 +38,8 @@ pip install pulumi-command
 
 ```bash
 pulumi login          # or: pulumi login --local for local state
-cd clusters/prod-scw/infra
-pulumi stack init prod-scw   # skip if stack already exists
+cd clusters/scw-alpha/infra
+pulumi stack init scw-alpha   # skip if stack already exists
 ```
 
 ## 3. Scaleway credentials
@@ -69,30 +69,30 @@ The age public key must already be in `.sops.yaml` at the repo root. If setting 
 
 ## 5. Review `config.yaml`
 
-Key settings in `clusters/prod-scw/config.yaml` to verify before deploying:
+Key settings in `clusters/scw-alpha/config.yaml` to verify before deploying:
 
 ```yaml
-cluster_name: prod-scw
+cluster_name: scw-alpha
 kubernetes_version: v1.34.3
 scw_region: fr-par
 private_network_cidr: 172.16.0.0/22   # must match cilium ipv4NativeRoutingCIDR
 pod_cidr_range: 192.168.0.0/16
 flux_git_url: https://github.com/hrishin/kube-clusters
 flux_git_branch: main
-flux_git_path: clusters/prod-scw/extensions
+flux_git_path: clusters/scw-alpha/extensions
 ```
 
 ## 6. Deploy
 
 ```bash
-cd clusters/prod-scw/infra
+cd clusters/scw-alpha/infra
 pulumi preview   # inspect the plan first
 pulumi up
 ```
 
 Pulumi runs the following steps in sequence:
 
-1. Creates a local `kind` cluster named `caps-mgmt-prod-scw`
+1. Creates a local `kind` cluster named `caps-mgmt-scw-alpha`
 2. Runs `clusterctl init --infrastructure scaleway` on it
 3. Applies CAPI/CAPS resources (Cluster, KubeadmControlPlane, MachineDeployments)
 4. Waits for the workload cluster control plane to become Ready
@@ -106,8 +106,8 @@ Total time: ~15–25 minutes.
 
 ```bash
 # Export the workload kubeconfig
-pulumi stack output workload_kubeconfig --show-secrets > ~/.kube/prod-scw.yaml
-export KUBECONFIG=~/.kube/prod-scw.yaml
+pulumi stack output workload_kubeconfig --show-secrets > ~/.kube/scw-alpha.yaml
+export KUBECONFIG=~/.kube/scw-alpha.yaml
 
 # Verify nodes
 kubectl get nodes
@@ -119,7 +119,7 @@ kubectl -n flux-system get gitrepositories
 
 ## What Flux manages after bootstrap
 
-Once Flux is running it reconciles everything under `clusters/prod-scw/extensions/`:
+Once Flux is running it reconciles everything under `clusters/scw-alpha/extensions/`:
 
 | Component | Source path |
 |---|---|
@@ -133,7 +133,7 @@ Once Flux is running it reconciles everything under `clusters/prod-scw/extension
 ## Teardown
 
 ```bash
-cd clusters/prod-scw/infra
+cd clusters/scw-alpha/infra
 pulumi destroy
 ```
 

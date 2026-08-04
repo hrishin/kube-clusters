@@ -46,7 +46,7 @@ echo -e "${GREEN}✓ AWS credentials configured${NC}"
 
 echo ""
 
-PROJECT_DIR="clusters/prod/infra"
+PROJECT_DIR="clusters/eks-alpha/infra"
 PULUMI_CMD="pulumi -C ${PROJECT_DIR}"
 
 if [ ! -d "${PROJECT_DIR}" ]; then

@@ -48,13 +48,13 @@ The IAM user or role needs permissions to manage VPC, EKS, EC2, IAM, and Auto Sc
 
 ```bash
 pulumi login          # or: pulumi login --local for local state
-cd clusters/prod/infra
+cd clusters/eks-alpha/infra
 pulumi stack init prod   # skip if stack already exists
 ```
 
 ## 4. Stack configuration
 
-All settings have defaults defined in `clusters/prod/infra/Pulumi.yaml`. Override any that differ for your environment:
+All settings have defaults defined in `clusters/eks-alpha/infra/Pulumi.yaml`. Override any that differ for your environment:
 
 ```bash
 # Required only if defaults don't match your environment
@@ -82,7 +82,7 @@ The age public key must be in `.sops.yaml` at the repo root. If setting up fresh
 
 ## 6. Review node groups
 
-Node group definitions are in `clusters/prod/config.yaml`. Verify instance types, sizes, and AMI IDs match your target region before deploying:
+Node group definitions are in `clusters/eks-alpha/config.yaml`. Verify instance types, sizes, and AMI IDs match your target region before deploying:
 
 ```yaml
 node_groups:
@@ -98,7 +98,7 @@ node_groups:
 ## 7. Deploy
 
 ```bash
-cd clusters/prod/infra
+cd clusters/eks-alpha/infra
 pulumi preview   # inspect the plan first
 pulumi up
 ```
@@ -131,7 +131,7 @@ kubectl -n flux-system get gitrepositories
 
 ## What Flux manages after bootstrap
 
-Once Flux is running it reconciles everything under `clusters/prod/extensions/`:
+Once Flux is running it reconciles everything under `clusters/eks-alpha/extensions/`:
 
 | Component | Layer |
 |---|---|
@@ -144,7 +144,7 @@ Extension Helm values come from `iac-modules/extensions/`, with EKS-specific ove
 ## Teardown
 
 ```bash
-cd clusters/prod/infra
+cd clusters/eks-alpha/infra
 pulumi destroy
 ```
 

@@ -5,7 +5,7 @@ set -e
 
 echo "Setting up Pulumi EKS infrastructure..."
 
-PROJECT_DIR="clusters/prod/infr"
+PROJECT_DIR="clusters/eks-alpha/infr"
 
 # Check if Python 3 is installed
 if ! command -v python3 &> /dev/null; then

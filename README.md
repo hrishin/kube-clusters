@@ -178,3 +178,5 @@ nodeSelector:
 ```bash
 pip install --upgrade pulumi-nebius
 ```
+
+See [docs/nebius.md](docs/nebius.md) for the full setup guide.

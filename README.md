@@ -12,8 +12,8 @@ This repository contains Pulumi programs and GitOps configuration for provisioni
 
 | Provider | Cluster | Module |
 |---|---|---|
-| AWS EKS | `clusters/eks-alpha`, `clusters/scw-mgmt-alpha` | `iac-modules/cluster-infra/v1.36-v1` |
-| Scaleway CAPS | `clusters/scw-alpha` | `iac-modules/cluster-infra/caps-v1` |
+| AWS EKS | `clusters/eks-alpha` | `iac-modules/cluster-infra/v1.36-v1` |
+| Scaleway CAPS | `clusters/scw-alpha`, `clusters/scw-mgmt-alpha` | `iac-modules/cluster-infra/caps-v1` |
 | Nebius MK8s | `clusters/nebius-alpha` | `iac-modules/cluster-infra/nebius-mk8s-v1` |
 
 ## What Gets Provisioned

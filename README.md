@@ -1,3 +1,9 @@
+## Goal
+
+Opinionated, production-ready GPU cluster blueprints for **model serving, inference, and training** — spanning AI-native clouds and hyperscalers from a single IaC codebase.
+
+The target clouds range from AI/neo clouds such as **Nebius** and **CoreWeave** (purpose-built GPU infrastructure, competitive spot pricing) to hyperscalers **AWS**, **Azure**, and **GCP** (breadth of managed services, global reach). Each provider gets its own Pulumi module and Flux extension layer; the cluster configuration schema and GitOps layout are intentionally kept uniform across all of them so workloads and tooling can move between providers with minimal friction.
+
 ## Kubernetes Infrastructure
 
 This repository contains Pulumi programs and GitOps configuration for provisioning and managing Kubernetes clusters across **AWS EKS**, **Scaleway** (CAPS), and **Nebius AI Cloud** (MK8s).

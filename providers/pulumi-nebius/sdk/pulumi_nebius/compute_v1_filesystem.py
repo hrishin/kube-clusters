@@ -21,30 +21,29 @@ __all__ = ['ComputeV1FilesystemArgs', 'ComputeV1Filesystem']
 @pulumi.input_type
 class ComputeV1FilesystemArgs:
     def __init__(__self__, *,
-                 parent_id: pulumi.Input[_builtins.str],
                  type: pulumi.Input[_builtins.str],
-                 block_size_bytes: Optional[pulumi.Input[_builtins.float]] = None,
-                 forbid_deletion: Optional[pulumi.Input[_builtins.bool]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 metadata: Optional[pulumi.Input['ComputeV1FilesystemMetadataArgs']] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 size_bytes: Optional[pulumi.Input[_builtins.float]] = None,
-                 size_gibibytes: Optional[pulumi.Input[_builtins.float]] = None,
-                 size_kibibytes: Optional[pulumi.Input[_builtins.float]] = None,
-                 size_mebibytes: Optional[pulumi.Input[_builtins.float]] = None):
+                 block_size_bytes: pulumi.Input[Optional[_builtins.float]] = None,
+                 forbid_deletion: pulumi.Input[Optional[_builtins.bool]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 metadata: pulumi.Input[Optional['ComputeV1FilesystemMetadataArgs']] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 size_bytes: pulumi.Input[Optional[_builtins.float]] = None,
+                 size_gibibytes: pulumi.Input[Optional[_builtins.float]] = None,
+                 size_kibibytes: pulumi.Input[Optional[_builtins.float]] = None,
+                 size_mebibytes: pulumi.Input[Optional[_builtins.float]] = None):
         """
         The set of arguments for constructing a ComputeV1Filesystem resource.
 
-        :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
         :param pulumi.Input[_builtins.str] type: :
                
                   The Shared Filesystem type determines its limits and performance characteristics.
                   For details, see https://docs.nebius.com/compute/storage/types#filesystems-types
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `NETWORK_SSD` - the list of available types will be clarified later, it is not final version
                   - `NETWORK_HDD`
@@ -59,16 +58,16 @@ class ComputeV1FilesystemArgs:
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels associated with the resource.
         :param pulumi.Input['ComputeV1FilesystemMetadataArgs'] metadata: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
+        :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
         :param pulumi.Input[_builtins.float] size_bytes: *Cannot be set alongside size_kibibytes,<span pulumi-lang-nodejs=" sizeMebibytes " pulumi-lang-dotnet=" SizeMebibytes " pulumi-lang-go=" sizeMebibytes " pulumi-lang-python=" size_mebibytes " pulumi-lang-yaml=" sizeMebibytes " pulumi-lang-java=" sizeMebibytes " pulumi-lang-hcl=" size_mebibytes "> sizeMebibytes </span>or size_gibibytes.*
         :param pulumi.Input[_builtins.float] size_gibibytes: *Cannot be set alongside size_bytes,<span pulumi-lang-nodejs=" sizeKibibytes " pulumi-lang-dotnet=" SizeKibibytes " pulumi-lang-go=" sizeKibibytes " pulumi-lang-python=" size_kibibytes " pulumi-lang-yaml=" sizeKibibytes " pulumi-lang-java=" sizeKibibytes " pulumi-lang-hcl=" size_kibibytes "> sizeKibibytes </span>or size_mebibytes.*
         :param pulumi.Input[_builtins.float] size_kibibytes: *Cannot be set alongside size_bytes,<span pulumi-lang-nodejs=" sizeMebibytes " pulumi-lang-dotnet=" SizeMebibytes " pulumi-lang-go=" sizeMebibytes " pulumi-lang-python=" size_mebibytes " pulumi-lang-yaml=" sizeMebibytes " pulumi-lang-java=" sizeMebibytes " pulumi-lang-hcl=" size_mebibytes "> sizeMebibytes </span>or size_gibibytes.*
         :param pulumi.Input[_builtins.float] size_mebibytes: *Cannot be set alongside size_bytes,<span pulumi-lang-nodejs=" sizeKibibytes " pulumi-lang-dotnet=" SizeKibibytes " pulumi-lang-go=" sizeKibibytes " pulumi-lang-python=" size_kibibytes " pulumi-lang-yaml=" sizeKibibytes " pulumi-lang-java=" sizeKibibytes " pulumi-lang-hcl=" size_kibibytes "> sizeKibibytes </span>or size_gibibytes.*
         """
-        pulumi.set(__self__, "parent_id", parent_id)
         pulumi.set(__self__, "type", type)
         if block_size_bytes is not None:
             pulumi.set(__self__, "block_size_bytes", block_size_bytes)
@@ -80,6 +79,8 @@ class ComputeV1FilesystemArgs:
             pulumi.set(__self__, "metadata", metadata)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if parent_id is not None:
+            pulumi.set(__self__, "parent_id", parent_id)
         if size_bytes is not None:
             pulumi.set(__self__, "size_bytes", size_bytes)
         if size_gibibytes is not None:
@@ -90,18 +91,6 @@ class ComputeV1FilesystemArgs:
             pulumi.set(__self__, "size_mebibytes", size_mebibytes)
 
     @_builtins.property
-    @pulumi.getter(name="parentId")
-    def parent_id(self) -> pulumi.Input[_builtins.str]:
-        """
-        Identifier of the parent resource to which the resource belongs.
-        """
-        return pulumi.get(self, "parent_id")
-
-    @parent_id.setter
-    def parent_id(self, value: pulumi.Input[_builtins.str]):
-        pulumi.set(self, "parent_id", value)
-
-    @_builtins.property
     @pulumi.getter
     def type(self) -> pulumi.Input[_builtins.str]:
         """
@@ -109,11 +98,11 @@ class ComputeV1FilesystemArgs:
 
            The Shared Filesystem type determines its limits and performance characteristics.
            For details, see https://docs.nebius.com/compute/storage/types#filesystems-types
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `NETWORK_SSD` - the list of available types will be clarified later, it is not final version
            - `NETWORK_HDD`
@@ -128,7 +117,7 @@ class ComputeV1FilesystemArgs:
 
     @_builtins.property
     @pulumi.getter(name="blockSizeBytes")
-    def block_size_bytes(self) -> Optional[pulumi.Input[_builtins.float]]:
+    def block_size_bytes(self) -> pulumi.Input[Optional[_builtins.float]]:
         """
         :
 
@@ -139,128 +128,141 @@ class ComputeV1FilesystemArgs:
         return pulumi.get(self, "block_size_bytes")
 
     @block_size_bytes.setter
-    def block_size_bytes(self, value: Optional[pulumi.Input[_builtins.float]]):
+    def block_size_bytes(self, value: pulumi.Input[Optional[_builtins.float]]):
         pulumi.set(self, "block_size_bytes", value)
 
     @_builtins.property
     @pulumi.getter(name="forbidDeletion")
-    def forbid_deletion(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def forbid_deletion(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Prevents deletion whilst set
         """
         return pulumi.get(self, "forbid_deletion")
 
     @forbid_deletion.setter
-    def forbid_deletion(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def forbid_deletion(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "forbid_deletion", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels associated with the resource.
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
     @pulumi.getter
-    def metadata(self) -> Optional[pulumi.Input['ComputeV1FilesystemMetadataArgs']]:
+    def metadata(self) -> pulumi.Input[Optional['ComputeV1FilesystemMetadataArgs']]:
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Common resource metadata.
         """
         return pulumi.get(self, "metadata")
 
     @metadata.setter
-    def metadata(self, value: Optional[pulumi.Input['ComputeV1FilesystemMetadataArgs']]):
+    def metadata(self, value: pulumi.Input[Optional['ComputeV1FilesystemMetadataArgs']]):
         pulumi.set(self, "metadata", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Human readable name for the resource.
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
+    @pulumi.getter(name="parentId")
+    def parent_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Identifier of the parent resource to which the resource belongs.
+        """
+        return pulumi.get(self, "parent_id")
+
+    @parent_id.setter
+    def parent_id(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "parent_id", value)
+
+    @_builtins.property
     @pulumi.getter(name="sizeBytes")
-    def size_bytes(self) -> Optional[pulumi.Input[_builtins.float]]:
+    def size_bytes(self) -> pulumi.Input[Optional[_builtins.float]]:
         """
         *Cannot be set alongside size_kibibytes,<span pulumi-lang-nodejs=" sizeMebibytes " pulumi-lang-dotnet=" SizeMebibytes " pulumi-lang-go=" sizeMebibytes " pulumi-lang-python=" size_mebibytes " pulumi-lang-yaml=" sizeMebibytes " pulumi-lang-java=" sizeMebibytes " pulumi-lang-hcl=" size_mebibytes "> sizeMebibytes </span>or size_gibibytes.*
         """
         return pulumi.get(self, "size_bytes")
 
     @size_bytes.setter
-    def size_bytes(self, value: Optional[pulumi.Input[_builtins.float]]):
+    def size_bytes(self, value: pulumi.Input[Optional[_builtins.float]]):
         pulumi.set(self, "size_bytes", value)
 
     @_builtins.property
     @pulumi.getter(name="sizeGibibytes")
-    def size_gibibytes(self) -> Optional[pulumi.Input[_builtins.float]]:
+    def size_gibibytes(self) -> pulumi.Input[Optional[_builtins.float]]:
         """
         *Cannot be set alongside size_bytes,<span pulumi-lang-nodejs=" sizeKibibytes " pulumi-lang-dotnet=" SizeKibibytes " pulumi-lang-go=" sizeKibibytes " pulumi-lang-python=" size_kibibytes " pulumi-lang-yaml=" sizeKibibytes " pulumi-lang-java=" sizeKibibytes " pulumi-lang-hcl=" size_kibibytes "> sizeKibibytes </span>or size_mebibytes.*
         """
         return pulumi.get(self, "size_gibibytes")
 
     @size_gibibytes.setter
-    def size_gibibytes(self, value: Optional[pulumi.Input[_builtins.float]]):
+    def size_gibibytes(self, value: pulumi.Input[Optional[_builtins.float]]):
         pulumi.set(self, "size_gibibytes", value)
 
     @_builtins.property
     @pulumi.getter(name="sizeKibibytes")
-    def size_kibibytes(self) -> Optional[pulumi.Input[_builtins.float]]:
+    def size_kibibytes(self) -> pulumi.Input[Optional[_builtins.float]]:
         """
         *Cannot be set alongside size_bytes,<span pulumi-lang-nodejs=" sizeMebibytes " pulumi-lang-dotnet=" SizeMebibytes " pulumi-lang-go=" sizeMebibytes " pulumi-lang-python=" size_mebibytes " pulumi-lang-yaml=" sizeMebibytes " pulumi-lang-java=" sizeMebibytes " pulumi-lang-hcl=" size_mebibytes "> sizeMebibytes </span>or size_gibibytes.*
         """
         return pulumi.get(self, "size_kibibytes")
 
     @size_kibibytes.setter
-    def size_kibibytes(self, value: Optional[pulumi.Input[_builtins.float]]):
+    def size_kibibytes(self, value: pulumi.Input[Optional[_builtins.float]]):
         pulumi.set(self, "size_kibibytes", value)
 
     @_builtins.property
     @pulumi.getter(name="sizeMebibytes")
-    def size_mebibytes(self) -> Optional[pulumi.Input[_builtins.float]]:
+    def size_mebibytes(self) -> pulumi.Input[Optional[_builtins.float]]:
         """
         *Cannot be set alongside size_bytes,<span pulumi-lang-nodejs=" sizeKibibytes " pulumi-lang-dotnet=" SizeKibibytes " pulumi-lang-go=" sizeKibibytes " pulumi-lang-python=" size_kibibytes " pulumi-lang-yaml=" sizeKibibytes " pulumi-lang-java=" sizeKibibytes " pulumi-lang-hcl=" size_kibibytes "> sizeKibibytes </span>or size_gibibytes.*
         """
         return pulumi.get(self, "size_mebibytes")
 
     @size_mebibytes.setter
-    def size_mebibytes(self, value: Optional[pulumi.Input[_builtins.float]]):
+    def size_mebibytes(self, value: pulumi.Input[Optional[_builtins.float]]):
         pulumi.set(self, "size_mebibytes", value)
 
 
 @pulumi.input_type
 class _ComputeV1FilesystemState:
     def __init__(__self__, *,
-                 block_size_bytes: Optional[pulumi.Input[_builtins.float]] = None,
-                 created_at: Optional[pulumi.Input[_builtins.str]] = None,
-                 forbid_deletion: Optional[pulumi.Input[_builtins.bool]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 metadata: Optional[pulumi.Input['ComputeV1FilesystemMetadataArgs']] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 resource_version: Optional[pulumi.Input[_builtins.float]] = None,
-                 size_bytes: Optional[pulumi.Input[_builtins.float]] = None,
-                 size_gibibytes: Optional[pulumi.Input[_builtins.float]] = None,
-                 size_kibibytes: Optional[pulumi.Input[_builtins.float]] = None,
-                 size_mebibytes: Optional[pulumi.Input[_builtins.float]] = None,
-                 status: Optional[pulumi.Input['ComputeV1FilesystemStatusArgs']] = None,
-                 type: Optional[pulumi.Input[_builtins.str]] = None,
-                 updated_at: Optional[pulumi.Input[_builtins.str]] = None):
+                 block_size_bytes: pulumi.Input[Optional[_builtins.float]] = None,
+                 created_at: pulumi.Input[Optional[_builtins.str]] = None,
+                 forbid_deletion: pulumi.Input[Optional[_builtins.bool]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 labels_all: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 metadata: pulumi.Input[Optional['ComputeV1FilesystemMetadataArgs']] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 resource_version: pulumi.Input[Optional[_builtins.float]] = None,
+                 size_bytes: pulumi.Input[Optional[_builtins.float]] = None,
+                 size_gibibytes: pulumi.Input[Optional[_builtins.float]] = None,
+                 size_kibibytes: pulumi.Input[Optional[_builtins.float]] = None,
+                 size_mebibytes: pulumi.Input[Optional[_builtins.float]] = None,
+                 status: pulumi.Input[Optional['ComputeV1FilesystemStatusArgs']] = None,
+                 type: pulumi.Input[Optional[_builtins.str]] = None,
+                 updated_at: pulumi.Input[Optional[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering ComputeV1Filesystem resources.
 
@@ -272,14 +274,15 @@ class _ComputeV1FilesystemState:
         :param pulumi.Input[_builtins.str] created_at: :
                
                   Timestamp indicating when the resource was created.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param pulumi.Input[_builtins.bool] forbid_deletion: Prevents deletion whilst set
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels associated with the resource.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels_all: Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
         :param pulumi.Input['ComputeV1FilesystemMetadataArgs'] metadata: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
         :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
@@ -297,11 +300,11 @@ class _ComputeV1FilesystemState:
                
                   The Shared Filesystem type determines its limits and performance characteristics.
                   For details, see https://docs.nebius.com/compute/storage/types#filesystems-types
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `NETWORK_SSD` - the list of available types will be clarified later, it is not final version
                   - `NETWORK_HDD`
@@ -310,7 +313,7 @@ class _ComputeV1FilesystemState:
         :param pulumi.Input[_builtins.str] updated_at: :
                
                   Timestamp indicating when the resource was last updated.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         if block_size_bytes is not None:
@@ -321,6 +324,8 @@ class _ComputeV1FilesystemState:
             pulumi.set(__self__, "forbid_deletion", forbid_deletion)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
+        if labels_all is not None:
+            pulumi.set(__self__, "labels_all", labels_all)
         if metadata is not None:
             pulumi.set(__self__, "metadata", metadata)
         if name is not None:
@@ -346,7 +351,7 @@ class _ComputeV1FilesystemState:
 
     @_builtins.property
     @pulumi.getter(name="blockSizeBytes")
-    def block_size_bytes(self) -> Optional[pulumi.Input[_builtins.float]]:
+    def block_size_bytes(self) -> pulumi.Input[Optional[_builtins.float]]:
         """
         :
 
@@ -357,92 +362,104 @@ class _ComputeV1FilesystemState:
         return pulumi.get(self, "block_size_bytes")
 
     @block_size_bytes.setter
-    def block_size_bytes(self, value: Optional[pulumi.Input[_builtins.float]]):
+    def block_size_bytes(self, value: pulumi.Input[Optional[_builtins.float]]):
         pulumi.set(self, "block_size_bytes", value)
 
     @_builtins.property
     @pulumi.getter(name="createdAt")
-    def created_at(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def created_at(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
            Timestamp indicating when the resource was created.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "created_at")
 
     @created_at.setter
-    def created_at(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def created_at(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "created_at", value)
 
     @_builtins.property
     @pulumi.getter(name="forbidDeletion")
-    def forbid_deletion(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def forbid_deletion(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         Prevents deletion whilst set
         """
         return pulumi.get(self, "forbid_deletion")
 
     @forbid_deletion.setter
-    def forbid_deletion(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def forbid_deletion(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "forbid_deletion", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels associated with the resource.
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
+    @pulumi.getter(name="labelsAll")
+    def labels_all(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
+        """
+        return pulumi.get(self, "labels_all")
+
+    @labels_all.setter
+    def labels_all(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "labels_all", value)
+
+    @_builtins.property
     @pulumi.getter
-    def metadata(self) -> Optional[pulumi.Input['ComputeV1FilesystemMetadataArgs']]:
+    def metadata(self) -> pulumi.Input[Optional['ComputeV1FilesystemMetadataArgs']]:
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Common resource metadata.
         """
         return pulumi.get(self, "metadata")
 
     @metadata.setter
-    def metadata(self, value: Optional[pulumi.Input['ComputeV1FilesystemMetadataArgs']]):
+    def metadata(self, value: pulumi.Input[Optional['ComputeV1FilesystemMetadataArgs']]):
         pulumi.set(self, "metadata", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Human readable name for the resource.
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="parentId")
-    def parent_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def parent_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Identifier of the parent resource to which the resource belongs.
         """
         return pulumi.get(self, "parent_id")
 
     @parent_id.setter
-    def parent_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def parent_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "parent_id", value)
 
     @_builtins.property
     @pulumi.getter(name="resourceVersion")
-    def resource_version(self) -> Optional[pulumi.Input[_builtins.float]]:
+    def resource_version(self) -> pulumi.Input[Optional[_builtins.float]]:
         """
         :
 
@@ -454,79 +471,79 @@ class _ComputeV1FilesystemState:
         return pulumi.get(self, "resource_version")
 
     @resource_version.setter
-    def resource_version(self, value: Optional[pulumi.Input[_builtins.float]]):
+    def resource_version(self, value: pulumi.Input[Optional[_builtins.float]]):
         pulumi.set(self, "resource_version", value)
 
     @_builtins.property
     @pulumi.getter(name="sizeBytes")
-    def size_bytes(self) -> Optional[pulumi.Input[_builtins.float]]:
+    def size_bytes(self) -> pulumi.Input[Optional[_builtins.float]]:
         """
         *Cannot be set alongside size_kibibytes,<span pulumi-lang-nodejs=" sizeMebibytes " pulumi-lang-dotnet=" SizeMebibytes " pulumi-lang-go=" sizeMebibytes " pulumi-lang-python=" size_mebibytes " pulumi-lang-yaml=" sizeMebibytes " pulumi-lang-java=" sizeMebibytes " pulumi-lang-hcl=" size_mebibytes "> sizeMebibytes </span>or size_gibibytes.*
         """
         return pulumi.get(self, "size_bytes")
 
     @size_bytes.setter
-    def size_bytes(self, value: Optional[pulumi.Input[_builtins.float]]):
+    def size_bytes(self, value: pulumi.Input[Optional[_builtins.float]]):
         pulumi.set(self, "size_bytes", value)
 
     @_builtins.property
     @pulumi.getter(name="sizeGibibytes")
-    def size_gibibytes(self) -> Optional[pulumi.Input[_builtins.float]]:
+    def size_gibibytes(self) -> pulumi.Input[Optional[_builtins.float]]:
         """
         *Cannot be set alongside size_bytes,<span pulumi-lang-nodejs=" sizeKibibytes " pulumi-lang-dotnet=" SizeKibibytes " pulumi-lang-go=" sizeKibibytes " pulumi-lang-python=" size_kibibytes " pulumi-lang-yaml=" sizeKibibytes " pulumi-lang-java=" sizeKibibytes " pulumi-lang-hcl=" size_kibibytes "> sizeKibibytes </span>or size_mebibytes.*
         """
         return pulumi.get(self, "size_gibibytes")
 
     @size_gibibytes.setter
-    def size_gibibytes(self, value: Optional[pulumi.Input[_builtins.float]]):
+    def size_gibibytes(self, value: pulumi.Input[Optional[_builtins.float]]):
         pulumi.set(self, "size_gibibytes", value)
 
     @_builtins.property
     @pulumi.getter(name="sizeKibibytes")
-    def size_kibibytes(self) -> Optional[pulumi.Input[_builtins.float]]:
+    def size_kibibytes(self) -> pulumi.Input[Optional[_builtins.float]]:
         """
         *Cannot be set alongside size_bytes,<span pulumi-lang-nodejs=" sizeMebibytes " pulumi-lang-dotnet=" SizeMebibytes " pulumi-lang-go=" sizeMebibytes " pulumi-lang-python=" size_mebibytes " pulumi-lang-yaml=" sizeMebibytes " pulumi-lang-java=" sizeMebibytes " pulumi-lang-hcl=" size_mebibytes "> sizeMebibytes </span>or size_gibibytes.*
         """
         return pulumi.get(self, "size_kibibytes")
 
     @size_kibibytes.setter
-    def size_kibibytes(self, value: Optional[pulumi.Input[_builtins.float]]):
+    def size_kibibytes(self, value: pulumi.Input[Optional[_builtins.float]]):
         pulumi.set(self, "size_kibibytes", value)
 
     @_builtins.property
     @pulumi.getter(name="sizeMebibytes")
-    def size_mebibytes(self) -> Optional[pulumi.Input[_builtins.float]]:
+    def size_mebibytes(self) -> pulumi.Input[Optional[_builtins.float]]:
         """
         *Cannot be set alongside size_bytes,<span pulumi-lang-nodejs=" sizeKibibytes " pulumi-lang-dotnet=" SizeKibibytes " pulumi-lang-go=" sizeKibibytes " pulumi-lang-python=" size_kibibytes " pulumi-lang-yaml=" sizeKibibytes " pulumi-lang-java=" sizeKibibytes " pulumi-lang-hcl=" size_kibibytes "> sizeKibibytes </span>or size_gibibytes.*
         """
         return pulumi.get(self, "size_mebibytes")
 
     @size_mebibytes.setter
-    def size_mebibytes(self, value: Optional[pulumi.Input[_builtins.float]]):
+    def size_mebibytes(self, value: pulumi.Input[Optional[_builtins.float]]):
         pulumi.set(self, "size_mebibytes", value)
 
     @_builtins.property
     @pulumi.getter
-    def status(self) -> Optional[pulumi.Input['ComputeV1FilesystemStatusArgs']]:
+    def status(self) -> pulumi.Input[Optional['ComputeV1FilesystemStatusArgs']]:
         return pulumi.get(self, "status")
 
     @status.setter
-    def status(self, value: Optional[pulumi.Input['ComputeV1FilesystemStatusArgs']]):
+    def status(self, value: pulumi.Input[Optional['ComputeV1FilesystemStatusArgs']]):
         pulumi.set(self, "status", value)
 
     @_builtins.property
     @pulumi.getter
-    def type(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def type(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
            The Shared Filesystem type determines its limits and performance characteristics.
            For details, see https://docs.nebius.com/compute/storage/types#filesystems-types
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `NETWORK_SSD` - the list of available types will be clarified later, it is not final version
            - `NETWORK_HDD`
@@ -536,23 +553,23 @@ class _ComputeV1FilesystemState:
         return pulumi.get(self, "type")
 
     @type.setter
-    def type(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def type(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "type", value)
 
     @_builtins.property
     @pulumi.getter(name="updatedAt")
-    def updated_at(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def updated_at(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
            Timestamp indicating when the resource was last updated.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "updated_at")
 
     @updated_at.setter
-    def updated_at(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def updated_at(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "updated_at", value)
 
 
@@ -562,17 +579,17 @@ class ComputeV1Filesystem(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 block_size_bytes: Optional[pulumi.Input[_builtins.float]] = None,
-                 forbid_deletion: Optional[pulumi.Input[_builtins.bool]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 metadata: Optional[pulumi.Input[Union['ComputeV1FilesystemMetadataArgs', 'ComputeV1FilesystemMetadataArgsDict']]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 size_bytes: Optional[pulumi.Input[_builtins.float]] = None,
-                 size_gibibytes: Optional[pulumi.Input[_builtins.float]] = None,
-                 size_kibibytes: Optional[pulumi.Input[_builtins.float]] = None,
-                 size_mebibytes: Optional[pulumi.Input[_builtins.float]] = None,
-                 type: Optional[pulumi.Input[_builtins.str]] = None,
+                 block_size_bytes: pulumi.Input[Optional[_builtins.float]] = None,
+                 forbid_deletion: pulumi.Input[Optional[_builtins.bool]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 metadata: pulumi.Input[Optional[Union['ComputeV1FilesystemMetadataArgs', 'ComputeV1FilesystemMetadataArgsDict']]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 size_bytes: pulumi.Input[Optional[_builtins.float]] = None,
+                 size_gibibytes: pulumi.Input[Optional[_builtins.float]] = None,
+                 size_kibibytes: pulumi.Input[Optional[_builtins.float]] = None,
+                 size_mebibytes: pulumi.Input[Optional[_builtins.float]] = None,
+                 type: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         """
         Create a ComputeV1Filesystem resource with the given unique name, props, and options.
@@ -588,8 +605,8 @@ class ComputeV1Filesystem(pulumi.CustomResource):
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels associated with the resource.
         :param pulumi.Input[Union['ComputeV1FilesystemMetadataArgs', 'ComputeV1FilesystemMetadataArgsDict']] metadata: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
         :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
@@ -601,11 +618,11 @@ class ComputeV1Filesystem(pulumi.CustomResource):
                
                   The Shared Filesystem type determines its limits and performance characteristics.
                   For details, see https://docs.nebius.com/compute/storage/types#filesystems-types
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `NETWORK_SSD` - the list of available types will be clarified later, it is not final version
                   - `NETWORK_HDD`
@@ -636,17 +653,17 @@ class ComputeV1Filesystem(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 block_size_bytes: Optional[pulumi.Input[_builtins.float]] = None,
-                 forbid_deletion: Optional[pulumi.Input[_builtins.bool]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 metadata: Optional[pulumi.Input[Union['ComputeV1FilesystemMetadataArgs', 'ComputeV1FilesystemMetadataArgsDict']]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 size_bytes: Optional[pulumi.Input[_builtins.float]] = None,
-                 size_gibibytes: Optional[pulumi.Input[_builtins.float]] = None,
-                 size_kibibytes: Optional[pulumi.Input[_builtins.float]] = None,
-                 size_mebibytes: Optional[pulumi.Input[_builtins.float]] = None,
-                 type: Optional[pulumi.Input[_builtins.str]] = None,
+                 block_size_bytes: pulumi.Input[Optional[_builtins.float]] = None,
+                 forbid_deletion: pulumi.Input[Optional[_builtins.bool]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 metadata: pulumi.Input[Optional[Union['ComputeV1FilesystemMetadataArgs', 'ComputeV1FilesystemMetadataArgsDict']]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 size_bytes: pulumi.Input[Optional[_builtins.float]] = None,
+                 size_gibibytes: pulumi.Input[Optional[_builtins.float]] = None,
+                 size_kibibytes: pulumi.Input[Optional[_builtins.float]] = None,
+                 size_mebibytes: pulumi.Input[Optional[_builtins.float]] = None,
+                 type: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -661,8 +678,6 @@ class ComputeV1Filesystem(pulumi.CustomResource):
             __props__.__dict__["labels"] = labels
             __props__.__dict__["metadata"] = metadata
             __props__.__dict__["name"] = name
-            if parent_id is None and not opts.urn:
-                raise TypeError("Missing required property 'parent_id'")
             __props__.__dict__["parent_id"] = parent_id
             __props__.__dict__["size_bytes"] = size_bytes
             __props__.__dict__["size_gibibytes"] = size_gibibytes
@@ -672,6 +687,7 @@ class ComputeV1Filesystem(pulumi.CustomResource):
                 raise TypeError("Missing required property 'type'")
             __props__.__dict__["type"] = type
             __props__.__dict__["created_at"] = None
+            __props__.__dict__["labels_all"] = None
             __props__.__dict__["resource_version"] = None
             __props__.__dict__["status"] = None
             __props__.__dict__["updated_at"] = None
@@ -686,21 +702,22 @@ class ComputeV1Filesystem(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            block_size_bytes: Optional[pulumi.Input[_builtins.float]] = None,
-            created_at: Optional[pulumi.Input[_builtins.str]] = None,
-            forbid_deletion: Optional[pulumi.Input[_builtins.bool]] = None,
-            labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            metadata: Optional[pulumi.Input[Union['ComputeV1FilesystemMetadataArgs', 'ComputeV1FilesystemMetadataArgsDict']]] = None,
-            name: Optional[pulumi.Input[_builtins.str]] = None,
-            parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-            resource_version: Optional[pulumi.Input[_builtins.float]] = None,
-            size_bytes: Optional[pulumi.Input[_builtins.float]] = None,
-            size_gibibytes: Optional[pulumi.Input[_builtins.float]] = None,
-            size_kibibytes: Optional[pulumi.Input[_builtins.float]] = None,
-            size_mebibytes: Optional[pulumi.Input[_builtins.float]] = None,
-            status: Optional[pulumi.Input[Union['ComputeV1FilesystemStatusArgs', 'ComputeV1FilesystemStatusArgsDict']]] = None,
-            type: Optional[pulumi.Input[_builtins.str]] = None,
-            updated_at: Optional[pulumi.Input[_builtins.str]] = None) -> 'ComputeV1Filesystem':
+            block_size_bytes: pulumi.Input[Optional[_builtins.float]] = None,
+            created_at: pulumi.Input[Optional[_builtins.str]] = None,
+            forbid_deletion: pulumi.Input[Optional[_builtins.bool]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            labels_all: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            metadata: pulumi.Input[Optional[Union['ComputeV1FilesystemMetadataArgs', 'ComputeV1FilesystemMetadataArgsDict']]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+            resource_version: pulumi.Input[Optional[_builtins.float]] = None,
+            size_bytes: pulumi.Input[Optional[_builtins.float]] = None,
+            size_gibibytes: pulumi.Input[Optional[_builtins.float]] = None,
+            size_kibibytes: pulumi.Input[Optional[_builtins.float]] = None,
+            size_mebibytes: pulumi.Input[Optional[_builtins.float]] = None,
+            status: pulumi.Input[Optional[Union['ComputeV1FilesystemStatusArgs', 'ComputeV1FilesystemStatusArgsDict']]] = None,
+            type: pulumi.Input[Optional[_builtins.str]] = None,
+            updated_at: pulumi.Input[Optional[_builtins.str]] = None) -> 'ComputeV1Filesystem':
         """
         Get an existing ComputeV1Filesystem resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -716,14 +733,15 @@ class ComputeV1Filesystem(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] created_at: :
                
                   Timestamp indicating when the resource was created.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param pulumi.Input[_builtins.bool] forbid_deletion: Prevents deletion whilst set
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels associated with the resource.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels_all: Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
         :param pulumi.Input[Union['ComputeV1FilesystemMetadataArgs', 'ComputeV1FilesystemMetadataArgsDict']] metadata: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
         :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
@@ -741,11 +759,11 @@ class ComputeV1Filesystem(pulumi.CustomResource):
                
                   The Shared Filesystem type determines its limits and performance characteristics.
                   For details, see https://docs.nebius.com/compute/storage/types#filesystems-types
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `NETWORK_SSD` - the list of available types will be clarified later, it is not final version
                   - `NETWORK_HDD`
@@ -754,7 +772,7 @@ class ComputeV1Filesystem(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] updated_at: :
                
                   Timestamp indicating when the resource was last updated.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
@@ -765,6 +783,7 @@ class ComputeV1Filesystem(pulumi.CustomResource):
         __props__.__dict__["created_at"] = created_at
         __props__.__dict__["forbid_deletion"] = forbid_deletion
         __props__.__dict__["labels"] = labels
+        __props__.__dict__["labels_all"] = labels_all
         __props__.__dict__["metadata"] = metadata
         __props__.__dict__["name"] = name
         __props__.__dict__["parent_id"] = parent_id
@@ -797,7 +816,7 @@ class ComputeV1Filesystem(pulumi.CustomResource):
         :
 
            Timestamp indicating when the resource was created.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "created_at")
@@ -819,13 +838,21 @@ class ComputeV1Filesystem(pulumi.CustomResource):
         return pulumi.get(self, "labels")
 
     @_builtins.property
+    @pulumi.getter(name="labelsAll")
+    def labels_all(self) -> pulumi.Output[Mapping[str, _builtins.str]]:
+        """
+        Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
+        """
+        return pulumi.get(self, "labels_all")
+
+    @_builtins.property
     @pulumi.getter
     def metadata(self) -> pulumi.Output['outputs.ComputeV1FilesystemMetadata']:
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Common resource metadata.
         """
         return pulumi.get(self, "metadata")
@@ -904,11 +931,11 @@ class ComputeV1Filesystem(pulumi.CustomResource):
 
            The Shared Filesystem type determines its limits and performance characteristics.
            For details, see https://docs.nebius.com/compute/storage/types#filesystems-types
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `NETWORK_SSD` - the list of available types will be clarified later, it is not final version
            - `NETWORK_HDD`
@@ -924,7 +951,7 @@ class ComputeV1Filesystem(pulumi.CustomResource):
         :
 
            Timestamp indicating when the resource was last updated.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "updated_at")

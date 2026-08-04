@@ -179,7 +179,7 @@ def get_iam_v1_auth_public_key(id: Optional[_builtins.str] = None,
         resource_version=pulumi.get(__ret__, 'resource_version'),
         status=pulumi.get(__ret__, 'status'),
         updated_at=pulumi.get(__ret__, 'updated_at'))
-def get_iam_v1_auth_public_key_output(id: Optional[pulumi.Input[_builtins.str]] = None,
+def get_iam_v1_auth_public_key_output(id: pulumi.Input[Optional[_builtins.str]] = None,
                                       opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetIamV1AuthPublicKeyResult]:
     """
     Use this data source to access information about an existing resource.

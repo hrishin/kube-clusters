@@ -21,17 +21,16 @@ __all__ = ['IamV1FederatedCredentialsArgs', 'IamV1FederatedCredentials']
 @pulumi.input_type
 class IamV1FederatedCredentialsArgs:
     def __init__(__self__, *,
-                 parent_id: pulumi.Input[_builtins.str],
                  subject_id: pulumi.Input[_builtins.str],
-                 federated_subject_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 metadata: Optional[pulumi.Input['IamV1FederatedCredentialsMetadataArgs']] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 oidc_provider: Optional[pulumi.Input['IamV1FederatedCredentialsOidcProviderArgs']] = None):
+                 federated_subject_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 metadata: pulumi.Input[Optional['IamV1FederatedCredentialsMetadataArgs']] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 oidc_provider: pulumi.Input[Optional['IamV1FederatedCredentialsOidcProviderArgs']] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None):
         """
         The set of arguments for constructing a IamV1FederatedCredentials resource.
 
-        :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
         :param pulumi.Input[_builtins.str] subject_id: IAM subject (service account) that the federated subject impersonates.
         :param pulumi.Input[_builtins.str] federated_subject_id: :
                
@@ -41,22 +40,22 @@ class IamV1FederatedCredentialsArgs:
         :param pulumi.Input['IamV1FederatedCredentialsMetadataArgs'] metadata: :
                
                   Federated credentials resource metadata.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
         :param pulumi.Input['IamV1FederatedCredentialsOidcProviderArgs'] oidc_provider: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   The OIDC provider does not have to be a full OIDC provider, but it must expose
                   OIDC discovery metadata at the "/.well-known/openid-configuration" endpoint.
                   The discovery metadata must contain <span pulumi-lang-nodejs=""jwksUri"" pulumi-lang-dotnet=""JwksUri"" pulumi-lang-go=""jwksUri"" pulumi-lang-python=""jwks_uri"" pulumi-lang-yaml=""jwksUri"" pulumi-lang-java=""jwksUri"" pulumi-lang-hcl=""jwks_uri"">"jwksUri"</span>, which points to the JSON Web
                   Key Set (JWKS). The JWKS contains public keys used to verify JSON
                   Web Tokens (JWTs) issued by the identity provider.
+        :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
         """
-        pulumi.set(__self__, "parent_id", parent_id)
         pulumi.set(__self__, "subject_id", subject_id)
         if federated_subject_id is not None:
             pulumi.set(__self__, "federated_subject_id", federated_subject_id)
@@ -68,18 +67,8 @@ class IamV1FederatedCredentialsArgs:
             pulumi.set(__self__, "name", name)
         if oidc_provider is not None:
             pulumi.set(__self__, "oidc_provider", oidc_provider)
-
-    @_builtins.property
-    @pulumi.getter(name="parentId")
-    def parent_id(self) -> pulumi.Input[_builtins.str]:
-        """
-        Identifier of the parent resource to which the resource belongs.
-        """
-        return pulumi.get(self, "parent_id")
-
-    @parent_id.setter
-    def parent_id(self, value: pulumi.Input[_builtins.str]):
-        pulumi.set(self, "parent_id", value)
+        if parent_id is not None:
+            pulumi.set(__self__, "parent_id", parent_id)
 
     @_builtins.property
     @pulumi.getter(name="subjectId")
@@ -95,7 +84,7 @@ class IamV1FederatedCredentialsArgs:
 
     @_builtins.property
     @pulumi.getter(name="federatedSubjectId")
-    def federated_subject_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def federated_subject_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
@@ -105,59 +94,59 @@ class IamV1FederatedCredentialsArgs:
         return pulumi.get(self, "federated_subject_id")
 
     @federated_subject_id.setter
-    def federated_subject_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def federated_subject_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "federated_subject_id", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels associated with the resource.
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
     @pulumi.getter
-    def metadata(self) -> Optional[pulumi.Input['IamV1FederatedCredentialsMetadataArgs']]:
+    def metadata(self) -> pulumi.Input[Optional['IamV1FederatedCredentialsMetadataArgs']]:
         """
         :
 
            Federated credentials resource metadata.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Common resource metadata.
         """
         return pulumi.get(self, "metadata")
 
     @metadata.setter
-    def metadata(self, value: Optional[pulumi.Input['IamV1FederatedCredentialsMetadataArgs']]):
+    def metadata(self, value: pulumi.Input[Optional['IamV1FederatedCredentialsMetadataArgs']]):
         pulumi.set(self, "metadata", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Human readable name for the resource.
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="oidcProvider")
-    def oidc_provider(self) -> Optional[pulumi.Input['IamV1FederatedCredentialsOidcProviderArgs']]:
+    def oidc_provider(self) -> pulumi.Input[Optional['IamV1FederatedCredentialsOidcProviderArgs']]:
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            The OIDC provider does not have to be a full OIDC provider, but it must expose
            OIDC discovery metadata at the "/.well-known/openid-configuration" endpoint.
            The discovery metadata must contain <span pulumi-lang-nodejs=""jwksUri"" pulumi-lang-dotnet=""JwksUri"" pulumi-lang-go=""jwksUri"" pulumi-lang-python=""jwks_uri"" pulumi-lang-yaml=""jwksUri"" pulumi-lang-java=""jwksUri"" pulumi-lang-hcl=""jwks_uri"">"jwksUri"</span>, which points to the JSON Web
@@ -167,49 +156,63 @@ class IamV1FederatedCredentialsArgs:
         return pulumi.get(self, "oidc_provider")
 
     @oidc_provider.setter
-    def oidc_provider(self, value: Optional[pulumi.Input['IamV1FederatedCredentialsOidcProviderArgs']]):
+    def oidc_provider(self, value: pulumi.Input[Optional['IamV1FederatedCredentialsOidcProviderArgs']]):
         pulumi.set(self, "oidc_provider", value)
+
+    @_builtins.property
+    @pulumi.getter(name="parentId")
+    def parent_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Identifier of the parent resource to which the resource belongs.
+        """
+        return pulumi.get(self, "parent_id")
+
+    @parent_id.setter
+    def parent_id(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "parent_id", value)
 
 
 @pulumi.input_type
 class _IamV1FederatedCredentialsState:
     def __init__(__self__, *,
-                 created_at: Optional[pulumi.Input[_builtins.str]] = None,
-                 federated_subject_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 metadata: Optional[pulumi.Input['IamV1FederatedCredentialsMetadataArgs']] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 oidc_provider: Optional[pulumi.Input['IamV1FederatedCredentialsOidcProviderArgs']] = None,
-                 parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 resource_version: Optional[pulumi.Input[_builtins.float]] = None,
-                 status: Optional[pulumi.Input['IamV1FederatedCredentialsStatusArgs']] = None,
-                 subject_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 updated_at: Optional[pulumi.Input[_builtins.str]] = None):
+                 created_at: pulumi.Input[Optional[_builtins.str]] = None,
+                 federated_subject_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 labels_all: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 metadata: pulumi.Input[Optional['IamV1FederatedCredentialsMetadataArgs']] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 oidc_provider: pulumi.Input[Optional['IamV1FederatedCredentialsOidcProviderArgs']] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 resource_version: pulumi.Input[Optional[_builtins.float]] = None,
+                 status: pulumi.Input[Optional['IamV1FederatedCredentialsStatusArgs']] = None,
+                 subject_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 updated_at: pulumi.Input[Optional[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering IamV1FederatedCredentials resources.
 
         :param pulumi.Input[_builtins.str] created_at: :
                
                   Timestamp indicating when the resource was created.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param pulumi.Input[_builtins.str] federated_subject_id: :
                
                   Federated subject ID. For oidc_provider, the subject is calculated from the
                   "sub" claim of the federated JWT token.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels associated with the resource.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels_all: Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
         :param pulumi.Input['IamV1FederatedCredentialsMetadataArgs'] metadata: :
                
                   Federated credentials resource metadata.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
         :param pulumi.Input['IamV1FederatedCredentialsOidcProviderArgs'] oidc_provider: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   The OIDC provider does not have to be a full OIDC provider, but it must expose
                   OIDC discovery metadata at the "/.well-known/openid-configuration" endpoint.
                   The discovery metadata must contain <span pulumi-lang-nodejs=""jwksUri"" pulumi-lang-dotnet=""JwksUri"" pulumi-lang-go=""jwksUri"" pulumi-lang-python=""jwks_uri"" pulumi-lang-yaml=""jwksUri"" pulumi-lang-java=""jwksUri"" pulumi-lang-hcl=""jwks_uri"">"jwksUri"</span>, which points to the JSON Web
@@ -227,7 +230,7 @@ class _IamV1FederatedCredentialsState:
         :param pulumi.Input[_builtins.str] updated_at: :
                
                   Timestamp indicating when the resource was last updated.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         if created_at is not None:
@@ -236,6 +239,8 @@ class _IamV1FederatedCredentialsState:
             pulumi.set(__self__, "federated_subject_id", federated_subject_id)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
+        if labels_all is not None:
+            pulumi.set(__self__, "labels_all", labels_all)
         if metadata is not None:
             pulumi.set(__self__, "metadata", metadata)
         if name is not None:
@@ -255,23 +260,23 @@ class _IamV1FederatedCredentialsState:
 
     @_builtins.property
     @pulumi.getter(name="createdAt")
-    def created_at(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def created_at(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
            Timestamp indicating when the resource was created.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "created_at")
 
     @created_at.setter
-    def created_at(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def created_at(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "created_at", value)
 
     @_builtins.property
     @pulumi.getter(name="federatedSubjectId")
-    def federated_subject_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def federated_subject_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
@@ -281,59 +286,71 @@ class _IamV1FederatedCredentialsState:
         return pulumi.get(self, "federated_subject_id")
 
     @federated_subject_id.setter
-    def federated_subject_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def federated_subject_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "federated_subject_id", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels associated with the resource.
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
+    @pulumi.getter(name="labelsAll")
+    def labels_all(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
+        """
+        return pulumi.get(self, "labels_all")
+
+    @labels_all.setter
+    def labels_all(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "labels_all", value)
+
+    @_builtins.property
     @pulumi.getter
-    def metadata(self) -> Optional[pulumi.Input['IamV1FederatedCredentialsMetadataArgs']]:
+    def metadata(self) -> pulumi.Input[Optional['IamV1FederatedCredentialsMetadataArgs']]:
         """
         :
 
            Federated credentials resource metadata.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Common resource metadata.
         """
         return pulumi.get(self, "metadata")
 
     @metadata.setter
-    def metadata(self, value: Optional[pulumi.Input['IamV1FederatedCredentialsMetadataArgs']]):
+    def metadata(self, value: pulumi.Input[Optional['IamV1FederatedCredentialsMetadataArgs']]):
         pulumi.set(self, "metadata", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Human readable name for the resource.
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="oidcProvider")
-    def oidc_provider(self) -> Optional[pulumi.Input['IamV1FederatedCredentialsOidcProviderArgs']]:
+    def oidc_provider(self) -> pulumi.Input[Optional['IamV1FederatedCredentialsOidcProviderArgs']]:
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            The OIDC provider does not have to be a full OIDC provider, but it must expose
            OIDC discovery metadata at the "/.well-known/openid-configuration" endpoint.
            The discovery metadata must contain <span pulumi-lang-nodejs=""jwksUri"" pulumi-lang-dotnet=""JwksUri"" pulumi-lang-go=""jwksUri"" pulumi-lang-python=""jwks_uri"" pulumi-lang-yaml=""jwksUri"" pulumi-lang-java=""jwksUri"" pulumi-lang-hcl=""jwks_uri"">"jwksUri"</span>, which points to the JSON Web
@@ -343,24 +360,24 @@ class _IamV1FederatedCredentialsState:
         return pulumi.get(self, "oidc_provider")
 
     @oidc_provider.setter
-    def oidc_provider(self, value: Optional[pulumi.Input['IamV1FederatedCredentialsOidcProviderArgs']]):
+    def oidc_provider(self, value: pulumi.Input[Optional['IamV1FederatedCredentialsOidcProviderArgs']]):
         pulumi.set(self, "oidc_provider", value)
 
     @_builtins.property
     @pulumi.getter(name="parentId")
-    def parent_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def parent_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Identifier of the parent resource to which the resource belongs.
         """
         return pulumi.get(self, "parent_id")
 
     @parent_id.setter
-    def parent_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def parent_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "parent_id", value)
 
     @_builtins.property
     @pulumi.getter(name="resourceVersion")
-    def resource_version(self) -> Optional[pulumi.Input[_builtins.float]]:
+    def resource_version(self) -> pulumi.Input[Optional[_builtins.float]]:
         """
         :
 
@@ -372,47 +389,47 @@ class _IamV1FederatedCredentialsState:
         return pulumi.get(self, "resource_version")
 
     @resource_version.setter
-    def resource_version(self, value: Optional[pulumi.Input[_builtins.float]]):
+    def resource_version(self, value: pulumi.Input[Optional[_builtins.float]]):
         pulumi.set(self, "resource_version", value)
 
     @_builtins.property
     @pulumi.getter
-    def status(self) -> Optional[pulumi.Input['IamV1FederatedCredentialsStatusArgs']]:
+    def status(self) -> pulumi.Input[Optional['IamV1FederatedCredentialsStatusArgs']]:
         """
         Federated credentials resource status.
         """
         return pulumi.get(self, "status")
 
     @status.setter
-    def status(self, value: Optional[pulumi.Input['IamV1FederatedCredentialsStatusArgs']]):
+    def status(self, value: pulumi.Input[Optional['IamV1FederatedCredentialsStatusArgs']]):
         pulumi.set(self, "status", value)
 
     @_builtins.property
     @pulumi.getter(name="subjectId")
-    def subject_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def subject_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         IAM subject (service account) that the federated subject impersonates.
         """
         return pulumi.get(self, "subject_id")
 
     @subject_id.setter
-    def subject_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def subject_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "subject_id", value)
 
     @_builtins.property
     @pulumi.getter(name="updatedAt")
-    def updated_at(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def updated_at(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
            Timestamp indicating when the resource was last updated.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "updated_at")
 
     @updated_at.setter
-    def updated_at(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def updated_at(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "updated_at", value)
 
 
@@ -422,13 +439,13 @@ class IamV1FederatedCredentials(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 federated_subject_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 metadata: Optional[pulumi.Input[Union['IamV1FederatedCredentialsMetadataArgs', 'IamV1FederatedCredentialsMetadataArgsDict']]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 oidc_provider: Optional[pulumi.Input[Union['IamV1FederatedCredentialsOidcProviderArgs', 'IamV1FederatedCredentialsOidcProviderArgsDict']]] = None,
-                 parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 subject_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 federated_subject_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 metadata: pulumi.Input[Optional[Union['IamV1FederatedCredentialsMetadataArgs', 'IamV1FederatedCredentialsMetadataArgsDict']]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 oidc_provider: pulumi.Input[Optional[Union['IamV1FederatedCredentialsOidcProviderArgs', 'IamV1FederatedCredentialsOidcProviderArgsDict']]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 subject_id: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         """
         Create a IamV1FederatedCredentials resource with the given unique name, props, and options.
@@ -443,15 +460,15 @@ class IamV1FederatedCredentials(pulumi.CustomResource):
         :param pulumi.Input[Union['IamV1FederatedCredentialsMetadataArgs', 'IamV1FederatedCredentialsMetadataArgsDict']] metadata: :
                
                   Federated credentials resource metadata.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
         :param pulumi.Input[Union['IamV1FederatedCredentialsOidcProviderArgs', 'IamV1FederatedCredentialsOidcProviderArgsDict']] oidc_provider: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   The OIDC provider does not have to be a full OIDC provider, but it must expose
                   OIDC discovery metadata at the "/.well-known/openid-configuration" endpoint.
                   The discovery metadata must contain <span pulumi-lang-nodejs=""jwksUri"" pulumi-lang-dotnet=""JwksUri"" pulumi-lang-go=""jwksUri"" pulumi-lang-python=""jwks_uri"" pulumi-lang-yaml=""jwksUri"" pulumi-lang-java=""jwksUri"" pulumi-lang-hcl=""jwks_uri"">"jwksUri"</span>, which points to the JSON Web
@@ -484,13 +501,13 @@ class IamV1FederatedCredentials(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 federated_subject_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 metadata: Optional[pulumi.Input[Union['IamV1FederatedCredentialsMetadataArgs', 'IamV1FederatedCredentialsMetadataArgsDict']]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 oidc_provider: Optional[pulumi.Input[Union['IamV1FederatedCredentialsOidcProviderArgs', 'IamV1FederatedCredentialsOidcProviderArgsDict']]] = None,
-                 parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 subject_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 federated_subject_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 metadata: pulumi.Input[Optional[Union['IamV1FederatedCredentialsMetadataArgs', 'IamV1FederatedCredentialsMetadataArgsDict']]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 oidc_provider: pulumi.Input[Optional[Union['IamV1FederatedCredentialsOidcProviderArgs', 'IamV1FederatedCredentialsOidcProviderArgsDict']]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 subject_id: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -505,13 +522,12 @@ class IamV1FederatedCredentials(pulumi.CustomResource):
             __props__.__dict__["metadata"] = metadata
             __props__.__dict__["name"] = name
             __props__.__dict__["oidc_provider"] = oidc_provider
-            if parent_id is None and not opts.urn:
-                raise TypeError("Missing required property 'parent_id'")
             __props__.__dict__["parent_id"] = parent_id
             if subject_id is None and not opts.urn:
                 raise TypeError("Missing required property 'subject_id'")
             __props__.__dict__["subject_id"] = subject_id
             __props__.__dict__["created_at"] = None
+            __props__.__dict__["labels_all"] = None
             __props__.__dict__["resource_version"] = None
             __props__.__dict__["status"] = None
             __props__.__dict__["updated_at"] = None
@@ -526,17 +542,18 @@ class IamV1FederatedCredentials(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            created_at: Optional[pulumi.Input[_builtins.str]] = None,
-            federated_subject_id: Optional[pulumi.Input[_builtins.str]] = None,
-            labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            metadata: Optional[pulumi.Input[Union['IamV1FederatedCredentialsMetadataArgs', 'IamV1FederatedCredentialsMetadataArgsDict']]] = None,
-            name: Optional[pulumi.Input[_builtins.str]] = None,
-            oidc_provider: Optional[pulumi.Input[Union['IamV1FederatedCredentialsOidcProviderArgs', 'IamV1FederatedCredentialsOidcProviderArgsDict']]] = None,
-            parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-            resource_version: Optional[pulumi.Input[_builtins.float]] = None,
-            status: Optional[pulumi.Input[Union['IamV1FederatedCredentialsStatusArgs', 'IamV1FederatedCredentialsStatusArgsDict']]] = None,
-            subject_id: Optional[pulumi.Input[_builtins.str]] = None,
-            updated_at: Optional[pulumi.Input[_builtins.str]] = None) -> 'IamV1FederatedCredentials':
+            created_at: pulumi.Input[Optional[_builtins.str]] = None,
+            federated_subject_id: pulumi.Input[Optional[_builtins.str]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            labels_all: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            metadata: pulumi.Input[Optional[Union['IamV1FederatedCredentialsMetadataArgs', 'IamV1FederatedCredentialsMetadataArgsDict']]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            oidc_provider: pulumi.Input[Optional[Union['IamV1FederatedCredentialsOidcProviderArgs', 'IamV1FederatedCredentialsOidcProviderArgsDict']]] = None,
+            parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+            resource_version: pulumi.Input[Optional[_builtins.float]] = None,
+            status: pulumi.Input[Optional[Union['IamV1FederatedCredentialsStatusArgs', 'IamV1FederatedCredentialsStatusArgsDict']]] = None,
+            subject_id: pulumi.Input[Optional[_builtins.str]] = None,
+            updated_at: pulumi.Input[Optional[_builtins.str]] = None) -> 'IamV1FederatedCredentials':
         """
         Get an existing IamV1FederatedCredentials resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -547,25 +564,26 @@ class IamV1FederatedCredentials(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] created_at: :
                
                   Timestamp indicating when the resource was created.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param pulumi.Input[_builtins.str] federated_subject_id: :
                
                   Federated subject ID. For oidc_provider, the subject is calculated from the
                   "sub" claim of the federated JWT token.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels associated with the resource.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels_all: Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
         :param pulumi.Input[Union['IamV1FederatedCredentialsMetadataArgs', 'IamV1FederatedCredentialsMetadataArgsDict']] metadata: :
                
                   Federated credentials resource metadata.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
         :param pulumi.Input[Union['IamV1FederatedCredentialsOidcProviderArgs', 'IamV1FederatedCredentialsOidcProviderArgsDict']] oidc_provider: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   The OIDC provider does not have to be a full OIDC provider, but it must expose
                   OIDC discovery metadata at the "/.well-known/openid-configuration" endpoint.
                   The discovery metadata must contain <span pulumi-lang-nodejs=""jwksUri"" pulumi-lang-dotnet=""JwksUri"" pulumi-lang-go=""jwksUri"" pulumi-lang-python=""jwks_uri"" pulumi-lang-yaml=""jwksUri"" pulumi-lang-java=""jwksUri"" pulumi-lang-hcl=""jwks_uri"">"jwksUri"</span>, which points to the JSON Web
@@ -583,7 +601,7 @@ class IamV1FederatedCredentials(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] updated_at: :
                
                   Timestamp indicating when the resource was last updated.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
@@ -593,6 +611,7 @@ class IamV1FederatedCredentials(pulumi.CustomResource):
         __props__.__dict__["created_at"] = created_at
         __props__.__dict__["federated_subject_id"] = federated_subject_id
         __props__.__dict__["labels"] = labels
+        __props__.__dict__["labels_all"] = labels_all
         __props__.__dict__["metadata"] = metadata
         __props__.__dict__["name"] = name
         __props__.__dict__["oidc_provider"] = oidc_provider
@@ -610,7 +629,7 @@ class IamV1FederatedCredentials(pulumi.CustomResource):
         :
 
            Timestamp indicating when the resource was created.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "created_at")
@@ -635,15 +654,23 @@ class IamV1FederatedCredentials(pulumi.CustomResource):
         return pulumi.get(self, "labels")
 
     @_builtins.property
+    @pulumi.getter(name="labelsAll")
+    def labels_all(self) -> pulumi.Output[Mapping[str, _builtins.str]]:
+        """
+        Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
+        """
+        return pulumi.get(self, "labels_all")
+
+    @_builtins.property
     @pulumi.getter
     def metadata(self) -> pulumi.Output['outputs.IamV1FederatedCredentialsMetadata']:
         """
         :
 
            Federated credentials resource metadata.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Common resource metadata.
         """
         return pulumi.get(self, "metadata")
@@ -662,8 +689,8 @@ class IamV1FederatedCredentials(pulumi.CustomResource):
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            The OIDC provider does not have to be a full OIDC provider, but it must expose
            OIDC discovery metadata at the "/.well-known/openid-configuration" endpoint.
            The discovery metadata must contain <span pulumi-lang-nodejs=""jwksUri"" pulumi-lang-dotnet=""JwksUri"" pulumi-lang-go=""jwksUri"" pulumi-lang-python=""jwks_uri"" pulumi-lang-yaml=""jwksUri"" pulumi-lang-java=""jwksUri"" pulumi-lang-hcl=""jwks_uri"">"jwksUri"</span>, which points to the JSON Web
@@ -716,7 +743,7 @@ class IamV1FederatedCredentials(pulumi.CustomResource):
         :
 
            Timestamp indicating when the resource was last updated.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "updated_at")

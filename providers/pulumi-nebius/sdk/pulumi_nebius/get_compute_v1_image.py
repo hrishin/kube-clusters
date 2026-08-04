@@ -27,7 +27,7 @@ class GetComputeV1ImageResult:
     """
     A collection of values returned by getComputeV1Image.
     """
-    def __init__(__self__, cpu_architecture=None, created_at=None, description=None, id=None, image_family=None, image_family_human_readable=None, labels=None, metadata=None, name=None, parent_id=None, recommended_platforms=None, resource_version=None, source_disk_id=None, source_disk_snapshot_id=None, source_storage=None, status=None, unsupported_platforms=None, updated_at=None, version=None):
+    def __init__(__self__, cpu_architecture=None, created_at=None, description=None, id=None, image_family=None, image_family_human_readable=None, labels=None, metadata=None, name=None, parent_id=None, recommended_platforms=None, resource_version=None, source_disk_id=None, source_disk_snapshot_id=None, source_storage=None, status=None, unsupported_platforms=None, unsupported_presets=None, updated_at=None, version=None):
         if cpu_architecture and not isinstance(cpu_architecture, str):
             raise TypeError("Expected argument 'cpu_architecture' to be a str")
         pulumi.set(__self__, "cpu_architecture", cpu_architecture)
@@ -79,6 +79,9 @@ class GetComputeV1ImageResult:
         if unsupported_platforms and not isinstance(unsupported_platforms, dict):
             raise TypeError("Expected argument 'unsupported_platforms' to be a dict")
         pulumi.set(__self__, "unsupported_platforms", unsupported_platforms)
+        if unsupported_presets and not isinstance(unsupported_presets, list):
+            raise TypeError("Expected argument 'unsupported_presets' to be a list")
+        pulumi.set(__self__, "unsupported_presets", unsupported_presets)
         if updated_at and not isinstance(updated_at, str):
             raise TypeError("Expected argument 'updated_at' to be a str")
         pulumi.set(__self__, "updated_at", updated_at)
@@ -172,6 +175,11 @@ class GetComputeV1ImageResult:
         return pulumi.get(self, "unsupported_platforms")
 
     @_builtins.property
+    @pulumi.getter(name="unsupportedPresets")
+    def unsupported_presets(self) -> Sequence['outputs.GetComputeV1ImageUnsupportedPresetResult']:
+        return pulumi.get(self, "unsupported_presets")
+
+    @_builtins.property
     @pulumi.getter(name="updatedAt")
     def updated_at(self) -> _builtins.str:
         return pulumi.get(self, "updated_at")
@@ -205,6 +213,7 @@ class AwaitableGetComputeV1ImageResult(GetComputeV1ImageResult):
             source_storage=self.source_storage,
             status=self.status,
             unsupported_platforms=self.unsupported_platforms,
+            unsupported_presets=self.unsupported_presets,
             updated_at=self.updated_at,
             version=self.version)
 
@@ -241,11 +250,12 @@ def get_compute_v1_image(id: Optional[_builtins.str] = None,
         source_storage=pulumi.get(__ret__, 'source_storage'),
         status=pulumi.get(__ret__, 'status'),
         unsupported_platforms=pulumi.get(__ret__, 'unsupported_platforms'),
+        unsupported_presets=pulumi.get(__ret__, 'unsupported_presets'),
         updated_at=pulumi.get(__ret__, 'updated_at'),
         version=pulumi.get(__ret__, 'version'))
-def get_compute_v1_image_output(id: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
-                                name: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
-                                parent_id: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
+def get_compute_v1_image_output(id: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
+                                name: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
+                                parent_id: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
                                 opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetComputeV1ImageResult]:
     """
     Use this data source to access information about an existing resource.
@@ -274,5 +284,6 @@ def get_compute_v1_image_output(id: Optional[pulumi.Input[Optional[_builtins.str
         source_storage=pulumi.get(__response__, 'source_storage'),
         status=pulumi.get(__response__, 'status'),
         unsupported_platforms=pulumi.get(__response__, 'unsupported_platforms'),
+        unsupported_presets=pulumi.get(__response__, 'unsupported_presets'),
         updated_at=pulumi.get(__response__, 'updated_at'),
         version=pulumi.get(__response__, 'version')))

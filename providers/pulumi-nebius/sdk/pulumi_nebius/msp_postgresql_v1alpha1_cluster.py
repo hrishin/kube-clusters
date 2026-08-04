@@ -24,32 +24,31 @@ class MspPostgresqlV1alpha1ClusterArgs:
                  bootstrap: pulumi.Input['MspPostgresqlV1alpha1ClusterBootstrapArgs'],
                  config: pulumi.Input['MspPostgresqlV1alpha1ClusterConfigArgs'],
                  network_id: pulumi.Input[_builtins.str],
-                 parent_id: pulumi.Input[_builtins.str],
-                 backup: Optional[pulumi.Input['MspPostgresqlV1alpha1ClusterBackupArgs']] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 metadata: Optional[pulumi.Input['MspPostgresqlV1alpha1ClusterMetadataArgs']] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 sensitive: Optional[pulumi.Input['MspPostgresqlV1alpha1ClusterSensitiveArgs']] = None):
+                 backup: pulumi.Input[Optional['MspPostgresqlV1alpha1ClusterBackupArgs']] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 metadata: pulumi.Input[Optional['MspPostgresqlV1alpha1ClusterMetadataArgs']] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 sensitive: pulumi.Input[Optional['MspPostgresqlV1alpha1ClusterSensitiveArgs']] = None):
         """
         The set of arguments for constructing a MspPostgresqlV1alpha1Cluster resource.
 
         :param pulumi.Input[_builtins.str] network_id: Network ID in which the cluster is created.
-        :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
         :param pulumi.Input[_builtins.str] description: Description of the PostgreSQL cluster.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels associated with the resource.
         :param pulumi.Input['MspPostgresqlV1alpha1ClusterMetadataArgs'] metadata: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
+        :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
         :param pulumi.Input['MspPostgresqlV1alpha1ClusterSensitiveArgs'] sensitive: This object mirrors the structure of the resource, providing view on the resource's [write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral/write-only) fields. It is a preferred way to define such fields as they are not stored in the state file. To use any field in write-only mode, do not set it in the main resource, instead set it in the <span pulumi-lang-nodejs="`sensitive`" pulumi-lang-dotnet="`Sensitive`" pulumi-lang-go="`sensitive`" pulumi-lang-python="`sensitive`" pulumi-lang-yaml="`sensitive`" pulumi-lang-java="`sensitive`" pulumi-lang-hcl="`sensitive`">`sensitive`</span> object. Setting the field in the main resource will overwrite the field in the <span pulumi-lang-nodejs="`sensitive`" pulumi-lang-dotnet="`Sensitive`" pulumi-lang-go="`sensitive`" pulumi-lang-python="`sensitive`" pulumi-lang-yaml="`sensitive`" pulumi-lang-java="`sensitive`" pulumi-lang-hcl="`sensitive`">`sensitive`</span> object at merging.
         """
         pulumi.set(__self__, "bootstrap", bootstrap)
         pulumi.set(__self__, "config", config)
         pulumi.set(__self__, "network_id", network_id)
-        pulumi.set(__self__, "parent_id", parent_id)
         if backup is not None:
             pulumi.set(__self__, "backup", backup)
         if description is not None:
@@ -60,6 +59,8 @@ class MspPostgresqlV1alpha1ClusterArgs:
             pulumi.set(__self__, "metadata", metadata)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if parent_id is not None:
+            pulumi.set(__self__, "parent_id", parent_id)
         if sensitive is not None:
             pulumi.set(__self__, "sensitive", sensitive)
 
@@ -94,122 +95,124 @@ class MspPostgresqlV1alpha1ClusterArgs:
         pulumi.set(self, "network_id", value)
 
     @_builtins.property
-    @pulumi.getter(name="parentId")
-    def parent_id(self) -> pulumi.Input[_builtins.str]:
-        """
-        Identifier of the parent resource to which the resource belongs.
-        """
-        return pulumi.get(self, "parent_id")
-
-    @parent_id.setter
-    def parent_id(self, value: pulumi.Input[_builtins.str]):
-        pulumi.set(self, "parent_id", value)
-
-    @_builtins.property
     @pulumi.getter
-    def backup(self) -> Optional[pulumi.Input['MspPostgresqlV1alpha1ClusterBackupArgs']]:
+    def backup(self) -> pulumi.Input[Optional['MspPostgresqlV1alpha1ClusterBackupArgs']]:
         return pulumi.get(self, "backup")
 
     @backup.setter
-    def backup(self, value: Optional[pulumi.Input['MspPostgresqlV1alpha1ClusterBackupArgs']]):
+    def backup(self, value: pulumi.Input[Optional['MspPostgresqlV1alpha1ClusterBackupArgs']]):
         pulumi.set(self, "backup", value)
 
     @_builtins.property
     @pulumi.getter
-    def description(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def description(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Description of the PostgreSQL cluster.
         """
         return pulumi.get(self, "description")
 
     @description.setter
-    def description(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def description(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "description", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels associated with the resource.
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
     @pulumi.getter
-    def metadata(self) -> Optional[pulumi.Input['MspPostgresqlV1alpha1ClusterMetadataArgs']]:
+    def metadata(self) -> pulumi.Input[Optional['MspPostgresqlV1alpha1ClusterMetadataArgs']]:
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Common resource metadata.
         """
         return pulumi.get(self, "metadata")
 
     @metadata.setter
-    def metadata(self, value: Optional[pulumi.Input['MspPostgresqlV1alpha1ClusterMetadataArgs']]):
+    def metadata(self, value: pulumi.Input[Optional['MspPostgresqlV1alpha1ClusterMetadataArgs']]):
         pulumi.set(self, "metadata", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Human readable name for the resource.
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
+    @pulumi.getter(name="parentId")
+    def parent_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Identifier of the parent resource to which the resource belongs.
+        """
+        return pulumi.get(self, "parent_id")
+
+    @parent_id.setter
+    def parent_id(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "parent_id", value)
+
+    @_builtins.property
     @pulumi.getter
-    def sensitive(self) -> Optional[pulumi.Input['MspPostgresqlV1alpha1ClusterSensitiveArgs']]:
+    def sensitive(self) -> pulumi.Input[Optional['MspPostgresqlV1alpha1ClusterSensitiveArgs']]:
         """
         This object mirrors the structure of the resource, providing view on the resource's [write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral/write-only) fields. It is a preferred way to define such fields as they are not stored in the state file. To use any field in write-only mode, do not set it in the main resource, instead set it in the <span pulumi-lang-nodejs="`sensitive`" pulumi-lang-dotnet="`Sensitive`" pulumi-lang-go="`sensitive`" pulumi-lang-python="`sensitive`" pulumi-lang-yaml="`sensitive`" pulumi-lang-java="`sensitive`" pulumi-lang-hcl="`sensitive`">`sensitive`</span> object. Setting the field in the main resource will overwrite the field in the <span pulumi-lang-nodejs="`sensitive`" pulumi-lang-dotnet="`Sensitive`" pulumi-lang-go="`sensitive`" pulumi-lang-python="`sensitive`" pulumi-lang-yaml="`sensitive`" pulumi-lang-java="`sensitive`" pulumi-lang-hcl="`sensitive`">`sensitive`</span> object at merging.
         """
         return pulumi.get(self, "sensitive")
 
     @sensitive.setter
-    def sensitive(self, value: Optional[pulumi.Input['MspPostgresqlV1alpha1ClusterSensitiveArgs']]):
+    def sensitive(self, value: pulumi.Input[Optional['MspPostgresqlV1alpha1ClusterSensitiveArgs']]):
         pulumi.set(self, "sensitive", value)
 
 
 @pulumi.input_type
 class _MspPostgresqlV1alpha1ClusterState:
     def __init__(__self__, *,
-                 backup: Optional[pulumi.Input['MspPostgresqlV1alpha1ClusterBackupArgs']] = None,
-                 bootstrap: Optional[pulumi.Input['MspPostgresqlV1alpha1ClusterBootstrapArgs']] = None,
-                 config: Optional[pulumi.Input['MspPostgresqlV1alpha1ClusterConfigArgs']] = None,
-                 created_at: Optional[pulumi.Input[_builtins.str]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 metadata: Optional[pulumi.Input['MspPostgresqlV1alpha1ClusterMetadataArgs']] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 network_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 resource_version: Optional[pulumi.Input[_builtins.float]] = None,
-                 sensitive: Optional[pulumi.Input['MspPostgresqlV1alpha1ClusterSensitiveArgs']] = None,
-                 status: Optional[pulumi.Input['MspPostgresqlV1alpha1ClusterStatusArgs']] = None,
-                 updated_at: Optional[pulumi.Input[_builtins.str]] = None):
+                 backup: pulumi.Input[Optional['MspPostgresqlV1alpha1ClusterBackupArgs']] = None,
+                 bootstrap: pulumi.Input[Optional['MspPostgresqlV1alpha1ClusterBootstrapArgs']] = None,
+                 config: pulumi.Input[Optional['MspPostgresqlV1alpha1ClusterConfigArgs']] = None,
+                 created_at: pulumi.Input[Optional[_builtins.str]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 labels_all: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 metadata: pulumi.Input[Optional['MspPostgresqlV1alpha1ClusterMetadataArgs']] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 network_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 resource_version: pulumi.Input[Optional[_builtins.float]] = None,
+                 sensitive: pulumi.Input[Optional['MspPostgresqlV1alpha1ClusterSensitiveArgs']] = None,
+                 status: pulumi.Input[Optional['MspPostgresqlV1alpha1ClusterStatusArgs']] = None,
+                 updated_at: pulumi.Input[Optional[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering MspPostgresqlV1alpha1Cluster resources.
 
         :param pulumi.Input[_builtins.str] created_at: :
                
                   Timestamp indicating when the resource was created.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param pulumi.Input[_builtins.str] description: Description of the PostgreSQL cluster.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels associated with the resource.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels_all: Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
         :param pulumi.Input['MspPostgresqlV1alpha1ClusterMetadataArgs'] metadata: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
         :param pulumi.Input[_builtins.str] network_id: Network ID in which the cluster is created.
@@ -224,7 +227,7 @@ class _MspPostgresqlV1alpha1ClusterState:
         :param pulumi.Input[_builtins.str] updated_at: :
                
                   Timestamp indicating when the resource was last updated.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         if backup is not None:
@@ -239,6 +242,8 @@ class _MspPostgresqlV1alpha1ClusterState:
             pulumi.set(__self__, "description", description)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
+        if labels_all is not None:
+            pulumi.set(__self__, "labels_all", labels_all)
         if metadata is not None:
             pulumi.set(__self__, "metadata", metadata)
         if name is not None:
@@ -258,126 +263,138 @@ class _MspPostgresqlV1alpha1ClusterState:
 
     @_builtins.property
     @pulumi.getter
-    def backup(self) -> Optional[pulumi.Input['MspPostgresqlV1alpha1ClusterBackupArgs']]:
+    def backup(self) -> pulumi.Input[Optional['MspPostgresqlV1alpha1ClusterBackupArgs']]:
         return pulumi.get(self, "backup")
 
     @backup.setter
-    def backup(self, value: Optional[pulumi.Input['MspPostgresqlV1alpha1ClusterBackupArgs']]):
+    def backup(self, value: pulumi.Input[Optional['MspPostgresqlV1alpha1ClusterBackupArgs']]):
         pulumi.set(self, "backup", value)
 
     @_builtins.property
     @pulumi.getter
-    def bootstrap(self) -> Optional[pulumi.Input['MspPostgresqlV1alpha1ClusterBootstrapArgs']]:
+    def bootstrap(self) -> pulumi.Input[Optional['MspPostgresqlV1alpha1ClusterBootstrapArgs']]:
         return pulumi.get(self, "bootstrap")
 
     @bootstrap.setter
-    def bootstrap(self, value: Optional[pulumi.Input['MspPostgresqlV1alpha1ClusterBootstrapArgs']]):
+    def bootstrap(self, value: pulumi.Input[Optional['MspPostgresqlV1alpha1ClusterBootstrapArgs']]):
         pulumi.set(self, "bootstrap", value)
 
     @_builtins.property
     @pulumi.getter
-    def config(self) -> Optional[pulumi.Input['MspPostgresqlV1alpha1ClusterConfigArgs']]:
+    def config(self) -> pulumi.Input[Optional['MspPostgresqlV1alpha1ClusterConfigArgs']]:
         return pulumi.get(self, "config")
 
     @config.setter
-    def config(self, value: Optional[pulumi.Input['MspPostgresqlV1alpha1ClusterConfigArgs']]):
+    def config(self, value: pulumi.Input[Optional['MspPostgresqlV1alpha1ClusterConfigArgs']]):
         pulumi.set(self, "config", value)
 
     @_builtins.property
     @pulumi.getter(name="createdAt")
-    def created_at(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def created_at(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
            Timestamp indicating when the resource was created.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "created_at")
 
     @created_at.setter
-    def created_at(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def created_at(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "created_at", value)
 
     @_builtins.property
     @pulumi.getter
-    def description(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def description(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Description of the PostgreSQL cluster.
         """
         return pulumi.get(self, "description")
 
     @description.setter
-    def description(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def description(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "description", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels associated with the resource.
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
+    @pulumi.getter(name="labelsAll")
+    def labels_all(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
+        """
+        return pulumi.get(self, "labels_all")
+
+    @labels_all.setter
+    def labels_all(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "labels_all", value)
+
+    @_builtins.property
     @pulumi.getter
-    def metadata(self) -> Optional[pulumi.Input['MspPostgresqlV1alpha1ClusterMetadataArgs']]:
+    def metadata(self) -> pulumi.Input[Optional['MspPostgresqlV1alpha1ClusterMetadataArgs']]:
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Common resource metadata.
         """
         return pulumi.get(self, "metadata")
 
     @metadata.setter
-    def metadata(self, value: Optional[pulumi.Input['MspPostgresqlV1alpha1ClusterMetadataArgs']]):
+    def metadata(self, value: pulumi.Input[Optional['MspPostgresqlV1alpha1ClusterMetadataArgs']]):
         pulumi.set(self, "metadata", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Human readable name for the resource.
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="networkId")
-    def network_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def network_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Network ID in which the cluster is created.
         """
         return pulumi.get(self, "network_id")
 
     @network_id.setter
-    def network_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def network_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "network_id", value)
 
     @_builtins.property
     @pulumi.getter(name="parentId")
-    def parent_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def parent_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Identifier of the parent resource to which the resource belongs.
         """
         return pulumi.get(self, "parent_id")
 
     @parent_id.setter
-    def parent_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def parent_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "parent_id", value)
 
     @_builtins.property
     @pulumi.getter(name="resourceVersion")
-    def resource_version(self) -> Optional[pulumi.Input[_builtins.float]]:
+    def resource_version(self) -> pulumi.Input[Optional[_builtins.float]]:
         """
         :
 
@@ -389,44 +406,44 @@ class _MspPostgresqlV1alpha1ClusterState:
         return pulumi.get(self, "resource_version")
 
     @resource_version.setter
-    def resource_version(self, value: Optional[pulumi.Input[_builtins.float]]):
+    def resource_version(self, value: pulumi.Input[Optional[_builtins.float]]):
         pulumi.set(self, "resource_version", value)
 
     @_builtins.property
     @pulumi.getter
-    def sensitive(self) -> Optional[pulumi.Input['MspPostgresqlV1alpha1ClusterSensitiveArgs']]:
+    def sensitive(self) -> pulumi.Input[Optional['MspPostgresqlV1alpha1ClusterSensitiveArgs']]:
         """
         This object mirrors the structure of the resource, providing view on the resource's [write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral/write-only) fields. It is a preferred way to define such fields as they are not stored in the state file. To use any field in write-only mode, do not set it in the main resource, instead set it in the <span pulumi-lang-nodejs="`sensitive`" pulumi-lang-dotnet="`Sensitive`" pulumi-lang-go="`sensitive`" pulumi-lang-python="`sensitive`" pulumi-lang-yaml="`sensitive`" pulumi-lang-java="`sensitive`" pulumi-lang-hcl="`sensitive`">`sensitive`</span> object. Setting the field in the main resource will overwrite the field in the <span pulumi-lang-nodejs="`sensitive`" pulumi-lang-dotnet="`Sensitive`" pulumi-lang-go="`sensitive`" pulumi-lang-python="`sensitive`" pulumi-lang-yaml="`sensitive`" pulumi-lang-java="`sensitive`" pulumi-lang-hcl="`sensitive`">`sensitive`</span> object at merging.
         """
         return pulumi.get(self, "sensitive")
 
     @sensitive.setter
-    def sensitive(self, value: Optional[pulumi.Input['MspPostgresqlV1alpha1ClusterSensitiveArgs']]):
+    def sensitive(self, value: pulumi.Input[Optional['MspPostgresqlV1alpha1ClusterSensitiveArgs']]):
         pulumi.set(self, "sensitive", value)
 
     @_builtins.property
     @pulumi.getter
-    def status(self) -> Optional[pulumi.Input['MspPostgresqlV1alpha1ClusterStatusArgs']]:
+    def status(self) -> pulumi.Input[Optional['MspPostgresqlV1alpha1ClusterStatusArgs']]:
         return pulumi.get(self, "status")
 
     @status.setter
-    def status(self, value: Optional[pulumi.Input['MspPostgresqlV1alpha1ClusterStatusArgs']]):
+    def status(self, value: pulumi.Input[Optional['MspPostgresqlV1alpha1ClusterStatusArgs']]):
         pulumi.set(self, "status", value)
 
     @_builtins.property
     @pulumi.getter(name="updatedAt")
-    def updated_at(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def updated_at(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
            Timestamp indicating when the resource was last updated.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "updated_at")
 
     @updated_at.setter
-    def updated_at(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def updated_at(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "updated_at", value)
 
 
@@ -436,16 +453,16 @@ class MspPostgresqlV1alpha1Cluster(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 backup: Optional[pulumi.Input[Union['MspPostgresqlV1alpha1ClusterBackupArgs', 'MspPostgresqlV1alpha1ClusterBackupArgsDict']]] = None,
-                 bootstrap: Optional[pulumi.Input[Union['MspPostgresqlV1alpha1ClusterBootstrapArgs', 'MspPostgresqlV1alpha1ClusterBootstrapArgsDict']]] = None,
-                 config: Optional[pulumi.Input[Union['MspPostgresqlV1alpha1ClusterConfigArgs', 'MspPostgresqlV1alpha1ClusterConfigArgsDict']]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 metadata: Optional[pulumi.Input[Union['MspPostgresqlV1alpha1ClusterMetadataArgs', 'MspPostgresqlV1alpha1ClusterMetadataArgsDict']]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 network_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 sensitive: Optional[pulumi.Input[Union['MspPostgresqlV1alpha1ClusterSensitiveArgs', 'MspPostgresqlV1alpha1ClusterSensitiveArgsDict']]] = None,
+                 backup: pulumi.Input[Optional[Union['MspPostgresqlV1alpha1ClusterBackupArgs', 'MspPostgresqlV1alpha1ClusterBackupArgsDict']]] = None,
+                 bootstrap: pulumi.Input[Optional[Union['MspPostgresqlV1alpha1ClusterBootstrapArgs', 'MspPostgresqlV1alpha1ClusterBootstrapArgsDict']]] = None,
+                 config: pulumi.Input[Optional[Union['MspPostgresqlV1alpha1ClusterConfigArgs', 'MspPostgresqlV1alpha1ClusterConfigArgsDict']]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 metadata: pulumi.Input[Optional[Union['MspPostgresqlV1alpha1ClusterMetadataArgs', 'MspPostgresqlV1alpha1ClusterMetadataArgsDict']]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 network_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 sensitive: pulumi.Input[Optional[Union['MspPostgresqlV1alpha1ClusterSensitiveArgs', 'MspPostgresqlV1alpha1ClusterSensitiveArgsDict']]] = None,
                  __props__=None):
         """
         Create a MspPostgresqlV1alpha1Cluster resource with the given unique name, props, and options.
@@ -456,8 +473,8 @@ class MspPostgresqlV1alpha1Cluster(pulumi.CustomResource):
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels associated with the resource.
         :param pulumi.Input[Union['MspPostgresqlV1alpha1ClusterMetadataArgs', 'MspPostgresqlV1alpha1ClusterMetadataArgsDict']] metadata: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
         :param pulumi.Input[_builtins.str] network_id: Network ID in which the cluster is created.
@@ -488,16 +505,16 @@ class MspPostgresqlV1alpha1Cluster(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 backup: Optional[pulumi.Input[Union['MspPostgresqlV1alpha1ClusterBackupArgs', 'MspPostgresqlV1alpha1ClusterBackupArgsDict']]] = None,
-                 bootstrap: Optional[pulumi.Input[Union['MspPostgresqlV1alpha1ClusterBootstrapArgs', 'MspPostgresqlV1alpha1ClusterBootstrapArgsDict']]] = None,
-                 config: Optional[pulumi.Input[Union['MspPostgresqlV1alpha1ClusterConfigArgs', 'MspPostgresqlV1alpha1ClusterConfigArgsDict']]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 metadata: Optional[pulumi.Input[Union['MspPostgresqlV1alpha1ClusterMetadataArgs', 'MspPostgresqlV1alpha1ClusterMetadataArgsDict']]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 network_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 sensitive: Optional[pulumi.Input[Union['MspPostgresqlV1alpha1ClusterSensitiveArgs', 'MspPostgresqlV1alpha1ClusterSensitiveArgsDict']]] = None,
+                 backup: pulumi.Input[Optional[Union['MspPostgresqlV1alpha1ClusterBackupArgs', 'MspPostgresqlV1alpha1ClusterBackupArgsDict']]] = None,
+                 bootstrap: pulumi.Input[Optional[Union['MspPostgresqlV1alpha1ClusterBootstrapArgs', 'MspPostgresqlV1alpha1ClusterBootstrapArgsDict']]] = None,
+                 config: pulumi.Input[Optional[Union['MspPostgresqlV1alpha1ClusterConfigArgs', 'MspPostgresqlV1alpha1ClusterConfigArgsDict']]] = None,
+                 description: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 metadata: pulumi.Input[Optional[Union['MspPostgresqlV1alpha1ClusterMetadataArgs', 'MspPostgresqlV1alpha1ClusterMetadataArgsDict']]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 network_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 sensitive: pulumi.Input[Optional[Union['MspPostgresqlV1alpha1ClusterSensitiveArgs', 'MspPostgresqlV1alpha1ClusterSensitiveArgsDict']]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -521,11 +538,10 @@ class MspPostgresqlV1alpha1Cluster(pulumi.CustomResource):
             if network_id is None and not opts.urn:
                 raise TypeError("Missing required property 'network_id'")
             __props__.__dict__["network_id"] = network_id
-            if parent_id is None and not opts.urn:
-                raise TypeError("Missing required property 'parent_id'")
             __props__.__dict__["parent_id"] = parent_id
             __props__.__dict__["sensitive"] = None if sensitive is None else pulumi.Output.secret(sensitive)
             __props__.__dict__["created_at"] = None
+            __props__.__dict__["labels_all"] = None
             __props__.__dict__["resource_version"] = None
             __props__.__dict__["status"] = None
             __props__.__dict__["updated_at"] = None
@@ -542,20 +558,21 @@ class MspPostgresqlV1alpha1Cluster(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            backup: Optional[pulumi.Input[Union['MspPostgresqlV1alpha1ClusterBackupArgs', 'MspPostgresqlV1alpha1ClusterBackupArgsDict']]] = None,
-            bootstrap: Optional[pulumi.Input[Union['MspPostgresqlV1alpha1ClusterBootstrapArgs', 'MspPostgresqlV1alpha1ClusterBootstrapArgsDict']]] = None,
-            config: Optional[pulumi.Input[Union['MspPostgresqlV1alpha1ClusterConfigArgs', 'MspPostgresqlV1alpha1ClusterConfigArgsDict']]] = None,
-            created_at: Optional[pulumi.Input[_builtins.str]] = None,
-            description: Optional[pulumi.Input[_builtins.str]] = None,
-            labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            metadata: Optional[pulumi.Input[Union['MspPostgresqlV1alpha1ClusterMetadataArgs', 'MspPostgresqlV1alpha1ClusterMetadataArgsDict']]] = None,
-            name: Optional[pulumi.Input[_builtins.str]] = None,
-            network_id: Optional[pulumi.Input[_builtins.str]] = None,
-            parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-            resource_version: Optional[pulumi.Input[_builtins.float]] = None,
-            sensitive: Optional[pulumi.Input[Union['MspPostgresqlV1alpha1ClusterSensitiveArgs', 'MspPostgresqlV1alpha1ClusterSensitiveArgsDict']]] = None,
-            status: Optional[pulumi.Input[Union['MspPostgresqlV1alpha1ClusterStatusArgs', 'MspPostgresqlV1alpha1ClusterStatusArgsDict']]] = None,
-            updated_at: Optional[pulumi.Input[_builtins.str]] = None) -> 'MspPostgresqlV1alpha1Cluster':
+            backup: pulumi.Input[Optional[Union['MspPostgresqlV1alpha1ClusterBackupArgs', 'MspPostgresqlV1alpha1ClusterBackupArgsDict']]] = None,
+            bootstrap: pulumi.Input[Optional[Union['MspPostgresqlV1alpha1ClusterBootstrapArgs', 'MspPostgresqlV1alpha1ClusterBootstrapArgsDict']]] = None,
+            config: pulumi.Input[Optional[Union['MspPostgresqlV1alpha1ClusterConfigArgs', 'MspPostgresqlV1alpha1ClusterConfigArgsDict']]] = None,
+            created_at: pulumi.Input[Optional[_builtins.str]] = None,
+            description: pulumi.Input[Optional[_builtins.str]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            labels_all: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            metadata: pulumi.Input[Optional[Union['MspPostgresqlV1alpha1ClusterMetadataArgs', 'MspPostgresqlV1alpha1ClusterMetadataArgsDict']]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            network_id: pulumi.Input[Optional[_builtins.str]] = None,
+            parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+            resource_version: pulumi.Input[Optional[_builtins.float]] = None,
+            sensitive: pulumi.Input[Optional[Union['MspPostgresqlV1alpha1ClusterSensitiveArgs', 'MspPostgresqlV1alpha1ClusterSensitiveArgsDict']]] = None,
+            status: pulumi.Input[Optional[Union['MspPostgresqlV1alpha1ClusterStatusArgs', 'MspPostgresqlV1alpha1ClusterStatusArgsDict']]] = None,
+            updated_at: pulumi.Input[Optional[_builtins.str]] = None) -> 'MspPostgresqlV1alpha1Cluster':
         """
         Get an existing MspPostgresqlV1alpha1Cluster resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -566,14 +583,15 @@ class MspPostgresqlV1alpha1Cluster(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] created_at: :
                
                   Timestamp indicating when the resource was created.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param pulumi.Input[_builtins.str] description: Description of the PostgreSQL cluster.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels associated with the resource.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels_all: Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
         :param pulumi.Input[Union['MspPostgresqlV1alpha1ClusterMetadataArgs', 'MspPostgresqlV1alpha1ClusterMetadataArgsDict']] metadata: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
         :param pulumi.Input[_builtins.str] network_id: Network ID in which the cluster is created.
@@ -588,7 +606,7 @@ class MspPostgresqlV1alpha1Cluster(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] updated_at: :
                
                   Timestamp indicating when the resource was last updated.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
@@ -601,6 +619,7 @@ class MspPostgresqlV1alpha1Cluster(pulumi.CustomResource):
         __props__.__dict__["created_at"] = created_at
         __props__.__dict__["description"] = description
         __props__.__dict__["labels"] = labels
+        __props__.__dict__["labels_all"] = labels_all
         __props__.__dict__["metadata"] = metadata
         __props__.__dict__["name"] = name
         __props__.__dict__["network_id"] = network_id
@@ -633,7 +652,7 @@ class MspPostgresqlV1alpha1Cluster(pulumi.CustomResource):
         :
 
            Timestamp indicating when the resource was created.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "created_at")
@@ -655,13 +674,21 @@ class MspPostgresqlV1alpha1Cluster(pulumi.CustomResource):
         return pulumi.get(self, "labels")
 
     @_builtins.property
+    @pulumi.getter(name="labelsAll")
+    def labels_all(self) -> pulumi.Output[Mapping[str, _builtins.str]]:
+        """
+        Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
+        """
+        return pulumi.get(self, "labels_all")
+
+    @_builtins.property
     @pulumi.getter
     def metadata(self) -> pulumi.Output['outputs.MspPostgresqlV1alpha1ClusterMetadata']:
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Common resource metadata.
         """
         return pulumi.get(self, "metadata")
@@ -723,7 +750,7 @@ class MspPostgresqlV1alpha1Cluster(pulumi.CustomResource):
         :
 
            Timestamp indicating when the resource was last updated.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "updated_at")

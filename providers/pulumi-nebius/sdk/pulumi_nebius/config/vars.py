@@ -50,6 +50,13 @@ class _ExportableConfig(types.ModuleType):
         return __config__.get('authTimeout')
 
     @_builtins.property
+    def default_labels(self) -> Optional[str]:
+        """
+        Labels to apply by default to managed resources that support labels. Resource labels override matching provider labels.
+        """
+        return __config__.get('defaultLabels')
+
+    @_builtins.property
     def domain(self) -> Optional[str]:
         """
         custom domain name (overrides domain_env)

@@ -20,24 +20,25 @@ __all__ = ['ProviderArgs', 'Provider']
 @pulumi.input_type
 class ProviderArgs:
     def __init__(__self__, *,
-                 address_options: Optional[pulumi.Input[Mapping[str, pulumi.Input['ProviderAddressOptionsArgs']]]] = None,
-                 address_template: Optional[pulumi.Input['ProviderAddressTemplateArgs']] = None,
-                 address_template_env: Optional[pulumi.Input[_builtins.str]] = None,
-                 auth_timeout: Optional[pulumi.Input[_builtins.str]] = None,
-                 domain: Optional[pulumi.Input[_builtins.str]] = None,
-                 domain_env: Optional[pulumi.Input[_builtins.str]] = None,
-                 impersonate_service_account_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 module_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 no_credentials: Optional[pulumi.Input[_builtins.bool]] = None,
-                 parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 per_retry_timeout: Optional[pulumi.Input[_builtins.str]] = None,
-                 profile: Optional[pulumi.Input['ProviderProfileArgs']] = None,
-                 resolvers: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 resolvers_env: Optional[pulumi.Input[_builtins.str]] = None,
-                 retries: Optional[pulumi.Input[_builtins.float]] = None,
-                 service_account: Optional[pulumi.Input['ProviderServiceAccountArgs']] = None,
-                 timeout: Optional[pulumi.Input[_builtins.str]] = None,
-                 token: Optional[pulumi.Input[_builtins.str]] = None,
+                 address_options: pulumi.Input[Optional[Mapping[str, pulumi.Input['ProviderAddressOptionsArgs']]]] = None,
+                 address_template: pulumi.Input[Optional['ProviderAddressTemplateArgs']] = None,
+                 address_template_env: pulumi.Input[Optional[_builtins.str]] = None,
+                 auth_timeout: pulumi.Input[Optional[_builtins.str]] = None,
+                 default_labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 domain: pulumi.Input[Optional[_builtins.str]] = None,
+                 domain_env: pulumi.Input[Optional[_builtins.str]] = None,
+                 impersonate_service_account_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 module_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 no_credentials: pulumi.Input[Optional[_builtins.bool]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 per_retry_timeout: pulumi.Input[Optional[_builtins.str]] = None,
+                 profile: pulumi.Input[Optional['ProviderProfileArgs']] = None,
+                 resolvers: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 resolvers_env: pulumi.Input[Optional[_builtins.str]] = None,
+                 retries: pulumi.Input[Optional[_builtins.float]] = None,
+                 service_account: pulumi.Input[Optional['ProviderServiceAccountArgs']] = None,
+                 timeout: pulumi.Input[Optional[_builtins.str]] = None,
+                 token: pulumi.Input[Optional[_builtins.str]] = None,
                  versioned_ephemeral_values: Optional[Any] = None):
         """
         The set of arguments for constructing a Provider resource.
@@ -46,6 +47,7 @@ class ProviderArgs:
         :param pulumi.Input['ProviderAddressTemplateArgs'] address_template: address template (overrides address_template_env)
         :param pulumi.Input[_builtins.str] address_template_env: env variable name to obtain address template in form of `FIND=REPLACE`
         :param pulumi.Input[_builtins.str] auth_timeout: timeout for each Nebius SDK request including authentication, default 15m0s, as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as <span pulumi-lang-nodejs="`300ms`" pulumi-lang-dotnet="`300ms`" pulumi-lang-go="`300ms`" pulumi-lang-python="`300ms`" pulumi-lang-yaml="`300ms`" pulumi-lang-java="`300ms`" pulumi-lang-hcl="`300ms`">`300ms`</span>, `-1.5h` or <span pulumi-lang-nodejs="`2h45m`" pulumi-lang-dotnet="`2h45m`" pulumi-lang-go="`2h45m`" pulumi-lang-python="`2h45m`" pulumi-lang-yaml="`2h45m`" pulumi-lang-java="`2h45m`" pulumi-lang-hcl="`2h45m`">`2h45m`</span>. Valid time units are <span pulumi-lang-nodejs="`ns`" pulumi-lang-dotnet="`Ns`" pulumi-lang-go="`ns`" pulumi-lang-python="`ns`" pulumi-lang-yaml="`ns`" pulumi-lang-java="`ns`" pulumi-lang-hcl="`ns`">`ns`</span>, <span pulumi-lang-nodejs="`us`" pulumi-lang-dotnet="`Us`" pulumi-lang-go="`us`" pulumi-lang-python="`us`" pulumi-lang-yaml="`us`" pulumi-lang-java="`us`" pulumi-lang-hcl="`us`">`us`</span> (or `µs`), <span pulumi-lang-nodejs="`ms`" pulumi-lang-dotnet="`Ms`" pulumi-lang-go="`ms`" pulumi-lang-python="`ms`" pulumi-lang-yaml="`ms`" pulumi-lang-java="`ms`" pulumi-lang-hcl="`ms`">`ms`</span>, <span pulumi-lang-nodejs="`s`" pulumi-lang-dotnet="`S`" pulumi-lang-go="`s`" pulumi-lang-python="`s`" pulumi-lang-yaml="`s`" pulumi-lang-java="`s`" pulumi-lang-hcl="`s`">`s`</span>, <span pulumi-lang-nodejs="`m`" pulumi-lang-dotnet="`M`" pulumi-lang-go="`m`" pulumi-lang-python="`m`" pulumi-lang-yaml="`m`" pulumi-lang-java="`m`" pulumi-lang-hcl="`m`">`m`</span>, <span pulumi-lang-nodejs="`h`" pulumi-lang-dotnet="`H`" pulumi-lang-go="`h`" pulumi-lang-python="`h`" pulumi-lang-yaml="`h`" pulumi-lang-java="`h`" pulumi-lang-hcl="`h`">`h`</span>, <span pulumi-lang-nodejs="`d`" pulumi-lang-dotnet="`D`" pulumi-lang-go="`d`" pulumi-lang-python="`d`" pulumi-lang-yaml="`d`" pulumi-lang-java="`d`" pulumi-lang-hcl="`d`">`d`</span>
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] default_labels: Labels to apply by default to managed resources that support labels. Resource labels override matching provider labels.
         :param pulumi.Input[_builtins.str] domain: custom domain name (overrides domain_env)
         :param pulumi.Input[_builtins.str] domain_env: env variable name to obtain custom domain name
         :param pulumi.Input[_builtins.str] impersonate_service_account_id: Service account ID to impersonate.
@@ -70,6 +72,8 @@ class ProviderArgs:
             pulumi.set(__self__, "address_template_env", address_template_env)
         if auth_timeout is not None:
             pulumi.set(__self__, "auth_timeout", auth_timeout)
+        if default_labels is not None:
+            pulumi.set(__self__, "default_labels", default_labels)
         if domain is not None:
             pulumi.set(__self__, "domain", domain)
         if domain_env is not None:
@@ -103,218 +107,230 @@ class ProviderArgs:
 
     @_builtins.property
     @pulumi.getter(name="addressOptions")
-    def address_options(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input['ProviderAddressOptionsArgs']]]]:
+    def address_options(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input['ProviderAddressOptionsArgs']]]]:
         """
         Set specific options for each address. Use "\\*" to set them for all addresses at once. Empty options will result in default TLS connection for this address, thus overriding "\\*".
         """
         return pulumi.get(self, "address_options")
 
     @address_options.setter
-    def address_options(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input['ProviderAddressOptionsArgs']]]]):
+    def address_options(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input['ProviderAddressOptionsArgs']]]]):
         pulumi.set(self, "address_options", value)
 
     @_builtins.property
     @pulumi.getter(name="addressTemplate")
-    def address_template(self) -> Optional[pulumi.Input['ProviderAddressTemplateArgs']]:
+    def address_template(self) -> pulumi.Input[Optional['ProviderAddressTemplateArgs']]:
         """
         address template (overrides address_template_env)
         """
         return pulumi.get(self, "address_template")
 
     @address_template.setter
-    def address_template(self, value: Optional[pulumi.Input['ProviderAddressTemplateArgs']]):
+    def address_template(self, value: pulumi.Input[Optional['ProviderAddressTemplateArgs']]):
         pulumi.set(self, "address_template", value)
 
     @_builtins.property
     @pulumi.getter(name="addressTemplateEnv")
-    def address_template_env(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def address_template_env(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         env variable name to obtain address template in form of `FIND=REPLACE`
         """
         return pulumi.get(self, "address_template_env")
 
     @address_template_env.setter
-    def address_template_env(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def address_template_env(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "address_template_env", value)
 
     @_builtins.property
     @pulumi.getter(name="authTimeout")
-    def auth_timeout(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def auth_timeout(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         timeout for each Nebius SDK request including authentication, default 15m0s, as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as <span pulumi-lang-nodejs="`300ms`" pulumi-lang-dotnet="`300ms`" pulumi-lang-go="`300ms`" pulumi-lang-python="`300ms`" pulumi-lang-yaml="`300ms`" pulumi-lang-java="`300ms`" pulumi-lang-hcl="`300ms`">`300ms`</span>, `-1.5h` or <span pulumi-lang-nodejs="`2h45m`" pulumi-lang-dotnet="`2h45m`" pulumi-lang-go="`2h45m`" pulumi-lang-python="`2h45m`" pulumi-lang-yaml="`2h45m`" pulumi-lang-java="`2h45m`" pulumi-lang-hcl="`2h45m`">`2h45m`</span>. Valid time units are <span pulumi-lang-nodejs="`ns`" pulumi-lang-dotnet="`Ns`" pulumi-lang-go="`ns`" pulumi-lang-python="`ns`" pulumi-lang-yaml="`ns`" pulumi-lang-java="`ns`" pulumi-lang-hcl="`ns`">`ns`</span>, <span pulumi-lang-nodejs="`us`" pulumi-lang-dotnet="`Us`" pulumi-lang-go="`us`" pulumi-lang-python="`us`" pulumi-lang-yaml="`us`" pulumi-lang-java="`us`" pulumi-lang-hcl="`us`">`us`</span> (or `µs`), <span pulumi-lang-nodejs="`ms`" pulumi-lang-dotnet="`Ms`" pulumi-lang-go="`ms`" pulumi-lang-python="`ms`" pulumi-lang-yaml="`ms`" pulumi-lang-java="`ms`" pulumi-lang-hcl="`ms`">`ms`</span>, <span pulumi-lang-nodejs="`s`" pulumi-lang-dotnet="`S`" pulumi-lang-go="`s`" pulumi-lang-python="`s`" pulumi-lang-yaml="`s`" pulumi-lang-java="`s`" pulumi-lang-hcl="`s`">`s`</span>, <span pulumi-lang-nodejs="`m`" pulumi-lang-dotnet="`M`" pulumi-lang-go="`m`" pulumi-lang-python="`m`" pulumi-lang-yaml="`m`" pulumi-lang-java="`m`" pulumi-lang-hcl="`m`">`m`</span>, <span pulumi-lang-nodejs="`h`" pulumi-lang-dotnet="`H`" pulumi-lang-go="`h`" pulumi-lang-python="`h`" pulumi-lang-yaml="`h`" pulumi-lang-java="`h`" pulumi-lang-hcl="`h`">`h`</span>, <span pulumi-lang-nodejs="`d`" pulumi-lang-dotnet="`D`" pulumi-lang-go="`d`" pulumi-lang-python="`d`" pulumi-lang-yaml="`d`" pulumi-lang-java="`d`" pulumi-lang-hcl="`d`">`d`</span>
         """
         return pulumi.get(self, "auth_timeout")
 
     @auth_timeout.setter
-    def auth_timeout(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def auth_timeout(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "auth_timeout", value)
 
     @_builtins.property
+    @pulumi.getter(name="defaultLabels")
+    def default_labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        Labels to apply by default to managed resources that support labels. Resource labels override matching provider labels.
+        """
+        return pulumi.get(self, "default_labels")
+
+    @default_labels.setter
+    def default_labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "default_labels", value)
+
+    @_builtins.property
     @pulumi.getter
-    def domain(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def domain(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         custom domain name (overrides domain_env)
         """
         return pulumi.get(self, "domain")
 
     @domain.setter
-    def domain(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def domain(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "domain", value)
 
     @_builtins.property
     @pulumi.getter(name="domainEnv")
-    def domain_env(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def domain_env(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         env variable name to obtain custom domain name
         """
         return pulumi.get(self, "domain_env")
 
     @domain_env.setter
-    def domain_env(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def domain_env(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "domain_env", value)
 
     @_builtins.property
     @pulumi.getter(name="impersonateServiceAccountId")
-    def impersonate_service_account_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def impersonate_service_account_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Service account ID to impersonate.
         """
         return pulumi.get(self, "impersonate_service_account_id")
 
     @impersonate_service_account_id.setter
-    def impersonate_service_account_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def impersonate_service_account_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "impersonate_service_account_id", value)
 
     @_builtins.property
     @pulumi.getter(name="moduleName")
-    def module_name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def module_name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         it is suggested to set this value to your module name if the provider is initialized in one, does not affect any behaviors
         """
         return pulumi.get(self, "module_name")
 
     @module_name.setter
-    def module_name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def module_name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "module_name", value)
 
     @_builtins.property
     @pulumi.getter(name="noCredentials")
-    def no_credentials(self) -> Optional[pulumi.Input[_builtins.bool]]:
+    def no_credentials(self) -> pulumi.Input[Optional[_builtins.bool]]:
         """
         do not authenticate
         """
         return pulumi.get(self, "no_credentials")
 
     @no_credentials.setter
-    def no_credentials(self, value: Optional[pulumi.Input[_builtins.bool]]):
+    def no_credentials(self, value: pulumi.Input[Optional[_builtins.bool]]):
         pulumi.set(self, "no_credentials", value)
 
     @_builtins.property
     @pulumi.getter(name="parentId")
-    def parent_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def parent_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Parent ID if it is not read from the profile, or if you want to overwrite it.
         """
         return pulumi.get(self, "parent_id")
 
     @parent_id.setter
-    def parent_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def parent_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "parent_id", value)
 
     @_builtins.property
     @pulumi.getter(name="perRetryTimeout")
-    def per_retry_timeout(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def per_retry_timeout(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         timeout for each Nebius SDK request retry, default 20s, as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as <span pulumi-lang-nodejs="`300ms`" pulumi-lang-dotnet="`300ms`" pulumi-lang-go="`300ms`" pulumi-lang-python="`300ms`" pulumi-lang-yaml="`300ms`" pulumi-lang-java="`300ms`" pulumi-lang-hcl="`300ms`">`300ms`</span>, `-1.5h` or <span pulumi-lang-nodejs="`2h45m`" pulumi-lang-dotnet="`2h45m`" pulumi-lang-go="`2h45m`" pulumi-lang-python="`2h45m`" pulumi-lang-yaml="`2h45m`" pulumi-lang-java="`2h45m`" pulumi-lang-hcl="`2h45m`">`2h45m`</span>. Valid time units are <span pulumi-lang-nodejs="`ns`" pulumi-lang-dotnet="`Ns`" pulumi-lang-go="`ns`" pulumi-lang-python="`ns`" pulumi-lang-yaml="`ns`" pulumi-lang-java="`ns`" pulumi-lang-hcl="`ns`">`ns`</span>, <span pulumi-lang-nodejs="`us`" pulumi-lang-dotnet="`Us`" pulumi-lang-go="`us`" pulumi-lang-python="`us`" pulumi-lang-yaml="`us`" pulumi-lang-java="`us`" pulumi-lang-hcl="`us`">`us`</span> (or `µs`), <span pulumi-lang-nodejs="`ms`" pulumi-lang-dotnet="`Ms`" pulumi-lang-go="`ms`" pulumi-lang-python="`ms`" pulumi-lang-yaml="`ms`" pulumi-lang-java="`ms`" pulumi-lang-hcl="`ms`">`ms`</span>, <span pulumi-lang-nodejs="`s`" pulumi-lang-dotnet="`S`" pulumi-lang-go="`s`" pulumi-lang-python="`s`" pulumi-lang-yaml="`s`" pulumi-lang-java="`s`" pulumi-lang-hcl="`s`">`s`</span>, <span pulumi-lang-nodejs="`m`" pulumi-lang-dotnet="`M`" pulumi-lang-go="`m`" pulumi-lang-python="`m`" pulumi-lang-yaml="`m`" pulumi-lang-java="`m`" pulumi-lang-hcl="`m`">`m`</span>, <span pulumi-lang-nodejs="`h`" pulumi-lang-dotnet="`H`" pulumi-lang-go="`h`" pulumi-lang-python="`h`" pulumi-lang-yaml="`h`" pulumi-lang-java="`h`" pulumi-lang-hcl="`h`">`h`</span>, <span pulumi-lang-nodejs="`d`" pulumi-lang-dotnet="`D`" pulumi-lang-go="`d`" pulumi-lang-python="`d`" pulumi-lang-yaml="`d`" pulumi-lang-java="`d`" pulumi-lang-hcl="`d`">`d`</span>
         """
         return pulumi.get(self, "per_retry_timeout")
 
     @per_retry_timeout.setter
-    def per_retry_timeout(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def per_retry_timeout(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "per_retry_timeout", value)
 
     @_builtins.property
     @pulumi.getter
-    def profile(self) -> Optional[pulumi.Input['ProviderProfileArgs']]:
+    def profile(self) -> pulumi.Input[Optional['ProviderProfileArgs']]:
         """
         Reads profile from the CLI config.
         """
         return pulumi.get(self, "profile")
 
     @profile.setter
-    def profile(self, value: Optional[pulumi.Input['ProviderProfileArgs']]):
+    def profile(self, value: pulumi.Input[Optional['ProviderProfileArgs']]):
         pulumi.set(self, "profile", value)
 
     @_builtins.property
     @pulumi.getter
-    def resolvers(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def resolvers(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         resolver map of type `[pattern|service_id]->address`
         """
         return pulumi.get(self, "resolvers")
 
     @resolvers.setter
-    def resolvers(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def resolvers(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "resolvers", value)
 
     @_builtins.property
     @pulumi.getter(name="resolversEnv")
-    def resolvers_env(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def resolvers_env(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         env variable name that holds resolver map (may be set alongside resolvers)
         """
         return pulumi.get(self, "resolvers_env")
 
     @resolvers_env.setter
-    def resolvers_env(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def resolvers_env(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "resolvers_env", value)
 
     @_builtins.property
     @pulumi.getter
-    def retries(self) -> Optional[pulumi.Input[_builtins.float]]:
+    def retries(self) -> pulumi.Input[Optional[_builtins.float]]:
         """
         number of retries for each Nebius SDK request, default 3
         """
         return pulumi.get(self, "retries")
 
     @retries.setter
-    def retries(self, value: Optional[pulumi.Input[_builtins.float]]):
+    def retries(self, value: pulumi.Input[Optional[_builtins.float]]):
         pulumi.set(self, "retries", value)
 
     @_builtins.property
     @pulumi.getter(name="serviceAccount")
-    def service_account(self) -> Optional[pulumi.Input['ProviderServiceAccountArgs']]:
+    def service_account(self) -> pulumi.Input[Optional['ProviderServiceAccountArgs']]:
         """
         sets service account credentials (is overridden by token)
         """
         return pulumi.get(self, "service_account")
 
     @service_account.setter
-    def service_account(self, value: Optional[pulumi.Input['ProviderServiceAccountArgs']]):
+    def service_account(self, value: pulumi.Input[Optional['ProviderServiceAccountArgs']]):
         pulumi.set(self, "service_account", value)
 
     @_builtins.property
     @pulumi.getter
-    def timeout(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def timeout(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         timeout for each Nebius SDK request, default 1m0s, as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as <span pulumi-lang-nodejs="`300ms`" pulumi-lang-dotnet="`300ms`" pulumi-lang-go="`300ms`" pulumi-lang-python="`300ms`" pulumi-lang-yaml="`300ms`" pulumi-lang-java="`300ms`" pulumi-lang-hcl="`300ms`">`300ms`</span>, `-1.5h` or <span pulumi-lang-nodejs="`2h45m`" pulumi-lang-dotnet="`2h45m`" pulumi-lang-go="`2h45m`" pulumi-lang-python="`2h45m`" pulumi-lang-yaml="`2h45m`" pulumi-lang-java="`2h45m`" pulumi-lang-hcl="`2h45m`">`2h45m`</span>. Valid time units are <span pulumi-lang-nodejs="`ns`" pulumi-lang-dotnet="`Ns`" pulumi-lang-go="`ns`" pulumi-lang-python="`ns`" pulumi-lang-yaml="`ns`" pulumi-lang-java="`ns`" pulumi-lang-hcl="`ns`">`ns`</span>, <span pulumi-lang-nodejs="`us`" pulumi-lang-dotnet="`Us`" pulumi-lang-go="`us`" pulumi-lang-python="`us`" pulumi-lang-yaml="`us`" pulumi-lang-java="`us`" pulumi-lang-hcl="`us`">`us`</span> (or `µs`), <span pulumi-lang-nodejs="`ms`" pulumi-lang-dotnet="`Ms`" pulumi-lang-go="`ms`" pulumi-lang-python="`ms`" pulumi-lang-yaml="`ms`" pulumi-lang-java="`ms`" pulumi-lang-hcl="`ms`">`ms`</span>, <span pulumi-lang-nodejs="`s`" pulumi-lang-dotnet="`S`" pulumi-lang-go="`s`" pulumi-lang-python="`s`" pulumi-lang-yaml="`s`" pulumi-lang-java="`s`" pulumi-lang-hcl="`s`">`s`</span>, <span pulumi-lang-nodejs="`m`" pulumi-lang-dotnet="`M`" pulumi-lang-go="`m`" pulumi-lang-python="`m`" pulumi-lang-yaml="`m`" pulumi-lang-java="`m`" pulumi-lang-hcl="`m`">`m`</span>, <span pulumi-lang-nodejs="`h`" pulumi-lang-dotnet="`H`" pulumi-lang-go="`h`" pulumi-lang-python="`h`" pulumi-lang-yaml="`h`" pulumi-lang-java="`h`" pulumi-lang-hcl="`h`">`h`</span>, <span pulumi-lang-nodejs="`d`" pulumi-lang-dotnet="`D`" pulumi-lang-go="`d`" pulumi-lang-python="`d`" pulumi-lang-yaml="`d`" pulumi-lang-java="`d`" pulumi-lang-hcl="`d`">`d`</span>
         """
         return pulumi.get(self, "timeout")
 
     @timeout.setter
-    def timeout(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def timeout(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "timeout", value)
 
     @_builtins.property
     @pulumi.getter
-    def token(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def token(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         authenticate using this IAM token
         """
         return pulumi.get(self, "token")
 
     @token.setter
-    def token(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def token(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "token", value)
 
     @_builtins.property
@@ -336,24 +352,25 @@ class Provider(pulumi.ProviderResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 address_options: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union['ProviderAddressOptionsArgs', 'ProviderAddressOptionsArgsDict']]]]] = None,
-                 address_template: Optional[pulumi.Input[Union['ProviderAddressTemplateArgs', 'ProviderAddressTemplateArgsDict']]] = None,
-                 address_template_env: Optional[pulumi.Input[_builtins.str]] = None,
-                 auth_timeout: Optional[pulumi.Input[_builtins.str]] = None,
-                 domain: Optional[pulumi.Input[_builtins.str]] = None,
-                 domain_env: Optional[pulumi.Input[_builtins.str]] = None,
-                 impersonate_service_account_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 module_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 no_credentials: Optional[pulumi.Input[_builtins.bool]] = None,
-                 parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 per_retry_timeout: Optional[pulumi.Input[_builtins.str]] = None,
-                 profile: Optional[pulumi.Input[Union['ProviderProfileArgs', 'ProviderProfileArgsDict']]] = None,
-                 resolvers: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 resolvers_env: Optional[pulumi.Input[_builtins.str]] = None,
-                 retries: Optional[pulumi.Input[_builtins.float]] = None,
-                 service_account: Optional[pulumi.Input[Union['ProviderServiceAccountArgs', 'ProviderServiceAccountArgsDict']]] = None,
-                 timeout: Optional[pulumi.Input[_builtins.str]] = None,
-                 token: Optional[pulumi.Input[_builtins.str]] = None,
+                 address_options: pulumi.Input[Optional[Mapping[str, pulumi.Input[Union['ProviderAddressOptionsArgs', 'ProviderAddressOptionsArgsDict']]]]] = None,
+                 address_template: pulumi.Input[Optional[Union['ProviderAddressTemplateArgs', 'ProviderAddressTemplateArgsDict']]] = None,
+                 address_template_env: pulumi.Input[Optional[_builtins.str]] = None,
+                 auth_timeout: pulumi.Input[Optional[_builtins.str]] = None,
+                 default_labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 domain: pulumi.Input[Optional[_builtins.str]] = None,
+                 domain_env: pulumi.Input[Optional[_builtins.str]] = None,
+                 impersonate_service_account_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 module_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 no_credentials: pulumi.Input[Optional[_builtins.bool]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 per_retry_timeout: pulumi.Input[Optional[_builtins.str]] = None,
+                 profile: pulumi.Input[Optional[Union['ProviderProfileArgs', 'ProviderProfileArgsDict']]] = None,
+                 resolvers: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 resolvers_env: pulumi.Input[Optional[_builtins.str]] = None,
+                 retries: pulumi.Input[Optional[_builtins.float]] = None,
+                 service_account: pulumi.Input[Optional[Union['ProviderServiceAccountArgs', 'ProviderServiceAccountArgsDict']]] = None,
+                 timeout: pulumi.Input[Optional[_builtins.str]] = None,
+                 token: pulumi.Input[Optional[_builtins.str]] = None,
                  versioned_ephemeral_values: Optional[Any] = None,
                  __props__=None):
         """
@@ -369,6 +386,7 @@ class Provider(pulumi.ProviderResource):
         :param pulumi.Input[Union['ProviderAddressTemplateArgs', 'ProviderAddressTemplateArgsDict']] address_template: address template (overrides address_template_env)
         :param pulumi.Input[_builtins.str] address_template_env: env variable name to obtain address template in form of `FIND=REPLACE`
         :param pulumi.Input[_builtins.str] auth_timeout: timeout for each Nebius SDK request including authentication, default 15m0s, as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as <span pulumi-lang-nodejs="`300ms`" pulumi-lang-dotnet="`300ms`" pulumi-lang-go="`300ms`" pulumi-lang-python="`300ms`" pulumi-lang-yaml="`300ms`" pulumi-lang-java="`300ms`" pulumi-lang-hcl="`300ms`">`300ms`</span>, `-1.5h` or <span pulumi-lang-nodejs="`2h45m`" pulumi-lang-dotnet="`2h45m`" pulumi-lang-go="`2h45m`" pulumi-lang-python="`2h45m`" pulumi-lang-yaml="`2h45m`" pulumi-lang-java="`2h45m`" pulumi-lang-hcl="`2h45m`">`2h45m`</span>. Valid time units are <span pulumi-lang-nodejs="`ns`" pulumi-lang-dotnet="`Ns`" pulumi-lang-go="`ns`" pulumi-lang-python="`ns`" pulumi-lang-yaml="`ns`" pulumi-lang-java="`ns`" pulumi-lang-hcl="`ns`">`ns`</span>, <span pulumi-lang-nodejs="`us`" pulumi-lang-dotnet="`Us`" pulumi-lang-go="`us`" pulumi-lang-python="`us`" pulumi-lang-yaml="`us`" pulumi-lang-java="`us`" pulumi-lang-hcl="`us`">`us`</span> (or `µs`), <span pulumi-lang-nodejs="`ms`" pulumi-lang-dotnet="`Ms`" pulumi-lang-go="`ms`" pulumi-lang-python="`ms`" pulumi-lang-yaml="`ms`" pulumi-lang-java="`ms`" pulumi-lang-hcl="`ms`">`ms`</span>, <span pulumi-lang-nodejs="`s`" pulumi-lang-dotnet="`S`" pulumi-lang-go="`s`" pulumi-lang-python="`s`" pulumi-lang-yaml="`s`" pulumi-lang-java="`s`" pulumi-lang-hcl="`s`">`s`</span>, <span pulumi-lang-nodejs="`m`" pulumi-lang-dotnet="`M`" pulumi-lang-go="`m`" pulumi-lang-python="`m`" pulumi-lang-yaml="`m`" pulumi-lang-java="`m`" pulumi-lang-hcl="`m`">`m`</span>, <span pulumi-lang-nodejs="`h`" pulumi-lang-dotnet="`H`" pulumi-lang-go="`h`" pulumi-lang-python="`h`" pulumi-lang-yaml="`h`" pulumi-lang-java="`h`" pulumi-lang-hcl="`h`">`h`</span>, <span pulumi-lang-nodejs="`d`" pulumi-lang-dotnet="`D`" pulumi-lang-go="`d`" pulumi-lang-python="`d`" pulumi-lang-yaml="`d`" pulumi-lang-java="`d`" pulumi-lang-hcl="`d`">`d`</span>
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] default_labels: Labels to apply by default to managed resources that support labels. Resource labels override matching provider labels.
         :param pulumi.Input[_builtins.str] domain: custom domain name (overrides domain_env)
         :param pulumi.Input[_builtins.str] domain_env: env variable name to obtain custom domain name
         :param pulumi.Input[_builtins.str] impersonate_service_account_id: Service account ID to impersonate.
@@ -413,24 +431,25 @@ class Provider(pulumi.ProviderResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 address_options: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union['ProviderAddressOptionsArgs', 'ProviderAddressOptionsArgsDict']]]]] = None,
-                 address_template: Optional[pulumi.Input[Union['ProviderAddressTemplateArgs', 'ProviderAddressTemplateArgsDict']]] = None,
-                 address_template_env: Optional[pulumi.Input[_builtins.str]] = None,
-                 auth_timeout: Optional[pulumi.Input[_builtins.str]] = None,
-                 domain: Optional[pulumi.Input[_builtins.str]] = None,
-                 domain_env: Optional[pulumi.Input[_builtins.str]] = None,
-                 impersonate_service_account_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 module_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 no_credentials: Optional[pulumi.Input[_builtins.bool]] = None,
-                 parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 per_retry_timeout: Optional[pulumi.Input[_builtins.str]] = None,
-                 profile: Optional[pulumi.Input[Union['ProviderProfileArgs', 'ProviderProfileArgsDict']]] = None,
-                 resolvers: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 resolvers_env: Optional[pulumi.Input[_builtins.str]] = None,
-                 retries: Optional[pulumi.Input[_builtins.float]] = None,
-                 service_account: Optional[pulumi.Input[Union['ProviderServiceAccountArgs', 'ProviderServiceAccountArgsDict']]] = None,
-                 timeout: Optional[pulumi.Input[_builtins.str]] = None,
-                 token: Optional[pulumi.Input[_builtins.str]] = None,
+                 address_options: pulumi.Input[Optional[Mapping[str, pulumi.Input[Union['ProviderAddressOptionsArgs', 'ProviderAddressOptionsArgsDict']]]]] = None,
+                 address_template: pulumi.Input[Optional[Union['ProviderAddressTemplateArgs', 'ProviderAddressTemplateArgsDict']]] = None,
+                 address_template_env: pulumi.Input[Optional[_builtins.str]] = None,
+                 auth_timeout: pulumi.Input[Optional[_builtins.str]] = None,
+                 default_labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 domain: pulumi.Input[Optional[_builtins.str]] = None,
+                 domain_env: pulumi.Input[Optional[_builtins.str]] = None,
+                 impersonate_service_account_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 module_name: pulumi.Input[Optional[_builtins.str]] = None,
+                 no_credentials: pulumi.Input[Optional[_builtins.bool]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 per_retry_timeout: pulumi.Input[Optional[_builtins.str]] = None,
+                 profile: pulumi.Input[Optional[Union['ProviderProfileArgs', 'ProviderProfileArgsDict']]] = None,
+                 resolvers: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 resolvers_env: pulumi.Input[Optional[_builtins.str]] = None,
+                 retries: pulumi.Input[Optional[_builtins.float]] = None,
+                 service_account: pulumi.Input[Optional[Union['ProviderServiceAccountArgs', 'ProviderServiceAccountArgsDict']]] = None,
+                 timeout: pulumi.Input[Optional[_builtins.str]] = None,
+                 token: pulumi.Input[Optional[_builtins.str]] = None,
                  versioned_ephemeral_values: Optional[Any] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -445,6 +464,7 @@ class Provider(pulumi.ProviderResource):
             __props__.__dict__["address_template"] = pulumi.Output.from_input(address_template).apply(pulumi.runtime.to_json) if address_template is not None else None
             __props__.__dict__["address_template_env"] = address_template_env
             __props__.__dict__["auth_timeout"] = auth_timeout
+            __props__.__dict__["default_labels"] = pulumi.Output.from_input(default_labels).apply(pulumi.runtime.to_json) if default_labels is not None else None
             __props__.__dict__["domain"] = domain
             __props__.__dict__["domain_env"] = domain_env
             __props__.__dict__["impersonate_service_account_id"] = impersonate_service_account_id

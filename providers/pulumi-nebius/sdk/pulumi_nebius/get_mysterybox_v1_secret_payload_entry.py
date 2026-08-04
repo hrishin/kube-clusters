@@ -96,10 +96,10 @@ def get_mysterybox_v1_secret_payload_entry(data: Optional[Union['GetMysteryboxV1
         key=pulumi.get(__ret__, 'key'),
         secret_id=pulumi.get(__ret__, 'secret_id'),
         version_id=pulumi.get(__ret__, 'version_id'))
-def get_mysterybox_v1_secret_payload_entry_output(data: Optional[pulumi.Input[Optional[Union['GetMysteryboxV1SecretPayloadEntryDataArgs', 'GetMysteryboxV1SecretPayloadEntryDataArgsDict']]]] = None,
-                                                  key: Optional[pulumi.Input[_builtins.str]] = None,
-                                                  secret_id: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
-                                                  version_id: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
+def get_mysterybox_v1_secret_payload_entry_output(data: pulumi.Input[Optional[Optional[Union['GetMysteryboxV1SecretPayloadEntryDataArgs', 'GetMysteryboxV1SecretPayloadEntryDataArgsDict']]]] = None,
+                                                  key: pulumi.Input[Optional[_builtins.str]] = None,
+                                                  secret_id: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
+                                                  version_id: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
                                                   opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetMysteryboxV1SecretPayloadEntryResult]:
     """
     Use this data source to access information about an existing resource.

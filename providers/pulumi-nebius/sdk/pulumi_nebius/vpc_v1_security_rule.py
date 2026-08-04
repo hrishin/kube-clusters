@@ -22,15 +22,15 @@ __all__ = ['VpcV1SecurityRuleArgs', 'VpcV1SecurityRule']
 class VpcV1SecurityRuleArgs:
     def __init__(__self__, *,
                  access: pulumi.Input[_builtins.str],
-                 parent_id: pulumi.Input[_builtins.str],
                  protocol: pulumi.Input[_builtins.str],
-                 egress: Optional[pulumi.Input['VpcV1SecurityRuleEgressArgs']] = None,
-                 ingress: Optional[pulumi.Input['VpcV1SecurityRuleIngressArgs']] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 metadata: Optional[pulumi.Input['VpcV1SecurityRuleMetadataArgs']] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 priority: Optional[pulumi.Input[_builtins.float]] = None,
-                 type: Optional[pulumi.Input[_builtins.str]] = None):
+                 egress: pulumi.Input[Optional['VpcV1SecurityRuleEgressArgs']] = None,
+                 ingress: pulumi.Input[Optional['VpcV1SecurityRuleIngressArgs']] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 metadata: pulumi.Input[Optional['VpcV1SecurityRuleMetadataArgs']] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 priority: pulumi.Input[Optional[_builtins.float]] = None,
+                 type: pulumi.Input[Optional[_builtins.str]] = None):
         """
         The set of arguments for constructing a VpcV1SecurityRule resource.
 
@@ -38,26 +38,25 @@ class VpcV1SecurityRuleArgs:
                
                   Access action for the rule.
                   Required. Determines whether matching traffic is allowed or denied.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Access specifies action on matching traffic: ALLOW or DENY.
                   Possible values:
-                  
+               
                   - `ACCESS_UNSPECIFIED`
                   - `ALLOW`
                   - `DENY`
-        :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
         :param pulumi.Input[_builtins.str] protocol: :
                
                   Protocol used in the rule.
                   Supported values: ANY, TCP, UDP, ICMP.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Protocol specifies traffic protocol.
                   Possible values:
-                  
+               
                   - `PROTOCOL_UNSPECIFIED`
                   - `ANY`
                   - `TCP`
@@ -65,52 +64,52 @@ class VpcV1SecurityRuleArgs:
                   - `ICMP`
         :param pulumi.Input['VpcV1SecurityRuleEgressArgs'] egress: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Defines match for outgoing traffic.
-                  
+               
                   *Cannot be set alongside ingress.*
         :param pulumi.Input['VpcV1SecurityRuleIngressArgs'] ingress: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Defines match for incoming traffic.
-                  
+               
                   *Cannot be set alongside egress.*
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels associated with the resource.
         :param pulumi.Input['VpcV1SecurityRuleMetadataArgs'] metadata: :
                
                   `metadata.parent_id` represents the SecurityGroup.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
+        :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
         :param pulumi.Input[_builtins.float] priority: :
                
                   Priority of the rule. Valid range: 0-1000.
                   Optional. If not specified or set to 0, defaults to 500.
                   Rules are evaluated in priority order (lower numbers first) using a first-match algorithm:
                   only the first matching rule takes effect (ALLOW or DENY), and subsequent rules are skipped.
-                  
+               
                   When multiple rules share the same priority, DENY rules are evaluated before ALLOW rules.
                   The final evaluation order is reflected in 'effective_priority' (see SecurityRuleStatus).
         :param pulumi.Input[_builtins.str] type: :
                
                   Type of the rule (STATEFUL or STATELESS)
                   Default value is STATEFUL
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   RuleType specifies whether the security rule is stateful or stateless.
                   Possible values:
-                  
+               
                   - `RULE_TYPE_UNSPECIFIED`
                   - `STATEFUL`
                   - `STATELESS`
         """
         pulumi.set(__self__, "access", access)
-        pulumi.set(__self__, "parent_id", parent_id)
         pulumi.set(__self__, "protocol", protocol)
         if egress is not None:
             pulumi.set(__self__, "egress", egress)
@@ -122,6 +121,8 @@ class VpcV1SecurityRuleArgs:
             pulumi.set(__self__, "metadata", metadata)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if parent_id is not None:
+            pulumi.set(__self__, "parent_id", parent_id)
         if priority is not None:
             pulumi.set(__self__, "priority", priority)
         if type is not None:
@@ -135,12 +136,12 @@ class VpcV1SecurityRuleArgs:
 
            Access action for the rule.
            Required. Determines whether matching traffic is allowed or denied.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Access specifies action on matching traffic: ALLOW or DENY.
            Possible values:
-           
+
            - `ACCESS_UNSPECIFIED`
            - `ALLOW`
            - `DENY`
@@ -152,18 +153,6 @@ class VpcV1SecurityRuleArgs:
         pulumi.set(self, "access", value)
 
     @_builtins.property
-    @pulumi.getter(name="parentId")
-    def parent_id(self) -> pulumi.Input[_builtins.str]:
-        """
-        Identifier of the parent resource to which the resource belongs.
-        """
-        return pulumi.get(self, "parent_id")
-
-    @parent_id.setter
-    def parent_id(self, value: pulumi.Input[_builtins.str]):
-        pulumi.set(self, "parent_id", value)
-
-    @_builtins.property
     @pulumi.getter
     def protocol(self) -> pulumi.Input[_builtins.str]:
         """
@@ -171,12 +160,12 @@ class VpcV1SecurityRuleArgs:
 
            Protocol used in the rule.
            Supported values: ANY, TCP, UDP, ICMP.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Protocol specifies traffic protocol.
            Possible values:
-           
+
            - `PROTOCOL_UNSPECIFIED`
            - `ANY`
            - `TCP`
@@ -191,85 +180,97 @@ class VpcV1SecurityRuleArgs:
 
     @_builtins.property
     @pulumi.getter
-    def egress(self) -> Optional[pulumi.Input['VpcV1SecurityRuleEgressArgs']]:
+    def egress(self) -> pulumi.Input[Optional['VpcV1SecurityRuleEgressArgs']]:
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Defines match for outgoing traffic.
-           
+
            *Cannot be set alongside ingress.*
         """
         return pulumi.get(self, "egress")
 
     @egress.setter
-    def egress(self, value: Optional[pulumi.Input['VpcV1SecurityRuleEgressArgs']]):
+    def egress(self, value: pulumi.Input[Optional['VpcV1SecurityRuleEgressArgs']]):
         pulumi.set(self, "egress", value)
 
     @_builtins.property
     @pulumi.getter
-    def ingress(self) -> Optional[pulumi.Input['VpcV1SecurityRuleIngressArgs']]:
+    def ingress(self) -> pulumi.Input[Optional['VpcV1SecurityRuleIngressArgs']]:
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Defines match for incoming traffic.
-           
+
            *Cannot be set alongside egress.*
         """
         return pulumi.get(self, "ingress")
 
     @ingress.setter
-    def ingress(self, value: Optional[pulumi.Input['VpcV1SecurityRuleIngressArgs']]):
+    def ingress(self, value: pulumi.Input[Optional['VpcV1SecurityRuleIngressArgs']]):
         pulumi.set(self, "ingress", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels associated with the resource.
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
     @pulumi.getter
-    def metadata(self) -> Optional[pulumi.Input['VpcV1SecurityRuleMetadataArgs']]:
+    def metadata(self) -> pulumi.Input[Optional['VpcV1SecurityRuleMetadataArgs']]:
         """
         :
 
            `metadata.parent_id` represents the SecurityGroup.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Common resource metadata.
         """
         return pulumi.get(self, "metadata")
 
     @metadata.setter
-    def metadata(self, value: Optional[pulumi.Input['VpcV1SecurityRuleMetadataArgs']]):
+    def metadata(self, value: pulumi.Input[Optional['VpcV1SecurityRuleMetadataArgs']]):
         pulumi.set(self, "metadata", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Human readable name for the resource.
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
+    @pulumi.getter(name="parentId")
+    def parent_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Identifier of the parent resource to which the resource belongs.
+        """
+        return pulumi.get(self, "parent_id")
+
+    @parent_id.setter
+    def parent_id(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "parent_id", value)
+
+    @_builtins.property
     @pulumi.getter
-    def priority(self) -> Optional[pulumi.Input[_builtins.float]]:
+    def priority(self) -> pulumi.Input[Optional[_builtins.float]]:
         """
         :
 
@@ -277,30 +278,30 @@ class VpcV1SecurityRuleArgs:
            Optional. If not specified or set to 0, defaults to 500.
            Rules are evaluated in priority order (lower numbers first) using a first-match algorithm:
            only the first matching rule takes effect (ALLOW or DENY), and subsequent rules are skipped.
-           
+
            When multiple rules share the same priority, DENY rules are evaluated before ALLOW rules.
            The final evaluation order is reflected in 'effective_priority' (see SecurityRuleStatus).
         """
         return pulumi.get(self, "priority")
 
     @priority.setter
-    def priority(self, value: Optional[pulumi.Input[_builtins.float]]):
+    def priority(self, value: pulumi.Input[Optional[_builtins.float]]):
         pulumi.set(self, "priority", value)
 
     @_builtins.property
     @pulumi.getter
-    def type(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def type(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
            Type of the rule (STATEFUL or STATELESS)
            Default value is STATEFUL
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            RuleType specifies whether the security rule is stateful or stateless.
            Possible values:
-           
+
            - `RULE_TYPE_UNSPECIFIED`
            - `STATEFUL`
            - `STATELESS`
@@ -308,27 +309,28 @@ class VpcV1SecurityRuleArgs:
         return pulumi.get(self, "type")
 
     @type.setter
-    def type(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def type(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "type", value)
 
 
 @pulumi.input_type
 class _VpcV1SecurityRuleState:
     def __init__(__self__, *,
-                 access: Optional[pulumi.Input[_builtins.str]] = None,
-                 created_at: Optional[pulumi.Input[_builtins.str]] = None,
-                 egress: Optional[pulumi.Input['VpcV1SecurityRuleEgressArgs']] = None,
-                 ingress: Optional[pulumi.Input['VpcV1SecurityRuleIngressArgs']] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 metadata: Optional[pulumi.Input['VpcV1SecurityRuleMetadataArgs']] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 priority: Optional[pulumi.Input[_builtins.float]] = None,
-                 protocol: Optional[pulumi.Input[_builtins.str]] = None,
-                 resource_version: Optional[pulumi.Input[_builtins.float]] = None,
-                 status: Optional[pulumi.Input['VpcV1SecurityRuleStatusArgs']] = None,
-                 type: Optional[pulumi.Input[_builtins.str]] = None,
-                 updated_at: Optional[pulumi.Input[_builtins.str]] = None):
+                 access: pulumi.Input[Optional[_builtins.str]] = None,
+                 created_at: pulumi.Input[Optional[_builtins.str]] = None,
+                 egress: pulumi.Input[Optional['VpcV1SecurityRuleEgressArgs']] = None,
+                 ingress: pulumi.Input[Optional['VpcV1SecurityRuleIngressArgs']] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 labels_all: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 metadata: pulumi.Input[Optional['VpcV1SecurityRuleMetadataArgs']] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 priority: pulumi.Input[Optional[_builtins.float]] = None,
+                 protocol: pulumi.Input[Optional[_builtins.str]] = None,
+                 resource_version: pulumi.Input[Optional[_builtins.float]] = None,
+                 status: pulumi.Input[Optional['VpcV1SecurityRuleStatusArgs']] = None,
+                 type: pulumi.Input[Optional[_builtins.str]] = None,
+                 updated_at: pulumi.Input[Optional[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering VpcV1SecurityRule resources.
 
@@ -336,41 +338,42 @@ class _VpcV1SecurityRuleState:
                
                   Access action for the rule.
                   Required. Determines whether matching traffic is allowed or denied.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Access specifies action on matching traffic: ALLOW or DENY.
                   Possible values:
-                  
+               
                   - `ACCESS_UNSPECIFIED`
                   - `ALLOW`
                   - `DENY`
         :param pulumi.Input[_builtins.str] created_at: :
                
                   Timestamp indicating when the resource was created.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param pulumi.Input['VpcV1SecurityRuleEgressArgs'] egress: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Defines match for outgoing traffic.
-                  
+               
                   *Cannot be set alongside ingress.*
         :param pulumi.Input['VpcV1SecurityRuleIngressArgs'] ingress: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Defines match for incoming traffic.
-                  
+               
                   *Cannot be set alongside egress.*
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels associated with the resource.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels_all: Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
         :param pulumi.Input['VpcV1SecurityRuleMetadataArgs'] metadata: :
                
                   `metadata.parent_id` represents the SecurityGroup.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
         :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
@@ -380,19 +383,19 @@ class _VpcV1SecurityRuleState:
                   Optional. If not specified or set to 0, defaults to 500.
                   Rules are evaluated in priority order (lower numbers first) using a first-match algorithm:
                   only the first matching rule takes effect (ALLOW or DENY), and subsequent rules are skipped.
-                  
+               
                   When multiple rules share the same priority, DENY rules are evaluated before ALLOW rules.
                   The final evaluation order is reflected in 'effective_priority' (see SecurityRuleStatus).
         :param pulumi.Input[_builtins.str] protocol: :
                
                   Protocol used in the rule.
                   Supported values: ANY, TCP, UDP, ICMP.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Protocol specifies traffic protocol.
                   Possible values:
-                  
+               
                   - `PROTOCOL_UNSPECIFIED`
                   - `ANY`
                   - `TCP`
@@ -409,19 +412,19 @@ class _VpcV1SecurityRuleState:
                
                   Type of the rule (STATEFUL or STATELESS)
                   Default value is STATEFUL
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   RuleType specifies whether the security rule is stateful or stateless.
                   Possible values:
-                  
+               
                   - `RULE_TYPE_UNSPECIFIED`
                   - `STATEFUL`
                   - `STATELESS`
         :param pulumi.Input[_builtins.str] updated_at: :
                
                   Timestamp indicating when the resource was last updated.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         if access is not None:
@@ -434,6 +437,8 @@ class _VpcV1SecurityRuleState:
             pulumi.set(__self__, "ingress", ingress)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
+        if labels_all is not None:
+            pulumi.set(__self__, "labels_all", labels_all)
         if metadata is not None:
             pulumi.set(__self__, "metadata", metadata)
         if name is not None:
@@ -455,18 +460,18 @@ class _VpcV1SecurityRuleState:
 
     @_builtins.property
     @pulumi.getter
-    def access(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def access(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
            Access action for the rule.
            Required. Determines whether matching traffic is allowed or denied.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Access specifies action on matching traffic: ALLOW or DENY.
            Possible values:
-           
+
            - `ACCESS_UNSPECIFIED`
            - `ALLOW`
            - `DENY`
@@ -474,118 +479,130 @@ class _VpcV1SecurityRuleState:
         return pulumi.get(self, "access")
 
     @access.setter
-    def access(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def access(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "access", value)
 
     @_builtins.property
     @pulumi.getter(name="createdAt")
-    def created_at(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def created_at(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
            Timestamp indicating when the resource was created.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "created_at")
 
     @created_at.setter
-    def created_at(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def created_at(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "created_at", value)
 
     @_builtins.property
     @pulumi.getter
-    def egress(self) -> Optional[pulumi.Input['VpcV1SecurityRuleEgressArgs']]:
+    def egress(self) -> pulumi.Input[Optional['VpcV1SecurityRuleEgressArgs']]:
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Defines match for outgoing traffic.
-           
+
            *Cannot be set alongside ingress.*
         """
         return pulumi.get(self, "egress")
 
     @egress.setter
-    def egress(self, value: Optional[pulumi.Input['VpcV1SecurityRuleEgressArgs']]):
+    def egress(self, value: pulumi.Input[Optional['VpcV1SecurityRuleEgressArgs']]):
         pulumi.set(self, "egress", value)
 
     @_builtins.property
     @pulumi.getter
-    def ingress(self) -> Optional[pulumi.Input['VpcV1SecurityRuleIngressArgs']]:
+    def ingress(self) -> pulumi.Input[Optional['VpcV1SecurityRuleIngressArgs']]:
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Defines match for incoming traffic.
-           
+
            *Cannot be set alongside egress.*
         """
         return pulumi.get(self, "ingress")
 
     @ingress.setter
-    def ingress(self, value: Optional[pulumi.Input['VpcV1SecurityRuleIngressArgs']]):
+    def ingress(self, value: pulumi.Input[Optional['VpcV1SecurityRuleIngressArgs']]):
         pulumi.set(self, "ingress", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels associated with the resource.
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
+    @pulumi.getter(name="labelsAll")
+    def labels_all(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
+        """
+        return pulumi.get(self, "labels_all")
+
+    @labels_all.setter
+    def labels_all(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "labels_all", value)
+
+    @_builtins.property
     @pulumi.getter
-    def metadata(self) -> Optional[pulumi.Input['VpcV1SecurityRuleMetadataArgs']]:
+    def metadata(self) -> pulumi.Input[Optional['VpcV1SecurityRuleMetadataArgs']]:
         """
         :
 
            `metadata.parent_id` represents the SecurityGroup.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Common resource metadata.
         """
         return pulumi.get(self, "metadata")
 
     @metadata.setter
-    def metadata(self, value: Optional[pulumi.Input['VpcV1SecurityRuleMetadataArgs']]):
+    def metadata(self, value: pulumi.Input[Optional['VpcV1SecurityRuleMetadataArgs']]):
         pulumi.set(self, "metadata", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Human readable name for the resource.
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="parentId")
-    def parent_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def parent_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Identifier of the parent resource to which the resource belongs.
         """
         return pulumi.get(self, "parent_id")
 
     @parent_id.setter
-    def parent_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def parent_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "parent_id", value)
 
     @_builtins.property
     @pulumi.getter
-    def priority(self) -> Optional[pulumi.Input[_builtins.float]]:
+    def priority(self) -> pulumi.Input[Optional[_builtins.float]]:
         """
         :
 
@@ -593,30 +610,30 @@ class _VpcV1SecurityRuleState:
            Optional. If not specified or set to 0, defaults to 500.
            Rules are evaluated in priority order (lower numbers first) using a first-match algorithm:
            only the first matching rule takes effect (ALLOW or DENY), and subsequent rules are skipped.
-           
+
            When multiple rules share the same priority, DENY rules are evaluated before ALLOW rules.
            The final evaluation order is reflected in 'effective_priority' (see SecurityRuleStatus).
         """
         return pulumi.get(self, "priority")
 
     @priority.setter
-    def priority(self, value: Optional[pulumi.Input[_builtins.float]]):
+    def priority(self, value: pulumi.Input[Optional[_builtins.float]]):
         pulumi.set(self, "priority", value)
 
     @_builtins.property
     @pulumi.getter
-    def protocol(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def protocol(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
            Protocol used in the rule.
            Supported values: ANY, TCP, UDP, ICMP.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Protocol specifies traffic protocol.
            Possible values:
-           
+
            - `PROTOCOL_UNSPECIFIED`
            - `ANY`
            - `TCP`
@@ -626,12 +643,12 @@ class _VpcV1SecurityRuleState:
         return pulumi.get(self, "protocol")
 
     @protocol.setter
-    def protocol(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def protocol(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "protocol", value)
 
     @_builtins.property
     @pulumi.getter(name="resourceVersion")
-    def resource_version(self) -> Optional[pulumi.Input[_builtins.float]]:
+    def resource_version(self) -> pulumi.Input[Optional[_builtins.float]]:
         """
         :
 
@@ -643,35 +660,35 @@ class _VpcV1SecurityRuleState:
         return pulumi.get(self, "resource_version")
 
     @resource_version.setter
-    def resource_version(self, value: Optional[pulumi.Input[_builtins.float]]):
+    def resource_version(self, value: pulumi.Input[Optional[_builtins.float]]):
         pulumi.set(self, "resource_version", value)
 
     @_builtins.property
     @pulumi.getter
-    def status(self) -> Optional[pulumi.Input['VpcV1SecurityRuleStatusArgs']]:
+    def status(self) -> pulumi.Input[Optional['VpcV1SecurityRuleStatusArgs']]:
         """
         Current status of the security rule.
         """
         return pulumi.get(self, "status")
 
     @status.setter
-    def status(self, value: Optional[pulumi.Input['VpcV1SecurityRuleStatusArgs']]):
+    def status(self, value: pulumi.Input[Optional['VpcV1SecurityRuleStatusArgs']]):
         pulumi.set(self, "status", value)
 
     @_builtins.property
     @pulumi.getter
-    def type(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def type(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
            Type of the rule (STATEFUL or STATELESS)
            Default value is STATEFUL
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            RuleType specifies whether the security rule is stateful or stateless.
            Possible values:
-           
+
            - `RULE_TYPE_UNSPECIFIED`
            - `STATEFUL`
            - `STATELESS`
@@ -679,23 +696,23 @@ class _VpcV1SecurityRuleState:
         return pulumi.get(self, "type")
 
     @type.setter
-    def type(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def type(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "type", value)
 
     @_builtins.property
     @pulumi.getter(name="updatedAt")
-    def updated_at(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def updated_at(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
            Timestamp indicating when the resource was last updated.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "updated_at")
 
     @updated_at.setter
-    def updated_at(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def updated_at(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "updated_at", value)
 
 
@@ -705,16 +722,16 @@ class VpcV1SecurityRule(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 access: Optional[pulumi.Input[_builtins.str]] = None,
-                 egress: Optional[pulumi.Input[Union['VpcV1SecurityRuleEgressArgs', 'VpcV1SecurityRuleEgressArgsDict']]] = None,
-                 ingress: Optional[pulumi.Input[Union['VpcV1SecurityRuleIngressArgs', 'VpcV1SecurityRuleIngressArgsDict']]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 metadata: Optional[pulumi.Input[Union['VpcV1SecurityRuleMetadataArgs', 'VpcV1SecurityRuleMetadataArgsDict']]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 priority: Optional[pulumi.Input[_builtins.float]] = None,
-                 protocol: Optional[pulumi.Input[_builtins.str]] = None,
-                 type: Optional[pulumi.Input[_builtins.str]] = None,
+                 access: pulumi.Input[Optional[_builtins.str]] = None,
+                 egress: pulumi.Input[Optional[Union['VpcV1SecurityRuleEgressArgs', 'VpcV1SecurityRuleEgressArgsDict']]] = None,
+                 ingress: pulumi.Input[Optional[Union['VpcV1SecurityRuleIngressArgs', 'VpcV1SecurityRuleIngressArgsDict']]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 metadata: pulumi.Input[Optional[Union['VpcV1SecurityRuleMetadataArgs', 'VpcV1SecurityRuleMetadataArgsDict']]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 priority: pulumi.Input[Optional[_builtins.float]] = None,
+                 protocol: pulumi.Input[Optional[_builtins.str]] = None,
+                 type: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         """
         Create a VpcV1SecurityRule resource with the given unique name, props, and options.
@@ -725,36 +742,36 @@ class VpcV1SecurityRule(pulumi.CustomResource):
                
                   Access action for the rule.
                   Required. Determines whether matching traffic is allowed or denied.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Access specifies action on matching traffic: ALLOW or DENY.
                   Possible values:
-                  
+               
                   - `ACCESS_UNSPECIFIED`
                   - `ALLOW`
                   - `DENY`
         :param pulumi.Input[Union['VpcV1SecurityRuleEgressArgs', 'VpcV1SecurityRuleEgressArgsDict']] egress: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Defines match for outgoing traffic.
-                  
+               
                   *Cannot be set alongside ingress.*
         :param pulumi.Input[Union['VpcV1SecurityRuleIngressArgs', 'VpcV1SecurityRuleIngressArgsDict']] ingress: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Defines match for incoming traffic.
-                  
+               
                   *Cannot be set alongside egress.*
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels associated with the resource.
         :param pulumi.Input[Union['VpcV1SecurityRuleMetadataArgs', 'VpcV1SecurityRuleMetadataArgsDict']] metadata: :
                
                   `metadata.parent_id` represents the SecurityGroup.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
         :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
@@ -764,19 +781,19 @@ class VpcV1SecurityRule(pulumi.CustomResource):
                   Optional. If not specified or set to 0, defaults to 500.
                   Rules are evaluated in priority order (lower numbers first) using a first-match algorithm:
                   only the first matching rule takes effect (ALLOW or DENY), and subsequent rules are skipped.
-                  
+               
                   When multiple rules share the same priority, DENY rules are evaluated before ALLOW rules.
                   The final evaluation order is reflected in 'effective_priority' (see SecurityRuleStatus).
         :param pulumi.Input[_builtins.str] protocol: :
                
                   Protocol used in the rule.
                   Supported values: ANY, TCP, UDP, ICMP.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Protocol specifies traffic protocol.
                   Possible values:
-                  
+               
                   - `PROTOCOL_UNSPECIFIED`
                   - `ANY`
                   - `TCP`
@@ -786,12 +803,12 @@ class VpcV1SecurityRule(pulumi.CustomResource):
                
                   Type of the rule (STATEFUL or STATELESS)
                   Default value is STATEFUL
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   RuleType specifies whether the security rule is stateful or stateless.
                   Possible values:
-                  
+               
                   - `RULE_TYPE_UNSPECIFIED`
                   - `STATEFUL`
                   - `STATELESS`
@@ -820,16 +837,16 @@ class VpcV1SecurityRule(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 access: Optional[pulumi.Input[_builtins.str]] = None,
-                 egress: Optional[pulumi.Input[Union['VpcV1SecurityRuleEgressArgs', 'VpcV1SecurityRuleEgressArgsDict']]] = None,
-                 ingress: Optional[pulumi.Input[Union['VpcV1SecurityRuleIngressArgs', 'VpcV1SecurityRuleIngressArgsDict']]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 metadata: Optional[pulumi.Input[Union['VpcV1SecurityRuleMetadataArgs', 'VpcV1SecurityRuleMetadataArgsDict']]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 priority: Optional[pulumi.Input[_builtins.float]] = None,
-                 protocol: Optional[pulumi.Input[_builtins.str]] = None,
-                 type: Optional[pulumi.Input[_builtins.str]] = None,
+                 access: pulumi.Input[Optional[_builtins.str]] = None,
+                 egress: pulumi.Input[Optional[Union['VpcV1SecurityRuleEgressArgs', 'VpcV1SecurityRuleEgressArgsDict']]] = None,
+                 ingress: pulumi.Input[Optional[Union['VpcV1SecurityRuleIngressArgs', 'VpcV1SecurityRuleIngressArgsDict']]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 metadata: pulumi.Input[Optional[Union['VpcV1SecurityRuleMetadataArgs', 'VpcV1SecurityRuleMetadataArgsDict']]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 priority: pulumi.Input[Optional[_builtins.float]] = None,
+                 protocol: pulumi.Input[Optional[_builtins.str]] = None,
+                 type: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -847,8 +864,6 @@ class VpcV1SecurityRule(pulumi.CustomResource):
             __props__.__dict__["labels"] = labels
             __props__.__dict__["metadata"] = metadata
             __props__.__dict__["name"] = name
-            if parent_id is None and not opts.urn:
-                raise TypeError("Missing required property 'parent_id'")
             __props__.__dict__["parent_id"] = parent_id
             __props__.__dict__["priority"] = priority
             if protocol is None and not opts.urn:
@@ -856,6 +871,7 @@ class VpcV1SecurityRule(pulumi.CustomResource):
             __props__.__dict__["protocol"] = protocol
             __props__.__dict__["type"] = type
             __props__.__dict__["created_at"] = None
+            __props__.__dict__["labels_all"] = None
             __props__.__dict__["resource_version"] = None
             __props__.__dict__["status"] = None
             __props__.__dict__["updated_at"] = None
@@ -870,20 +886,21 @@ class VpcV1SecurityRule(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            access: Optional[pulumi.Input[_builtins.str]] = None,
-            created_at: Optional[pulumi.Input[_builtins.str]] = None,
-            egress: Optional[pulumi.Input[Union['VpcV1SecurityRuleEgressArgs', 'VpcV1SecurityRuleEgressArgsDict']]] = None,
-            ingress: Optional[pulumi.Input[Union['VpcV1SecurityRuleIngressArgs', 'VpcV1SecurityRuleIngressArgsDict']]] = None,
-            labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            metadata: Optional[pulumi.Input[Union['VpcV1SecurityRuleMetadataArgs', 'VpcV1SecurityRuleMetadataArgsDict']]] = None,
-            name: Optional[pulumi.Input[_builtins.str]] = None,
-            parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-            priority: Optional[pulumi.Input[_builtins.float]] = None,
-            protocol: Optional[pulumi.Input[_builtins.str]] = None,
-            resource_version: Optional[pulumi.Input[_builtins.float]] = None,
-            status: Optional[pulumi.Input[Union['VpcV1SecurityRuleStatusArgs', 'VpcV1SecurityRuleStatusArgsDict']]] = None,
-            type: Optional[pulumi.Input[_builtins.str]] = None,
-            updated_at: Optional[pulumi.Input[_builtins.str]] = None) -> 'VpcV1SecurityRule':
+            access: pulumi.Input[Optional[_builtins.str]] = None,
+            created_at: pulumi.Input[Optional[_builtins.str]] = None,
+            egress: pulumi.Input[Optional[Union['VpcV1SecurityRuleEgressArgs', 'VpcV1SecurityRuleEgressArgsDict']]] = None,
+            ingress: pulumi.Input[Optional[Union['VpcV1SecurityRuleIngressArgs', 'VpcV1SecurityRuleIngressArgsDict']]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            labels_all: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            metadata: pulumi.Input[Optional[Union['VpcV1SecurityRuleMetadataArgs', 'VpcV1SecurityRuleMetadataArgsDict']]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+            priority: pulumi.Input[Optional[_builtins.float]] = None,
+            protocol: pulumi.Input[Optional[_builtins.str]] = None,
+            resource_version: pulumi.Input[Optional[_builtins.float]] = None,
+            status: pulumi.Input[Optional[Union['VpcV1SecurityRuleStatusArgs', 'VpcV1SecurityRuleStatusArgsDict']]] = None,
+            type: pulumi.Input[Optional[_builtins.str]] = None,
+            updated_at: pulumi.Input[Optional[_builtins.str]] = None) -> 'VpcV1SecurityRule':
         """
         Get an existing VpcV1SecurityRule resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -895,41 +912,42 @@ class VpcV1SecurityRule(pulumi.CustomResource):
                
                   Access action for the rule.
                   Required. Determines whether matching traffic is allowed or denied.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Access specifies action on matching traffic: ALLOW or DENY.
                   Possible values:
-                  
+               
                   - `ACCESS_UNSPECIFIED`
                   - `ALLOW`
                   - `DENY`
         :param pulumi.Input[_builtins.str] created_at: :
                
                   Timestamp indicating when the resource was created.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param pulumi.Input[Union['VpcV1SecurityRuleEgressArgs', 'VpcV1SecurityRuleEgressArgsDict']] egress: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Defines match for outgoing traffic.
-                  
+               
                   *Cannot be set alongside ingress.*
         :param pulumi.Input[Union['VpcV1SecurityRuleIngressArgs', 'VpcV1SecurityRuleIngressArgsDict']] ingress: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Defines match for incoming traffic.
-                  
+               
                   *Cannot be set alongside egress.*
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels associated with the resource.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels_all: Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
         :param pulumi.Input[Union['VpcV1SecurityRuleMetadataArgs', 'VpcV1SecurityRuleMetadataArgsDict']] metadata: :
                
                   `metadata.parent_id` represents the SecurityGroup.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
         :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
@@ -939,19 +957,19 @@ class VpcV1SecurityRule(pulumi.CustomResource):
                   Optional. If not specified or set to 0, defaults to 500.
                   Rules are evaluated in priority order (lower numbers first) using a first-match algorithm:
                   only the first matching rule takes effect (ALLOW or DENY), and subsequent rules are skipped.
-                  
+               
                   When multiple rules share the same priority, DENY rules are evaluated before ALLOW rules.
                   The final evaluation order is reflected in 'effective_priority' (see SecurityRuleStatus).
         :param pulumi.Input[_builtins.str] protocol: :
                
                   Protocol used in the rule.
                   Supported values: ANY, TCP, UDP, ICMP.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Protocol specifies traffic protocol.
                   Possible values:
-                  
+               
                   - `PROTOCOL_UNSPECIFIED`
                   - `ANY`
                   - `TCP`
@@ -968,19 +986,19 @@ class VpcV1SecurityRule(pulumi.CustomResource):
                
                   Type of the rule (STATEFUL or STATELESS)
                   Default value is STATEFUL
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   RuleType specifies whether the security rule is stateful or stateless.
                   Possible values:
-                  
+               
                   - `RULE_TYPE_UNSPECIFIED`
                   - `STATEFUL`
                   - `STATELESS`
         :param pulumi.Input[_builtins.str] updated_at: :
                
                   Timestamp indicating when the resource was last updated.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
@@ -992,6 +1010,7 @@ class VpcV1SecurityRule(pulumi.CustomResource):
         __props__.__dict__["egress"] = egress
         __props__.__dict__["ingress"] = ingress
         __props__.__dict__["labels"] = labels
+        __props__.__dict__["labels_all"] = labels_all
         __props__.__dict__["metadata"] = metadata
         __props__.__dict__["name"] = name
         __props__.__dict__["parent_id"] = parent_id
@@ -1011,12 +1030,12 @@ class VpcV1SecurityRule(pulumi.CustomResource):
 
            Access action for the rule.
            Required. Determines whether matching traffic is allowed or denied.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Access specifies action on matching traffic: ALLOW or DENY.
            Possible values:
-           
+
            - `ACCESS_UNSPECIFIED`
            - `ALLOW`
            - `DENY`
@@ -1030,7 +1049,7 @@ class VpcV1SecurityRule(pulumi.CustomResource):
         :
 
            Timestamp indicating when the resource was created.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "created_at")
@@ -1041,10 +1060,10 @@ class VpcV1SecurityRule(pulumi.CustomResource):
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Defines match for outgoing traffic.
-           
+
            *Cannot be set alongside ingress.*
         """
         return pulumi.get(self, "egress")
@@ -1055,10 +1074,10 @@ class VpcV1SecurityRule(pulumi.CustomResource):
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Defines match for incoming traffic.
-           
+
            *Cannot be set alongside egress.*
         """
         return pulumi.get(self, "ingress")
@@ -1072,15 +1091,23 @@ class VpcV1SecurityRule(pulumi.CustomResource):
         return pulumi.get(self, "labels")
 
     @_builtins.property
+    @pulumi.getter(name="labelsAll")
+    def labels_all(self) -> pulumi.Output[Mapping[str, _builtins.str]]:
+        """
+        Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
+        """
+        return pulumi.get(self, "labels_all")
+
+    @_builtins.property
     @pulumi.getter
     def metadata(self) -> pulumi.Output['outputs.VpcV1SecurityRuleMetadata']:
         """
         :
 
            `metadata.parent_id` represents the SecurityGroup.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Common resource metadata.
         """
         return pulumi.get(self, "metadata")
@@ -1111,7 +1138,7 @@ class VpcV1SecurityRule(pulumi.CustomResource):
            Optional. If not specified or set to 0, defaults to 500.
            Rules are evaluated in priority order (lower numbers first) using a first-match algorithm:
            only the first matching rule takes effect (ALLOW or DENY), and subsequent rules are skipped.
-           
+
            When multiple rules share the same priority, DENY rules are evaluated before ALLOW rules.
            The final evaluation order is reflected in 'effective_priority' (see SecurityRuleStatus).
         """
@@ -1125,12 +1152,12 @@ class VpcV1SecurityRule(pulumi.CustomResource):
 
            Protocol used in the rule.
            Supported values: ANY, TCP, UDP, ICMP.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Protocol specifies traffic protocol.
            Possible values:
-           
+
            - `PROTOCOL_UNSPECIFIED`
            - `ANY`
            - `TCP`
@@ -1168,12 +1195,12 @@ class VpcV1SecurityRule(pulumi.CustomResource):
 
            Type of the rule (STATEFUL or STATELESS)
            Default value is STATEFUL
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            RuleType specifies whether the security rule is stateful or stateless.
            Possible values:
-           
+
            - `RULE_TYPE_UNSPECIFIED`
            - `STATEFUL`
            - `STATELESS`
@@ -1187,7 +1214,7 @@ class VpcV1SecurityRule(pulumi.CustomResource):
         :
 
            Timestamp indicating when the resource was last updated.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "updated_at")

@@ -21,16 +21,15 @@ __all__ = ['VpcV1NetworkArgs', 'VpcV1Network']
 @pulumi.input_type
 class VpcV1NetworkArgs:
     def __init__(__self__, *,
-                 parent_id: pulumi.Input[_builtins.str],
-                 ipv4_private_pools: Optional[pulumi.Input['VpcV1NetworkIpv4PrivatePoolsArgs']] = None,
-                 ipv4_public_pools: Optional[pulumi.Input['VpcV1NetworkIpv4PublicPoolsArgs']] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 metadata: Optional[pulumi.Input['VpcV1NetworkMetadataArgs']] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None):
+                 ipv4_private_pools: pulumi.Input[Optional['VpcV1NetworkIpv4PrivatePoolsArgs']] = None,
+                 ipv4_public_pools: pulumi.Input[Optional['VpcV1NetworkIpv4PublicPoolsArgs']] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 metadata: pulumi.Input[Optional['VpcV1NetworkMetadataArgs']] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None):
         """
         The set of arguments for constructing a VpcV1Network resource.
 
-        :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
         :param pulumi.Input['VpcV1NetworkIpv4PrivatePoolsArgs'] ipv4_private_pools: :
                
                   Pools for private IPv4 addresses.
@@ -46,13 +45,13 @@ class VpcV1NetworkArgs:
                
                   Metadata for the network resource.
                   `metadata.parent_id` represents IAM container
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
+        :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
         """
-        pulumi.set(__self__, "parent_id", parent_id)
         if ipv4_private_pools is not None:
             pulumi.set(__self__, "ipv4_private_pools", ipv4_private_pools)
         if ipv4_public_pools is not None:
@@ -63,22 +62,12 @@ class VpcV1NetworkArgs:
             pulumi.set(__self__, "metadata", metadata)
         if name is not None:
             pulumi.set(__self__, "name", name)
-
-    @_builtins.property
-    @pulumi.getter(name="parentId")
-    def parent_id(self) -> pulumi.Input[_builtins.str]:
-        """
-        Identifier of the parent resource to which the resource belongs.
-        """
-        return pulumi.get(self, "parent_id")
-
-    @parent_id.setter
-    def parent_id(self, value: pulumi.Input[_builtins.str]):
-        pulumi.set(self, "parent_id", value)
+        if parent_id is not None:
+            pulumi.set(__self__, "parent_id", parent_id)
 
     @_builtins.property
     @pulumi.getter(name="ipv4PrivatePools")
-    def ipv4_private_pools(self) -> Optional[pulumi.Input['VpcV1NetworkIpv4PrivatePoolsArgs']]:
+    def ipv4_private_pools(self) -> pulumi.Input[Optional['VpcV1NetworkIpv4PrivatePoolsArgs']]:
         """
         :
 
@@ -90,12 +79,12 @@ class VpcV1NetworkArgs:
         return pulumi.get(self, "ipv4_private_pools")
 
     @ipv4_private_pools.setter
-    def ipv4_private_pools(self, value: Optional[pulumi.Input['VpcV1NetworkIpv4PrivatePoolsArgs']]):
+    def ipv4_private_pools(self, value: pulumi.Input[Optional['VpcV1NetworkIpv4PrivatePoolsArgs']]):
         pulumi.set(self, "ipv4_private_pools", value)
 
     @_builtins.property
     @pulumi.getter(name="ipv4PublicPools")
-    def ipv4_public_pools(self) -> Optional[pulumi.Input['VpcV1NetworkIpv4PublicPoolsArgs']]:
+    def ipv4_public_pools(self) -> pulumi.Input[Optional['VpcV1NetworkIpv4PublicPoolsArgs']]:
         """
         :
 
@@ -105,73 +94,86 @@ class VpcV1NetworkArgs:
         return pulumi.get(self, "ipv4_public_pools")
 
     @ipv4_public_pools.setter
-    def ipv4_public_pools(self, value: Optional[pulumi.Input['VpcV1NetworkIpv4PublicPoolsArgs']]):
+    def ipv4_public_pools(self, value: pulumi.Input[Optional['VpcV1NetworkIpv4PublicPoolsArgs']]):
         pulumi.set(self, "ipv4_public_pools", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels associated with the resource.
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
     @pulumi.getter
-    def metadata(self) -> Optional[pulumi.Input['VpcV1NetworkMetadataArgs']]:
+    def metadata(self) -> pulumi.Input[Optional['VpcV1NetworkMetadataArgs']]:
         """
         :
 
            Metadata for the network resource.
            `metadata.parent_id` represents IAM container
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Common resource metadata.
         """
         return pulumi.get(self, "metadata")
 
     @metadata.setter
-    def metadata(self, value: Optional[pulumi.Input['VpcV1NetworkMetadataArgs']]):
+    def metadata(self, value: pulumi.Input[Optional['VpcV1NetworkMetadataArgs']]):
         pulumi.set(self, "metadata", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Human readable name for the resource.
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
+
+    @_builtins.property
+    @pulumi.getter(name="parentId")
+    def parent_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Identifier of the parent resource to which the resource belongs.
+        """
+        return pulumi.get(self, "parent_id")
+
+    @parent_id.setter
+    def parent_id(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "parent_id", value)
 
 
 @pulumi.input_type
 class _VpcV1NetworkState:
     def __init__(__self__, *,
-                 created_at: Optional[pulumi.Input[_builtins.str]] = None,
-                 ipv4_private_pools: Optional[pulumi.Input['VpcV1NetworkIpv4PrivatePoolsArgs']] = None,
-                 ipv4_public_pools: Optional[pulumi.Input['VpcV1NetworkIpv4PublicPoolsArgs']] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 metadata: Optional[pulumi.Input['VpcV1NetworkMetadataArgs']] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 resource_version: Optional[pulumi.Input[_builtins.float]] = None,
-                 status: Optional[pulumi.Input['VpcV1NetworkStatusArgs']] = None,
-                 updated_at: Optional[pulumi.Input[_builtins.str]] = None):
+                 created_at: pulumi.Input[Optional[_builtins.str]] = None,
+                 ipv4_private_pools: pulumi.Input[Optional['VpcV1NetworkIpv4PrivatePoolsArgs']] = None,
+                 ipv4_public_pools: pulumi.Input[Optional['VpcV1NetworkIpv4PublicPoolsArgs']] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 labels_all: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 metadata: pulumi.Input[Optional['VpcV1NetworkMetadataArgs']] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 resource_version: pulumi.Input[Optional[_builtins.float]] = None,
+                 status: pulumi.Input[Optional['VpcV1NetworkStatusArgs']] = None,
+                 updated_at: pulumi.Input[Optional[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering VpcV1Network resources.
 
         :param pulumi.Input[_builtins.str] created_at: :
                
                   Timestamp indicating when the resource was created.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param pulumi.Input['VpcV1NetworkIpv4PrivatePoolsArgs'] ipv4_private_pools: :
                
@@ -184,13 +186,14 @@ class _VpcV1NetworkState:
                   Pools for public IPv4 addresses.
                   Default public pool will be used if not specified.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels associated with the resource.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels_all: Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
         :param pulumi.Input['VpcV1NetworkMetadataArgs'] metadata: :
                
                   Metadata for the network resource.
                   `metadata.parent_id` represents IAM container
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
         :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
@@ -204,7 +207,7 @@ class _VpcV1NetworkState:
         :param pulumi.Input[_builtins.str] updated_at: :
                
                   Timestamp indicating when the resource was last updated.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         if created_at is not None:
@@ -215,6 +218,8 @@ class _VpcV1NetworkState:
             pulumi.set(__self__, "ipv4_public_pools", ipv4_public_pools)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
+        if labels_all is not None:
+            pulumi.set(__self__, "labels_all", labels_all)
         if metadata is not None:
             pulumi.set(__self__, "metadata", metadata)
         if name is not None:
@@ -230,23 +235,23 @@ class _VpcV1NetworkState:
 
     @_builtins.property
     @pulumi.getter(name="createdAt")
-    def created_at(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def created_at(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
            Timestamp indicating when the resource was created.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "created_at")
 
     @created_at.setter
-    def created_at(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def created_at(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "created_at", value)
 
     @_builtins.property
     @pulumi.getter(name="ipv4PrivatePools")
-    def ipv4_private_pools(self) -> Optional[pulumi.Input['VpcV1NetworkIpv4PrivatePoolsArgs']]:
+    def ipv4_private_pools(self) -> pulumi.Input[Optional['VpcV1NetworkIpv4PrivatePoolsArgs']]:
         """
         :
 
@@ -258,12 +263,12 @@ class _VpcV1NetworkState:
         return pulumi.get(self, "ipv4_private_pools")
 
     @ipv4_private_pools.setter
-    def ipv4_private_pools(self, value: Optional[pulumi.Input['VpcV1NetworkIpv4PrivatePoolsArgs']]):
+    def ipv4_private_pools(self, value: pulumi.Input[Optional['VpcV1NetworkIpv4PrivatePoolsArgs']]):
         pulumi.set(self, "ipv4_private_pools", value)
 
     @_builtins.property
     @pulumi.getter(name="ipv4PublicPools")
-    def ipv4_public_pools(self) -> Optional[pulumi.Input['VpcV1NetworkIpv4PublicPoolsArgs']]:
+    def ipv4_public_pools(self) -> pulumi.Input[Optional['VpcV1NetworkIpv4PublicPoolsArgs']]:
         """
         :
 
@@ -273,67 +278,79 @@ class _VpcV1NetworkState:
         return pulumi.get(self, "ipv4_public_pools")
 
     @ipv4_public_pools.setter
-    def ipv4_public_pools(self, value: Optional[pulumi.Input['VpcV1NetworkIpv4PublicPoolsArgs']]):
+    def ipv4_public_pools(self, value: pulumi.Input[Optional['VpcV1NetworkIpv4PublicPoolsArgs']]):
         pulumi.set(self, "ipv4_public_pools", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels associated with the resource.
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
+    @pulumi.getter(name="labelsAll")
+    def labels_all(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
+        """
+        return pulumi.get(self, "labels_all")
+
+    @labels_all.setter
+    def labels_all(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "labels_all", value)
+
+    @_builtins.property
     @pulumi.getter
-    def metadata(self) -> Optional[pulumi.Input['VpcV1NetworkMetadataArgs']]:
+    def metadata(self) -> pulumi.Input[Optional['VpcV1NetworkMetadataArgs']]:
         """
         :
 
            Metadata for the network resource.
            `metadata.parent_id` represents IAM container
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Common resource metadata.
         """
         return pulumi.get(self, "metadata")
 
     @metadata.setter
-    def metadata(self, value: Optional[pulumi.Input['VpcV1NetworkMetadataArgs']]):
+    def metadata(self, value: pulumi.Input[Optional['VpcV1NetworkMetadataArgs']]):
         pulumi.set(self, "metadata", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Human readable name for the resource.
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="parentId")
-    def parent_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def parent_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Identifier of the parent resource to which the resource belongs.
         """
         return pulumi.get(self, "parent_id")
 
     @parent_id.setter
-    def parent_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def parent_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "parent_id", value)
 
     @_builtins.property
     @pulumi.getter(name="resourceVersion")
-    def resource_version(self) -> Optional[pulumi.Input[_builtins.float]]:
+    def resource_version(self) -> pulumi.Input[Optional[_builtins.float]]:
         """
         :
 
@@ -345,35 +362,35 @@ class _VpcV1NetworkState:
         return pulumi.get(self, "resource_version")
 
     @resource_version.setter
-    def resource_version(self, value: Optional[pulumi.Input[_builtins.float]]):
+    def resource_version(self, value: pulumi.Input[Optional[_builtins.float]]):
         pulumi.set(self, "resource_version", value)
 
     @_builtins.property
     @pulumi.getter
-    def status(self) -> Optional[pulumi.Input['VpcV1NetworkStatusArgs']]:
+    def status(self) -> pulumi.Input[Optional['VpcV1NetworkStatusArgs']]:
         """
         Status of the network.
         """
         return pulumi.get(self, "status")
 
     @status.setter
-    def status(self, value: Optional[pulumi.Input['VpcV1NetworkStatusArgs']]):
+    def status(self, value: pulumi.Input[Optional['VpcV1NetworkStatusArgs']]):
         pulumi.set(self, "status", value)
 
     @_builtins.property
     @pulumi.getter(name="updatedAt")
-    def updated_at(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def updated_at(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
            Timestamp indicating when the resource was last updated.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "updated_at")
 
     @updated_at.setter
-    def updated_at(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def updated_at(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "updated_at", value)
 
 
@@ -383,12 +400,12 @@ class VpcV1Network(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 ipv4_private_pools: Optional[pulumi.Input[Union['VpcV1NetworkIpv4PrivatePoolsArgs', 'VpcV1NetworkIpv4PrivatePoolsArgsDict']]] = None,
-                 ipv4_public_pools: Optional[pulumi.Input[Union['VpcV1NetworkIpv4PublicPoolsArgs', 'VpcV1NetworkIpv4PublicPoolsArgsDict']]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 metadata: Optional[pulumi.Input[Union['VpcV1NetworkMetadataArgs', 'VpcV1NetworkMetadataArgsDict']]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 parent_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 ipv4_private_pools: pulumi.Input[Optional[Union['VpcV1NetworkIpv4PrivatePoolsArgs', 'VpcV1NetworkIpv4PrivatePoolsArgsDict']]] = None,
+                 ipv4_public_pools: pulumi.Input[Optional[Union['VpcV1NetworkIpv4PublicPoolsArgs', 'VpcV1NetworkIpv4PublicPoolsArgsDict']]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 metadata: pulumi.Input[Optional[Union['VpcV1NetworkMetadataArgs', 'VpcV1NetworkMetadataArgsDict']]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         """
         Create a VpcV1Network resource with the given unique name, props, and options.
@@ -410,9 +427,9 @@ class VpcV1Network(pulumi.CustomResource):
                
                   Metadata for the network resource.
                   `metadata.parent_id` represents IAM container
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
         :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
@@ -421,7 +438,7 @@ class VpcV1Network(pulumi.CustomResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: VpcV1NetworkArgs,
+                 args: Optional[VpcV1NetworkArgs] = None,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Create a VpcV1Network resource with the given unique name, props, and options.
@@ -441,12 +458,12 @@ class VpcV1Network(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 ipv4_private_pools: Optional[pulumi.Input[Union['VpcV1NetworkIpv4PrivatePoolsArgs', 'VpcV1NetworkIpv4PrivatePoolsArgsDict']]] = None,
-                 ipv4_public_pools: Optional[pulumi.Input[Union['VpcV1NetworkIpv4PublicPoolsArgs', 'VpcV1NetworkIpv4PublicPoolsArgsDict']]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 metadata: Optional[pulumi.Input[Union['VpcV1NetworkMetadataArgs', 'VpcV1NetworkMetadataArgsDict']]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 parent_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 ipv4_private_pools: pulumi.Input[Optional[Union['VpcV1NetworkIpv4PrivatePoolsArgs', 'VpcV1NetworkIpv4PrivatePoolsArgsDict']]] = None,
+                 ipv4_public_pools: pulumi.Input[Optional[Union['VpcV1NetworkIpv4PublicPoolsArgs', 'VpcV1NetworkIpv4PublicPoolsArgsDict']]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 metadata: pulumi.Input[Optional[Union['VpcV1NetworkMetadataArgs', 'VpcV1NetworkMetadataArgsDict']]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -461,10 +478,9 @@ class VpcV1Network(pulumi.CustomResource):
             __props__.__dict__["labels"] = labels
             __props__.__dict__["metadata"] = metadata
             __props__.__dict__["name"] = name
-            if parent_id is None and not opts.urn:
-                raise TypeError("Missing required property 'parent_id'")
             __props__.__dict__["parent_id"] = parent_id
             __props__.__dict__["created_at"] = None
+            __props__.__dict__["labels_all"] = None
             __props__.__dict__["resource_version"] = None
             __props__.__dict__["status"] = None
             __props__.__dict__["updated_at"] = None
@@ -479,16 +495,17 @@ class VpcV1Network(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            created_at: Optional[pulumi.Input[_builtins.str]] = None,
-            ipv4_private_pools: Optional[pulumi.Input[Union['VpcV1NetworkIpv4PrivatePoolsArgs', 'VpcV1NetworkIpv4PrivatePoolsArgsDict']]] = None,
-            ipv4_public_pools: Optional[pulumi.Input[Union['VpcV1NetworkIpv4PublicPoolsArgs', 'VpcV1NetworkIpv4PublicPoolsArgsDict']]] = None,
-            labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            metadata: Optional[pulumi.Input[Union['VpcV1NetworkMetadataArgs', 'VpcV1NetworkMetadataArgsDict']]] = None,
-            name: Optional[pulumi.Input[_builtins.str]] = None,
-            parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-            resource_version: Optional[pulumi.Input[_builtins.float]] = None,
-            status: Optional[pulumi.Input[Union['VpcV1NetworkStatusArgs', 'VpcV1NetworkStatusArgsDict']]] = None,
-            updated_at: Optional[pulumi.Input[_builtins.str]] = None) -> 'VpcV1Network':
+            created_at: pulumi.Input[Optional[_builtins.str]] = None,
+            ipv4_private_pools: pulumi.Input[Optional[Union['VpcV1NetworkIpv4PrivatePoolsArgs', 'VpcV1NetworkIpv4PrivatePoolsArgsDict']]] = None,
+            ipv4_public_pools: pulumi.Input[Optional[Union['VpcV1NetworkIpv4PublicPoolsArgs', 'VpcV1NetworkIpv4PublicPoolsArgsDict']]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            labels_all: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            metadata: pulumi.Input[Optional[Union['VpcV1NetworkMetadataArgs', 'VpcV1NetworkMetadataArgsDict']]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+            resource_version: pulumi.Input[Optional[_builtins.float]] = None,
+            status: pulumi.Input[Optional[Union['VpcV1NetworkStatusArgs', 'VpcV1NetworkStatusArgsDict']]] = None,
+            updated_at: pulumi.Input[Optional[_builtins.str]] = None) -> 'VpcV1Network':
         """
         Get an existing VpcV1Network resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -499,7 +516,7 @@ class VpcV1Network(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] created_at: :
                
                   Timestamp indicating when the resource was created.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param pulumi.Input[Union['VpcV1NetworkIpv4PrivatePoolsArgs', 'VpcV1NetworkIpv4PrivatePoolsArgsDict']] ipv4_private_pools: :
                
@@ -512,13 +529,14 @@ class VpcV1Network(pulumi.CustomResource):
                   Pools for public IPv4 addresses.
                   Default public pool will be used if not specified.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels associated with the resource.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels_all: Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
         :param pulumi.Input[Union['VpcV1NetworkMetadataArgs', 'VpcV1NetworkMetadataArgsDict']] metadata: :
                
                   Metadata for the network resource.
                   `metadata.parent_id` represents IAM container
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
         :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
@@ -532,7 +550,7 @@ class VpcV1Network(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] updated_at: :
                
                   Timestamp indicating when the resource was last updated.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
@@ -543,6 +561,7 @@ class VpcV1Network(pulumi.CustomResource):
         __props__.__dict__["ipv4_private_pools"] = ipv4_private_pools
         __props__.__dict__["ipv4_public_pools"] = ipv4_public_pools
         __props__.__dict__["labels"] = labels
+        __props__.__dict__["labels_all"] = labels_all
         __props__.__dict__["metadata"] = metadata
         __props__.__dict__["name"] = name
         __props__.__dict__["parent_id"] = parent_id
@@ -558,7 +577,7 @@ class VpcV1Network(pulumi.CustomResource):
         :
 
            Timestamp indicating when the resource was created.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "created_at")
@@ -596,6 +615,14 @@ class VpcV1Network(pulumi.CustomResource):
         return pulumi.get(self, "labels")
 
     @_builtins.property
+    @pulumi.getter(name="labelsAll")
+    def labels_all(self) -> pulumi.Output[Mapping[str, _builtins.str]]:
+        """
+        Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
+        """
+        return pulumi.get(self, "labels_all")
+
+    @_builtins.property
     @pulumi.getter
     def metadata(self) -> pulumi.Output['outputs.VpcV1NetworkMetadata']:
         """
@@ -603,9 +630,9 @@ class VpcV1Network(pulumi.CustomResource):
 
            Metadata for the network resource.
            `metadata.parent_id` represents IAM container
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Common resource metadata.
         """
         return pulumi.get(self, "metadata")
@@ -654,7 +681,7 @@ class VpcV1Network(pulumi.CustomResource):
         :
 
            Timestamp indicating when the resource was last updated.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "updated_at")

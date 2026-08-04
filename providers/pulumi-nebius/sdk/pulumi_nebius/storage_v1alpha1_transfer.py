@@ -23,67 +23,66 @@ class StorageV1alpha1TransferArgs:
     def __init__(__self__, *,
                  destination: pulumi.Input['StorageV1alpha1TransferDestinationArgs'],
                  overwrite_strategy: pulumi.Input[_builtins.str],
-                 parent_id: pulumi.Input[_builtins.str],
                  source: pulumi.Input['StorageV1alpha1TransferSourceArgs'],
-                 after_n_empty_iterations: Optional[pulumi.Input['StorageV1alpha1TransferAfterNEmptyIterationsArgs']] = None,
-                 after_one_iteration: Optional[pulumi.Input['StorageV1alpha1TransferAfterOneIterationArgs']] = None,
-                 infinite: Optional[pulumi.Input['StorageV1alpha1TransferInfiniteArgs']] = None,
-                 inter_iteration_interval: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 metadata: Optional[pulumi.Input['StorageV1alpha1TransferMetadataArgs']] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 sensitive: Optional[pulumi.Input['StorageV1alpha1TransferSensitiveArgs']] = None):
+                 after_n_empty_iterations: pulumi.Input[Optional['StorageV1alpha1TransferAfterNEmptyIterationsArgs']] = None,
+                 after_one_iteration: pulumi.Input[Optional['StorageV1alpha1TransferAfterOneIterationArgs']] = None,
+                 infinite: pulumi.Input[Optional['StorageV1alpha1TransferInfiniteArgs']] = None,
+                 inter_iteration_interval: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 metadata: pulumi.Input[Optional['StorageV1alpha1TransferMetadataArgs']] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 sensitive: pulumi.Input[Optional['StorageV1alpha1TransferSensitiveArgs']] = None):
         """
         The set of arguments for constructing a StorageV1alpha1Transfer resource.
 
         :param pulumi.Input[_builtins.str] overwrite_strategy: :
                
                   Overwrite strategy set logic of overwrite already existed objects in destination bucket.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `OVERWRITE_STRATEGY_UNSPECIFIED`
                   - `NEVER`:
-                     Never overwrite objects that exist in the destination.
-                     If object exists in destination bucket, skip it.
-                     Safest option to prevent data loss.
-                  
+                Never overwrite objects that exist in the destination.
+                If object exists in destination bucket, skip it.
+                Safest option to prevent data loss.
+               
                   - `IF_NEWER`:
-                     Overwrite only if source object is newer than destination.
-                     Comparison based on Last-Modified timestamp.
-                     Recommended for incremental sync scenarios.
-                  
+                Overwrite only if source object is newer than destination.
+                Comparison based on Last-Modified timestamp.
+                Recommended for incremental sync scenarios.
+               
                   - `ALWAYS`:
-                     Always overwrite destination objects unconditionally.
-                     Use with caution - may cause data loss in destination.
-                     Suitable for full bucket synchronization.
-        :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
+                Always overwrite destination objects unconditionally.
+                Use with caution - may cause data loss in destination.
+                Suitable for full bucket synchronization.
         :param pulumi.Input['StorageV1alpha1TransferAfterNEmptyIterationsArgs'] after_n_empty_iterations: *Cannot be set alongside<span pulumi-lang-nodejs=" afterOneIteration " pulumi-lang-dotnet=" AfterOneIteration " pulumi-lang-go=" afterOneIteration " pulumi-lang-python=" after_one_iteration " pulumi-lang-yaml=" afterOneIteration " pulumi-lang-java=" afterOneIteration " pulumi-lang-hcl=" after_one_iteration "> afterOneIteration </span>or infinite.*
         :param pulumi.Input['StorageV1alpha1TransferAfterOneIterationArgs'] after_one_iteration: *Cannot be set alongside<span pulumi-lang-nodejs=" afterNEmptyIterations " pulumi-lang-dotnet=" AfterNEmptyIterations " pulumi-lang-go=" afterNEmptyIterations " pulumi-lang-python=" after_n_empty_iterations " pulumi-lang-yaml=" afterNEmptyIterations " pulumi-lang-java=" afterNEmptyIterations " pulumi-lang-hcl=" after_n_empty_iterations "> afterNEmptyIterations </span>or infinite.*
         :param pulumi.Input['StorageV1alpha1TransferInfiniteArgs'] infinite: :
                
                   Infinite transfers do not stop automatically and can be stopped manually by the user.
-                  
+               
                   *Cannot be set alongside<span pulumi-lang-nodejs=" afterOneIteration " pulumi-lang-dotnet=" AfterOneIteration " pulumi-lang-go=" afterOneIteration " pulumi-lang-python=" after_one_iteration " pulumi-lang-yaml=" afterOneIteration " pulumi-lang-java=" afterOneIteration " pulumi-lang-hcl=" after_one_iteration "> afterOneIteration </span>or after_n_empty_iterations.*
         :param pulumi.Input[_builtins.str] inter_iteration_interval: :
                
                   Time to wait between transfer iterations. Default is 15 minutes if not specified.
-                  
+               
                   Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as <span pulumi-lang-nodejs="`300ms`" pulumi-lang-dotnet="`300ms`" pulumi-lang-go="`300ms`" pulumi-lang-python="`300ms`" pulumi-lang-yaml="`300ms`" pulumi-lang-java="`300ms`" pulumi-lang-hcl="`300ms`">`300ms`</span>, `-1.5h` or <span pulumi-lang-nodejs="`2h45m`" pulumi-lang-dotnet="`2h45m`" pulumi-lang-go="`2h45m`" pulumi-lang-python="`2h45m`" pulumi-lang-yaml="`2h45m`" pulumi-lang-java="`2h45m`" pulumi-lang-hcl="`2h45m`">`2h45m`</span>. Valid time units are <span pulumi-lang-nodejs="`ns`" pulumi-lang-dotnet="`Ns`" pulumi-lang-go="`ns`" pulumi-lang-python="`ns`" pulumi-lang-yaml="`ns`" pulumi-lang-java="`ns`" pulumi-lang-hcl="`ns`">`ns`</span>, <span pulumi-lang-nodejs="`us`" pulumi-lang-dotnet="`Us`" pulumi-lang-go="`us`" pulumi-lang-python="`us`" pulumi-lang-yaml="`us`" pulumi-lang-java="`us`" pulumi-lang-hcl="`us`">`us`</span> (or `µs`), <span pulumi-lang-nodejs="`ms`" pulumi-lang-dotnet="`Ms`" pulumi-lang-go="`ms`" pulumi-lang-python="`ms`" pulumi-lang-yaml="`ms`" pulumi-lang-java="`ms`" pulumi-lang-hcl="`ms`">`ms`</span>, <span pulumi-lang-nodejs="`s`" pulumi-lang-dotnet="`S`" pulumi-lang-go="`s`" pulumi-lang-python="`s`" pulumi-lang-yaml="`s`" pulumi-lang-java="`s`" pulumi-lang-hcl="`s`">`s`</span>, <span pulumi-lang-nodejs="`m`" pulumi-lang-dotnet="`M`" pulumi-lang-go="`m`" pulumi-lang-python="`m`" pulumi-lang-yaml="`m`" pulumi-lang-java="`m`" pulumi-lang-hcl="`m`">`m`</span>, <span pulumi-lang-nodejs="`h`" pulumi-lang-dotnet="`H`" pulumi-lang-go="`h`" pulumi-lang-python="`h`" pulumi-lang-yaml="`h`" pulumi-lang-java="`h`" pulumi-lang-hcl="`h`">`h`</span>, <span pulumi-lang-nodejs="`d`" pulumi-lang-dotnet="`D`" pulumi-lang-go="`d`" pulumi-lang-python="`d`" pulumi-lang-yaml="`d`" pulumi-lang-java="`d`" pulumi-lang-hcl="`d`">`d`</span>.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels associated with the resource.
         :param pulumi.Input['StorageV1alpha1TransferMetadataArgs'] metadata: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
+        :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
         :param pulumi.Input['StorageV1alpha1TransferSensitiveArgs'] sensitive: This object mirrors the structure of the resource, providing view on the resource's [write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral/write-only) fields. It is a preferred way to define such fields as they are not stored in the state file. To use any field in write-only mode, do not set it in the main resource, instead set it in the <span pulumi-lang-nodejs="`sensitive`" pulumi-lang-dotnet="`Sensitive`" pulumi-lang-go="`sensitive`" pulumi-lang-python="`sensitive`" pulumi-lang-yaml="`sensitive`" pulumi-lang-java="`sensitive`" pulumi-lang-hcl="`sensitive`">`sensitive`</span> object. Setting the field in the main resource will overwrite the field in the <span pulumi-lang-nodejs="`sensitive`" pulumi-lang-dotnet="`Sensitive`" pulumi-lang-go="`sensitive`" pulumi-lang-python="`sensitive`" pulumi-lang-yaml="`sensitive`" pulumi-lang-java="`sensitive`" pulumi-lang-hcl="`sensitive`">`sensitive`</span> object at merging.
         """
         pulumi.set(__self__, "destination", destination)
         pulumi.set(__self__, "overwrite_strategy", overwrite_strategy)
-        pulumi.set(__self__, "parent_id", parent_id)
         pulumi.set(__self__, "source", source)
         if after_n_empty_iterations is not None:
             pulumi.set(__self__, "after_n_empty_iterations", after_n_empty_iterations)
@@ -99,6 +98,8 @@ class StorageV1alpha1TransferArgs:
             pulumi.set(__self__, "metadata", metadata)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if parent_id is not None:
+            pulumi.set(__self__, "parent_id", parent_id)
         if sensitive is not None:
             pulumi.set(__self__, "sensitive", sensitive)
 
@@ -118,44 +119,32 @@ class StorageV1alpha1TransferArgs:
         :
 
            Overwrite strategy set logic of overwrite already existed objects in destination bucket.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `OVERWRITE_STRATEGY_UNSPECIFIED`
            - `NEVER`:
-              Never overwrite objects that exist in the destination.
-              If object exists in destination bucket, skip it.
-              Safest option to prevent data loss.
-           
+         Never overwrite objects that exist in the destination.
+         If object exists in destination bucket, skip it.
+         Safest option to prevent data loss.
+
            - `IF_NEWER`:
-              Overwrite only if source object is newer than destination.
-              Comparison based on Last-Modified timestamp.
-              Recommended for incremental sync scenarios.
-           
+         Overwrite only if source object is newer than destination.
+         Comparison based on Last-Modified timestamp.
+         Recommended for incremental sync scenarios.
+
            - `ALWAYS`:
-              Always overwrite destination objects unconditionally.
-              Use with caution - may cause data loss in destination.
-              Suitable for full bucket synchronization.
+         Always overwrite destination objects unconditionally.
+         Use with caution - may cause data loss in destination.
+         Suitable for full bucket synchronization.
         """
         return pulumi.get(self, "overwrite_strategy")
 
     @overwrite_strategy.setter
     def overwrite_strategy(self, value: pulumi.Input[_builtins.str]):
         pulumi.set(self, "overwrite_strategy", value)
-
-    @_builtins.property
-    @pulumi.getter(name="parentId")
-    def parent_id(self) -> pulumi.Input[_builtins.str]:
-        """
-        Identifier of the parent resource to which the resource belongs.
-        """
-        return pulumi.get(self, "parent_id")
-
-    @parent_id.setter
-    def parent_id(self, value: pulumi.Input[_builtins.str]):
-        pulumi.set(self, "parent_id", value)
 
     @_builtins.property
     @pulumi.getter
@@ -168,132 +157,145 @@ class StorageV1alpha1TransferArgs:
 
     @_builtins.property
     @pulumi.getter(name="afterNEmptyIterations")
-    def after_n_empty_iterations(self) -> Optional[pulumi.Input['StorageV1alpha1TransferAfterNEmptyIterationsArgs']]:
+    def after_n_empty_iterations(self) -> pulumi.Input[Optional['StorageV1alpha1TransferAfterNEmptyIterationsArgs']]:
         """
         *Cannot be set alongside<span pulumi-lang-nodejs=" afterOneIteration " pulumi-lang-dotnet=" AfterOneIteration " pulumi-lang-go=" afterOneIteration " pulumi-lang-python=" after_one_iteration " pulumi-lang-yaml=" afterOneIteration " pulumi-lang-java=" afterOneIteration " pulumi-lang-hcl=" after_one_iteration "> afterOneIteration </span>or infinite.*
         """
         return pulumi.get(self, "after_n_empty_iterations")
 
     @after_n_empty_iterations.setter
-    def after_n_empty_iterations(self, value: Optional[pulumi.Input['StorageV1alpha1TransferAfterNEmptyIterationsArgs']]):
+    def after_n_empty_iterations(self, value: pulumi.Input[Optional['StorageV1alpha1TransferAfterNEmptyIterationsArgs']]):
         pulumi.set(self, "after_n_empty_iterations", value)
 
     @_builtins.property
     @pulumi.getter(name="afterOneIteration")
-    def after_one_iteration(self) -> Optional[pulumi.Input['StorageV1alpha1TransferAfterOneIterationArgs']]:
+    def after_one_iteration(self) -> pulumi.Input[Optional['StorageV1alpha1TransferAfterOneIterationArgs']]:
         """
         *Cannot be set alongside<span pulumi-lang-nodejs=" afterNEmptyIterations " pulumi-lang-dotnet=" AfterNEmptyIterations " pulumi-lang-go=" afterNEmptyIterations " pulumi-lang-python=" after_n_empty_iterations " pulumi-lang-yaml=" afterNEmptyIterations " pulumi-lang-java=" afterNEmptyIterations " pulumi-lang-hcl=" after_n_empty_iterations "> afterNEmptyIterations </span>or infinite.*
         """
         return pulumi.get(self, "after_one_iteration")
 
     @after_one_iteration.setter
-    def after_one_iteration(self, value: Optional[pulumi.Input['StorageV1alpha1TransferAfterOneIterationArgs']]):
+    def after_one_iteration(self, value: pulumi.Input[Optional['StorageV1alpha1TransferAfterOneIterationArgs']]):
         pulumi.set(self, "after_one_iteration", value)
 
     @_builtins.property
     @pulumi.getter
-    def infinite(self) -> Optional[pulumi.Input['StorageV1alpha1TransferInfiniteArgs']]:
+    def infinite(self) -> pulumi.Input[Optional['StorageV1alpha1TransferInfiniteArgs']]:
         """
         :
 
            Infinite transfers do not stop automatically and can be stopped manually by the user.
-           
+
            *Cannot be set alongside<span pulumi-lang-nodejs=" afterOneIteration " pulumi-lang-dotnet=" AfterOneIteration " pulumi-lang-go=" afterOneIteration " pulumi-lang-python=" after_one_iteration " pulumi-lang-yaml=" afterOneIteration " pulumi-lang-java=" afterOneIteration " pulumi-lang-hcl=" after_one_iteration "> afterOneIteration </span>or after_n_empty_iterations.*
         """
         return pulumi.get(self, "infinite")
 
     @infinite.setter
-    def infinite(self, value: Optional[pulumi.Input['StorageV1alpha1TransferInfiniteArgs']]):
+    def infinite(self, value: pulumi.Input[Optional['StorageV1alpha1TransferInfiniteArgs']]):
         pulumi.set(self, "infinite", value)
 
     @_builtins.property
     @pulumi.getter(name="interIterationInterval")
-    def inter_iteration_interval(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def inter_iteration_interval(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
            Time to wait between transfer iterations. Default is 15 minutes if not specified.
-           
+
            Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as <span pulumi-lang-nodejs="`300ms`" pulumi-lang-dotnet="`300ms`" pulumi-lang-go="`300ms`" pulumi-lang-python="`300ms`" pulumi-lang-yaml="`300ms`" pulumi-lang-java="`300ms`" pulumi-lang-hcl="`300ms`">`300ms`</span>, `-1.5h` or <span pulumi-lang-nodejs="`2h45m`" pulumi-lang-dotnet="`2h45m`" pulumi-lang-go="`2h45m`" pulumi-lang-python="`2h45m`" pulumi-lang-yaml="`2h45m`" pulumi-lang-java="`2h45m`" pulumi-lang-hcl="`2h45m`">`2h45m`</span>. Valid time units are <span pulumi-lang-nodejs="`ns`" pulumi-lang-dotnet="`Ns`" pulumi-lang-go="`ns`" pulumi-lang-python="`ns`" pulumi-lang-yaml="`ns`" pulumi-lang-java="`ns`" pulumi-lang-hcl="`ns`">`ns`</span>, <span pulumi-lang-nodejs="`us`" pulumi-lang-dotnet="`Us`" pulumi-lang-go="`us`" pulumi-lang-python="`us`" pulumi-lang-yaml="`us`" pulumi-lang-java="`us`" pulumi-lang-hcl="`us`">`us`</span> (or `µs`), <span pulumi-lang-nodejs="`ms`" pulumi-lang-dotnet="`Ms`" pulumi-lang-go="`ms`" pulumi-lang-python="`ms`" pulumi-lang-yaml="`ms`" pulumi-lang-java="`ms`" pulumi-lang-hcl="`ms`">`ms`</span>, <span pulumi-lang-nodejs="`s`" pulumi-lang-dotnet="`S`" pulumi-lang-go="`s`" pulumi-lang-python="`s`" pulumi-lang-yaml="`s`" pulumi-lang-java="`s`" pulumi-lang-hcl="`s`">`s`</span>, <span pulumi-lang-nodejs="`m`" pulumi-lang-dotnet="`M`" pulumi-lang-go="`m`" pulumi-lang-python="`m`" pulumi-lang-yaml="`m`" pulumi-lang-java="`m`" pulumi-lang-hcl="`m`">`m`</span>, <span pulumi-lang-nodejs="`h`" pulumi-lang-dotnet="`H`" pulumi-lang-go="`h`" pulumi-lang-python="`h`" pulumi-lang-yaml="`h`" pulumi-lang-java="`h`" pulumi-lang-hcl="`h`">`h`</span>, <span pulumi-lang-nodejs="`d`" pulumi-lang-dotnet="`D`" pulumi-lang-go="`d`" pulumi-lang-python="`d`" pulumi-lang-yaml="`d`" pulumi-lang-java="`d`" pulumi-lang-hcl="`d`">`d`</span>.
         """
         return pulumi.get(self, "inter_iteration_interval")
 
     @inter_iteration_interval.setter
-    def inter_iteration_interval(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def inter_iteration_interval(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "inter_iteration_interval", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels associated with the resource.
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
     @pulumi.getter
-    def metadata(self) -> Optional[pulumi.Input['StorageV1alpha1TransferMetadataArgs']]:
+    def metadata(self) -> pulumi.Input[Optional['StorageV1alpha1TransferMetadataArgs']]:
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Common resource metadata.
         """
         return pulumi.get(self, "metadata")
 
     @metadata.setter
-    def metadata(self, value: Optional[pulumi.Input['StorageV1alpha1TransferMetadataArgs']]):
+    def metadata(self, value: pulumi.Input[Optional['StorageV1alpha1TransferMetadataArgs']]):
         pulumi.set(self, "metadata", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Human readable name for the resource.
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
+    @pulumi.getter(name="parentId")
+    def parent_id(self) -> pulumi.Input[Optional[_builtins.str]]:
+        """
+        Identifier of the parent resource to which the resource belongs.
+        """
+        return pulumi.get(self, "parent_id")
+
+    @parent_id.setter
+    def parent_id(self, value: pulumi.Input[Optional[_builtins.str]]):
+        pulumi.set(self, "parent_id", value)
+
+    @_builtins.property
     @pulumi.getter
-    def sensitive(self) -> Optional[pulumi.Input['StorageV1alpha1TransferSensitiveArgs']]:
+    def sensitive(self) -> pulumi.Input[Optional['StorageV1alpha1TransferSensitiveArgs']]:
         """
         This object mirrors the structure of the resource, providing view on the resource's [write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral/write-only) fields. It is a preferred way to define such fields as they are not stored in the state file. To use any field in write-only mode, do not set it in the main resource, instead set it in the <span pulumi-lang-nodejs="`sensitive`" pulumi-lang-dotnet="`Sensitive`" pulumi-lang-go="`sensitive`" pulumi-lang-python="`sensitive`" pulumi-lang-yaml="`sensitive`" pulumi-lang-java="`sensitive`" pulumi-lang-hcl="`sensitive`">`sensitive`</span> object. Setting the field in the main resource will overwrite the field in the <span pulumi-lang-nodejs="`sensitive`" pulumi-lang-dotnet="`Sensitive`" pulumi-lang-go="`sensitive`" pulumi-lang-python="`sensitive`" pulumi-lang-yaml="`sensitive`" pulumi-lang-java="`sensitive`" pulumi-lang-hcl="`sensitive`">`sensitive`</span> object at merging.
         """
         return pulumi.get(self, "sensitive")
 
     @sensitive.setter
-    def sensitive(self, value: Optional[pulumi.Input['StorageV1alpha1TransferSensitiveArgs']]):
+    def sensitive(self, value: pulumi.Input[Optional['StorageV1alpha1TransferSensitiveArgs']]):
         pulumi.set(self, "sensitive", value)
 
 
 @pulumi.input_type
 class _StorageV1alpha1TransferState:
     def __init__(__self__, *,
-                 after_n_empty_iterations: Optional[pulumi.Input['StorageV1alpha1TransferAfterNEmptyIterationsArgs']] = None,
-                 after_one_iteration: Optional[pulumi.Input['StorageV1alpha1TransferAfterOneIterationArgs']] = None,
-                 created_at: Optional[pulumi.Input[_builtins.str]] = None,
-                 destination: Optional[pulumi.Input['StorageV1alpha1TransferDestinationArgs']] = None,
-                 infinite: Optional[pulumi.Input['StorageV1alpha1TransferInfiniteArgs']] = None,
-                 inter_iteration_interval: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 metadata: Optional[pulumi.Input['StorageV1alpha1TransferMetadataArgs']] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 overwrite_strategy: Optional[pulumi.Input[_builtins.str]] = None,
-                 parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 resource_version: Optional[pulumi.Input[_builtins.float]] = None,
-                 sensitive: Optional[pulumi.Input['StorageV1alpha1TransferSensitiveArgs']] = None,
-                 source: Optional[pulumi.Input['StorageV1alpha1TransferSourceArgs']] = None,
-                 status: Optional[pulumi.Input['StorageV1alpha1TransferStatusArgs']] = None,
-                 updated_at: Optional[pulumi.Input[_builtins.str]] = None):
+                 after_n_empty_iterations: pulumi.Input[Optional['StorageV1alpha1TransferAfterNEmptyIterationsArgs']] = None,
+                 after_one_iteration: pulumi.Input[Optional['StorageV1alpha1TransferAfterOneIterationArgs']] = None,
+                 created_at: pulumi.Input[Optional[_builtins.str]] = None,
+                 destination: pulumi.Input[Optional['StorageV1alpha1TransferDestinationArgs']] = None,
+                 infinite: pulumi.Input[Optional['StorageV1alpha1TransferInfiniteArgs']] = None,
+                 inter_iteration_interval: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 labels_all: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 metadata: pulumi.Input[Optional['StorageV1alpha1TransferMetadataArgs']] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 overwrite_strategy: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 resource_version: pulumi.Input[Optional[_builtins.float]] = None,
+                 sensitive: pulumi.Input[Optional['StorageV1alpha1TransferSensitiveArgs']] = None,
+                 source: pulumi.Input[Optional['StorageV1alpha1TransferSourceArgs']] = None,
+                 status: pulumi.Input[Optional['StorageV1alpha1TransferStatusArgs']] = None,
+                 updated_at: pulumi.Input[Optional[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering StorageV1alpha1Transfer resources.
 
@@ -302,48 +304,49 @@ class _StorageV1alpha1TransferState:
         :param pulumi.Input[_builtins.str] created_at: :
                
                   Timestamp indicating when the resource was created.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param pulumi.Input['StorageV1alpha1TransferInfiniteArgs'] infinite: :
                
                   Infinite transfers do not stop automatically and can be stopped manually by the user.
-                  
+               
                   *Cannot be set alongside<span pulumi-lang-nodejs=" afterOneIteration " pulumi-lang-dotnet=" AfterOneIteration " pulumi-lang-go=" afterOneIteration " pulumi-lang-python=" after_one_iteration " pulumi-lang-yaml=" afterOneIteration " pulumi-lang-java=" afterOneIteration " pulumi-lang-hcl=" after_one_iteration "> afterOneIteration </span>or after_n_empty_iterations.*
         :param pulumi.Input[_builtins.str] inter_iteration_interval: :
                
                   Time to wait between transfer iterations. Default is 15 minutes if not specified.
-                  
+               
                   Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as <span pulumi-lang-nodejs="`300ms`" pulumi-lang-dotnet="`300ms`" pulumi-lang-go="`300ms`" pulumi-lang-python="`300ms`" pulumi-lang-yaml="`300ms`" pulumi-lang-java="`300ms`" pulumi-lang-hcl="`300ms`">`300ms`</span>, `-1.5h` or <span pulumi-lang-nodejs="`2h45m`" pulumi-lang-dotnet="`2h45m`" pulumi-lang-go="`2h45m`" pulumi-lang-python="`2h45m`" pulumi-lang-yaml="`2h45m`" pulumi-lang-java="`2h45m`" pulumi-lang-hcl="`2h45m`">`2h45m`</span>. Valid time units are <span pulumi-lang-nodejs="`ns`" pulumi-lang-dotnet="`Ns`" pulumi-lang-go="`ns`" pulumi-lang-python="`ns`" pulumi-lang-yaml="`ns`" pulumi-lang-java="`ns`" pulumi-lang-hcl="`ns`">`ns`</span>, <span pulumi-lang-nodejs="`us`" pulumi-lang-dotnet="`Us`" pulumi-lang-go="`us`" pulumi-lang-python="`us`" pulumi-lang-yaml="`us`" pulumi-lang-java="`us`" pulumi-lang-hcl="`us`">`us`</span> (or `µs`), <span pulumi-lang-nodejs="`ms`" pulumi-lang-dotnet="`Ms`" pulumi-lang-go="`ms`" pulumi-lang-python="`ms`" pulumi-lang-yaml="`ms`" pulumi-lang-java="`ms`" pulumi-lang-hcl="`ms`">`ms`</span>, <span pulumi-lang-nodejs="`s`" pulumi-lang-dotnet="`S`" pulumi-lang-go="`s`" pulumi-lang-python="`s`" pulumi-lang-yaml="`s`" pulumi-lang-java="`s`" pulumi-lang-hcl="`s`">`s`</span>, <span pulumi-lang-nodejs="`m`" pulumi-lang-dotnet="`M`" pulumi-lang-go="`m`" pulumi-lang-python="`m`" pulumi-lang-yaml="`m`" pulumi-lang-java="`m`" pulumi-lang-hcl="`m`">`m`</span>, <span pulumi-lang-nodejs="`h`" pulumi-lang-dotnet="`H`" pulumi-lang-go="`h`" pulumi-lang-python="`h`" pulumi-lang-yaml="`h`" pulumi-lang-java="`h`" pulumi-lang-hcl="`h`">`h`</span>, <span pulumi-lang-nodejs="`d`" pulumi-lang-dotnet="`D`" pulumi-lang-go="`d`" pulumi-lang-python="`d`" pulumi-lang-yaml="`d`" pulumi-lang-java="`d`" pulumi-lang-hcl="`d`">`d`</span>.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels associated with the resource.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels_all: Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
         :param pulumi.Input['StorageV1alpha1TransferMetadataArgs'] metadata: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
         :param pulumi.Input[_builtins.str] overwrite_strategy: :
                
                   Overwrite strategy set logic of overwrite already existed objects in destination bucket.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `OVERWRITE_STRATEGY_UNSPECIFIED`
                   - `NEVER`:
-                     Never overwrite objects that exist in the destination.
-                     If object exists in destination bucket, skip it.
-                     Safest option to prevent data loss.
-                  
+                Never overwrite objects that exist in the destination.
+                If object exists in destination bucket, skip it.
+                Safest option to prevent data loss.
+               
                   - `IF_NEWER`:
-                     Overwrite only if source object is newer than destination.
-                     Comparison based on Last-Modified timestamp.
-                     Recommended for incremental sync scenarios.
-                  
+                Overwrite only if source object is newer than destination.
+                Comparison based on Last-Modified timestamp.
+                Recommended for incremental sync scenarios.
+               
                   - `ALWAYS`:
-                     Always overwrite destination objects unconditionally.
-                     Use with caution - may cause data loss in destination.
-                     Suitable for full bucket synchronization.
+                Always overwrite destination objects unconditionally.
+                Use with caution - may cause data loss in destination.
+                Suitable for full bucket synchronization.
         :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
         :param pulumi.Input[_builtins.float] resource_version: :
                
@@ -355,7 +358,7 @@ class _StorageV1alpha1TransferState:
         :param pulumi.Input[_builtins.str] updated_at: :
                
                   Timestamp indicating when the resource was last updated.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         if after_n_empty_iterations is not None:
@@ -372,6 +375,8 @@ class _StorageV1alpha1TransferState:
             pulumi.set(__self__, "inter_iteration_interval", inter_iteration_interval)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
+        if labels_all is not None:
+            pulumi.set(__self__, "labels_all", labels_all)
         if metadata is not None:
             pulumi.set(__self__, "metadata", metadata)
         if name is not None:
@@ -393,174 +398,186 @@ class _StorageV1alpha1TransferState:
 
     @_builtins.property
     @pulumi.getter(name="afterNEmptyIterations")
-    def after_n_empty_iterations(self) -> Optional[pulumi.Input['StorageV1alpha1TransferAfterNEmptyIterationsArgs']]:
+    def after_n_empty_iterations(self) -> pulumi.Input[Optional['StorageV1alpha1TransferAfterNEmptyIterationsArgs']]:
         """
         *Cannot be set alongside<span pulumi-lang-nodejs=" afterOneIteration " pulumi-lang-dotnet=" AfterOneIteration " pulumi-lang-go=" afterOneIteration " pulumi-lang-python=" after_one_iteration " pulumi-lang-yaml=" afterOneIteration " pulumi-lang-java=" afterOneIteration " pulumi-lang-hcl=" after_one_iteration "> afterOneIteration </span>or infinite.*
         """
         return pulumi.get(self, "after_n_empty_iterations")
 
     @after_n_empty_iterations.setter
-    def after_n_empty_iterations(self, value: Optional[pulumi.Input['StorageV1alpha1TransferAfterNEmptyIterationsArgs']]):
+    def after_n_empty_iterations(self, value: pulumi.Input[Optional['StorageV1alpha1TransferAfterNEmptyIterationsArgs']]):
         pulumi.set(self, "after_n_empty_iterations", value)
 
     @_builtins.property
     @pulumi.getter(name="afterOneIteration")
-    def after_one_iteration(self) -> Optional[pulumi.Input['StorageV1alpha1TransferAfterOneIterationArgs']]:
+    def after_one_iteration(self) -> pulumi.Input[Optional['StorageV1alpha1TransferAfterOneIterationArgs']]:
         """
         *Cannot be set alongside<span pulumi-lang-nodejs=" afterNEmptyIterations " pulumi-lang-dotnet=" AfterNEmptyIterations " pulumi-lang-go=" afterNEmptyIterations " pulumi-lang-python=" after_n_empty_iterations " pulumi-lang-yaml=" afterNEmptyIterations " pulumi-lang-java=" afterNEmptyIterations " pulumi-lang-hcl=" after_n_empty_iterations "> afterNEmptyIterations </span>or infinite.*
         """
         return pulumi.get(self, "after_one_iteration")
 
     @after_one_iteration.setter
-    def after_one_iteration(self, value: Optional[pulumi.Input['StorageV1alpha1TransferAfterOneIterationArgs']]):
+    def after_one_iteration(self, value: pulumi.Input[Optional['StorageV1alpha1TransferAfterOneIterationArgs']]):
         pulumi.set(self, "after_one_iteration", value)
 
     @_builtins.property
     @pulumi.getter(name="createdAt")
-    def created_at(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def created_at(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
            Timestamp indicating when the resource was created.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "created_at")
 
     @created_at.setter
-    def created_at(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def created_at(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "created_at", value)
 
     @_builtins.property
     @pulumi.getter
-    def destination(self) -> Optional[pulumi.Input['StorageV1alpha1TransferDestinationArgs']]:
+    def destination(self) -> pulumi.Input[Optional['StorageV1alpha1TransferDestinationArgs']]:
         return pulumi.get(self, "destination")
 
     @destination.setter
-    def destination(self, value: Optional[pulumi.Input['StorageV1alpha1TransferDestinationArgs']]):
+    def destination(self, value: pulumi.Input[Optional['StorageV1alpha1TransferDestinationArgs']]):
         pulumi.set(self, "destination", value)
 
     @_builtins.property
     @pulumi.getter
-    def infinite(self) -> Optional[pulumi.Input['StorageV1alpha1TransferInfiniteArgs']]:
+    def infinite(self) -> pulumi.Input[Optional['StorageV1alpha1TransferInfiniteArgs']]:
         """
         :
 
            Infinite transfers do not stop automatically and can be stopped manually by the user.
-           
+
            *Cannot be set alongside<span pulumi-lang-nodejs=" afterOneIteration " pulumi-lang-dotnet=" AfterOneIteration " pulumi-lang-go=" afterOneIteration " pulumi-lang-python=" after_one_iteration " pulumi-lang-yaml=" afterOneIteration " pulumi-lang-java=" afterOneIteration " pulumi-lang-hcl=" after_one_iteration "> afterOneIteration </span>or after_n_empty_iterations.*
         """
         return pulumi.get(self, "infinite")
 
     @infinite.setter
-    def infinite(self, value: Optional[pulumi.Input['StorageV1alpha1TransferInfiniteArgs']]):
+    def infinite(self, value: pulumi.Input[Optional['StorageV1alpha1TransferInfiniteArgs']]):
         pulumi.set(self, "infinite", value)
 
     @_builtins.property
     @pulumi.getter(name="interIterationInterval")
-    def inter_iteration_interval(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def inter_iteration_interval(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
            Time to wait between transfer iterations. Default is 15 minutes if not specified.
-           
+
            Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as <span pulumi-lang-nodejs="`300ms`" pulumi-lang-dotnet="`300ms`" pulumi-lang-go="`300ms`" pulumi-lang-python="`300ms`" pulumi-lang-yaml="`300ms`" pulumi-lang-java="`300ms`" pulumi-lang-hcl="`300ms`">`300ms`</span>, `-1.5h` or <span pulumi-lang-nodejs="`2h45m`" pulumi-lang-dotnet="`2h45m`" pulumi-lang-go="`2h45m`" pulumi-lang-python="`2h45m`" pulumi-lang-yaml="`2h45m`" pulumi-lang-java="`2h45m`" pulumi-lang-hcl="`2h45m`">`2h45m`</span>. Valid time units are <span pulumi-lang-nodejs="`ns`" pulumi-lang-dotnet="`Ns`" pulumi-lang-go="`ns`" pulumi-lang-python="`ns`" pulumi-lang-yaml="`ns`" pulumi-lang-java="`ns`" pulumi-lang-hcl="`ns`">`ns`</span>, <span pulumi-lang-nodejs="`us`" pulumi-lang-dotnet="`Us`" pulumi-lang-go="`us`" pulumi-lang-python="`us`" pulumi-lang-yaml="`us`" pulumi-lang-java="`us`" pulumi-lang-hcl="`us`">`us`</span> (or `µs`), <span pulumi-lang-nodejs="`ms`" pulumi-lang-dotnet="`Ms`" pulumi-lang-go="`ms`" pulumi-lang-python="`ms`" pulumi-lang-yaml="`ms`" pulumi-lang-java="`ms`" pulumi-lang-hcl="`ms`">`ms`</span>, <span pulumi-lang-nodejs="`s`" pulumi-lang-dotnet="`S`" pulumi-lang-go="`s`" pulumi-lang-python="`s`" pulumi-lang-yaml="`s`" pulumi-lang-java="`s`" pulumi-lang-hcl="`s`">`s`</span>, <span pulumi-lang-nodejs="`m`" pulumi-lang-dotnet="`M`" pulumi-lang-go="`m`" pulumi-lang-python="`m`" pulumi-lang-yaml="`m`" pulumi-lang-java="`m`" pulumi-lang-hcl="`m`">`m`</span>, <span pulumi-lang-nodejs="`h`" pulumi-lang-dotnet="`H`" pulumi-lang-go="`h`" pulumi-lang-python="`h`" pulumi-lang-yaml="`h`" pulumi-lang-java="`h`" pulumi-lang-hcl="`h`">`h`</span>, <span pulumi-lang-nodejs="`d`" pulumi-lang-dotnet="`D`" pulumi-lang-go="`d`" pulumi-lang-python="`d`" pulumi-lang-yaml="`d`" pulumi-lang-java="`d`" pulumi-lang-hcl="`d`">`d`</span>.
         """
         return pulumi.get(self, "inter_iteration_interval")
 
     @inter_iteration_interval.setter
-    def inter_iteration_interval(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def inter_iteration_interval(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "inter_iteration_interval", value)
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+    def labels(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels associated with the resource.
         """
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
+    @pulumi.getter(name="labelsAll")
+    def labels_all(self) -> pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
+        """
+        return pulumi.get(self, "labels_all")
+
+    @labels_all.setter
+    def labels_all(self, value: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "labels_all", value)
+
+    @_builtins.property
     @pulumi.getter
-    def metadata(self) -> Optional[pulumi.Input['StorageV1alpha1TransferMetadataArgs']]:
+    def metadata(self) -> pulumi.Input[Optional['StorageV1alpha1TransferMetadataArgs']]:
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Common resource metadata.
         """
         return pulumi.get(self, "metadata")
 
     @metadata.setter
-    def metadata(self, value: Optional[pulumi.Input['StorageV1alpha1TransferMetadataArgs']]):
+    def metadata(self, value: pulumi.Input[Optional['StorageV1alpha1TransferMetadataArgs']]):
         pulumi.set(self, "metadata", value)
 
     @_builtins.property
     @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def name(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Human readable name for the resource.
         """
         return pulumi.get(self, "name")
 
     @name.setter
-    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def name(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "name", value)
 
     @_builtins.property
     @pulumi.getter(name="overwriteStrategy")
-    def overwrite_strategy(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def overwrite_strategy(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
            Overwrite strategy set logic of overwrite already existed objects in destination bucket.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `OVERWRITE_STRATEGY_UNSPECIFIED`
            - `NEVER`:
-              Never overwrite objects that exist in the destination.
-              If object exists in destination bucket, skip it.
-              Safest option to prevent data loss.
-           
+         Never overwrite objects that exist in the destination.
+         If object exists in destination bucket, skip it.
+         Safest option to prevent data loss.
+
            - `IF_NEWER`:
-              Overwrite only if source object is newer than destination.
-              Comparison based on Last-Modified timestamp.
-              Recommended for incremental sync scenarios.
-           
+         Overwrite only if source object is newer than destination.
+         Comparison based on Last-Modified timestamp.
+         Recommended for incremental sync scenarios.
+
            - `ALWAYS`:
-              Always overwrite destination objects unconditionally.
-              Use with caution - may cause data loss in destination.
-              Suitable for full bucket synchronization.
+         Always overwrite destination objects unconditionally.
+         Use with caution - may cause data loss in destination.
+         Suitable for full bucket synchronization.
         """
         return pulumi.get(self, "overwrite_strategy")
 
     @overwrite_strategy.setter
-    def overwrite_strategy(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def overwrite_strategy(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "overwrite_strategy", value)
 
     @_builtins.property
     @pulumi.getter(name="parentId")
-    def parent_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def parent_id(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         Identifier of the parent resource to which the resource belongs.
         """
         return pulumi.get(self, "parent_id")
 
     @parent_id.setter
-    def parent_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def parent_id(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "parent_id", value)
 
     @_builtins.property
     @pulumi.getter(name="resourceVersion")
-    def resource_version(self) -> Optional[pulumi.Input[_builtins.float]]:
+    def resource_version(self) -> pulumi.Input[Optional[_builtins.float]]:
         """
         :
 
@@ -572,53 +589,53 @@ class _StorageV1alpha1TransferState:
         return pulumi.get(self, "resource_version")
 
     @resource_version.setter
-    def resource_version(self, value: Optional[pulumi.Input[_builtins.float]]):
+    def resource_version(self, value: pulumi.Input[Optional[_builtins.float]]):
         pulumi.set(self, "resource_version", value)
 
     @_builtins.property
     @pulumi.getter
-    def sensitive(self) -> Optional[pulumi.Input['StorageV1alpha1TransferSensitiveArgs']]:
+    def sensitive(self) -> pulumi.Input[Optional['StorageV1alpha1TransferSensitiveArgs']]:
         """
         This object mirrors the structure of the resource, providing view on the resource's [write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral/write-only) fields. It is a preferred way to define such fields as they are not stored in the state file. To use any field in write-only mode, do not set it in the main resource, instead set it in the <span pulumi-lang-nodejs="`sensitive`" pulumi-lang-dotnet="`Sensitive`" pulumi-lang-go="`sensitive`" pulumi-lang-python="`sensitive`" pulumi-lang-yaml="`sensitive`" pulumi-lang-java="`sensitive`" pulumi-lang-hcl="`sensitive`">`sensitive`</span> object. Setting the field in the main resource will overwrite the field in the <span pulumi-lang-nodejs="`sensitive`" pulumi-lang-dotnet="`Sensitive`" pulumi-lang-go="`sensitive`" pulumi-lang-python="`sensitive`" pulumi-lang-yaml="`sensitive`" pulumi-lang-java="`sensitive`" pulumi-lang-hcl="`sensitive`">`sensitive`</span> object at merging.
         """
         return pulumi.get(self, "sensitive")
 
     @sensitive.setter
-    def sensitive(self, value: Optional[pulumi.Input['StorageV1alpha1TransferSensitiveArgs']]):
+    def sensitive(self, value: pulumi.Input[Optional['StorageV1alpha1TransferSensitiveArgs']]):
         pulumi.set(self, "sensitive", value)
 
     @_builtins.property
     @pulumi.getter
-    def source(self) -> Optional[pulumi.Input['StorageV1alpha1TransferSourceArgs']]:
+    def source(self) -> pulumi.Input[Optional['StorageV1alpha1TransferSourceArgs']]:
         return pulumi.get(self, "source")
 
     @source.setter
-    def source(self, value: Optional[pulumi.Input['StorageV1alpha1TransferSourceArgs']]):
+    def source(self, value: pulumi.Input[Optional['StorageV1alpha1TransferSourceArgs']]):
         pulumi.set(self, "source", value)
 
     @_builtins.property
     @pulumi.getter
-    def status(self) -> Optional[pulumi.Input['StorageV1alpha1TransferStatusArgs']]:
+    def status(self) -> pulumi.Input[Optional['StorageV1alpha1TransferStatusArgs']]:
         return pulumi.get(self, "status")
 
     @status.setter
-    def status(self, value: Optional[pulumi.Input['StorageV1alpha1TransferStatusArgs']]):
+    def status(self, value: pulumi.Input[Optional['StorageV1alpha1TransferStatusArgs']]):
         pulumi.set(self, "status", value)
 
     @_builtins.property
     @pulumi.getter(name="updatedAt")
-    def updated_at(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def updated_at(self) -> pulumi.Input[Optional[_builtins.str]]:
         """
         :
 
            Timestamp indicating when the resource was last updated.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "updated_at")
 
     @updated_at.setter
-    def updated_at(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def updated_at(self, value: pulumi.Input[Optional[_builtins.str]]):
         pulumi.set(self, "updated_at", value)
 
 
@@ -628,18 +645,18 @@ class StorageV1alpha1Transfer(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 after_n_empty_iterations: Optional[pulumi.Input[Union['StorageV1alpha1TransferAfterNEmptyIterationsArgs', 'StorageV1alpha1TransferAfterNEmptyIterationsArgsDict']]] = None,
-                 after_one_iteration: Optional[pulumi.Input[Union['StorageV1alpha1TransferAfterOneIterationArgs', 'StorageV1alpha1TransferAfterOneIterationArgsDict']]] = None,
-                 destination: Optional[pulumi.Input[Union['StorageV1alpha1TransferDestinationArgs', 'StorageV1alpha1TransferDestinationArgsDict']]] = None,
-                 infinite: Optional[pulumi.Input[Union['StorageV1alpha1TransferInfiniteArgs', 'StorageV1alpha1TransferInfiniteArgsDict']]] = None,
-                 inter_iteration_interval: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 metadata: Optional[pulumi.Input[Union['StorageV1alpha1TransferMetadataArgs', 'StorageV1alpha1TransferMetadataArgsDict']]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 overwrite_strategy: Optional[pulumi.Input[_builtins.str]] = None,
-                 parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 sensitive: Optional[pulumi.Input[Union['StorageV1alpha1TransferSensitiveArgs', 'StorageV1alpha1TransferSensitiveArgsDict']]] = None,
-                 source: Optional[pulumi.Input[Union['StorageV1alpha1TransferSourceArgs', 'StorageV1alpha1TransferSourceArgsDict']]] = None,
+                 after_n_empty_iterations: pulumi.Input[Optional[Union['StorageV1alpha1TransferAfterNEmptyIterationsArgs', 'StorageV1alpha1TransferAfterNEmptyIterationsArgsDict']]] = None,
+                 after_one_iteration: pulumi.Input[Optional[Union['StorageV1alpha1TransferAfterOneIterationArgs', 'StorageV1alpha1TransferAfterOneIterationArgsDict']]] = None,
+                 destination: pulumi.Input[Optional[Union['StorageV1alpha1TransferDestinationArgs', 'StorageV1alpha1TransferDestinationArgsDict']]] = None,
+                 infinite: pulumi.Input[Optional[Union['StorageV1alpha1TransferInfiniteArgs', 'StorageV1alpha1TransferInfiniteArgsDict']]] = None,
+                 inter_iteration_interval: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 metadata: pulumi.Input[Optional[Union['StorageV1alpha1TransferMetadataArgs', 'StorageV1alpha1TransferMetadataArgsDict']]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 overwrite_strategy: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 sensitive: pulumi.Input[Optional[Union['StorageV1alpha1TransferSensitiveArgs', 'StorageV1alpha1TransferSensitiveArgsDict']]] = None,
+                 source: pulumi.Input[Optional[Union['StorageV1alpha1TransferSourceArgs', 'StorageV1alpha1TransferSourceArgsDict']]] = None,
                  __props__=None):
         """
         Create a StorageV1alpha1Transfer resource with the given unique name, props, and options.
@@ -651,43 +668,43 @@ class StorageV1alpha1Transfer(pulumi.CustomResource):
         :param pulumi.Input[Union['StorageV1alpha1TransferInfiniteArgs', 'StorageV1alpha1TransferInfiniteArgsDict']] infinite: :
                
                   Infinite transfers do not stop automatically and can be stopped manually by the user.
-                  
+               
                   *Cannot be set alongside<span pulumi-lang-nodejs=" afterOneIteration " pulumi-lang-dotnet=" AfterOneIteration " pulumi-lang-go=" afterOneIteration " pulumi-lang-python=" after_one_iteration " pulumi-lang-yaml=" afterOneIteration " pulumi-lang-java=" afterOneIteration " pulumi-lang-hcl=" after_one_iteration "> afterOneIteration </span>or after_n_empty_iterations.*
         :param pulumi.Input[_builtins.str] inter_iteration_interval: :
                
                   Time to wait between transfer iterations. Default is 15 minutes if not specified.
-                  
+               
                   Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as <span pulumi-lang-nodejs="`300ms`" pulumi-lang-dotnet="`300ms`" pulumi-lang-go="`300ms`" pulumi-lang-python="`300ms`" pulumi-lang-yaml="`300ms`" pulumi-lang-java="`300ms`" pulumi-lang-hcl="`300ms`">`300ms`</span>, `-1.5h` or <span pulumi-lang-nodejs="`2h45m`" pulumi-lang-dotnet="`2h45m`" pulumi-lang-go="`2h45m`" pulumi-lang-python="`2h45m`" pulumi-lang-yaml="`2h45m`" pulumi-lang-java="`2h45m`" pulumi-lang-hcl="`2h45m`">`2h45m`</span>. Valid time units are <span pulumi-lang-nodejs="`ns`" pulumi-lang-dotnet="`Ns`" pulumi-lang-go="`ns`" pulumi-lang-python="`ns`" pulumi-lang-yaml="`ns`" pulumi-lang-java="`ns`" pulumi-lang-hcl="`ns`">`ns`</span>, <span pulumi-lang-nodejs="`us`" pulumi-lang-dotnet="`Us`" pulumi-lang-go="`us`" pulumi-lang-python="`us`" pulumi-lang-yaml="`us`" pulumi-lang-java="`us`" pulumi-lang-hcl="`us`">`us`</span> (or `µs`), <span pulumi-lang-nodejs="`ms`" pulumi-lang-dotnet="`Ms`" pulumi-lang-go="`ms`" pulumi-lang-python="`ms`" pulumi-lang-yaml="`ms`" pulumi-lang-java="`ms`" pulumi-lang-hcl="`ms`">`ms`</span>, <span pulumi-lang-nodejs="`s`" pulumi-lang-dotnet="`S`" pulumi-lang-go="`s`" pulumi-lang-python="`s`" pulumi-lang-yaml="`s`" pulumi-lang-java="`s`" pulumi-lang-hcl="`s`">`s`</span>, <span pulumi-lang-nodejs="`m`" pulumi-lang-dotnet="`M`" pulumi-lang-go="`m`" pulumi-lang-python="`m`" pulumi-lang-yaml="`m`" pulumi-lang-java="`m`" pulumi-lang-hcl="`m`">`m`</span>, <span pulumi-lang-nodejs="`h`" pulumi-lang-dotnet="`H`" pulumi-lang-go="`h`" pulumi-lang-python="`h`" pulumi-lang-yaml="`h`" pulumi-lang-java="`h`" pulumi-lang-hcl="`h`">`h`</span>, <span pulumi-lang-nodejs="`d`" pulumi-lang-dotnet="`D`" pulumi-lang-go="`d`" pulumi-lang-python="`d`" pulumi-lang-yaml="`d`" pulumi-lang-java="`d`" pulumi-lang-hcl="`d`">`d`</span>.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels associated with the resource.
         :param pulumi.Input[Union['StorageV1alpha1TransferMetadataArgs', 'StorageV1alpha1TransferMetadataArgsDict']] metadata: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
         :param pulumi.Input[_builtins.str] overwrite_strategy: :
                
                   Overwrite strategy set logic of overwrite already existed objects in destination bucket.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `OVERWRITE_STRATEGY_UNSPECIFIED`
                   - `NEVER`:
-                     Never overwrite objects that exist in the destination.
-                     If object exists in destination bucket, skip it.
-                     Safest option to prevent data loss.
-                  
+                Never overwrite objects that exist in the destination.
+                If object exists in destination bucket, skip it.
+                Safest option to prevent data loss.
+               
                   - `IF_NEWER`:
-                     Overwrite only if source object is newer than destination.
-                     Comparison based on Last-Modified timestamp.
-                     Recommended for incremental sync scenarios.
-                  
+                Overwrite only if source object is newer than destination.
+                Comparison based on Last-Modified timestamp.
+                Recommended for incremental sync scenarios.
+               
                   - `ALWAYS`:
-                     Always overwrite destination objects unconditionally.
-                     Use with caution - may cause data loss in destination.
-                     Suitable for full bucket synchronization.
+                Always overwrite destination objects unconditionally.
+                Use with caution - may cause data loss in destination.
+                Suitable for full bucket synchronization.
         :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
         :param pulumi.Input[Union['StorageV1alpha1TransferSensitiveArgs', 'StorageV1alpha1TransferSensitiveArgsDict']] sensitive: This object mirrors the structure of the resource, providing view on the resource's [write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral/write-only) fields. It is a preferred way to define such fields as they are not stored in the state file. To use any field in write-only mode, do not set it in the main resource, instead set it in the <span pulumi-lang-nodejs="`sensitive`" pulumi-lang-dotnet="`Sensitive`" pulumi-lang-go="`sensitive`" pulumi-lang-python="`sensitive`" pulumi-lang-yaml="`sensitive`" pulumi-lang-java="`sensitive`" pulumi-lang-hcl="`sensitive`">`sensitive`</span> object. Setting the field in the main resource will overwrite the field in the <span pulumi-lang-nodejs="`sensitive`" pulumi-lang-dotnet="`Sensitive`" pulumi-lang-go="`sensitive`" pulumi-lang-python="`sensitive`" pulumi-lang-yaml="`sensitive`" pulumi-lang-java="`sensitive`" pulumi-lang-hcl="`sensitive`">`sensitive`</span> object at merging.
         """
@@ -715,18 +732,18 @@ class StorageV1alpha1Transfer(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 after_n_empty_iterations: Optional[pulumi.Input[Union['StorageV1alpha1TransferAfterNEmptyIterationsArgs', 'StorageV1alpha1TransferAfterNEmptyIterationsArgsDict']]] = None,
-                 after_one_iteration: Optional[pulumi.Input[Union['StorageV1alpha1TransferAfterOneIterationArgs', 'StorageV1alpha1TransferAfterOneIterationArgsDict']]] = None,
-                 destination: Optional[pulumi.Input[Union['StorageV1alpha1TransferDestinationArgs', 'StorageV1alpha1TransferDestinationArgsDict']]] = None,
-                 infinite: Optional[pulumi.Input[Union['StorageV1alpha1TransferInfiniteArgs', 'StorageV1alpha1TransferInfiniteArgsDict']]] = None,
-                 inter_iteration_interval: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 metadata: Optional[pulumi.Input[Union['StorageV1alpha1TransferMetadataArgs', 'StorageV1alpha1TransferMetadataArgsDict']]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None,
-                 overwrite_strategy: Optional[pulumi.Input[_builtins.str]] = None,
-                 parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 sensitive: Optional[pulumi.Input[Union['StorageV1alpha1TransferSensitiveArgs', 'StorageV1alpha1TransferSensitiveArgsDict']]] = None,
-                 source: Optional[pulumi.Input[Union['StorageV1alpha1TransferSourceArgs', 'StorageV1alpha1TransferSourceArgsDict']]] = None,
+                 after_n_empty_iterations: pulumi.Input[Optional[Union['StorageV1alpha1TransferAfterNEmptyIterationsArgs', 'StorageV1alpha1TransferAfterNEmptyIterationsArgsDict']]] = None,
+                 after_one_iteration: pulumi.Input[Optional[Union['StorageV1alpha1TransferAfterOneIterationArgs', 'StorageV1alpha1TransferAfterOneIterationArgsDict']]] = None,
+                 destination: pulumi.Input[Optional[Union['StorageV1alpha1TransferDestinationArgs', 'StorageV1alpha1TransferDestinationArgsDict']]] = None,
+                 infinite: pulumi.Input[Optional[Union['StorageV1alpha1TransferInfiniteArgs', 'StorageV1alpha1TransferInfiniteArgsDict']]] = None,
+                 inter_iteration_interval: pulumi.Input[Optional[_builtins.str]] = None,
+                 labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 metadata: pulumi.Input[Optional[Union['StorageV1alpha1TransferMetadataArgs', 'StorageV1alpha1TransferMetadataArgsDict']]] = None,
+                 name: pulumi.Input[Optional[_builtins.str]] = None,
+                 overwrite_strategy: pulumi.Input[Optional[_builtins.str]] = None,
+                 parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+                 sensitive: pulumi.Input[Optional[Union['StorageV1alpha1TransferSensitiveArgs', 'StorageV1alpha1TransferSensitiveArgsDict']]] = None,
+                 source: pulumi.Input[Optional[Union['StorageV1alpha1TransferSourceArgs', 'StorageV1alpha1TransferSourceArgsDict']]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -749,14 +766,13 @@ class StorageV1alpha1Transfer(pulumi.CustomResource):
             if overwrite_strategy is None and not opts.urn:
                 raise TypeError("Missing required property 'overwrite_strategy'")
             __props__.__dict__["overwrite_strategy"] = overwrite_strategy
-            if parent_id is None and not opts.urn:
-                raise TypeError("Missing required property 'parent_id'")
             __props__.__dict__["parent_id"] = parent_id
             __props__.__dict__["sensitive"] = None if sensitive is None else pulumi.Output.secret(sensitive)
             if source is None and not opts.urn:
                 raise TypeError("Missing required property 'source'")
             __props__.__dict__["source"] = source
             __props__.__dict__["created_at"] = None
+            __props__.__dict__["labels_all"] = None
             __props__.__dict__["resource_version"] = None
             __props__.__dict__["status"] = None
             __props__.__dict__["updated_at"] = None
@@ -773,22 +789,23 @@ class StorageV1alpha1Transfer(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            after_n_empty_iterations: Optional[pulumi.Input[Union['StorageV1alpha1TransferAfterNEmptyIterationsArgs', 'StorageV1alpha1TransferAfterNEmptyIterationsArgsDict']]] = None,
-            after_one_iteration: Optional[pulumi.Input[Union['StorageV1alpha1TransferAfterOneIterationArgs', 'StorageV1alpha1TransferAfterOneIterationArgsDict']]] = None,
-            created_at: Optional[pulumi.Input[_builtins.str]] = None,
-            destination: Optional[pulumi.Input[Union['StorageV1alpha1TransferDestinationArgs', 'StorageV1alpha1TransferDestinationArgsDict']]] = None,
-            infinite: Optional[pulumi.Input[Union['StorageV1alpha1TransferInfiniteArgs', 'StorageV1alpha1TransferInfiniteArgsDict']]] = None,
-            inter_iteration_interval: Optional[pulumi.Input[_builtins.str]] = None,
-            labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            metadata: Optional[pulumi.Input[Union['StorageV1alpha1TransferMetadataArgs', 'StorageV1alpha1TransferMetadataArgsDict']]] = None,
-            name: Optional[pulumi.Input[_builtins.str]] = None,
-            overwrite_strategy: Optional[pulumi.Input[_builtins.str]] = None,
-            parent_id: Optional[pulumi.Input[_builtins.str]] = None,
-            resource_version: Optional[pulumi.Input[_builtins.float]] = None,
-            sensitive: Optional[pulumi.Input[Union['StorageV1alpha1TransferSensitiveArgs', 'StorageV1alpha1TransferSensitiveArgsDict']]] = None,
-            source: Optional[pulumi.Input[Union['StorageV1alpha1TransferSourceArgs', 'StorageV1alpha1TransferSourceArgsDict']]] = None,
-            status: Optional[pulumi.Input[Union['StorageV1alpha1TransferStatusArgs', 'StorageV1alpha1TransferStatusArgsDict']]] = None,
-            updated_at: Optional[pulumi.Input[_builtins.str]] = None) -> 'StorageV1alpha1Transfer':
+            after_n_empty_iterations: pulumi.Input[Optional[Union['StorageV1alpha1TransferAfterNEmptyIterationsArgs', 'StorageV1alpha1TransferAfterNEmptyIterationsArgsDict']]] = None,
+            after_one_iteration: pulumi.Input[Optional[Union['StorageV1alpha1TransferAfterOneIterationArgs', 'StorageV1alpha1TransferAfterOneIterationArgsDict']]] = None,
+            created_at: pulumi.Input[Optional[_builtins.str]] = None,
+            destination: pulumi.Input[Optional[Union['StorageV1alpha1TransferDestinationArgs', 'StorageV1alpha1TransferDestinationArgsDict']]] = None,
+            infinite: pulumi.Input[Optional[Union['StorageV1alpha1TransferInfiniteArgs', 'StorageV1alpha1TransferInfiniteArgsDict']]] = None,
+            inter_iteration_interval: pulumi.Input[Optional[_builtins.str]] = None,
+            labels: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            labels_all: pulumi.Input[Optional[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            metadata: pulumi.Input[Optional[Union['StorageV1alpha1TransferMetadataArgs', 'StorageV1alpha1TransferMetadataArgsDict']]] = None,
+            name: pulumi.Input[Optional[_builtins.str]] = None,
+            overwrite_strategy: pulumi.Input[Optional[_builtins.str]] = None,
+            parent_id: pulumi.Input[Optional[_builtins.str]] = None,
+            resource_version: pulumi.Input[Optional[_builtins.float]] = None,
+            sensitive: pulumi.Input[Optional[Union['StorageV1alpha1TransferSensitiveArgs', 'StorageV1alpha1TransferSensitiveArgsDict']]] = None,
+            source: pulumi.Input[Optional[Union['StorageV1alpha1TransferSourceArgs', 'StorageV1alpha1TransferSourceArgsDict']]] = None,
+            status: pulumi.Input[Optional[Union['StorageV1alpha1TransferStatusArgs', 'StorageV1alpha1TransferStatusArgsDict']]] = None,
+            updated_at: pulumi.Input[Optional[_builtins.str]] = None) -> 'StorageV1alpha1Transfer':
         """
         Get an existing StorageV1alpha1Transfer resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -801,48 +818,49 @@ class StorageV1alpha1Transfer(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] created_at: :
                
                   Timestamp indicating when the resource was created.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param pulumi.Input[Union['StorageV1alpha1TransferInfiniteArgs', 'StorageV1alpha1TransferInfiniteArgsDict']] infinite: :
                
                   Infinite transfers do not stop automatically and can be stopped manually by the user.
-                  
+               
                   *Cannot be set alongside<span pulumi-lang-nodejs=" afterOneIteration " pulumi-lang-dotnet=" AfterOneIteration " pulumi-lang-go=" afterOneIteration " pulumi-lang-python=" after_one_iteration " pulumi-lang-yaml=" afterOneIteration " pulumi-lang-java=" afterOneIteration " pulumi-lang-hcl=" after_one_iteration "> afterOneIteration </span>or after_n_empty_iterations.*
         :param pulumi.Input[_builtins.str] inter_iteration_interval: :
                
                   Time to wait between transfer iterations. Default is 15 minutes if not specified.
-                  
+               
                   Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as <span pulumi-lang-nodejs="`300ms`" pulumi-lang-dotnet="`300ms`" pulumi-lang-go="`300ms`" pulumi-lang-python="`300ms`" pulumi-lang-yaml="`300ms`" pulumi-lang-java="`300ms`" pulumi-lang-hcl="`300ms`">`300ms`</span>, `-1.5h` or <span pulumi-lang-nodejs="`2h45m`" pulumi-lang-dotnet="`2h45m`" pulumi-lang-go="`2h45m`" pulumi-lang-python="`2h45m`" pulumi-lang-yaml="`2h45m`" pulumi-lang-java="`2h45m`" pulumi-lang-hcl="`2h45m`">`2h45m`</span>. Valid time units are <span pulumi-lang-nodejs="`ns`" pulumi-lang-dotnet="`Ns`" pulumi-lang-go="`ns`" pulumi-lang-python="`ns`" pulumi-lang-yaml="`ns`" pulumi-lang-java="`ns`" pulumi-lang-hcl="`ns`">`ns`</span>, <span pulumi-lang-nodejs="`us`" pulumi-lang-dotnet="`Us`" pulumi-lang-go="`us`" pulumi-lang-python="`us`" pulumi-lang-yaml="`us`" pulumi-lang-java="`us`" pulumi-lang-hcl="`us`">`us`</span> (or `µs`), <span pulumi-lang-nodejs="`ms`" pulumi-lang-dotnet="`Ms`" pulumi-lang-go="`ms`" pulumi-lang-python="`ms`" pulumi-lang-yaml="`ms`" pulumi-lang-java="`ms`" pulumi-lang-hcl="`ms`">`ms`</span>, <span pulumi-lang-nodejs="`s`" pulumi-lang-dotnet="`S`" pulumi-lang-go="`s`" pulumi-lang-python="`s`" pulumi-lang-yaml="`s`" pulumi-lang-java="`s`" pulumi-lang-hcl="`s`">`s`</span>, <span pulumi-lang-nodejs="`m`" pulumi-lang-dotnet="`M`" pulumi-lang-go="`m`" pulumi-lang-python="`m`" pulumi-lang-yaml="`m`" pulumi-lang-java="`m`" pulumi-lang-hcl="`m`">`m`</span>, <span pulumi-lang-nodejs="`h`" pulumi-lang-dotnet="`H`" pulumi-lang-go="`h`" pulumi-lang-python="`h`" pulumi-lang-yaml="`h`" pulumi-lang-java="`h`" pulumi-lang-hcl="`h`">`h`</span>, <span pulumi-lang-nodejs="`d`" pulumi-lang-dotnet="`D`" pulumi-lang-go="`d`" pulumi-lang-python="`d`" pulumi-lang-yaml="`d`" pulumi-lang-java="`d`" pulumi-lang-hcl="`d`">`d`</span>.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels associated with the resource.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels_all: Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
         :param pulumi.Input[Union['StorageV1alpha1TransferMetadataArgs', 'StorageV1alpha1TransferMetadataArgsDict']] metadata: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Common resource metadata.
         :param pulumi.Input[_builtins.str] name: Human readable name for the resource.
         :param pulumi.Input[_builtins.str] overwrite_strategy: :
                
                   Overwrite strategy set logic of overwrite already existed objects in destination bucket.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `OVERWRITE_STRATEGY_UNSPECIFIED`
                   - `NEVER`:
-                     Never overwrite objects that exist in the destination.
-                     If object exists in destination bucket, skip it.
-                     Safest option to prevent data loss.
-                  
+                Never overwrite objects that exist in the destination.
+                If object exists in destination bucket, skip it.
+                Safest option to prevent data loss.
+               
                   - `IF_NEWER`:
-                     Overwrite only if source object is newer than destination.
-                     Comparison based on Last-Modified timestamp.
-                     Recommended for incremental sync scenarios.
-                  
+                Overwrite only if source object is newer than destination.
+                Comparison based on Last-Modified timestamp.
+                Recommended for incremental sync scenarios.
+               
                   - `ALWAYS`:
-                     Always overwrite destination objects unconditionally.
-                     Use with caution - may cause data loss in destination.
-                     Suitable for full bucket synchronization.
+                Always overwrite destination objects unconditionally.
+                Use with caution - may cause data loss in destination.
+                Suitable for full bucket synchronization.
         :param pulumi.Input[_builtins.str] parent_id: Identifier of the parent resource to which the resource belongs.
         :param pulumi.Input[_builtins.float] resource_version: :
                
@@ -854,7 +872,7 @@ class StorageV1alpha1Transfer(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] updated_at: :
                
                   Timestamp indicating when the resource was last updated.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
@@ -868,6 +886,7 @@ class StorageV1alpha1Transfer(pulumi.CustomResource):
         __props__.__dict__["infinite"] = infinite
         __props__.__dict__["inter_iteration_interval"] = inter_iteration_interval
         __props__.__dict__["labels"] = labels
+        __props__.__dict__["labels_all"] = labels_all
         __props__.__dict__["metadata"] = metadata
         __props__.__dict__["name"] = name
         __props__.__dict__["overwrite_strategy"] = overwrite_strategy
@@ -902,7 +921,7 @@ class StorageV1alpha1Transfer(pulumi.CustomResource):
         :
 
            Timestamp indicating when the resource was created.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "created_at")
@@ -919,7 +938,7 @@ class StorageV1alpha1Transfer(pulumi.CustomResource):
         :
 
            Infinite transfers do not stop automatically and can be stopped manually by the user.
-           
+
            *Cannot be set alongside<span pulumi-lang-nodejs=" afterOneIteration " pulumi-lang-dotnet=" AfterOneIteration " pulumi-lang-go=" afterOneIteration " pulumi-lang-python=" after_one_iteration " pulumi-lang-yaml=" afterOneIteration " pulumi-lang-java=" afterOneIteration " pulumi-lang-hcl=" after_one_iteration "> afterOneIteration </span>or after_n_empty_iterations.*
         """
         return pulumi.get(self, "infinite")
@@ -931,7 +950,7 @@ class StorageV1alpha1Transfer(pulumi.CustomResource):
         :
 
            Time to wait between transfer iterations. Default is 15 minutes if not specified.
-           
+
            Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as <span pulumi-lang-nodejs="`300ms`" pulumi-lang-dotnet="`300ms`" pulumi-lang-go="`300ms`" pulumi-lang-python="`300ms`" pulumi-lang-yaml="`300ms`" pulumi-lang-java="`300ms`" pulumi-lang-hcl="`300ms`">`300ms`</span>, `-1.5h` or <span pulumi-lang-nodejs="`2h45m`" pulumi-lang-dotnet="`2h45m`" pulumi-lang-go="`2h45m`" pulumi-lang-python="`2h45m`" pulumi-lang-yaml="`2h45m`" pulumi-lang-java="`2h45m`" pulumi-lang-hcl="`2h45m`">`2h45m`</span>. Valid time units are <span pulumi-lang-nodejs="`ns`" pulumi-lang-dotnet="`Ns`" pulumi-lang-go="`ns`" pulumi-lang-python="`ns`" pulumi-lang-yaml="`ns`" pulumi-lang-java="`ns`" pulumi-lang-hcl="`ns`">`ns`</span>, <span pulumi-lang-nodejs="`us`" pulumi-lang-dotnet="`Us`" pulumi-lang-go="`us`" pulumi-lang-python="`us`" pulumi-lang-yaml="`us`" pulumi-lang-java="`us`" pulumi-lang-hcl="`us`">`us`</span> (or `µs`), <span pulumi-lang-nodejs="`ms`" pulumi-lang-dotnet="`Ms`" pulumi-lang-go="`ms`" pulumi-lang-python="`ms`" pulumi-lang-yaml="`ms`" pulumi-lang-java="`ms`" pulumi-lang-hcl="`ms`">`ms`</span>, <span pulumi-lang-nodejs="`s`" pulumi-lang-dotnet="`S`" pulumi-lang-go="`s`" pulumi-lang-python="`s`" pulumi-lang-yaml="`s`" pulumi-lang-java="`s`" pulumi-lang-hcl="`s`">`s`</span>, <span pulumi-lang-nodejs="`m`" pulumi-lang-dotnet="`M`" pulumi-lang-go="`m`" pulumi-lang-python="`m`" pulumi-lang-yaml="`m`" pulumi-lang-java="`m`" pulumi-lang-hcl="`m`">`m`</span>, <span pulumi-lang-nodejs="`h`" pulumi-lang-dotnet="`H`" pulumi-lang-go="`h`" pulumi-lang-python="`h`" pulumi-lang-yaml="`h`" pulumi-lang-java="`h`" pulumi-lang-hcl="`h`">`h`</span>, <span pulumi-lang-nodejs="`d`" pulumi-lang-dotnet="`D`" pulumi-lang-go="`d`" pulumi-lang-python="`d`" pulumi-lang-yaml="`d`" pulumi-lang-java="`d`" pulumi-lang-hcl="`d`">`d`</span>.
         """
         return pulumi.get(self, "inter_iteration_interval")
@@ -945,13 +964,21 @@ class StorageV1alpha1Transfer(pulumi.CustomResource):
         return pulumi.get(self, "labels")
 
     @_builtins.property
+    @pulumi.getter(name="labelsAll")
+    def labels_all(self) -> pulumi.Output[Mapping[str, _builtins.str]]:
+        """
+        Effective labels sent to the API after merging provider <span pulumi-lang-nodejs="`defaultLabels`" pulumi-lang-dotnet="`DefaultLabels`" pulumi-lang-go="`defaultLabels`" pulumi-lang-python="`default_labels`" pulumi-lang-yaml="`defaultLabels`" pulumi-lang-java="`defaultLabels`" pulumi-lang-hcl="`default_labels`">`defaultLabels`</span> with resource <span pulumi-lang-nodejs="`labels`" pulumi-lang-dotnet="`Labels`" pulumi-lang-go="`labels`" pulumi-lang-python="`labels`" pulumi-lang-yaml="`labels`" pulumi-lang-java="`labels`" pulumi-lang-hcl="`labels`">`labels`</span>.
+        """
+        return pulumi.get(self, "labels_all")
+
+    @_builtins.property
     @pulumi.getter
     def metadata(self) -> pulumi.Output['outputs.StorageV1alpha1TransferMetadata']:
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Common resource metadata.
         """
         return pulumi.get(self, "metadata")
@@ -971,26 +998,26 @@ class StorageV1alpha1Transfer(pulumi.CustomResource):
         :
 
            Overwrite strategy set logic of overwrite already existed objects in destination bucket.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `OVERWRITE_STRATEGY_UNSPECIFIED`
            - `NEVER`:
-              Never overwrite objects that exist in the destination.
-              If object exists in destination bucket, skip it.
-              Safest option to prevent data loss.
-           
+         Never overwrite objects that exist in the destination.
+         If object exists in destination bucket, skip it.
+         Safest option to prevent data loss.
+
            - `IF_NEWER`:
-              Overwrite only if source object is newer than destination.
-              Comparison based on Last-Modified timestamp.
-              Recommended for incremental sync scenarios.
-           
+         Overwrite only if source object is newer than destination.
+         Comparison based on Last-Modified timestamp.
+         Recommended for incremental sync scenarios.
+
            - `ALWAYS`:
-              Always overwrite destination objects unconditionally.
-              Use with caution - may cause data loss in destination.
-              Suitable for full bucket synchronization.
+         Always overwrite destination objects unconditionally.
+         Use with caution - may cause data loss in destination.
+         Suitable for full bucket synchronization.
         """
         return pulumi.get(self, "overwrite_strategy")
 
@@ -1040,7 +1067,7 @@ class StorageV1alpha1Transfer(pulumi.CustomResource):
         :
 
            Timestamp indicating when the resource was last updated.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "updated_at")

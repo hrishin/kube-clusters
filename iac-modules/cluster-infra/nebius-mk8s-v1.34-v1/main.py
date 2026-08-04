@@ -1,6 +1,6 @@
 """
 Nebius MK8s cluster — orchestrator module.
-Mirrors the structure of iac-modules/cluster-infra/v1.36-v1/main.py.
+Mirrors the structure of iac-modules/cluster-infra/eks-v1.36-v1/main.py.
 """
 
 from pathlib import Path

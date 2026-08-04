@@ -12,9 +12,9 @@ This repository contains Pulumi programs and GitOps configuration for provisioni
 
 | Provider | Cluster | Module |
 |---|---|---|
-| AWS EKS | `clusters/eks-alpha` | `iac-modules/cluster-infra/v1.36-v1` |
+| AWS EKS | `clusters/eks-alpha` | `iac-modules/cluster-infra/eks-v{k8s_version}-v1` |
 | Scaleway CAPS | `clusters/scw-alpha`, `clusters/scw-mgmt-alpha` | `iac-modules/cluster-infra/caps-v1` |
-| Nebius MK8s | `clusters/nebius-alpha` | `iac-modules/cluster-infra/nebius-mk8s-v1` |
+| Nebius MK8s | `clusters/nebius-alpha` | `iac-modules/cluster-infra/nebius-mk8s-v{k8s_version}-v1` |
 
 ## What Gets Provisioned
 
@@ -79,9 +79,9 @@ clusters/
 
 iac-modules/
   cluster-infra/
-    v1.36-v1/      # AWS EKS provisioning module
+    eks-v1.36-v1/ # AWS EKS provisioning module (versioned per k8s release)
     caps-v1/       # Scaleway CAPS provisioning module
-    nebius-mk8s-v1/ # Nebius MK8s provisioning module
+    nebius-mk8s-v1.34-v1/ # Nebius MK8s provisioning module (versioned per k8s release)
   extensions/      # Helm/Flux extension definitions (base + provider overlays)
 
 config/            # SOPS-encrypted configuration values

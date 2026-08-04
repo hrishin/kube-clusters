@@ -131,7 +131,7 @@ def bootstrap_flux(
     """
     Bootstrap Flux on a Nebius MK8s cluster.
 
-    Mirrors iac-modules/cluster-infra/v1.36-v1/kubernetes_addons/addons.py::bootstrap_flux
+    Mirrors iac-modules/cluster-infra/eks-v1.36-v1/kubernetes_addons/addons.py::bootstrap_flux
     but builds the kubeconfig from Nebius cluster status (endpoint + CA cert PEM) instead
     of using `aws eks get-token`.
     """

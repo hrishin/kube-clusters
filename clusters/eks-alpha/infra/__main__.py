@@ -18,15 +18,15 @@ CLUSTER_ROOT = CLUSTER_INFRA_DIR.parent
 _cluster_version = pulumi.Config().get("cluster_version") or "1.36"
 _infra_dir = REPO_ROOT / "iac-modules" / "cluster-infra"
 
-# Pick the highest vN for the given k8s version: v1.36-v1, v1.36-v2 → v1.36-v2
+# Pick the highest revision for the given k8s version: eks-v1.36-v1, eks-v1.36-v2 → eks-v1.36-v2
 _candidates = sorted(
-    (p for p in _infra_dir.iterdir() if p.is_dir() and p.name.startswith(f"v{_cluster_version}-v")),
+    (p for p in _infra_dir.iterdir() if p.is_dir() and p.name.startswith(f"eks-v{_cluster_version}-v")),
     key=lambda p: int(p.name.rsplit("-v", 1)[-1]),
 )
 if not _candidates:
-    _available = [p.name for p in _infra_dir.iterdir() if p.is_dir()]
+    _available = [p.name for p in _infra_dir.iterdir() if p.is_dir() and p.name.startswith("eks-")]
     raise RuntimeError(
-        f"No cluster-infra module for Kubernetes {_cluster_version}. "
+        f"No eks module for Kubernetes {_cluster_version}. "
         f"Available: {_available}"
     )
 MODULE_ROOT = _candidates[-1]

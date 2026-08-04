@@ -152,8 +152,8 @@ def get_capacity_v1_capacity_block_group(by_resource_affinity: Optional[Union['G
         resource_version=pulumi.get(__ret__, 'resource_version'),
         status=pulumi.get(__ret__, 'status'),
         updated_at=pulumi.get(__ret__, 'updated_at'))
-def get_capacity_v1_capacity_block_group_output(by_resource_affinity: Optional[pulumi.Input[Optional[Union['GetCapacityV1CapacityBlockGroupByResourceAffinityArgs', 'GetCapacityV1CapacityBlockGroupByResourceAffinityArgsDict']]]] = None,
-                                                id: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
+def get_capacity_v1_capacity_block_group_output(by_resource_affinity: pulumi.Input[Optional[Optional[Union['GetCapacityV1CapacityBlockGroupByResourceAffinityArgs', 'GetCapacityV1CapacityBlockGroupByResourceAffinityArgsDict']]]] = None,
+                                                id: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
                                                 opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetCapacityV1CapacityBlockGroupResult]:
     """
     Use this data source to access information about an existing resource.

@@ -149,7 +149,7 @@ def get_iam_v1_tenant_user_account(id: Optional[_builtins.str] = None,
         status=pulumi.get(__ret__, 'status'),
         updated_at=pulumi.get(__ret__, 'updated_at'),
         visible_attributes=pulumi.get(__ret__, 'visible_attributes'))
-def get_iam_v1_tenant_user_account_output(id: Optional[pulumi.Input[_builtins.str]] = None,
+def get_iam_v1_tenant_user_account_output(id: pulumi.Input[Optional[_builtins.str]] = None,
                                           opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetIamV1TenantUserAccountResult]:
     """
     Use this data source to access information about an existing resource.

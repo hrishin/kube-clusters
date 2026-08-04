@@ -172,8 +172,8 @@ def get_quotas_v1_quota_allowance(by_name_in_region: Optional[Union['GetQuotasV1
         resource_version=pulumi.get(__ret__, 'resource_version'),
         status=pulumi.get(__ret__, 'status'),
         updated_at=pulumi.get(__ret__, 'updated_at'))
-def get_quotas_v1_quota_allowance_output(by_name_in_region: Optional[pulumi.Input[Optional[Union['GetQuotasV1QuotaAllowanceByNameInRegionArgs', 'GetQuotasV1QuotaAllowanceByNameInRegionArgsDict']]]] = None,
-                                         id: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
+def get_quotas_v1_quota_allowance_output(by_name_in_region: pulumi.Input[Optional[Optional[Union['GetQuotasV1QuotaAllowanceByNameInRegionArgs', 'GetQuotasV1QuotaAllowanceByNameInRegionArgsDict']]]] = None,
+                                         id: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
                                          opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetQuotasV1QuotaAllowanceResult]:
     """
     Use this data source to access information about an existing resource.

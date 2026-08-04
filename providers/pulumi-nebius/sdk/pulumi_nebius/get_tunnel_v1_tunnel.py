@@ -159,7 +159,7 @@ def get_tunnel_v1_tunnel(id: Optional[_builtins.str] = None,
         status=pulumi.get(__ret__, 'status'),
         title=pulumi.get(__ret__, 'title'),
         updated_at=pulumi.get(__ret__, 'updated_at'))
-def get_tunnel_v1_tunnel_output(id: Optional[pulumi.Input[_builtins.str]] = None,
+def get_tunnel_v1_tunnel_output(id: pulumi.Input[Optional[_builtins.str]] = None,
                                 opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetTunnelV1TunnelResult]:
     """
     Use this data source to access information about an existing resource.

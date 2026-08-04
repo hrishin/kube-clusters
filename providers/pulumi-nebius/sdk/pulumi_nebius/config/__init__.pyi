@@ -35,6 +35,11 @@ authTimeout: Optional[str]
 timeout for each Nebius SDK request including authentication, default 15m0s, as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as <span pulumi-lang-nodejs="`300ms`" pulumi-lang-dotnet="`300ms`" pulumi-lang-go="`300ms`" pulumi-lang-python="`300ms`" pulumi-lang-yaml="`300ms`" pulumi-lang-java="`300ms`" pulumi-lang-hcl="`300ms`">`300ms`</span>, `-1.5h` or <span pulumi-lang-nodejs="`2h45m`" pulumi-lang-dotnet="`2h45m`" pulumi-lang-go="`2h45m`" pulumi-lang-python="`2h45m`" pulumi-lang-yaml="`2h45m`" pulumi-lang-java="`2h45m`" pulumi-lang-hcl="`2h45m`">`2h45m`</span>. Valid time units are <span pulumi-lang-nodejs="`ns`" pulumi-lang-dotnet="`Ns`" pulumi-lang-go="`ns`" pulumi-lang-python="`ns`" pulumi-lang-yaml="`ns`" pulumi-lang-java="`ns`" pulumi-lang-hcl="`ns`">`ns`</span>, <span pulumi-lang-nodejs="`us`" pulumi-lang-dotnet="`Us`" pulumi-lang-go="`us`" pulumi-lang-python="`us`" pulumi-lang-yaml="`us`" pulumi-lang-java="`us`" pulumi-lang-hcl="`us`">`us`</span> (or `µs`), <span pulumi-lang-nodejs="`ms`" pulumi-lang-dotnet="`Ms`" pulumi-lang-go="`ms`" pulumi-lang-python="`ms`" pulumi-lang-yaml="`ms`" pulumi-lang-java="`ms`" pulumi-lang-hcl="`ms`">`ms`</span>, <span pulumi-lang-nodejs="`s`" pulumi-lang-dotnet="`S`" pulumi-lang-go="`s`" pulumi-lang-python="`s`" pulumi-lang-yaml="`s`" pulumi-lang-java="`s`" pulumi-lang-hcl="`s`">`s`</span>, <span pulumi-lang-nodejs="`m`" pulumi-lang-dotnet="`M`" pulumi-lang-go="`m`" pulumi-lang-python="`m`" pulumi-lang-yaml="`m`" pulumi-lang-java="`m`" pulumi-lang-hcl="`m`">`m`</span>, <span pulumi-lang-nodejs="`h`" pulumi-lang-dotnet="`H`" pulumi-lang-go="`h`" pulumi-lang-python="`h`" pulumi-lang-yaml="`h`" pulumi-lang-java="`h`" pulumi-lang-hcl="`h`">`h`</span>, <span pulumi-lang-nodejs="`d`" pulumi-lang-dotnet="`D`" pulumi-lang-go="`d`" pulumi-lang-python="`d`" pulumi-lang-yaml="`d`" pulumi-lang-java="`d`" pulumi-lang-hcl="`d`">`d`</span>
 """
 
+defaultLabels: Optional[str]
+"""
+Labels to apply by default to managed resources that support labels. Resource labels override matching provider labels.
+"""
+
 domain: Optional[str]
 """
 custom domain name (overrides domain_env)

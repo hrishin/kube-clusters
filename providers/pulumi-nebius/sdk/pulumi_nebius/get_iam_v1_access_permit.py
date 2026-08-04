@@ -159,7 +159,7 @@ def get_iam_v1_access_permit(id: Optional[_builtins.str] = None,
         role=pulumi.get(__ret__, 'role'),
         status=pulumi.get(__ret__, 'status'),
         updated_at=pulumi.get(__ret__, 'updated_at'))
-def get_iam_v1_access_permit_output(id: Optional[pulumi.Input[_builtins.str]] = None,
+def get_iam_v1_access_permit_output(id: pulumi.Input[Optional[_builtins.str]] = None,
                                     opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetIamV1AccessPermitResult]:
     """
     Use this data source to access information about an existing resource.

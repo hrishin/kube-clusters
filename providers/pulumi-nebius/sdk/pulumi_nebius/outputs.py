@@ -399,6 +399,7 @@ __all__ = [
     'GetComputeV1ImageSourceStorageResult',
     'GetComputeV1ImageStatusResult',
     'GetComputeV1ImageStatusImageFamilyDeprecationResult',
+    'GetComputeV1ImageUnsupportedPresetResult',
     'GetComputeV1InstanceBootDiskResult',
     'GetComputeV1InstanceBootDiskExistingDiskResult',
     'GetComputeV1InstanceBootDiskManagedDiskResult',
@@ -791,10 +792,10 @@ class ApplicationsV1alpha1K8sReleaseStatus(dict):
         """
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `CREATED`
                   - `RUNNING`
@@ -818,10 +819,10 @@ class ApplicationsV1alpha1K8sReleaseStatus(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `CREATED`
            - `RUNNING`
@@ -871,11 +872,11 @@ class CapacityV1CapacityAllowanceStatus(dict):
         :param _builtins.str state: :
                
                   Current state of the capacity allowance.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `STATE_PROVISIONING` - Capacity Allowance is being allocated; the process can take up to several minutes.
                   - `STATE_ACTIVE` - Capacity Allowance is allocated and can be used.
@@ -889,11 +890,11 @@ class CapacityV1CapacityAllowanceStatus(dict):
         :param _builtins.str usage_state: :
                
                   Current state of the capacity allowance usage.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `USAGE_STATE_UNSPECIFIED`
                   - `USAGE_STATE_USED` - Capacity allowance is actively in use.
                   - `USAGE_STATE_NOT_USED` - Capacity allowance is not currently in use.
@@ -929,11 +930,11 @@ class CapacityV1CapacityAllowanceStatus(dict):
         :
 
            Current state of the capacity allowance.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `STATE_PROVISIONING` - Capacity Allowance is being allocated; the process can take up to several minutes.
            - `STATE_ACTIVE` - Capacity Allowance is allocated and can be used.
@@ -975,11 +976,11 @@ class CapacityV1CapacityAllowanceStatus(dict):
         :
 
            Current state of the capacity allowance usage.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `USAGE_STATE_UNSPECIFIED`
            - `USAGE_STATE_USED` - Capacity allowance is actively in use.
            - `USAGE_STATE_NOT_USED` - Capacity allowance is not currently in use.
@@ -997,10 +998,10 @@ class ComputeV1DiskDiskEncryption(dict):
         """
         :param _builtins.str type: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `DISK_ENCRYPTION_UNSPECIFIED` - No encryption is applied unless explicitly specified.
                   - `DISK_ENCRYPTION_MANAGED`:
                      Enables encryption using the platform's default root key from KMS.
@@ -1015,10 +1016,10 @@ class ComputeV1DiskDiskEncryption(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `DISK_ENCRYPTION_UNSPECIFIED` - No encryption is applied unless explicitly specified.
            - `DISK_ENCRYPTION_MANAGED`:
               Enables encryption using the platform's default root key from KMS.
@@ -1080,22 +1081,22 @@ class ComputeV1DiskSnapshotStatus(dict):
                
                   CPU architecture associated with the source disk.
                   Not set if the architecture is unknown.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Right now UNDEFINED is an alias for AMD64, but that might change in the future
                   Possible values:
-                  
+               
                   - `UNDEFINED`
                   - `AMD64`
                   - `ARM64`
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   All possible states for DiskSnapshot resource
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `CREATING`
                   - `READY`
@@ -1146,12 +1147,12 @@ class ComputeV1DiskSnapshotStatus(dict):
 
            CPU architecture associated with the source disk.
            Not set if the architecture is unknown.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Right now UNDEFINED is an alias for AMD64, but that might change in the future
            Possible values:
-           
+
            - `UNDEFINED`
            - `AMD64`
            - `ARM64`
@@ -1164,11 +1165,11 @@ class ComputeV1DiskSnapshotStatus(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            All possible states for DiskSnapshot resource
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `CREATING`
            - `READY`
@@ -1321,19 +1322,19 @@ class ComputeV1DiskStatus(dict):
         :param _builtins.bool reconciling: Indicates whether there is an ongoing operation
         :param _builtins.str source_image_cpu_architecture: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `SOURCE_IMAGE_CPU_UNSPECIFIED`
                   - `AMD64`
                   - `ARM64`
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `CREATING`
                   - `READY`
@@ -1430,10 +1431,10 @@ class ComputeV1DiskStatus(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `SOURCE_IMAGE_CPU_UNSPECIFIED`
            - `AMD64`
            - `ARM64`
@@ -1451,10 +1452,10 @@ class ComputeV1DiskStatus(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `CREATING`
            - `READY`
@@ -1559,10 +1560,10 @@ class ComputeV1FilesystemStatus(dict):
         :param _builtins.bool reconciling: Indicates whether there is an ongoing operation
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `CREATING`
                   - `READY`
@@ -1619,10 +1620,10 @@ class ComputeV1FilesystemStatus(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `CREATING`
            - `READY`
@@ -1780,10 +1781,10 @@ class ComputeV1InstanceBootDisk(dict):
         """
         :param _builtins.str attach_mode: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `READ_ONLY`
                   - `READ_WRITE`
@@ -1791,10 +1792,10 @@ class ComputeV1InstanceBootDisk(dict):
         :param 'ComputeV1InstanceBootDiskExistingDiskArgs' existing_disk: :
                
                   Attach an existing disk.
-                  
+               
                   Lifecycle:
                   - The disk is preserved when the instance is deleted (it will be detached).
-                  
+               
                   Switching to a managed disk:
                   - To delete the disk together with the instance, switch to ManagedDisk in the instance spec.
                   - For the switch, `ManagedDisk.name` MUST match the current disk <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span>
@@ -1803,47 +1804,47 @@ class ComputeV1InstanceBootDisk(dict):
                     exactly as they are currently defined in the disk resource.
                     Obtain the current values via `DiskService.Get` and copy them verbatim.
                     If `ManagedDisk.spec` differs from the current disk spec, the instance update will fail.
-                  
+               
                   *Cannot be set alongside managed_disk.*
         :param 'ComputeV1InstanceBootDiskManagedDiskArgs' managed_disk: :
                
                   Attach a managed disk.
-                  
+               
                   Lifecycle:
                   - The disk is deleted when the instance is deleted.
-                  
+               
                   Semantics:
                   - Specifying a ManagedDisk expresses an intent to have that managed disk attached.
                   - If this intent cannot be satisfied, the entire operation fails.
                   - You can check the intent status in `instance.status.disk_attachments`.
-                  
+               
                   Updates and matching:
                   - Managed disks can be updated only via instance spec updates. Updates via DiskService are not allowed.
                   - During updates, disks are matched by <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span>.
-                  
+               
                   Renaming and data loss:
                   - Changing the disk <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span> triggers disk replacement (create a new disk and delete the old one),
                     which causes data loss.
                   - To rename a managed disk safely:
                     1) switch it to ExistingDisk in the instance spec, and
                     2) update/rename it via DiskService.
-                  
+               
                   Conflicts:
                   - Instance create/update fails if there is already a disk with the same <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span>.
                     as requested by any ManagedDisk.
-                  
+               
                   Finding the disk ID:
                   - The disk ID is available in `instance.status.disk_attachments` after it is created.
                     Use `DiskAttachmentStatus.name` to find the desired disk which matches <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span>.
-                  
+               
                   Switching to an existing (non-managed) disk:
                   - To preserve the disk after instance deletion, switch it to ExistingDisk in the instance spec,
                     use the disk ID from `instance.status.disk_attachments`.
-                  
+               
                   Deletion protection:
                   - Switching ExistingDisk to ManagedDisk fails if `Disk.spec.deletion_protection` is enabled.
                   - Deleting an instance that has a ManagedDisk fails if `Disk.spec.deletion_protection` is enabled.
-                  
+               
                   *Cannot be set alongside existing_disk.*
         """
         pulumi.set(__self__, "attach_mode", attach_mode)
@@ -1860,10 +1861,10 @@ class ComputeV1InstanceBootDisk(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `READ_ONLY`
            - `READ_WRITE`
@@ -1885,10 +1886,10 @@ class ComputeV1InstanceBootDisk(dict):
         :
 
            Attach an existing disk.
-           
+
            Lifecycle:
            - The disk is preserved when the instance is deleted (it will be detached).
-           
+
            Switching to a managed disk:
            - To delete the disk together with the instance, switch to ManagedDisk in the instance spec.
            - For the switch, `ManagedDisk.name` MUST match the current disk <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span>
@@ -1897,7 +1898,7 @@ class ComputeV1InstanceBootDisk(dict):
              exactly as they are currently defined in the disk resource.
              Obtain the current values via `DiskService.Get` and copy them verbatim.
              If `ManagedDisk.spec` differs from the current disk spec, the instance update will fail.
-           
+
            *Cannot be set alongside managed_disk.*
         """
         return pulumi.get(self, "existing_disk")
@@ -1909,42 +1910,42 @@ class ComputeV1InstanceBootDisk(dict):
         :
 
            Attach a managed disk.
-           
+
            Lifecycle:
            - The disk is deleted when the instance is deleted.
-           
+
            Semantics:
            - Specifying a ManagedDisk expresses an intent to have that managed disk attached.
            - If this intent cannot be satisfied, the entire operation fails.
            - You can check the intent status in `instance.status.disk_attachments`.
-           
+
            Updates and matching:
            - Managed disks can be updated only via instance spec updates. Updates via DiskService are not allowed.
            - During updates, disks are matched by <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span>.
-           
+
            Renaming and data loss:
            - Changing the disk <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span> triggers disk replacement (create a new disk and delete the old one),
              which causes data loss.
            - To rename a managed disk safely:
              1) switch it to ExistingDisk in the instance spec, and
              2) update/rename it via DiskService.
-           
+
            Conflicts:
            - Instance create/update fails if there is already a disk with the same <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span>.
              as requested by any ManagedDisk.
-           
+
            Finding the disk ID:
            - The disk ID is available in `instance.status.disk_attachments` after it is created.
              Use `DiskAttachmentStatus.name` to find the desired disk which matches <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span>.
-           
+
            Switching to an existing (non-managed) disk:
            - To preserve the disk after instance deletion, switch it to ExistingDisk in the instance spec,
              use the disk ID from `instance.status.disk_attachments`.
-           
+
            Deletion protection:
            - Switching ExistingDisk to ManagedDisk fails if `Disk.spec.deletion_protection` is enabled.
            - Deleting an instance that has a ManagedDisk fails if `Disk.spec.deletion_protection` is enabled.
-           
+
            *Cannot be set alongside existing_disk.*
         """
         return pulumi.get(self, "managed_disk")
@@ -2065,12 +2066,12 @@ class ComputeV1InstanceBootDiskManagedDiskSpec(dict):
                
                   The type of disk defines the performance and reliability characteristics of the block device.
                   For details, see https://docs.nebius.com/compute/storage/types#disks-types
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   the list of available types will be clarified later, it is not final version
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `NETWORK_SSD`
                   - `NETWORK_HDD`
@@ -2121,12 +2122,12 @@ class ComputeV1InstanceBootDiskManagedDiskSpec(dict):
 
            The type of disk defines the performance and reliability characteristics of the block device.
            For details, see https://docs.nebius.com/compute/storage/types#disks-types
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            the list of available types will be clarified later, it is not final version
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `NETWORK_SSD`
            - `NETWORK_HDD`
@@ -2227,10 +2228,10 @@ class ComputeV1InstanceBootDiskManagedDiskSpecDiskEncryption(dict):
         """
         :param _builtins.str type: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `DISK_ENCRYPTION_UNSPECIFIED` - No encryption is applied unless explicitly specified.
                   - `DISK_ENCRYPTION_MANAGED`:
                      Enables encryption using the platform's default root key from KMS.
@@ -2245,10 +2246,10 @@ class ComputeV1InstanceBootDiskManagedDiskSpecDiskEncryption(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `DISK_ENCRYPTION_UNSPECIFIED` - No encryption is applied unless explicitly specified.
            - `DISK_ENCRYPTION_MANAGED`:
               Enables encryption using the platform's default root key from KMS.
@@ -2326,10 +2327,10 @@ class ComputeV1InstanceFilesystem(dict):
         """
         :param _builtins.str attach_mode: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `READ_ONLY`
                   - `READ_WRITE`
@@ -2346,10 +2347,10 @@ class ComputeV1InstanceFilesystem(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `READ_ONLY`
            - `READ_WRITE`
@@ -2463,7 +2464,7 @@ class ComputeV1InstanceLocalDisksPassthroughGroup(dict):
         :param _builtins.bool requested: :
                
                   Passthrough local disks from the underlying host.
-                  
+               
                   Devices are expected to appear in the guest as NVMe devices (nvme0, nvme1, ...),
                   but the exact number depends on the preset.
                   Enabled only when this field is explicitly set.
@@ -2478,7 +2479,7 @@ class ComputeV1InstanceLocalDisksPassthroughGroup(dict):
         :
 
            Passthrough local disks from the underlying host.
-           
+
            Devices are expected to appear in the guest as NVMe devices (nvme0, nvme1, ...),
            but the exact number depends on the preset.
            Enabled only when this field is explicitly set.
@@ -2528,9 +2529,9 @@ class ComputeV1InstanceNetworkInterface(dict):
         :param 'ComputeV1InstanceNetworkInterfaceIpAddressArgs' ip_address: :
                
                   Private IPv4 address associated with the interface.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Describes an IPv4 address.
         :param _builtins.str name: :
                
@@ -2542,9 +2543,9 @@ class ComputeV1InstanceNetworkInterface(dict):
         :param 'ComputeV1InstanceNetworkInterfacePublicIpAddressArgs' public_ip_address: :
                
                   Public IPv4 address associated with the interface.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Describes a public IP address.
         :param Sequence['ComputeV1InstanceNetworkInterfaceSecurityGroupArgs'] security_groups: :
                
@@ -2569,9 +2570,9 @@ class ComputeV1InstanceNetworkInterface(dict):
         :
 
            Private IPv4 address associated with the interface.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Describes an IPv4 address.
         """
         return pulumi.get(self, "ip_address")
@@ -2611,9 +2612,9 @@ class ComputeV1InstanceNetworkInterface(dict):
         :
 
            Public IPv4 address associated with the interface.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Describes a public IP address.
         """
         return pulumi.get(self, "public_ip_address")
@@ -2804,11 +2805,11 @@ class ComputeV1InstancePreemptible(dict):
                
                   Specifies what happens when the VM is preempted. The only supported value is STOP:
                   Compute stops the VM without deleting or restarting it.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `STOP`
         """
@@ -2824,11 +2825,11 @@ class ComputeV1InstancePreemptible(dict):
 
            Specifies what happens when the VM is preempted. The only supported value is STOP:
            Compute stops the VM without deleting or restarting it.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `STOP`
         """
@@ -2866,20 +2867,20 @@ class ComputeV1InstanceReservationPolicy(dict):
         """
         :param _builtins.str policy: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `AUTO`:
                      1) Will try to launch instance in any<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>if provided.
                      2) Will try to launch instance in any of the available capacity block.
                      3) Will try to launch instance in PAYG if 1 & 2 are not satisfied.
-                  
+               
                   - `FORBID`:
-                     The instance is launched only using on-demand (PAYG) capacity.
-                     No attempt is made to find or use a Capacity Block.
-                     It's an error to provide<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>with policy = FORBID
-                  
+                The instance is launched only using on-demand (PAYG) capacity.
+                No attempt is made to find or use a Capacity Block.
+                It's an error to provide<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>with policy = FORBID
+               
                   - `STRICT`:
                      1) Will try to launch the instance in Capacity Blocks from<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>if provided.
                      2) If<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>are not provided will try to launch instance in suitable & available Capacity Block.
@@ -2897,20 +2898,20 @@ class ComputeV1InstanceReservationPolicy(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `AUTO`:
               1) Will try to launch instance in any<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>if provided.
               2) Will try to launch instance in any of the available capacity block.
               3) Will try to launch instance in PAYG if 1 & 2 are not satisfied.
-           
+
            - `FORBID`:
-              The instance is launched only using on-demand (PAYG) capacity.
-              No attempt is made to find or use a Capacity Block.
-              It's an error to provide<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>with policy = FORBID
-           
+         The instance is launched only using on-demand (PAYG) capacity.
+         No attempt is made to find or use a Capacity Block.
+         It's an error to provide<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>with policy = FORBID
+
            - `STRICT`:
               1) Will try to launch the instance in Capacity Blocks from<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>if provided.
               2) If<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>are not provided will try to launch instance in suitable & available Capacity Block.
@@ -2980,10 +2981,10 @@ class ComputeV1InstanceSecondaryDisk(dict):
         """
         :param _builtins.str attach_mode: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `READ_ONLY`
                   - `READ_WRITE`
@@ -2991,10 +2992,10 @@ class ComputeV1InstanceSecondaryDisk(dict):
         :param 'ComputeV1InstanceSecondaryDiskExistingDiskArgs' existing_disk: :
                
                   Attach an existing disk.
-                  
+               
                   Lifecycle:
                   - The disk is preserved when the instance is deleted (it will be detached).
-                  
+               
                   Switching to a managed disk:
                   - To delete the disk together with the instance, switch to ManagedDisk in the instance spec.
                   - For the switch, `ManagedDisk.name` MUST match the current disk <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span>
@@ -3003,47 +3004,47 @@ class ComputeV1InstanceSecondaryDisk(dict):
                     exactly as they are currently defined in the disk resource.
                     Obtain the current values via `DiskService.Get` and copy them verbatim.
                     If `ManagedDisk.spec` differs from the current disk spec, the instance update will fail.
-                  
+               
                   *Cannot be set alongside managed_disk.*
         :param 'ComputeV1InstanceSecondaryDiskManagedDiskArgs' managed_disk: :
                
                   Attach a managed disk.
-                  
+               
                   Lifecycle:
                   - The disk is deleted when the instance is deleted.
-                  
+               
                   Semantics:
                   - Specifying a ManagedDisk expresses an intent to have that managed disk attached.
                   - If this intent cannot be satisfied, the entire operation fails.
                   - You can check the intent status in `instance.status.disk_attachments`.
-                  
+               
                   Updates and matching:
                   - Managed disks can be updated only via instance spec updates. Updates via DiskService are not allowed.
                   - During updates, disks are matched by <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span>.
-                  
+               
                   Renaming and data loss:
                   - Changing the disk <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span> triggers disk replacement (create a new disk and delete the old one),
                     which causes data loss.
                   - To rename a managed disk safely:
                     1) switch it to ExistingDisk in the instance spec, and
                     2) update/rename it via DiskService.
-                  
+               
                   Conflicts:
                   - Instance create/update fails if there is already a disk with the same <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span>.
                     as requested by any ManagedDisk.
-                  
+               
                   Finding the disk ID:
                   - The disk ID is available in `instance.status.disk_attachments` after it is created.
                     Use `DiskAttachmentStatus.name` to find the desired disk which matches <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span>.
-                  
+               
                   Switching to an existing (non-managed) disk:
                   - To preserve the disk after instance deletion, switch it to ExistingDisk in the instance spec,
                     use the disk ID from `instance.status.disk_attachments`.
-                  
+               
                   Deletion protection:
                   - Switching ExistingDisk to ManagedDisk fails if `Disk.spec.deletion_protection` is enabled.
                   - Deleting an instance that has a ManagedDisk fails if `Disk.spec.deletion_protection` is enabled.
-                  
+               
                   *Cannot be set alongside existing_disk.*
         """
         pulumi.set(__self__, "attach_mode", attach_mode)
@@ -3060,10 +3061,10 @@ class ComputeV1InstanceSecondaryDisk(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `READ_ONLY`
            - `READ_WRITE`
@@ -3085,10 +3086,10 @@ class ComputeV1InstanceSecondaryDisk(dict):
         :
 
            Attach an existing disk.
-           
+
            Lifecycle:
            - The disk is preserved when the instance is deleted (it will be detached).
-           
+
            Switching to a managed disk:
            - To delete the disk together with the instance, switch to ManagedDisk in the instance spec.
            - For the switch, `ManagedDisk.name` MUST match the current disk <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span>
@@ -3097,7 +3098,7 @@ class ComputeV1InstanceSecondaryDisk(dict):
              exactly as they are currently defined in the disk resource.
              Obtain the current values via `DiskService.Get` and copy them verbatim.
              If `ManagedDisk.spec` differs from the current disk spec, the instance update will fail.
-           
+
            *Cannot be set alongside managed_disk.*
         """
         return pulumi.get(self, "existing_disk")
@@ -3109,42 +3110,42 @@ class ComputeV1InstanceSecondaryDisk(dict):
         :
 
            Attach a managed disk.
-           
+
            Lifecycle:
            - The disk is deleted when the instance is deleted.
-           
+
            Semantics:
            - Specifying a ManagedDisk expresses an intent to have that managed disk attached.
            - If this intent cannot be satisfied, the entire operation fails.
            - You can check the intent status in `instance.status.disk_attachments`.
-           
+
            Updates and matching:
            - Managed disks can be updated only via instance spec updates. Updates via DiskService are not allowed.
            - During updates, disks are matched by <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span>.
-           
+
            Renaming and data loss:
            - Changing the disk <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span> triggers disk replacement (create a new disk and delete the old one),
              which causes data loss.
            - To rename a managed disk safely:
              1) switch it to ExistingDisk in the instance spec, and
              2) update/rename it via DiskService.
-           
+
            Conflicts:
            - Instance create/update fails if there is already a disk with the same <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span>.
              as requested by any ManagedDisk.
-           
+
            Finding the disk ID:
            - The disk ID is available in `instance.status.disk_attachments` after it is created.
              Use `DiskAttachmentStatus.name` to find the desired disk which matches <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span>.
-           
+
            Switching to an existing (non-managed) disk:
            - To preserve the disk after instance deletion, switch it to ExistingDisk in the instance spec,
              use the disk ID from `instance.status.disk_attachments`.
-           
+
            Deletion protection:
            - Switching ExistingDisk to ManagedDisk fails if `Disk.spec.deletion_protection` is enabled.
            - Deleting an instance that has a ManagedDisk fails if `Disk.spec.deletion_protection` is enabled.
-           
+
            *Cannot be set alongside existing_disk.*
         """
         return pulumi.get(self, "managed_disk")
@@ -3265,12 +3266,12 @@ class ComputeV1InstanceSecondaryDiskManagedDiskSpec(dict):
                
                   The type of disk defines the performance and reliability characteristics of the block device.
                   For details, see https://docs.nebius.com/compute/storage/types#disks-types
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   the list of available types will be clarified later, it is not final version
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `NETWORK_SSD`
                   - `NETWORK_HDD`
@@ -3321,12 +3322,12 @@ class ComputeV1InstanceSecondaryDiskManagedDiskSpec(dict):
 
            The type of disk defines the performance and reliability characteristics of the block device.
            For details, see https://docs.nebius.com/compute/storage/types#disks-types
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            the list of available types will be clarified later, it is not final version
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `NETWORK_SSD`
            - `NETWORK_HDD`
@@ -3427,10 +3428,10 @@ class ComputeV1InstanceSecondaryDiskManagedDiskSpecDiskEncryption(dict):
         """
         :param _builtins.str type: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `DISK_ENCRYPTION_UNSPECIFIED` - No encryption is applied unless explicitly specified.
                   - `DISK_ENCRYPTION_MANAGED`:
                      Enables encryption using the platform's default root key from KMS.
@@ -3445,10 +3446,10 @@ class ComputeV1InstanceSecondaryDiskManagedDiskSpecDiskEncryption(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `DISK_ENCRYPTION_UNSPECIFIED` - No encryption is applied unless explicitly specified.
            - `DISK_ENCRYPTION_MANAGED`:
               Enables encryption using the platform's default root key from KMS.
@@ -3535,16 +3536,16 @@ class ComputeV1InstanceStatus(dict):
         :param Sequence['ComputeV1InstanceStatusDiskAttachmentArgs'] disk_attachments: Status of the requested disk attachments.
         :param Sequence['ComputeV1InstanceStatusNetworkInterfaceArgs'] network_interfaces: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Describes the status of a network interface.
         :param _builtins.bool reconciling: Indicates whether there is an ongoing operation
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `CREATING`
                   - `UPDATING`
@@ -3594,8 +3595,8 @@ class ComputeV1InstanceStatus(dict):
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Describes the status of a network interface.
         """
         return pulumi.get(self, "network_interfaces")
@@ -3619,10 +3620,10 @@ class ComputeV1InstanceStatus(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `CREATING`
            - `UPDATING`
@@ -3674,7 +3675,7 @@ class ComputeV1InstanceStatusDiskAttachment(dict):
                
                   Disk name used to match this status entry with the desired attachment
                   from the instance specification.
-                  
+               
                   Consistency:
                   - For ManagedDisk, this value is derived from the instance spec (ManagedDisk.name).
                   - For ExistingDisk, this value is derived from the disk resource name and may lag behind
@@ -3719,7 +3720,7 @@ class ComputeV1InstanceStatusDiskAttachment(dict):
 
            Disk name used to match this status entry with the desired attachment
            from the instance specification.
-           
+
            Consistency:
            - For ManagedDisk, this value is derived from the instance spec (ManagedDisk.name).
            - For ExistingDisk, this value is derived from the disk resource name and may lag behind
@@ -4083,11 +4084,11 @@ class ComputeV1NvlInstanceGroupStatusInstances(dict):
         :param _builtins.str instance_state: :
                
                   Current state of the instance.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `CREATING`
                   - `UPDATING`
@@ -4108,11 +4109,11 @@ class ComputeV1NvlInstanceGroupStatusInstances(dict):
         :
 
            Current state of the instance.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `CREATING`
            - `UPDATING`
@@ -4474,10 +4475,10 @@ class IamV1AuthPublicKeyStatus(dict):
         """
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `ACTIVE`
                   - `INACTIVE`
@@ -4515,10 +4516,10 @@ class IamV1AuthPublicKeyStatus(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `ACTIVE`
            - `INACTIVE`
@@ -4639,10 +4640,10 @@ class IamV1FederationCertificateStatus(dict):
         :param _builtins.str not_before: A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `ACTIVE`
                   - `EXPIRED`
@@ -4697,10 +4698,10 @@ class IamV1FederationCertificateStatus(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `ACTIVE`
            - `EXPIRED`
@@ -4808,11 +4809,11 @@ class IamV1FederationStatus(dict):
         :param _builtins.str state: :
                
                   Federation state.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `ACTIVE`
                   - `INACTIVE`
@@ -4840,11 +4841,11 @@ class IamV1FederationStatus(dict):
         :
 
            Federation state.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `ACTIVE`
            - `INACTIVE`
@@ -4896,8 +4897,8 @@ class IamV1GroupMembershipStatus(dict):
         """
         :param 'IamV1GroupMembershipStatusGroupMemberMetadataArgs' group_member_metadata: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Common resource metadata.
         :param 'IamV1GroupMembershipStatusServiceAccountStatusArgs' service_account_status: *Cannot be set alongside tenant_user_account_status.*
         :param 'IamV1GroupMembershipStatusTenantUserAccountStatusArgs' tenant_user_account_status: *Cannot be set alongside service_account_status.*
@@ -4915,8 +4916,8 @@ class IamV1GroupMembershipStatus(dict):
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Common resource metadata.
         """
         return pulumi.get(self, "group_member_metadata")
@@ -4975,7 +4976,7 @@ class IamV1GroupMembershipStatusGroupMemberMetadata(dict):
         :param _builtins.str created_at: :
                
                   Timestamp indicating when the resource was created.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param _builtins.str id: Identifier for the resource, unique for its resource type.
         :param Mapping[str, _builtins.str] labels: Labels associated with the resource.
@@ -4990,7 +4991,7 @@ class IamV1GroupMembershipStatusGroupMemberMetadata(dict):
         :param _builtins.str updated_at: :
                
                   Timestamp indicating when the resource was last updated.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         if created_at is not None:
@@ -5015,7 +5016,7 @@ class IamV1GroupMembershipStatusGroupMemberMetadata(dict):
         :
 
            Timestamp indicating when the resource was created.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "created_at")
@@ -5072,7 +5073,7 @@ class IamV1GroupMembershipStatusGroupMemberMetadata(dict):
         :
 
            Timestamp indicating when the resource was last updated.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "updated_at")
@@ -5130,16 +5131,16 @@ class IamV1GroupMembershipStatusTenantUserAccountStatus(dict):
                   once invitation is accepted it looses this reference (and internally gets a reference to their global federated user account)
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `ACTIVE`:
                      - in case of ordinary tenant user account a corresponding user can log into the system and use granted tenant resources
                      - in case of invited tenant user account once the invitation is accepted a corresponding user can start using granted resources
                        immediately
-                  
+               
                   - `INACTIVE` - unused
                   - `BLOCKED`:
                      - in case of ordinary tenant user account a corresponding user can log into the system but cannot be authorized to use tenant
@@ -5149,11 +5150,11 @@ class IamV1GroupMembershipStatusTenantUserAccountStatus(dict):
         :param _builtins.str user_account_state: :
                
                   user account state can help distinguish case when account is blocked globally
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `ACTIVE` - usual state when federated user can log into the system and view/manage granted resources in one or more tenants
                   - `INACTIVE` - federated user can be blocked (manually or by any specific automated process), in this state user cannot log into the system
@@ -5198,16 +5199,16 @@ class IamV1GroupMembershipStatusTenantUserAccountStatus(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `ACTIVE`:
               - in case of ordinary tenant user account a corresponding user can log into the system and use granted tenant resources
               - in case of invited tenant user account once the invitation is accepted a corresponding user can start using granted resources
                 immediately
-           
+
            - `INACTIVE` - unused
            - `BLOCKED`:
               - in case of ordinary tenant user account a corresponding user can log into the system but cannot be authorized to use tenant
@@ -5224,11 +5225,11 @@ class IamV1GroupMembershipStatusTenantUserAccountStatus(dict):
         :
 
            user account state can help distinguish case when account is blocked globally
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `ACTIVE` - usual state when federated user can log into the system and view/manage granted resources in one or more tenants
            - `INACTIVE` - federated user can be blocked (manually or by any specific automated process), in this state user cannot log into the system
@@ -5276,10 +5277,10 @@ class IamV1GroupStatus(dict):
         """
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `ACTIVE`
         """
@@ -5308,10 +5309,10 @@ class IamV1GroupStatus(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `ACTIVE`
         """
@@ -5358,10 +5359,10 @@ class IamV1InvitationStatus(dict):
         :param _builtins.str expires_at: A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `CREATING` - contacts data is not stored in pds yet. probably will GC it later
                   - `CREATED` - notification is not sent yet
@@ -5390,10 +5391,10 @@ class IamV1InvitationStatus(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `CREATING` - contacts data is not stored in pds yet. probably will GC it later
            - `CREATED` - notification is not sent yet
@@ -5564,10 +5565,10 @@ class IamV2AccessKeyStatus(dict):
         """
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `ACTIVE`
                   - `INACTIVE`
@@ -5626,10 +5627,10 @@ class IamV2AccessKeyStatus(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `ACTIVE`
            - `INACTIVE`
@@ -5671,11 +5672,11 @@ class IamV2ProjectStatus(dict):
         :param _builtins.str project_state: :
                
                   Current state of the project.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `CREATING`
                   - `ACTIVE`
@@ -5695,11 +5696,11 @@ class IamV2ProjectStatus(dict):
         :
 
            Current state of the project.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `CREATING`
            - `ACTIVE`
@@ -5747,22 +5748,22 @@ class KmsV1AsymmetricKeyStatus(dict):
         :param _builtins.str deleted_at: :
                
                   Time when the key was scheduled for deletion.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param _builtins.str purge_at: :
                
                   Time when the key will be permanently deleted.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param _builtins.str state: :
                
                   State (ACTIVE, SCHEDULED_FOR_DELETION)
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Key state
                   Possible values:
-                  
+               
                   - `KEY_STATE_UNSPECIFIED`
                   - `ACTIVE` - Key is active, ready for use
                   - `SCHEDULED_FOR_DELETION` - Key is scheduled for deletion.
@@ -5781,7 +5782,7 @@ class KmsV1AsymmetricKeyStatus(dict):
         :
 
            Time when the key was scheduled for deletion.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "deleted_at")
@@ -5793,7 +5794,7 @@ class KmsV1AsymmetricKeyStatus(dict):
         :
 
            Time when the key will be permanently deleted.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "purge_at")
@@ -5805,12 +5806,12 @@ class KmsV1AsymmetricKeyStatus(dict):
         :
 
            State (ACTIVE, SCHEDULED_FOR_DELETION)
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Key state
            Possible values:
-           
+
            - `KEY_STATE_UNSPECIFIED`
            - `ACTIVE` - Key is active, ready for use
            - `SCHEDULED_FOR_DELETION` - Key is scheduled for deletion.
@@ -5853,22 +5854,22 @@ class KmsV1SymmetricKeyStatus(dict):
         :param _builtins.str deleted_at: :
                
                   Time when the key was scheduled for deletion.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param _builtins.str purge_at: :
                
                   Time when the key will be permanently deleted.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param _builtins.str state: :
                
                   State (ACTIVE, SCHEDULED_FOR_DELETION).
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Key state
                   Possible values:
-                  
+               
                   - `KEY_STATE_UNSPECIFIED`
                   - `ACTIVE` - Key is active, ready for use
                   - `SCHEDULED_FOR_DELETION` - Key is scheduled for deletion.
@@ -5887,7 +5888,7 @@ class KmsV1SymmetricKeyStatus(dict):
         :
 
            Time when the key was scheduled for deletion.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "deleted_at")
@@ -5899,7 +5900,7 @@ class KmsV1SymmetricKeyStatus(dict):
         :
 
            Time when the key will be permanently deleted.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "purge_at")
@@ -5911,12 +5912,12 @@ class KmsV1SymmetricKeyStatus(dict):
         :
 
            State (ACTIVE, SCHEDULED_FOR_DELETION).
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Key state
            Possible values:
-           
+
            - `KEY_STATE_UNSPECIFIED`
            - `ACTIVE` - Key is active, ready for use
            - `SCHEDULED_FOR_DELETION` - Key is scheduled for deletion.
@@ -5975,7 +5976,7 @@ class Mk8sV1ClusterControlPlane(dict):
                   Enables installation of the Karpenter inside a cluster.
                   Karpenter will be installed as a helm chart inside cluster
                   so it requires creation of at least one CPU public node group.
-                  
+               
                   Please note that there is no feature parity between Karpenter node pools and
                   public node groups.
                   By default cluster will be created without it.
@@ -6048,7 +6049,7 @@ class Mk8sV1ClusterControlPlane(dict):
            Enables installation of the Karpenter inside a cluster.
            Karpenter will be installed as a helm chart inside cluster
            so it requires creation of at least one CPU public node group.
-           
+
            Please note that there is no feature parity between Karpenter node pools and
            public node groups.
            By default cluster will be created without it.
@@ -6242,16 +6243,16 @@ class Mk8sV1ClusterStatus(dict):
         """
         :param Sequence['Mk8sV1ClusterStatusEventArgs'] events: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   A resource event that has occurred (more or less in the same way) multiple times across a service-defined aggregation interval
         :param _builtins.bool reconciling: Show that changes are in flight
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `PROVISIONING`
                   - `RUNNING`
@@ -6277,8 +6278,8 @@ class Mk8sV1ClusterStatus(dict):
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            A resource event that has occurred (more or less in the same way) multiple times across a service-defined aggregation interval
         """
         return pulumi.get(self, "events")
@@ -6297,10 +6298,10 @@ class Mk8sV1ClusterStatus(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `PROVISIONING`
            - `RUNNING`
@@ -6336,8 +6337,8 @@ class Mk8sV1ClusterStatusControlPlane(dict):
         """
         :param 'Mk8sV1ClusterStatusControlPlaneEndpointsArgs' endpoints: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Endpoints of Kubernetes control plane. Kubernetes API can be accessed at `https://endpoint/`.
         :param _builtins.float etcd_cluster_size: Number of instances in etcd cluster.
         :param _builtins.str version: :
@@ -6368,8 +6369,8 @@ class Mk8sV1ClusterStatusControlPlane(dict):
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Endpoints of Kubernetes control plane. Kubernetes API can be accessed at `https://endpoint/`.
         """
         return pulumi.get(self, "endpoints")
@@ -6514,14 +6515,14 @@ class Mk8sV1ClusterStatusEvent(dict):
         :param _builtins.str first_occurred_at: :
                
                   Time of the first occurrence of a recurrent event
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param 'Mk8sV1ClusterStatusEventLastOccurrenceArgs' last_occurrence: :
                
                   Last occurrence of a recurrent event
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Represents an API Resource-related event which is potentially important to the end-user. What exactly constitutes an *event* to be
                   reported is service-dependent
         :param _builtins.float occurrence_count: The number of times this event has occurred between <span pulumi-lang-nodejs="`firstOccurredAt`" pulumi-lang-dotnet="`FirstOccurredAt`" pulumi-lang-go="`firstOccurredAt`" pulumi-lang-python="`first_occurred_at`" pulumi-lang-yaml="`firstOccurredAt`" pulumi-lang-java="`firstOccurredAt`" pulumi-lang-hcl="`first_occurred_at`">`firstOccurredAt`</span> and `last_occurrence.occurred_at`. Must be > 0
@@ -6540,7 +6541,7 @@ class Mk8sV1ClusterStatusEvent(dict):
         :
 
            Time of the first occurrence of a recurrent event
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "first_occurred_at")
@@ -6552,9 +6553,9 @@ class Mk8sV1ClusterStatusEvent(dict):
         :
 
            Last occurrence of a recurrent event
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Represents an API Resource-related event which is potentially important to the end-user. What exactly constitutes an *event* to be
            reported is service-dependent
         """
@@ -6598,18 +6599,18 @@ class Mk8sV1ClusterStatusEventLastOccurrence(dict):
         :param _builtins.str level: :
                
                   Severity level for the event
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED` - Unspecified event severity level
                   - `DEBUG` - A debug event providing detailed insight. Such events are used to debug problems with specific resource(s) and process(es)
                   - `INFO` - A normal event or state change. Informs what is happening with the API resource. Does not require user attention or interaction
                   - `WARN`:
-                     Warning event. Indicates a potential or minor problem with the API resource and/or the corresponding processes. Needs user attention,
-                     but requires no immediate action (yet)
-                  
+                Warning event. Indicates a potential or minor problem with the API resource and/or the corresponding processes. Needs user attention,
+                but requires no immediate action (yet)
+               
                   - `ERROR` - Error event. Indicates a serious problem with the API resource and/or the corresponding processes. Requires immediate user action
         :param _builtins.str message: :
                
@@ -6618,7 +6619,7 @@ class Mk8sV1ClusterStatusEventLastOccurrence(dict):
         :param _builtins.str occurred_at: :
                
                   Time at which the event has occurred
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         if code is not None:
@@ -6645,18 +6646,18 @@ class Mk8sV1ClusterStatusEventLastOccurrence(dict):
         :
 
            Severity level for the event
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED` - Unspecified event severity level
            - `DEBUG` - A debug event providing detailed insight. Such events are used to debug problems with specific resource(s) and process(es)
            - `INFO` - A normal event or state change. Informs what is happening with the API resource. Does not require user attention or interaction
            - `WARN`:
-              Warning event. Indicates a potential or minor problem with the API resource and/or the corresponding processes. Needs user attention,
-              but requires no immediate action (yet)
-           
+         Warning event. Indicates a potential or minor problem with the API resource and/or the corresponding processes. Needs user attention,
+         but requires no immediate action (yet)
+
            - `ERROR` - Error event. Indicates a serious problem with the API resource and/or the corresponding processes. Requires immediate user action
         """
         return pulumi.get(self, "level")
@@ -6679,7 +6680,7 @@ class Mk8sV1ClusterStatusEventLastOccurrence(dict):
         :
 
            Time at which the event has occurred
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "occurred_at")
@@ -6716,16 +6717,16 @@ class Mk8sV1NodeGroupAutoRepairCondition(dict):
         :param _builtins.bool disabled: :
                
                   When true, disables the default auto-repair condition rules.
-                  
+               
                   *Cannot be set alongside timeout.*
         :param _builtins.str status: :
                
                   Node condition status.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `CONDITION_STATUS_UNSPECIFIED`
                   - `TRUE`
                   - `FALSE`
@@ -6733,9 +6734,9 @@ class Mk8sV1NodeGroupAutoRepairCondition(dict):
         :param _builtins.str timeout: :
                
                   The duration after which the node is automatically repaired if the condition remains in the specified status.
-                  
+               
                   Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as <span pulumi-lang-nodejs="`300ms`" pulumi-lang-dotnet="`300ms`" pulumi-lang-go="`300ms`" pulumi-lang-python="`300ms`" pulumi-lang-yaml="`300ms`" pulumi-lang-java="`300ms`" pulumi-lang-hcl="`300ms`">`300ms`</span>, `-1.5h` or <span pulumi-lang-nodejs="`2h45m`" pulumi-lang-dotnet="`2h45m`" pulumi-lang-go="`2h45m`" pulumi-lang-python="`2h45m`" pulumi-lang-yaml="`2h45m`" pulumi-lang-java="`2h45m`" pulumi-lang-hcl="`2h45m`">`2h45m`</span>. Valid time units are <span pulumi-lang-nodejs="`ns`" pulumi-lang-dotnet="`Ns`" pulumi-lang-go="`ns`" pulumi-lang-python="`ns`" pulumi-lang-yaml="`ns`" pulumi-lang-java="`ns`" pulumi-lang-hcl="`ns`">`ns`</span>, <span pulumi-lang-nodejs="`us`" pulumi-lang-dotnet="`Us`" pulumi-lang-go="`us`" pulumi-lang-python="`us`" pulumi-lang-yaml="`us`" pulumi-lang-java="`us`" pulumi-lang-hcl="`us`">`us`</span> (or `µs`), <span pulumi-lang-nodejs="`ms`" pulumi-lang-dotnet="`Ms`" pulumi-lang-go="`ms`" pulumi-lang-python="`ms`" pulumi-lang-yaml="`ms`" pulumi-lang-java="`ms`" pulumi-lang-hcl="`ms`">`ms`</span>, <span pulumi-lang-nodejs="`s`" pulumi-lang-dotnet="`S`" pulumi-lang-go="`s`" pulumi-lang-python="`s`" pulumi-lang-yaml="`s`" pulumi-lang-java="`s`" pulumi-lang-hcl="`s`">`s`</span>, <span pulumi-lang-nodejs="`m`" pulumi-lang-dotnet="`M`" pulumi-lang-go="`m`" pulumi-lang-python="`m`" pulumi-lang-yaml="`m`" pulumi-lang-java="`m`" pulumi-lang-hcl="`m`">`m`</span>, <span pulumi-lang-nodejs="`h`" pulumi-lang-dotnet="`H`" pulumi-lang-go="`h`" pulumi-lang-python="`h`" pulumi-lang-yaml="`h`" pulumi-lang-java="`h`" pulumi-lang-hcl="`h`">`h`</span>, <span pulumi-lang-nodejs="`d`" pulumi-lang-dotnet="`D`" pulumi-lang-go="`d`" pulumi-lang-python="`d`" pulumi-lang-yaml="`d`" pulumi-lang-java="`d`" pulumi-lang-hcl="`d`">`d`</span>.
-                  
+               
                   *Cannot be set alongside disabled.*
         """
         pulumi.set(__self__, "type", type)
@@ -6761,7 +6762,7 @@ class Mk8sV1NodeGroupAutoRepairCondition(dict):
         :
 
            When true, disables the default auto-repair condition rules.
-           
+
            *Cannot be set alongside timeout.*
         """
         return pulumi.get(self, "disabled")
@@ -6773,11 +6774,11 @@ class Mk8sV1NodeGroupAutoRepairCondition(dict):
         :
 
            Node condition status.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `CONDITION_STATUS_UNSPECIFIED`
            - `TRUE`
            - `FALSE`
@@ -6792,9 +6793,9 @@ class Mk8sV1NodeGroupAutoRepairCondition(dict):
         :
 
            The duration after which the node is automatically repaired if the condition remains in the specified status.
-           
+
            Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as <span pulumi-lang-nodejs="`300ms`" pulumi-lang-dotnet="`300ms`" pulumi-lang-go="`300ms`" pulumi-lang-python="`300ms`" pulumi-lang-yaml="`300ms`" pulumi-lang-java="`300ms`" pulumi-lang-hcl="`300ms`">`300ms`</span>, `-1.5h` or <span pulumi-lang-nodejs="`2h45m`" pulumi-lang-dotnet="`2h45m`" pulumi-lang-go="`2h45m`" pulumi-lang-python="`2h45m`" pulumi-lang-yaml="`2h45m`" pulumi-lang-java="`2h45m`" pulumi-lang-hcl="`2h45m`">`2h45m`</span>. Valid time units are <span pulumi-lang-nodejs="`ns`" pulumi-lang-dotnet="`Ns`" pulumi-lang-go="`ns`" pulumi-lang-python="`ns`" pulumi-lang-yaml="`ns`" pulumi-lang-java="`ns`" pulumi-lang-hcl="`ns`">`ns`</span>, <span pulumi-lang-nodejs="`us`" pulumi-lang-dotnet="`Us`" pulumi-lang-go="`us`" pulumi-lang-python="`us`" pulumi-lang-yaml="`us`" pulumi-lang-java="`us`" pulumi-lang-hcl="`us`">`us`</span> (or `µs`), <span pulumi-lang-nodejs="`ms`" pulumi-lang-dotnet="`Ms`" pulumi-lang-go="`ms`" pulumi-lang-python="`ms`" pulumi-lang-yaml="`ms`" pulumi-lang-java="`ms`" pulumi-lang-hcl="`ms`">`ms`</span>, <span pulumi-lang-nodejs="`s`" pulumi-lang-dotnet="`S`" pulumi-lang-go="`s`" pulumi-lang-python="`s`" pulumi-lang-yaml="`s`" pulumi-lang-java="`s`" pulumi-lang-hcl="`s`">`s`</span>, <span pulumi-lang-nodejs="`m`" pulumi-lang-dotnet="`M`" pulumi-lang-go="`m`" pulumi-lang-python="`m`" pulumi-lang-yaml="`m`" pulumi-lang-java="`m`" pulumi-lang-hcl="`m`">`m`</span>, <span pulumi-lang-nodejs="`h`" pulumi-lang-dotnet="`H`" pulumi-lang-go="`h`" pulumi-lang-python="`h`" pulumi-lang-yaml="`h`" pulumi-lang-java="`h`" pulumi-lang-hcl="`h`">`h`</span>, <span pulumi-lang-nodejs="`d`" pulumi-lang-dotnet="`D`" pulumi-lang-go="`d`" pulumi-lang-python="`d`" pulumi-lang-yaml="`d`" pulumi-lang-java="`d`" pulumi-lang-hcl="`d`">`d`</span>.
-           
+
            *Cannot be set alongside disabled.*
         """
         return pulumi.get(self, "timeout")
@@ -6884,8 +6885,8 @@ class Mk8sV1NodeGroupStatus(dict):
         """
         :param Sequence['Mk8sV1NodeGroupStatusEventArgs'] events: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   A resource event that has occurred (more or less in the same way) multiple times across a service-defined aggregation interval
         :param _builtins.float node_count: :
                
@@ -6902,10 +6903,10 @@ class Mk8sV1NodeGroupStatus(dict):
         :param _builtins.bool reconciling: Show that there are changes are in flight.
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `PROVISIONING`
                   - `RUNNING`
@@ -6951,8 +6952,8 @@ class Mk8sV1NodeGroupStatus(dict):
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            A resource event that has occurred (more or less in the same way) multiple times across a service-defined aggregation interval
         """
         return pulumi.get(self, "events")
@@ -7004,10 +7005,10 @@ class Mk8sV1NodeGroupStatus(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `PROVISIONING`
            - `RUNNING`
@@ -7083,14 +7084,14 @@ class Mk8sV1NodeGroupStatusEvent(dict):
         :param _builtins.str first_occurred_at: :
                
                   Time of the first occurrence of a recurrent event
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param 'Mk8sV1NodeGroupStatusEventLastOccurrenceArgs' last_occurrence: :
                
                   Last occurrence of a recurrent event
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Represents an API Resource-related event which is potentially important to the end-user. What exactly constitutes an *event* to be
                   reported is service-dependent
         :param _builtins.float occurrence_count: The number of times this event has occurred between <span pulumi-lang-nodejs="`firstOccurredAt`" pulumi-lang-dotnet="`FirstOccurredAt`" pulumi-lang-go="`firstOccurredAt`" pulumi-lang-python="`first_occurred_at`" pulumi-lang-yaml="`firstOccurredAt`" pulumi-lang-java="`firstOccurredAt`" pulumi-lang-hcl="`first_occurred_at`">`firstOccurredAt`</span> and `last_occurrence.occurred_at`. Must be > 0
@@ -7109,7 +7110,7 @@ class Mk8sV1NodeGroupStatusEvent(dict):
         :
 
            Time of the first occurrence of a recurrent event
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "first_occurred_at")
@@ -7121,9 +7122,9 @@ class Mk8sV1NodeGroupStatusEvent(dict):
         :
 
            Last occurrence of a recurrent event
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Represents an API Resource-related event which is potentially important to the end-user. What exactly constitutes an *event* to be
            reported is service-dependent
         """
@@ -7167,18 +7168,18 @@ class Mk8sV1NodeGroupStatusEventLastOccurrence(dict):
         :param _builtins.str level: :
                
                   Severity level for the event
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED` - Unspecified event severity level
                   - `DEBUG` - A debug event providing detailed insight. Such events are used to debug problems with specific resource(s) and process(es)
                   - `INFO` - A normal event or state change. Informs what is happening with the API resource. Does not require user attention or interaction
                   - `WARN`:
-                     Warning event. Indicates a potential or minor problem with the API resource and/or the corresponding processes. Needs user attention,
-                     but requires no immediate action (yet)
-                  
+                Warning event. Indicates a potential or minor problem with the API resource and/or the corresponding processes. Needs user attention,
+                but requires no immediate action (yet)
+               
                   - `ERROR` - Error event. Indicates a serious problem with the API resource and/or the corresponding processes. Requires immediate user action
         :param _builtins.str message: :
                
@@ -7187,7 +7188,7 @@ class Mk8sV1NodeGroupStatusEventLastOccurrence(dict):
         :param _builtins.str occurred_at: :
                
                   Time at which the event has occurred
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         if code is not None:
@@ -7214,18 +7215,18 @@ class Mk8sV1NodeGroupStatusEventLastOccurrence(dict):
         :
 
            Severity level for the event
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED` - Unspecified event severity level
            - `DEBUG` - A debug event providing detailed insight. Such events are used to debug problems with specific resource(s) and process(es)
            - `INFO` - A normal event or state change. Informs what is happening with the API resource. Does not require user attention or interaction
            - `WARN`:
-              Warning event. Indicates a potential or minor problem with the API resource and/or the corresponding processes. Needs user attention,
-              but requires no immediate action (yet)
-           
+         Warning event. Indicates a potential or minor problem with the API resource and/or the corresponding processes. Needs user attention,
+         but requires no immediate action (yet)
+
            - `ERROR` - Error event. Indicates a serious problem with the API resource and/or the corresponding processes. Requires immediate user action
         """
         return pulumi.get(self, "level")
@@ -7248,7 +7249,7 @@ class Mk8sV1NodeGroupStatusEventLastOccurrence(dict):
         :
 
            Time at which the event has occurred
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "occurred_at")
@@ -7290,35 +7291,35 @@ class Mk8sV1NodeGroupStatusStrategy(dict):
                   Important consequence of that is if PodDisruptionBudget doesn't allow evicting a pod,
                   then NodeGroup update with node re-creation will hang on that pod eviction.
                   Note that this is different from `kubectl drain --timeout`, which gives up and returns an error.
-                  
+               
                   On 2026-08-01, defaults to 0.
                   IMPORTANT: starting from Q3 2026 new default is 10m;
                   for new clusters it will default to 10m,
                   node groups in existing clusters will be gradually migrated during Q3 to the default of 10m as well.
                   To get the actual value for your node group, please see 'strategy' in its status.
-                  
+               
                   Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as <span pulumi-lang-nodejs="`300ms`" pulumi-lang-dotnet="`300ms`" pulumi-lang-go="`300ms`" pulumi-lang-python="`300ms`" pulumi-lang-yaml="`300ms`" pulumi-lang-java="`300ms`" pulumi-lang-hcl="`300ms`">`300ms`</span>, `-1.5h` or <span pulumi-lang-nodejs="`2h45m`" pulumi-lang-dotnet="`2h45m`" pulumi-lang-go="`2h45m`" pulumi-lang-python="`2h45m`" pulumi-lang-yaml="`2h45m`" pulumi-lang-java="`2h45m`" pulumi-lang-hcl="`2h45m`">`2h45m`</span>. Valid time units are <span pulumi-lang-nodejs="`ns`" pulumi-lang-dotnet="`Ns`" pulumi-lang-go="`ns`" pulumi-lang-python="`ns`" pulumi-lang-yaml="`ns`" pulumi-lang-java="`ns`" pulumi-lang-hcl="`ns`">`ns`</span>, <span pulumi-lang-nodejs="`us`" pulumi-lang-dotnet="`Us`" pulumi-lang-go="`us`" pulumi-lang-python="`us`" pulumi-lang-yaml="`us`" pulumi-lang-java="`us`" pulumi-lang-hcl="`us`">`us`</span> (or `µs`), <span pulumi-lang-nodejs="`ms`" pulumi-lang-dotnet="`Ms`" pulumi-lang-go="`ms`" pulumi-lang-python="`ms`" pulumi-lang-yaml="`ms`" pulumi-lang-java="`ms`" pulumi-lang-hcl="`ms`">`ms`</span>, <span pulumi-lang-nodejs="`s`" pulumi-lang-dotnet="`S`" pulumi-lang-go="`s`" pulumi-lang-python="`s`" pulumi-lang-yaml="`s`" pulumi-lang-java="`s`" pulumi-lang-hcl="`s`">`s`</span>, <span pulumi-lang-nodejs="`m`" pulumi-lang-dotnet="`M`" pulumi-lang-go="`m`" pulumi-lang-python="`m`" pulumi-lang-yaml="`m`" pulumi-lang-java="`m`" pulumi-lang-hcl="`m`">`m`</span>, <span pulumi-lang-nodejs="`h`" pulumi-lang-dotnet="`H`" pulumi-lang-go="`h`" pulumi-lang-python="`h`" pulumi-lang-yaml="`h`" pulumi-lang-java="`h`" pulumi-lang-hcl="`h`">`h`</span>, <span pulumi-lang-nodejs="`d`" pulumi-lang-dotnet="`D`" pulumi-lang-go="`d`" pulumi-lang-python="`d`" pulumi-lang-yaml="`d`" pulumi-lang-java="`d`" pulumi-lang-hcl="`d`">`d`</span>.
         :param 'Mk8sV1NodeGroupStatusStrategyMaxSurgeArgs' max_surge: :
                
                   The maximum number of additional nodes that can be provisioned above the desired number of nodes during the update process.
-                  
+               
                   This value can be specified either as an absolute number (for example 3) or as a percentage of the desired
                   number of nodes (for example 5%).
-                  
+               
                   When specified as a percentage, the actual number is calculated by rounding up to the nearest whole number.
                   This value cannot be 0 if <span pulumi-lang-nodejs="`maxUnavailable`" pulumi-lang-dotnet="`MaxUnavailable`" pulumi-lang-go="`maxUnavailable`" pulumi-lang-python="`max_unavailable`" pulumi-lang-yaml="`maxUnavailable`" pulumi-lang-java="`maxUnavailable`" pulumi-lang-hcl="`max_unavailable`">`maxUnavailable`</span> is also set to 0.
-                  
+               
                   On 2026-08-01, defaults to 1.
                   IMPORTANT: starting from Q3 2026 new default is 0;
                   for new clusters it will default to 0,
                   node groups in existing clusters will be gradually migrated during Q3 to the default of 0 as well.
                   To get the actual value for your node group, please see 'strategy' in its status.
-                  
+               
                   Example: If set to 25%, the node group can scale up by an additional 25% during the update,
                   allowing new nodes to be added before old nodes are removed, which helps minimize workload disruption.
-                  
+               
                   NOTE:
-                  
+               
                   it is user responsibility to ensure that there are enough quota for provision nodes above the desired number.
                   Available quota effectively limits <span pulumi-lang-nodejs="`maxSurge`" pulumi-lang-dotnet="`MaxSurge`" pulumi-lang-go="`maxSurge`" pulumi-lang-python="`max_surge`" pulumi-lang-yaml="`maxSurge`" pulumi-lang-java="`maxSurge`" pulumi-lang-hcl="`max_surge`">`maxSurge`</span>.
                   In case of not enough quota even for one extra node, update operation will hung because of quota exhausted error.
@@ -7326,19 +7327,19 @@ class Mk8sV1NodeGroupStatusStrategy(dict):
         :param 'Mk8sV1NodeGroupStatusStrategyMaxUnavailableArgs' max_unavailable: :
                
                   The maximum number of nodes that can be simultaneously unavailable during the update process.
-                  
+               
                   This value can be specified either as an absolute number (for example 3) or as a percentage of the desired
                   number of nodes (for example 5%).
-                  
+               
                   When specified as a percentage, the actual number is calculated by rounding down to the nearest whole number.
                   This value cannot be 0 if <span pulumi-lang-nodejs="`maxSurge`" pulumi-lang-dotnet="`MaxSurge`" pulumi-lang-go="`maxSurge`" pulumi-lang-python="`max_surge`" pulumi-lang-yaml="`maxSurge`" pulumi-lang-java="`maxSurge`" pulumi-lang-hcl="`max_surge`">`maxSurge`</span> is also set to 0.
-                  
+               
                   On 2026-08-01, defaults to 0.
                   IMPORTANT: starting from Q3 2026 new default is 1;
                   for new clusters it will default to 1,
                   node groups in existing clusters will be gradually migrated during Q3 to the default of 1 as well.
                   To get the actual value for your node group, please see 'strategy' in its status.
-                  
+               
                   Example: If set to 20%, up to 20% of the nodes can be taken offline at once during the update,
                   ensuring that at least 80% of the desired nodes remain operational.
         """
@@ -7361,13 +7362,13 @@ class Mk8sV1NodeGroupStatusStrategy(dict):
            Important consequence of that is if PodDisruptionBudget doesn't allow evicting a pod,
            then NodeGroup update with node re-creation will hang on that pod eviction.
            Note that this is different from `kubectl drain --timeout`, which gives up and returns an error.
-           
+
            On 2026-08-01, defaults to 0.
            IMPORTANT: starting from Q3 2026 new default is 10m;
            for new clusters it will default to 10m,
            node groups in existing clusters will be gradually migrated during Q3 to the default of 10m as well.
            To get the actual value for your node group, please see 'strategy' in its status.
-           
+
            Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as <span pulumi-lang-nodejs="`300ms`" pulumi-lang-dotnet="`300ms`" pulumi-lang-go="`300ms`" pulumi-lang-python="`300ms`" pulumi-lang-yaml="`300ms`" pulumi-lang-java="`300ms`" pulumi-lang-hcl="`300ms`">`300ms`</span>, `-1.5h` or <span pulumi-lang-nodejs="`2h45m`" pulumi-lang-dotnet="`2h45m`" pulumi-lang-go="`2h45m`" pulumi-lang-python="`2h45m`" pulumi-lang-yaml="`2h45m`" pulumi-lang-java="`2h45m`" pulumi-lang-hcl="`2h45m`">`2h45m`</span>. Valid time units are <span pulumi-lang-nodejs="`ns`" pulumi-lang-dotnet="`Ns`" pulumi-lang-go="`ns`" pulumi-lang-python="`ns`" pulumi-lang-yaml="`ns`" pulumi-lang-java="`ns`" pulumi-lang-hcl="`ns`">`ns`</span>, <span pulumi-lang-nodejs="`us`" pulumi-lang-dotnet="`Us`" pulumi-lang-go="`us`" pulumi-lang-python="`us`" pulumi-lang-yaml="`us`" pulumi-lang-java="`us`" pulumi-lang-hcl="`us`">`us`</span> (or `µs`), <span pulumi-lang-nodejs="`ms`" pulumi-lang-dotnet="`Ms`" pulumi-lang-go="`ms`" pulumi-lang-python="`ms`" pulumi-lang-yaml="`ms`" pulumi-lang-java="`ms`" pulumi-lang-hcl="`ms`">`ms`</span>, <span pulumi-lang-nodejs="`s`" pulumi-lang-dotnet="`S`" pulumi-lang-go="`s`" pulumi-lang-python="`s`" pulumi-lang-yaml="`s`" pulumi-lang-java="`s`" pulumi-lang-hcl="`s`">`s`</span>, <span pulumi-lang-nodejs="`m`" pulumi-lang-dotnet="`M`" pulumi-lang-go="`m`" pulumi-lang-python="`m`" pulumi-lang-yaml="`m`" pulumi-lang-java="`m`" pulumi-lang-hcl="`m`">`m`</span>, <span pulumi-lang-nodejs="`h`" pulumi-lang-dotnet="`H`" pulumi-lang-go="`h`" pulumi-lang-python="`h`" pulumi-lang-yaml="`h`" pulumi-lang-java="`h`" pulumi-lang-hcl="`h`">`h`</span>, <span pulumi-lang-nodejs="`d`" pulumi-lang-dotnet="`D`" pulumi-lang-go="`d`" pulumi-lang-python="`d`" pulumi-lang-yaml="`d`" pulumi-lang-java="`d`" pulumi-lang-hcl="`d`">`d`</span>.
         """
         return pulumi.get(self, "drain_timeout")
@@ -7379,24 +7380,24 @@ class Mk8sV1NodeGroupStatusStrategy(dict):
         :
 
            The maximum number of additional nodes that can be provisioned above the desired number of nodes during the update process.
-           
+
            This value can be specified either as an absolute number (for example 3) or as a percentage of the desired
            number of nodes (for example 5%).
-           
+
            When specified as a percentage, the actual number is calculated by rounding up to the nearest whole number.
            This value cannot be 0 if <span pulumi-lang-nodejs="`maxUnavailable`" pulumi-lang-dotnet="`MaxUnavailable`" pulumi-lang-go="`maxUnavailable`" pulumi-lang-python="`max_unavailable`" pulumi-lang-yaml="`maxUnavailable`" pulumi-lang-java="`maxUnavailable`" pulumi-lang-hcl="`max_unavailable`">`maxUnavailable`</span> is also set to 0.
-           
+
            On 2026-08-01, defaults to 1.
            IMPORTANT: starting from Q3 2026 new default is 0;
            for new clusters it will default to 0,
            node groups in existing clusters will be gradually migrated during Q3 to the default of 0 as well.
            To get the actual value for your node group, please see 'strategy' in its status.
-           
+
            Example: If set to 25%, the node group can scale up by an additional 25% during the update,
            allowing new nodes to be added before old nodes are removed, which helps minimize workload disruption.
-           
+
            NOTE:
-           
+
            it is user responsibility to ensure that there are enough quota for provision nodes above the desired number.
            Available quota effectively limits <span pulumi-lang-nodejs="`maxSurge`" pulumi-lang-dotnet="`MaxSurge`" pulumi-lang-go="`maxSurge`" pulumi-lang-python="`max_surge`" pulumi-lang-yaml="`maxSurge`" pulumi-lang-java="`maxSurge`" pulumi-lang-hcl="`max_surge`">`maxSurge`</span>.
            In case of not enough quota even for one extra node, update operation will hung because of quota exhausted error.
@@ -7411,19 +7412,19 @@ class Mk8sV1NodeGroupStatusStrategy(dict):
         :
 
            The maximum number of nodes that can be simultaneously unavailable during the update process.
-           
+
            This value can be specified either as an absolute number (for example 3) or as a percentage of the desired
            number of nodes (for example 5%).
-           
+
            When specified as a percentage, the actual number is calculated by rounding down to the nearest whole number.
            This value cannot be 0 if <span pulumi-lang-nodejs="`maxSurge`" pulumi-lang-dotnet="`MaxSurge`" pulumi-lang-go="`maxSurge`" pulumi-lang-python="`max_surge`" pulumi-lang-yaml="`maxSurge`" pulumi-lang-java="`maxSurge`" pulumi-lang-hcl="`max_surge`">`maxSurge`</span> is also set to 0.
-           
+
            On 2026-08-01, defaults to 0.
            IMPORTANT: starting from Q3 2026 new default is 1;
            for new clusters it will default to 1,
            node groups in existing clusters will be gradually migrated during Q3 to the default of 1 as well.
            To get the actual value for your node group, please see 'strategy' in its status.
-           
+
            Example: If set to 20%, up to 20% of the nodes can be taken offline at once during the update,
            ensuring that at least 80% of the desired nodes remain operational.
         """
@@ -7528,35 +7529,35 @@ class Mk8sV1NodeGroupStrategy(dict):
                   Important consequence of that is if PodDisruptionBudget doesn't allow evicting a pod,
                   then NodeGroup update with node re-creation will hang on that pod eviction.
                   Note that this is different from `kubectl drain --timeout`, which gives up and returns an error.
-                  
+               
                   On 2026-08-01, defaults to 0.
                   IMPORTANT: starting from Q3 2026 new default is 10m;
                   for new clusters it will default to 10m,
                   node groups in existing clusters will be gradually migrated during Q3 to the default of 10m as well.
                   To get the actual value for your node group, please see 'strategy' in its status.
-                  
+               
                   Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as <span pulumi-lang-nodejs="`300ms`" pulumi-lang-dotnet="`300ms`" pulumi-lang-go="`300ms`" pulumi-lang-python="`300ms`" pulumi-lang-yaml="`300ms`" pulumi-lang-java="`300ms`" pulumi-lang-hcl="`300ms`">`300ms`</span>, `-1.5h` or <span pulumi-lang-nodejs="`2h45m`" pulumi-lang-dotnet="`2h45m`" pulumi-lang-go="`2h45m`" pulumi-lang-python="`2h45m`" pulumi-lang-yaml="`2h45m`" pulumi-lang-java="`2h45m`" pulumi-lang-hcl="`2h45m`">`2h45m`</span>. Valid time units are <span pulumi-lang-nodejs="`ns`" pulumi-lang-dotnet="`Ns`" pulumi-lang-go="`ns`" pulumi-lang-python="`ns`" pulumi-lang-yaml="`ns`" pulumi-lang-java="`ns`" pulumi-lang-hcl="`ns`">`ns`</span>, <span pulumi-lang-nodejs="`us`" pulumi-lang-dotnet="`Us`" pulumi-lang-go="`us`" pulumi-lang-python="`us`" pulumi-lang-yaml="`us`" pulumi-lang-java="`us`" pulumi-lang-hcl="`us`">`us`</span> (or `µs`), <span pulumi-lang-nodejs="`ms`" pulumi-lang-dotnet="`Ms`" pulumi-lang-go="`ms`" pulumi-lang-python="`ms`" pulumi-lang-yaml="`ms`" pulumi-lang-java="`ms`" pulumi-lang-hcl="`ms`">`ms`</span>, <span pulumi-lang-nodejs="`s`" pulumi-lang-dotnet="`S`" pulumi-lang-go="`s`" pulumi-lang-python="`s`" pulumi-lang-yaml="`s`" pulumi-lang-java="`s`" pulumi-lang-hcl="`s`">`s`</span>, <span pulumi-lang-nodejs="`m`" pulumi-lang-dotnet="`M`" pulumi-lang-go="`m`" pulumi-lang-python="`m`" pulumi-lang-yaml="`m`" pulumi-lang-java="`m`" pulumi-lang-hcl="`m`">`m`</span>, <span pulumi-lang-nodejs="`h`" pulumi-lang-dotnet="`H`" pulumi-lang-go="`h`" pulumi-lang-python="`h`" pulumi-lang-yaml="`h`" pulumi-lang-java="`h`" pulumi-lang-hcl="`h`">`h`</span>, <span pulumi-lang-nodejs="`d`" pulumi-lang-dotnet="`D`" pulumi-lang-go="`d`" pulumi-lang-python="`d`" pulumi-lang-yaml="`d`" pulumi-lang-java="`d`" pulumi-lang-hcl="`d`">`d`</span>.
         :param 'Mk8sV1NodeGroupStrategyMaxSurgeArgs' max_surge: :
                
                   The maximum number of additional nodes that can be provisioned above the desired number of nodes during the update process.
-                  
+               
                   This value can be specified either as an absolute number (for example 3) or as a percentage of the desired
                   number of nodes (for example 5%).
-                  
+               
                   When specified as a percentage, the actual number is calculated by rounding up to the nearest whole number.
                   This value cannot be 0 if <span pulumi-lang-nodejs="`maxUnavailable`" pulumi-lang-dotnet="`MaxUnavailable`" pulumi-lang-go="`maxUnavailable`" pulumi-lang-python="`max_unavailable`" pulumi-lang-yaml="`maxUnavailable`" pulumi-lang-java="`maxUnavailable`" pulumi-lang-hcl="`max_unavailable`">`maxUnavailable`</span> is also set to 0.
-                  
+               
                   On 2026-08-01, defaults to 1.
                   IMPORTANT: starting from Q3 2026 new default is 0;
                   for new clusters it will default to 0,
                   node groups in existing clusters will be gradually migrated during Q3 to the default of 0 as well.
                   To get the actual value for your node group, please see 'strategy' in its status.
-                  
+               
                   Example: If set to 25%, the node group can scale up by an additional 25% during the update,
                   allowing new nodes to be added before old nodes are removed, which helps minimize workload disruption.
-                  
+               
                   NOTE:
-                  
+               
                   it is user responsibility to ensure that there are enough quota for provision nodes above the desired number.
                   Available quota effectively limits <span pulumi-lang-nodejs="`maxSurge`" pulumi-lang-dotnet="`MaxSurge`" pulumi-lang-go="`maxSurge`" pulumi-lang-python="`max_surge`" pulumi-lang-yaml="`maxSurge`" pulumi-lang-java="`maxSurge`" pulumi-lang-hcl="`max_surge`">`maxSurge`</span>.
                   In case of not enough quota even for one extra node, update operation will hung because of quota exhausted error.
@@ -7564,19 +7565,19 @@ class Mk8sV1NodeGroupStrategy(dict):
         :param 'Mk8sV1NodeGroupStrategyMaxUnavailableArgs' max_unavailable: :
                
                   The maximum number of nodes that can be simultaneously unavailable during the update process.
-                  
+               
                   This value can be specified either as an absolute number (for example 3) or as a percentage of the desired
                   number of nodes (for example 5%).
-                  
+               
                   When specified as a percentage, the actual number is calculated by rounding down to the nearest whole number.
                   This value cannot be 0 if <span pulumi-lang-nodejs="`maxSurge`" pulumi-lang-dotnet="`MaxSurge`" pulumi-lang-go="`maxSurge`" pulumi-lang-python="`max_surge`" pulumi-lang-yaml="`maxSurge`" pulumi-lang-java="`maxSurge`" pulumi-lang-hcl="`max_surge`">`maxSurge`</span> is also set to 0.
-                  
+               
                   On 2026-08-01, defaults to 0.
                   IMPORTANT: starting from Q3 2026 new default is 1;
                   for new clusters it will default to 1,
                   node groups in existing clusters will be gradually migrated during Q3 to the default of 1 as well.
                   To get the actual value for your node group, please see 'strategy' in its status.
-                  
+               
                   Example: If set to 20%, up to 20% of the nodes can be taken offline at once during the update,
                   ensuring that at least 80% of the desired nodes remain operational.
         """
@@ -7599,13 +7600,13 @@ class Mk8sV1NodeGroupStrategy(dict):
            Important consequence of that is if PodDisruptionBudget doesn't allow evicting a pod,
            then NodeGroup update with node re-creation will hang on that pod eviction.
            Note that this is different from `kubectl drain --timeout`, which gives up and returns an error.
-           
+
            On 2026-08-01, defaults to 0.
            IMPORTANT: starting from Q3 2026 new default is 10m;
            for new clusters it will default to 10m,
            node groups in existing clusters will be gradually migrated during Q3 to the default of 10m as well.
            To get the actual value for your node group, please see 'strategy' in its status.
-           
+
            Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as <span pulumi-lang-nodejs="`300ms`" pulumi-lang-dotnet="`300ms`" pulumi-lang-go="`300ms`" pulumi-lang-python="`300ms`" pulumi-lang-yaml="`300ms`" pulumi-lang-java="`300ms`" pulumi-lang-hcl="`300ms`">`300ms`</span>, `-1.5h` or <span pulumi-lang-nodejs="`2h45m`" pulumi-lang-dotnet="`2h45m`" pulumi-lang-go="`2h45m`" pulumi-lang-python="`2h45m`" pulumi-lang-yaml="`2h45m`" pulumi-lang-java="`2h45m`" pulumi-lang-hcl="`2h45m`">`2h45m`</span>. Valid time units are <span pulumi-lang-nodejs="`ns`" pulumi-lang-dotnet="`Ns`" pulumi-lang-go="`ns`" pulumi-lang-python="`ns`" pulumi-lang-yaml="`ns`" pulumi-lang-java="`ns`" pulumi-lang-hcl="`ns`">`ns`</span>, <span pulumi-lang-nodejs="`us`" pulumi-lang-dotnet="`Us`" pulumi-lang-go="`us`" pulumi-lang-python="`us`" pulumi-lang-yaml="`us`" pulumi-lang-java="`us`" pulumi-lang-hcl="`us`">`us`</span> (or `µs`), <span pulumi-lang-nodejs="`ms`" pulumi-lang-dotnet="`Ms`" pulumi-lang-go="`ms`" pulumi-lang-python="`ms`" pulumi-lang-yaml="`ms`" pulumi-lang-java="`ms`" pulumi-lang-hcl="`ms`">`ms`</span>, <span pulumi-lang-nodejs="`s`" pulumi-lang-dotnet="`S`" pulumi-lang-go="`s`" pulumi-lang-python="`s`" pulumi-lang-yaml="`s`" pulumi-lang-java="`s`" pulumi-lang-hcl="`s`">`s`</span>, <span pulumi-lang-nodejs="`m`" pulumi-lang-dotnet="`M`" pulumi-lang-go="`m`" pulumi-lang-python="`m`" pulumi-lang-yaml="`m`" pulumi-lang-java="`m`" pulumi-lang-hcl="`m`">`m`</span>, <span pulumi-lang-nodejs="`h`" pulumi-lang-dotnet="`H`" pulumi-lang-go="`h`" pulumi-lang-python="`h`" pulumi-lang-yaml="`h`" pulumi-lang-java="`h`" pulumi-lang-hcl="`h`">`h`</span>, <span pulumi-lang-nodejs="`d`" pulumi-lang-dotnet="`D`" pulumi-lang-go="`d`" pulumi-lang-python="`d`" pulumi-lang-yaml="`d`" pulumi-lang-java="`d`" pulumi-lang-hcl="`d`">`d`</span>.
         """
         return pulumi.get(self, "drain_timeout")
@@ -7617,24 +7618,24 @@ class Mk8sV1NodeGroupStrategy(dict):
         :
 
            The maximum number of additional nodes that can be provisioned above the desired number of nodes during the update process.
-           
+
            This value can be specified either as an absolute number (for example 3) or as a percentage of the desired
            number of nodes (for example 5%).
-           
+
            When specified as a percentage, the actual number is calculated by rounding up to the nearest whole number.
            This value cannot be 0 if <span pulumi-lang-nodejs="`maxUnavailable`" pulumi-lang-dotnet="`MaxUnavailable`" pulumi-lang-go="`maxUnavailable`" pulumi-lang-python="`max_unavailable`" pulumi-lang-yaml="`maxUnavailable`" pulumi-lang-java="`maxUnavailable`" pulumi-lang-hcl="`max_unavailable`">`maxUnavailable`</span> is also set to 0.
-           
+
            On 2026-08-01, defaults to 1.
            IMPORTANT: starting from Q3 2026 new default is 0;
            for new clusters it will default to 0,
            node groups in existing clusters will be gradually migrated during Q3 to the default of 0 as well.
            To get the actual value for your node group, please see 'strategy' in its status.
-           
+
            Example: If set to 25%, the node group can scale up by an additional 25% during the update,
            allowing new nodes to be added before old nodes are removed, which helps minimize workload disruption.
-           
+
            NOTE:
-           
+
            it is user responsibility to ensure that there are enough quota for provision nodes above the desired number.
            Available quota effectively limits <span pulumi-lang-nodejs="`maxSurge`" pulumi-lang-dotnet="`MaxSurge`" pulumi-lang-go="`maxSurge`" pulumi-lang-python="`max_surge`" pulumi-lang-yaml="`maxSurge`" pulumi-lang-java="`maxSurge`" pulumi-lang-hcl="`max_surge`">`maxSurge`</span>.
            In case of not enough quota even for one extra node, update operation will hung because of quota exhausted error.
@@ -7649,19 +7650,19 @@ class Mk8sV1NodeGroupStrategy(dict):
         :
 
            The maximum number of nodes that can be simultaneously unavailable during the update process.
-           
+
            This value can be specified either as an absolute number (for example 3) or as a percentage of the desired
            number of nodes (for example 5%).
-           
+
            When specified as a percentage, the actual number is calculated by rounding down to the nearest whole number.
            This value cannot be 0 if <span pulumi-lang-nodejs="`maxSurge`" pulumi-lang-dotnet="`MaxSurge`" pulumi-lang-go="`maxSurge`" pulumi-lang-python="`max_surge`" pulumi-lang-yaml="`maxSurge`" pulumi-lang-java="`maxSurge`" pulumi-lang-hcl="`max_surge`">`maxSurge`</span> is also set to 0.
-           
+
            On 2026-08-01, defaults to 0.
            IMPORTANT: starting from Q3 2026 new default is 1;
            for new clusters it will default to 1,
            node groups in existing clusters will be gradually migrated during Q3 to the default of 1 as well.
            To get the actual value for your node group, please see 'strategy' in its status.
-           
+
            Example: If set to 20%, up to 20% of the nodes can be taken offline at once during the update,
            ensuring that at least 80% of the desired nodes remain operational.
         """
@@ -7797,9 +7798,9 @@ class Mk8sV1NodeGroupTemplate(dict):
         :param 'Mk8sV1NodeGroupTemplateGpuSettingsArgs' gpu_settings: :
                
                   GPU-related settings.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   GPU-related settings.
         :param 'Mk8sV1NodeGroupTemplateLocalDisksArgs' local_disks: :
                
@@ -7846,9 +7847,9 @@ class Mk8sV1NodeGroupTemplate(dict):
         :param 'Mk8sV1NodeGroupTemplateReservationPolicyArgs' reservation_policy: :
                
                  <span pulumi-lang-nodejs=" reservationPolicy " pulumi-lang-dotnet=" ReservationPolicy " pulumi-lang-go=" reservationPolicy " pulumi-lang-python=" reservation_policy " pulumi-lang-yaml=" reservationPolicy " pulumi-lang-java=" reservationPolicy " pulumi-lang-hcl=" reservation_policy "> reservationPolicy </span>is an interface of the "capacity block" (or "capacity block group") mechanism of Nebius Compute.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   ReservationPolicy is copied as-is from NebiusAPI `compute/v1/instance.proto`.
         :param _builtins.str service_account_id: :
                
@@ -7856,7 +7857,7 @@ class Mk8sV1NodeGroupTemplate(dict):
                   With these credentials, it is possible to make <span pulumi-lang-nodejs="`nebius`" pulumi-lang-dotnet="`Nebius`" pulumi-lang-go="`nebius`" pulumi-lang-python="`nebius`" pulumi-lang-yaml="`nebius`" pulumi-lang-java="`nebius`" pulumi-lang-hcl="`nebius`">`nebius`</span> CLI or public API requests from the nodes
                   without the need for extra authentication.
                   This service account is also used to make requests to container registry.
-                  
+               
                   `resource.serviceaccount.issueAccessToken` permission is required to use this field.
         :param Sequence['Mk8sV1NodeGroupTemplateTaintArgs'] taints: :
                
@@ -7865,9 +7866,9 @@ class Mk8sV1NodeGroupTemplate(dict):
                   That behaviour may change later.
                   So, for now you will need to manually set them to existing nodes, if that is needed.
                   Field change will NOT trigger NodeGroup roll out.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   See https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
         """
         pulumi.set(__self__, "resources", resources)
@@ -7955,9 +7956,9 @@ class Mk8sV1NodeGroupTemplate(dict):
         :
 
            GPU-related settings.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            GPU-related settings.
         """
         return pulumi.get(self, "gpu_settings")
@@ -8056,9 +8057,9 @@ class Mk8sV1NodeGroupTemplate(dict):
         :
 
           <span pulumi-lang-nodejs=" reservationPolicy " pulumi-lang-dotnet=" ReservationPolicy " pulumi-lang-go=" reservationPolicy " pulumi-lang-python=" reservation_policy " pulumi-lang-yaml=" reservationPolicy " pulumi-lang-java=" reservationPolicy " pulumi-lang-hcl=" reservation_policy "> reservationPolicy </span>is an interface of the "capacity block" (or "capacity block group") mechanism of Nebius Compute.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            ReservationPolicy is copied as-is from NebiusAPI `compute/v1/instance.proto`.
         """
         return pulumi.get(self, "reservation_policy")
@@ -8073,7 +8074,7 @@ class Mk8sV1NodeGroupTemplate(dict):
            With these credentials, it is possible to make <span pulumi-lang-nodejs="`nebius`" pulumi-lang-dotnet="`Nebius`" pulumi-lang-go="`nebius`" pulumi-lang-python="`nebius`" pulumi-lang-yaml="`nebius`" pulumi-lang-java="`nebius`" pulumi-lang-hcl="`nebius`">`nebius`</span> CLI or public API requests from the nodes
            without the need for extra authentication.
            This service account is also used to make requests to container registry.
-           
+
            `resource.serviceaccount.issueAccessToken` permission is required to use this field.
         """
         return pulumi.get(self, "service_account_id")
@@ -8089,9 +8090,9 @@ class Mk8sV1NodeGroupTemplate(dict):
            That behaviour may change later.
            So, for now you will need to manually set them to existing nodes, if that is needed.
            Field change will NOT trigger NodeGroup roll out.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            See https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
         """
         return pulumi.get(self, "taints")
@@ -8138,10 +8139,10 @@ class Mk8sV1NodeGroupTemplateBootDisk(dict):
         :param _builtins.float size_mebibytes: *Cannot be set alongside size_bytes,<span pulumi-lang-nodejs=" sizeKibibytes " pulumi-lang-dotnet=" SizeKibibytes " pulumi-lang-go=" sizeKibibytes " pulumi-lang-python=" size_kibibytes " pulumi-lang-yaml=" sizeKibibytes " pulumi-lang-java=" sizeKibibytes " pulumi-lang-hcl=" size_kibibytes "> sizeKibibytes </span>or size_gibibytes.*
         :param _builtins.str type: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `NETWORK_SSD`
                   - `NETWORK_HDD`
@@ -8204,10 +8205,10 @@ class Mk8sV1NodeGroupTemplateBootDisk(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `NETWORK_SSD`
            - `NETWORK_HDD`
@@ -8247,10 +8248,10 @@ class Mk8sV1NodeGroupTemplateFilesystem(dict):
         """
         :param _builtins.str attach_mode: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `READ_ONLY`
                   - `READ_WRITE`
@@ -8267,10 +8268,10 @@ class Mk8sV1NodeGroupTemplateFilesystem(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `READ_ONLY`
            - `READ_WRITE`
@@ -8398,11 +8399,11 @@ class Mk8sV1NodeGroupTemplateLocalDisks(dict):
                
                   config defines actions that managed Kubernetes service performs on mounted local disks
                   to provide them inside Kubernetes cluster with a convenient interface.
-                  
+               
                   When omitted, a default value is generated.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   LocalDisksSpecConfig defines actions that managed Kubernetes service performs on mounted local disks
                   to provide them inside Kubernetes cluster with a convenient interface.
         :param 'Mk8sV1NodeGroupTemplateLocalDisksPassthroughGroupArgs' passthrough_group: :
@@ -8424,11 +8425,11 @@ class Mk8sV1NodeGroupTemplateLocalDisks(dict):
 
            config defines actions that managed Kubernetes service performs on mounted local disks
            to provide them inside Kubernetes cluster with a convenient interface.
-           
+
            When omitted, a default value is generated.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            LocalDisksSpecConfig defines actions that managed Kubernetes service performs on mounted local disks
            to provide them inside Kubernetes cluster with a convenient interface.
         """
@@ -8474,14 +8475,14 @@ class Mk8sV1NodeGroupTemplateLocalDisksConfig(dict):
                
                   kubelet_ephemeral: combine all local disks into a single storage volume and use it as kubelet's local ephemeral storage on the node
                   See also https://kubernetes.io/docs/concepts/storage/ephemeral-storage/
-                  
+               
                   The default when LocalDisksSpecConfig is not set.
-                  
+               
                   *Cannot be set alongside none.*
         :param _builtins.bool none: :
                
                   none: "do nothing" - local disks will be provisioned as on a regular compute instance.
-                  
+               
                   *Cannot be set alongside kubelet_ephemeral.*
         """
         if kubelet_ephemeral is not None:
@@ -8497,9 +8498,9 @@ class Mk8sV1NodeGroupTemplateLocalDisksConfig(dict):
 
            kubelet_ephemeral: combine all local disks into a single storage volume and use it as kubelet's local ephemeral storage on the node
            See also https://kubernetes.io/docs/concepts/storage/ephemeral-storage/
-           
+
            The default when LocalDisksSpecConfig is not set.
-           
+
            *Cannot be set alongside none.*
         """
         return pulumi.get(self, "kubelet_ephemeral")
@@ -8511,7 +8512,7 @@ class Mk8sV1NodeGroupTemplateLocalDisksConfig(dict):
         :
 
            none: "do nothing" - local disks will be provisioned as on a regular compute instance.
-           
+
            *Cannot be set alongside kubelet_ephemeral.*
         """
         return pulumi.get(self, "none")
@@ -8525,7 +8526,7 @@ class Mk8sV1NodeGroupTemplateLocalDisksPassthroughGroup(dict):
         :param _builtins.bool requested: :
                
                   Passthrough local disks from the underlying host.
-                  
+               
                   Devices are expected to appear in the guest as NVMe devices (nvme0, nvme1, ...),
                   but the exact number depends on the preset.
                   Enabled only when this field is explicitly set.
@@ -8540,7 +8541,7 @@ class Mk8sV1NodeGroupTemplateLocalDisksPassthroughGroup(dict):
         :
 
            Passthrough local disks from the underlying host.
-           
+
            Devices are expected to appear in the guest as NVMe devices (nvme0, nvme1, ...),
            but the exact number depends on the preset.
            Enabled only when this field is explicitly set.
@@ -8556,14 +8557,14 @@ class Mk8sV1NodeGroupTemplateMetadata(dict):
         :param Mapping[str, _builtins.str] labels: :
                
                   Kubernetes Node labels.
-                  
+               
                   Keys and values must follow Kubernetes label syntax:
                   https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
-                  
+               
                   For now change will not be propagated to existing nodes, so will be applied only to Kubernetes Nodes created after the field change.
                   That behavior may change later.
                   So, for now you will need to manually set them to existing nodes, if that is needed.
-                  
+               
                   System labels containing "kubernetes.io" and "k8s.io" will be ignored.
                   Field change will NOT trigger NodeGroup roll out.
         """
@@ -8577,14 +8578,14 @@ class Mk8sV1NodeGroupTemplateMetadata(dict):
         :
 
            Kubernetes Node labels.
-           
+
            Keys and values must follow Kubernetes label syntax:
            https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
-           
+
            For now change will not be propagated to existing nodes, so will be applied only to Kubernetes Nodes created after the field change.
            That behavior may change later.
            So, for now you will need to manually set them to existing nodes, if that is needed.
-           
+
            System labels containing "kubernetes.io" and "k8s.io" will be ignored.
            Field change will NOT trigger NodeGroup roll out.
         """
@@ -8623,9 +8624,9 @@ class Mk8sV1NodeGroupTemplateNetworkInterface(dict):
                
                   Parameters for Public IPv4 address associated with the interface.
                   Set to empty value, to enable it.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Describes a public IP address.
         :param Sequence['Mk8sV1NodeGroupTemplateNetworkInterfaceSecurityGroupArgs'] security_groups: User provided VPC Security Groups which will be assigned to all nodes of this NodeGroup.
         :param _builtins.str subnet_id: :
@@ -8649,9 +8650,9 @@ class Mk8sV1NodeGroupTemplateNetworkInterface(dict):
 
            Parameters for Public IPv4 address associated with the interface.
            Set to empty value, to enable it.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Describes a public IP address.
         """
         return pulumi.get(self, "public_ip_address")
@@ -8763,20 +8764,20 @@ class Mk8sV1NodeGroupTemplateReservationPolicy(dict):
         """
         :param _builtins.str policy: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `AUTO`:
                      1) Will try to launch instance in any<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>if provided.
                      2) Will try to launch instance in any of the available capacity block.
                      3) Will try to launch instance in PAYG if 1 & 2 are not satisfied.
-                  
+               
                   - `FORBID`:
-                     The instance is launched only using on-demand (PAYG) capacity.
-                     No attempt is made to find or use a Capacity Block.
-                     It's an error to provide<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>with policy = FORBID
-                  
+                The instance is launched only using on-demand (PAYG) capacity.
+                No attempt is made to find or use a Capacity Block.
+                It's an error to provide<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>with policy = FORBID
+               
                   - `STRICT`:
                      1) Will try to launch the instance in Capacity Blocks from<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>if provided.
                      2) If<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>are not provided will try to launch instance in suitable & available Capacity Block.
@@ -8794,20 +8795,20 @@ class Mk8sV1NodeGroupTemplateReservationPolicy(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `AUTO`:
               1) Will try to launch instance in any<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>if provided.
               2) Will try to launch instance in any of the available capacity block.
               3) Will try to launch instance in PAYG if 1 & 2 are not satisfied.
-           
+
            - `FORBID`:
-              The instance is launched only using on-demand (PAYG) capacity.
-              No attempt is made to find or use a Capacity Block.
-              It's an error to provide<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>with policy = FORBID
-           
+         The instance is launched only using on-demand (PAYG) capacity.
+         No attempt is made to find or use a Capacity Block.
+         It's an error to provide<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>with policy = FORBID
+
            - `STRICT`:
               1) Will try to launch the instance in Capacity Blocks from<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>if provided.
               2) If<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>are not provided will try to launch instance in suitable & available Capacity Block.
@@ -8853,10 +8854,10 @@ class Mk8sV1NodeGroupTemplateTaint(dict):
         """
         :param _builtins.str effect: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `EFFECT_UNSPECIFIED`
                   - `NO_EXECUTE`
                   - `NO_SCHEDULE`
@@ -8872,10 +8873,10 @@ class Mk8sV1NodeGroupTemplateTaint(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `EFFECT_UNSPECIFIED`
            - `NO_EXECUTE`
            - `NO_SCHEDULE`
@@ -9106,10 +9107,10 @@ class Mk8sV1alpha1ClusterStatus(dict):
         :param _builtins.bool reconciling: Show that changes are in flight
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `PROVISIONING`
                   - `RUNNING`
@@ -9141,10 +9142,10 @@ class Mk8sV1alpha1ClusterStatus(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `PROVISIONING`
            - `RUNNING`
@@ -9180,8 +9181,8 @@ class Mk8sV1alpha1ClusterStatusControlPlane(dict):
         """
         :param 'Mk8sV1alpha1ClusterStatusControlPlaneEndpointsArgs' endpoints: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Endpoints of Kubernetes control plane. Kubernetes API can be accessed at `https://endpoint/`.
         :param _builtins.float etcd_cluster_size: Number of instances in etcd cluster.
         :param _builtins.str version: Version have format `major.minor.patch-nebius-cp.n` like "1.30.0-nebius-cp.3".
@@ -9206,8 +9207,8 @@ class Mk8sV1alpha1ClusterStatusControlPlane(dict):
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Endpoints of Kubernetes control plane. Kubernetes API can be accessed at `https://endpoint/`.
         """
         return pulumi.get(self, "endpoints")
@@ -9340,16 +9341,16 @@ class Mk8sV1alpha1NodeGroupAutoRepairCondition(dict):
         :param _builtins.bool disabled: :
                
                   When true, disables the default auto-repair condition rules.
-                  
+               
                   *Cannot be set alongside timeout.*
         :param _builtins.str status: :
                
                   Node condition status.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `CONDITION_STATUS_UNSPECIFIED`
                   - `TRUE`
                   - `FALSE`
@@ -9357,9 +9358,9 @@ class Mk8sV1alpha1NodeGroupAutoRepairCondition(dict):
         :param _builtins.str timeout: :
                
                   The duration after which the node is automatically repaired if the condition remains in the specified status.
-                  
+               
                   Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as <span pulumi-lang-nodejs="`300ms`" pulumi-lang-dotnet="`300ms`" pulumi-lang-go="`300ms`" pulumi-lang-python="`300ms`" pulumi-lang-yaml="`300ms`" pulumi-lang-java="`300ms`" pulumi-lang-hcl="`300ms`">`300ms`</span>, `-1.5h` or <span pulumi-lang-nodejs="`2h45m`" pulumi-lang-dotnet="`2h45m`" pulumi-lang-go="`2h45m`" pulumi-lang-python="`2h45m`" pulumi-lang-yaml="`2h45m`" pulumi-lang-java="`2h45m`" pulumi-lang-hcl="`2h45m`">`2h45m`</span>. Valid time units are <span pulumi-lang-nodejs="`ns`" pulumi-lang-dotnet="`Ns`" pulumi-lang-go="`ns`" pulumi-lang-python="`ns`" pulumi-lang-yaml="`ns`" pulumi-lang-java="`ns`" pulumi-lang-hcl="`ns`">`ns`</span>, <span pulumi-lang-nodejs="`us`" pulumi-lang-dotnet="`Us`" pulumi-lang-go="`us`" pulumi-lang-python="`us`" pulumi-lang-yaml="`us`" pulumi-lang-java="`us`" pulumi-lang-hcl="`us`">`us`</span> (or `µs`), <span pulumi-lang-nodejs="`ms`" pulumi-lang-dotnet="`Ms`" pulumi-lang-go="`ms`" pulumi-lang-python="`ms`" pulumi-lang-yaml="`ms`" pulumi-lang-java="`ms`" pulumi-lang-hcl="`ms`">`ms`</span>, <span pulumi-lang-nodejs="`s`" pulumi-lang-dotnet="`S`" pulumi-lang-go="`s`" pulumi-lang-python="`s`" pulumi-lang-yaml="`s`" pulumi-lang-java="`s`" pulumi-lang-hcl="`s`">`s`</span>, <span pulumi-lang-nodejs="`m`" pulumi-lang-dotnet="`M`" pulumi-lang-go="`m`" pulumi-lang-python="`m`" pulumi-lang-yaml="`m`" pulumi-lang-java="`m`" pulumi-lang-hcl="`m`">`m`</span>, <span pulumi-lang-nodejs="`h`" pulumi-lang-dotnet="`H`" pulumi-lang-go="`h`" pulumi-lang-python="`h`" pulumi-lang-yaml="`h`" pulumi-lang-java="`h`" pulumi-lang-hcl="`h`">`h`</span>, <span pulumi-lang-nodejs="`d`" pulumi-lang-dotnet="`D`" pulumi-lang-go="`d`" pulumi-lang-python="`d`" pulumi-lang-yaml="`d`" pulumi-lang-java="`d`" pulumi-lang-hcl="`d`">`d`</span>.
-                  
+               
                   *Cannot be set alongside disabled.*
         """
         pulumi.set(__self__, "type", type)
@@ -9385,7 +9386,7 @@ class Mk8sV1alpha1NodeGroupAutoRepairCondition(dict):
         :
 
            When true, disables the default auto-repair condition rules.
-           
+
            *Cannot be set alongside timeout.*
         """
         return pulumi.get(self, "disabled")
@@ -9397,11 +9398,11 @@ class Mk8sV1alpha1NodeGroupAutoRepairCondition(dict):
         :
 
            Node condition status.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `CONDITION_STATUS_UNSPECIFIED`
            - `TRUE`
            - `FALSE`
@@ -9416,9 +9417,9 @@ class Mk8sV1alpha1NodeGroupAutoRepairCondition(dict):
         :
 
            The duration after which the node is automatically repaired if the condition remains in the specified status.
-           
+
            Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as <span pulumi-lang-nodejs="`300ms`" pulumi-lang-dotnet="`300ms`" pulumi-lang-go="`300ms`" pulumi-lang-python="`300ms`" pulumi-lang-yaml="`300ms`" pulumi-lang-java="`300ms`" pulumi-lang-hcl="`300ms`">`300ms`</span>, `-1.5h` or <span pulumi-lang-nodejs="`2h45m`" pulumi-lang-dotnet="`2h45m`" pulumi-lang-go="`2h45m`" pulumi-lang-python="`2h45m`" pulumi-lang-yaml="`2h45m`" pulumi-lang-java="`2h45m`" pulumi-lang-hcl="`2h45m`">`2h45m`</span>. Valid time units are <span pulumi-lang-nodejs="`ns`" pulumi-lang-dotnet="`Ns`" pulumi-lang-go="`ns`" pulumi-lang-python="`ns`" pulumi-lang-yaml="`ns`" pulumi-lang-java="`ns`" pulumi-lang-hcl="`ns`">`ns`</span>, <span pulumi-lang-nodejs="`us`" pulumi-lang-dotnet="`Us`" pulumi-lang-go="`us`" pulumi-lang-python="`us`" pulumi-lang-yaml="`us`" pulumi-lang-java="`us`" pulumi-lang-hcl="`us`">`us`</span> (or `µs`), <span pulumi-lang-nodejs="`ms`" pulumi-lang-dotnet="`Ms`" pulumi-lang-go="`ms`" pulumi-lang-python="`ms`" pulumi-lang-yaml="`ms`" pulumi-lang-java="`ms`" pulumi-lang-hcl="`ms`">`ms`</span>, <span pulumi-lang-nodejs="`s`" pulumi-lang-dotnet="`S`" pulumi-lang-go="`s`" pulumi-lang-python="`s`" pulumi-lang-yaml="`s`" pulumi-lang-java="`s`" pulumi-lang-hcl="`s`">`s`</span>, <span pulumi-lang-nodejs="`m`" pulumi-lang-dotnet="`M`" pulumi-lang-go="`m`" pulumi-lang-python="`m`" pulumi-lang-yaml="`m`" pulumi-lang-java="`m`" pulumi-lang-hcl="`m`">`m`</span>, <span pulumi-lang-nodejs="`h`" pulumi-lang-dotnet="`H`" pulumi-lang-go="`h`" pulumi-lang-python="`h`" pulumi-lang-yaml="`h`" pulumi-lang-java="`h`" pulumi-lang-hcl="`h`">`h`</span>, <span pulumi-lang-nodejs="`d`" pulumi-lang-dotnet="`D`" pulumi-lang-go="`d`" pulumi-lang-python="`d`" pulumi-lang-yaml="`d`" pulumi-lang-java="`d`" pulumi-lang-hcl="`d`">`d`</span>.
-           
+
            *Cannot be set alongside disabled.*
         """
         return pulumi.get(self, "timeout")
@@ -9519,10 +9520,10 @@ class Mk8sV1alpha1NodeGroupStatus(dict):
         :param _builtins.bool reconciling: Show that changes are in flight
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `PROVISIONING`
                   - `RUNNING`
@@ -9595,10 +9596,10 @@ class Mk8sV1alpha1NodeGroupStatus(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `PROVISIONING`
            - `RUNNING`
@@ -9659,7 +9660,7 @@ class Mk8sV1alpha1NodeGroupStrategy(dict):
                   DrainTimeout is the total amount of time that the service will spend on draining a node.
                   By default, node can be drained without any time limitations.
                   NOTE: NodeDrainTimeout is different from `kubectl drain --timeout`
-                  
+               
                   Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as <span pulumi-lang-nodejs="`300ms`" pulumi-lang-dotnet="`300ms`" pulumi-lang-go="`300ms`" pulumi-lang-python="`300ms`" pulumi-lang-yaml="`300ms`" pulumi-lang-java="`300ms`" pulumi-lang-hcl="`300ms`">`300ms`</span>, `-1.5h` or <span pulumi-lang-nodejs="`2h45m`" pulumi-lang-dotnet="`2h45m`" pulumi-lang-go="`2h45m`" pulumi-lang-python="`2h45m`" pulumi-lang-yaml="`2h45m`" pulumi-lang-java="`2h45m`" pulumi-lang-hcl="`2h45m`">`2h45m`</span>. Valid time units are <span pulumi-lang-nodejs="`ns`" pulumi-lang-dotnet="`Ns`" pulumi-lang-go="`ns`" pulumi-lang-python="`ns`" pulumi-lang-yaml="`ns`" pulumi-lang-java="`ns`" pulumi-lang-hcl="`ns`">`ns`</span>, <span pulumi-lang-nodejs="`us`" pulumi-lang-dotnet="`Us`" pulumi-lang-go="`us`" pulumi-lang-python="`us`" pulumi-lang-yaml="`us`" pulumi-lang-java="`us`" pulumi-lang-hcl="`us`">`us`</span> (or `µs`), <span pulumi-lang-nodejs="`ms`" pulumi-lang-dotnet="`Ms`" pulumi-lang-go="`ms`" pulumi-lang-python="`ms`" pulumi-lang-yaml="`ms`" pulumi-lang-java="`ms`" pulumi-lang-hcl="`ms`">`ms`</span>, <span pulumi-lang-nodejs="`s`" pulumi-lang-dotnet="`S`" pulumi-lang-go="`s`" pulumi-lang-python="`s`" pulumi-lang-yaml="`s`" pulumi-lang-java="`s`" pulumi-lang-hcl="`s`">`s`</span>, <span pulumi-lang-nodejs="`m`" pulumi-lang-dotnet="`M`" pulumi-lang-go="`m`" pulumi-lang-python="`m`" pulumi-lang-yaml="`m`" pulumi-lang-java="`m`" pulumi-lang-hcl="`m`">`m`</span>, <span pulumi-lang-nodejs="`h`" pulumi-lang-dotnet="`H`" pulumi-lang-go="`h`" pulumi-lang-python="`h`" pulumi-lang-yaml="`h`" pulumi-lang-java="`h`" pulumi-lang-hcl="`h`">`h`</span>, <span pulumi-lang-nodejs="`d`" pulumi-lang-dotnet="`D`" pulumi-lang-go="`d`" pulumi-lang-python="`d`" pulumi-lang-yaml="`d`" pulumi-lang-java="`d`" pulumi-lang-hcl="`d`">`d`</span>.
         :param 'Mk8sV1alpha1NodeGroupStrategyMaxSurgeArgs' max_surge: :
                
@@ -9707,7 +9708,7 @@ class Mk8sV1alpha1NodeGroupStrategy(dict):
            DrainTimeout is the total amount of time that the service will spend on draining a node.
            By default, node can be drained without any time limitations.
            NOTE: NodeDrainTimeout is different from `kubectl drain --timeout`
-           
+
            Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as <span pulumi-lang-nodejs="`300ms`" pulumi-lang-dotnet="`300ms`" pulumi-lang-go="`300ms`" pulumi-lang-python="`300ms`" pulumi-lang-yaml="`300ms`" pulumi-lang-java="`300ms`" pulumi-lang-hcl="`300ms`">`300ms`</span>, `-1.5h` or <span pulumi-lang-nodejs="`2h45m`" pulumi-lang-dotnet="`2h45m`" pulumi-lang-go="`2h45m`" pulumi-lang-python="`2h45m`" pulumi-lang-yaml="`2h45m`" pulumi-lang-java="`2h45m`" pulumi-lang-hcl="`2h45m`">`2h45m`</span>. Valid time units are <span pulumi-lang-nodejs="`ns`" pulumi-lang-dotnet="`Ns`" pulumi-lang-go="`ns`" pulumi-lang-python="`ns`" pulumi-lang-yaml="`ns`" pulumi-lang-java="`ns`" pulumi-lang-hcl="`ns`">`ns`</span>, <span pulumi-lang-nodejs="`us`" pulumi-lang-dotnet="`Us`" pulumi-lang-go="`us`" pulumi-lang-python="`us`" pulumi-lang-yaml="`us`" pulumi-lang-java="`us`" pulumi-lang-hcl="`us`">`us`</span> (or `µs`), <span pulumi-lang-nodejs="`ms`" pulumi-lang-dotnet="`Ms`" pulumi-lang-go="`ms`" pulumi-lang-python="`ms`" pulumi-lang-yaml="`ms`" pulumi-lang-java="`ms`" pulumi-lang-hcl="`ms`">`ms`</span>, <span pulumi-lang-nodejs="`s`" pulumi-lang-dotnet="`S`" pulumi-lang-go="`s`" pulumi-lang-python="`s`" pulumi-lang-yaml="`s`" pulumi-lang-java="`s`" pulumi-lang-hcl="`s`">`s`</span>, <span pulumi-lang-nodejs="`m`" pulumi-lang-dotnet="`M`" pulumi-lang-go="`m`" pulumi-lang-python="`m`" pulumi-lang-yaml="`m`" pulumi-lang-java="`m`" pulumi-lang-hcl="`m`">`m`</span>, <span pulumi-lang-nodejs="`h`" pulumi-lang-dotnet="`H`" pulumi-lang-go="`h`" pulumi-lang-python="`h`" pulumi-lang-yaml="`h`" pulumi-lang-java="`h`" pulumi-lang-hcl="`h`">`h`</span>, <span pulumi-lang-nodejs="`d`" pulumi-lang-dotnet="`D`" pulumi-lang-go="`d`" pulumi-lang-python="`d`" pulumi-lang-yaml="`d`" pulumi-lang-java="`d`" pulumi-lang-hcl="`d`">`d`</span>.
         """
         return pulumi.get(self, "drain_timeout")
@@ -9865,9 +9866,9 @@ class Mk8sV1alpha1NodeGroupTemplate(dict):
         :param 'Mk8sV1alpha1NodeGroupTemplateGpuSettingsArgs' gpu_settings: :
                
                   GPU-related settings.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   GPU-related settings.
         :param _builtins.str os: :
                
@@ -9905,12 +9906,12 @@ class Mk8sV1alpha1NodeGroupTemplate(dict):
                   the Nebius service account whose credentials will be available on the nodes of the group. With these credentials, it is possible to
                   make <span pulumi-lang-nodejs="`nebius`" pulumi-lang-dotnet="`Nebius`" pulumi-lang-go="`nebius`" pulumi-lang-python="`nebius`" pulumi-lang-yaml="`nebius`" pulumi-lang-java="`nebius`" pulumi-lang-hcl="`nebius`">`nebius`</span> CLI or public API requests from the nodes without the need for extra authentication. This service account is also used to
                   make requests to container registry.
-                  
+               
                   `resource.serviceaccount.issueAccessToken` permission is required to use this field.
         :param Sequence['Mk8sV1alpha1NodeGroupTemplateTaintArgs'] taints: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   See https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
         """
         pulumi.set(__self__, "resources", resources)
@@ -9972,9 +9973,9 @@ class Mk8sV1alpha1NodeGroupTemplate(dict):
         :
 
            GPU-related settings.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            GPU-related settings.
         """
         return pulumi.get(self, "gpu_settings")
@@ -10043,7 +10044,7 @@ class Mk8sV1alpha1NodeGroupTemplate(dict):
            the Nebius service account whose credentials will be available on the nodes of the group. With these credentials, it is possible to
            make <span pulumi-lang-nodejs="`nebius`" pulumi-lang-dotnet="`Nebius`" pulumi-lang-go="`nebius`" pulumi-lang-python="`nebius`" pulumi-lang-yaml="`nebius`" pulumi-lang-java="`nebius`" pulumi-lang-hcl="`nebius`">`nebius`</span> CLI or public API requests from the nodes without the need for extra authentication. This service account is also used to
            make requests to container registry.
-           
+
            `resource.serviceaccount.issueAccessToken` permission is required to use this field.
         """
         return pulumi.get(self, "service_account_id")
@@ -10054,8 +10055,8 @@ class Mk8sV1alpha1NodeGroupTemplate(dict):
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            See https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
         """
         return pulumi.get(self, "taints")
@@ -10102,10 +10103,10 @@ class Mk8sV1alpha1NodeGroupTemplateBootDisk(dict):
         :param _builtins.float size_mebibytes: *Cannot be set alongside size_bytes,<span pulumi-lang-nodejs=" sizeKibibytes " pulumi-lang-dotnet=" SizeKibibytes " pulumi-lang-go=" sizeKibibytes " pulumi-lang-python=" size_kibibytes " pulumi-lang-yaml=" sizeKibibytes " pulumi-lang-java=" sizeKibibytes " pulumi-lang-hcl=" size_kibibytes "> sizeKibibytes </span>or size_gibibytes.*
         :param _builtins.str type: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `NETWORK_SSD` - the list of available types will be clarified later, it is not final version
                   - `NETWORK_HDD`
@@ -10168,10 +10169,10 @@ class Mk8sV1alpha1NodeGroupTemplateBootDisk(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `NETWORK_SSD` - the list of available types will be clarified later, it is not final version
            - `NETWORK_HDD`
@@ -10211,10 +10212,10 @@ class Mk8sV1alpha1NodeGroupTemplateFilesystem(dict):
         """
         :param _builtins.str attach_mode: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `READ_ONLY`
                   - `READ_WRITE`
@@ -10230,10 +10231,10 @@ class Mk8sV1alpha1NodeGroupTemplateFilesystem(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `READ_ONLY`
            - `READ_WRITE`
@@ -10386,9 +10387,9 @@ class Mk8sV1alpha1NodeGroupTemplateNetworkInterface(dict):
         :param 'Mk8sV1alpha1NodeGroupTemplateNetworkInterfacePublicIpAddressArgs' public_ip_address: :
                
                   Public IPv4 address associated with the interface.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Describes a public IP address.
         :param _builtins.str subnet_id: :
                
@@ -10408,9 +10409,9 @@ class Mk8sV1alpha1NodeGroupTemplateNetworkInterface(dict):
         :
 
            Public IPv4 address associated with the interface.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Describes a public IP address.
         """
         return pulumi.get(self, "public_ip_address")
@@ -10469,10 +10470,10 @@ class Mk8sV1alpha1NodeGroupTemplateTaint(dict):
         """
         :param _builtins.str effect: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `EFFECT_UNSPECIFIED`
                   - `NO_EXECUTE`
                   - `NO_SCHEDULE`
@@ -10488,10 +10489,10 @@ class Mk8sV1alpha1NodeGroupTemplateTaint(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `EFFECT_UNSPECIFIED`
            - `NO_EXECUTE`
            - `NO_SCHEDULE`
@@ -10608,11 +10609,11 @@ class MspMlflowV1alpha1ClusterStatus(dict):
         :param _builtins.str phase: :
                
                   Current phase of the cluster.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `PHASE_UNSPECIFIED`
                   - `PHASE_PROVISIONING`
                   - `PHASE_RUNNING`
@@ -10625,11 +10626,11 @@ class MspMlflowV1alpha1ClusterStatus(dict):
         :param _builtins.str state: :
                
                   State reflects substatus of the phase to define whether it's healthy or not.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `STATE_IN_PROGRESS`
                   - `STATE_FINISHED`
@@ -10688,11 +10689,11 @@ class MspMlflowV1alpha1ClusterStatus(dict):
         :
 
            Current phase of the cluster.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `PHASE_UNSPECIFIED`
            - `PHASE_PROVISIONING`
            - `PHASE_RUNNING`
@@ -10712,11 +10713,11 @@ class MspMlflowV1alpha1ClusterStatus(dict):
         :
 
            State reflects substatus of the phase to define whether it's healthy or not.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `STATE_IN_PROGRESS`
            - `STATE_FINISHED`
@@ -11010,11 +11011,11 @@ class MspPostgresqlV1alpha1ClusterConfigPoolerConfig(dict):
         :param _builtins.str pooling_mode: :
                
                   Mode that the connection pooler is working in.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `POOLING_MODE_UNSPECIFIED`
                   - `SESSION` - Session pooling mode.
                   - `TRANSACTION` - Transaction pooling mode.
@@ -11039,11 +11040,11 @@ class MspPostgresqlV1alpha1ClusterConfigPoolerConfig(dict):
         :
 
            Mode that the connection pooler is working in.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `POOLING_MODE_UNSPECIFIED`
            - `SESSION` - Session pooling mode.
            - `TRANSACTION` - Transaction pooling mode.
@@ -11418,11 +11419,11 @@ class MspPostgresqlV1alpha1ClusterStatus(dict):
         :param _builtins.str phase: :
                
                   Current phase of the cluster.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `PHASE_UNSPECIFIED`
                   - `PHASE_PROVISIONING`
                   - `PHASE_RUNNING`
@@ -11436,11 +11437,11 @@ class MspPostgresqlV1alpha1ClusterStatus(dict):
         :param _builtins.str state: :
                
                   State reflects substatus of the phase to define whether it's healthy or not.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `STATE_IN_PROGRESS`
                   - `STATE_FINISHED`
@@ -11472,11 +11473,11 @@ class MspPostgresqlV1alpha1ClusterStatus(dict):
         :
 
            Current phase of the cluster.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `PHASE_UNSPECIFIED`
            - `PHASE_PROVISIONING`
            - `PHASE_RUNNING`
@@ -11504,11 +11505,11 @@ class MspPostgresqlV1alpha1ClusterStatus(dict):
         :
 
            State reflects substatus of the phase to define whether it's healthy or not.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `STATE_IN_PROGRESS`
            - `STATE_FINISHED`
@@ -11681,9 +11682,9 @@ class MysteryboxV1SecretSecretVersion(dict):
         :param Sequence['MysteryboxV1SecretSecretVersionPayloadArgs'] payloads: :
                
                   Payload entries related to the version.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Represents the secret's content as key-value pair.
         """
         if description is not None:
@@ -11708,9 +11709,9 @@ class MysteryboxV1SecretSecretVersion(dict):
         :
 
            Payload entries related to the version.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Represents the secret's content as key-value pair.
         """
         return pulumi.get(self, "payloads")
@@ -11751,12 +11752,12 @@ class MysteryboxV1SecretSecretVersionPayload(dict):
         :param _builtins.str binary_value: :
                
                   The binary data to encrypt and store in the version of the secret.
-                  
+               
                   *Cannot be set alongside string_value.*
         :param _builtins.str string_value: :
                
                   The text data to encrypt and store in the version of the secret.
-                  
+               
                   *Cannot be set alongside binary_value.*
         """
         pulumi.set(__self__, "key", key)
@@ -11780,7 +11781,7 @@ class MysteryboxV1SecretSecretVersionPayload(dict):
         :
 
            The binary data to encrypt and store in the version of the secret.
-           
+
            *Cannot be set alongside string_value.*
         """
         return pulumi.get(self, "binary_value")
@@ -11792,7 +11793,7 @@ class MysteryboxV1SecretSecretVersionPayload(dict):
         :
 
            The text data to encrypt and store in the version of the secret.
-           
+
            *Cannot be set alongside binary_value.*
         """
         return pulumi.get(self, "string_value")
@@ -11861,9 +11862,9 @@ class MysteryboxV1SecretSensitiveSecretVersion(dict):
                :
                
                   Payload entries related to the version.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Represents the secret's content as key-value pair.
         """
         if payloads is not None:
@@ -11877,9 +11878,9 @@ class MysteryboxV1SecretSensitiveSecretVersion(dict):
         :
 
            Payload entries related to the version.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Represents the secret's content as key-value pair.
         """
         return pulumi.get(self, "payloads")
@@ -11915,7 +11916,7 @@ class MysteryboxV1SecretSensitiveSecretVersionPayload(dict):
                :
                
                   The binary data to encrypt and store in the version of the secret.
-                  
+               
                   *Cannot be set alongside string_value.*
         :param _builtins.str key: **NOTE:** This field is write-only and its value will not be updated in state as part of read operations.
                Non-confidential key of the payload entry.
@@ -11923,7 +11924,7 @@ class MysteryboxV1SecretSensitiveSecretVersionPayload(dict):
                :
                
                   The text data to encrypt and store in the version of the secret.
-                  
+               
                   *Cannot be set alongside binary_value.*
         """
         if binary_value is not None:
@@ -11941,7 +11942,7 @@ class MysteryboxV1SecretSensitiveSecretVersionPayload(dict):
         :
 
            The binary data to encrypt and store in the version of the secret.
-           
+
            *Cannot be set alongside string_value.*
         """
         return pulumi.get(self, "binary_value")
@@ -11963,7 +11964,7 @@ class MysteryboxV1SecretSensitiveSecretVersionPayload(dict):
         :
 
            The text data to encrypt and store in the version of the secret.
-           
+
            *Cannot be set alongside binary_value.*
         """
         return pulumi.get(self, "string_value")
@@ -12001,21 +12002,21 @@ class MysteryboxV1SecretStatus(dict):
         :param _builtins.str deleted_at: :
                
                   Time when user called soft delete method
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param _builtins.str purge_at: :
                
                   Time when key should be totally deleted from DB
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param _builtins.str state: :
                
                   State (ACTIVE, SCHEDULED_FOR_DELETION)
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `ACTIVE` - Resource is active, ready for use
                   - `SCHEDULED_FOR_DELETION` - Resource was marked as soft deleted
@@ -12036,7 +12037,7 @@ class MysteryboxV1SecretStatus(dict):
         :
 
            Time when user called soft delete method
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "deleted_at")
@@ -12053,7 +12054,7 @@ class MysteryboxV1SecretStatus(dict):
         :
 
            Time when key should be totally deleted from DB
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "purge_at")
@@ -12065,11 +12066,11 @@ class MysteryboxV1SecretStatus(dict):
         :
 
            State (ACTIVE, SCHEDULED_FOR_DELETION)
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `ACTIVE` - Resource is active, ready for use
            - `SCHEDULED_FOR_DELETION` - Resource was marked as soft deleted
@@ -12113,12 +12114,12 @@ class MysteryboxV1SecretVersionPayload(dict):
         :param _builtins.str binary_value: :
                
                   The binary data to encrypt and store in the version of the secret.
-                  
+               
                   *Cannot be set alongside string_value.*
         :param _builtins.str string_value: :
                
                   The text data to encrypt and store in the version of the secret.
-                  
+               
                   *Cannot be set alongside binary_value.*
         """
         pulumi.set(__self__, "key", key)
@@ -12142,7 +12143,7 @@ class MysteryboxV1SecretVersionPayload(dict):
         :
 
            The binary data to encrypt and store in the version of the secret.
-           
+
            *Cannot be set alongside string_value.*
         """
         return pulumi.get(self, "binary_value")
@@ -12154,7 +12155,7 @@ class MysteryboxV1SecretVersionPayload(dict):
         :
 
            The text data to encrypt and store in the version of the secret.
-           
+
            *Cannot be set alongside binary_value.*
         """
         return pulumi.get(self, "string_value")
@@ -12170,9 +12171,9 @@ class MysteryboxV1SecretVersionSensitive(dict):
                :
                
                   Payload entries related to the version.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Represents the secret's content as key-value pair.
         :param _builtins.str version: The version of the write-only fields combined. You can use a hash here, some number, or a version of the secret from which you pull the value, or you can concatenate all of that together. This field is not sent to the server, but it is stored in the state, so don't store raw secrets here. Changing this field will trigger an update of the resource even if no other fields are changed. Use of this field is not required, but if you do not use it, changes in write-only fields will not trigger updates of the resource by themselves and therefore might not be reflected.
         """
@@ -12189,9 +12190,9 @@ class MysteryboxV1SecretVersionSensitive(dict):
         :
 
            Payload entries related to the version.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Represents the secret's content as key-value pair.
         """
         return pulumi.get(self, "payloads")
@@ -12235,7 +12236,7 @@ class MysteryboxV1SecretVersionSensitivePayload(dict):
                :
                
                   The binary data to encrypt and store in the version of the secret.
-                  
+               
                   *Cannot be set alongside string_value.*
         :param _builtins.str key: **NOTE:** This field is write-only and its value will not be updated in state as part of read operations.
                Non-confidential key of the payload entry.
@@ -12243,7 +12244,7 @@ class MysteryboxV1SecretVersionSensitivePayload(dict):
                :
                
                   The text data to encrypt and store in the version of the secret.
-                  
+               
                   *Cannot be set alongside binary_value.*
         """
         if binary_value is not None:
@@ -12261,7 +12262,7 @@ class MysteryboxV1SecretVersionSensitivePayload(dict):
         :
 
            The binary data to encrypt and store in the version of the secret.
-           
+
            *Cannot be set alongside string_value.*
         """
         return pulumi.get(self, "binary_value")
@@ -12283,7 +12284,7 @@ class MysteryboxV1SecretVersionSensitivePayload(dict):
         :
 
            The text data to encrypt and store in the version of the secret.
-           
+
            *Cannot be set alongside binary_value.*
         """
         return pulumi.get(self, "string_value")
@@ -12318,21 +12319,21 @@ class MysteryboxV1SecretVersionStatus(dict):
         :param _builtins.str deleted_at: :
                
                   Time when user called soft delete method
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param _builtins.str purge_at: :
                
                   Time when key should be totally deleted from DB
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param _builtins.str state: :
                
                   State (ACTIVE, SCHEDULED_FOR_DELETION)
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `ACTIVE` - Resource is active, ready for use
                   - `SCHEDULED_FOR_DELETION` - Resource was marked as soft deleted
@@ -12351,7 +12352,7 @@ class MysteryboxV1SecretVersionStatus(dict):
         :
 
            Time when user called soft delete method
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "deleted_at")
@@ -12363,7 +12364,7 @@ class MysteryboxV1SecretVersionStatus(dict):
         :
 
            Time when key should be totally deleted from DB
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "purge_at")
@@ -12375,11 +12376,11 @@ class MysteryboxV1SecretVersionStatus(dict):
         :
 
            State (ACTIVE, SCHEDULED_FOR_DELETION)
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `ACTIVE` - Resource is active, ready for use
            - `SCHEDULED_FOR_DELETION` - Resource was marked as soft deleted
@@ -12441,11 +12442,11 @@ class QuotasV1QuotaAllowanceStatus(dict):
         :param _builtins.str state: :
                
                   Current state of the quota.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `STATE_PROVISIONING` - Quota is being allocated; the process can take up to several minutes.
                   - `STATE_ACTIVE` - Quota is allocated and can be used.
@@ -12465,18 +12466,18 @@ class QuotasV1QuotaAllowanceStatus(dict):
         :param _builtins.str usage_state: :
                
                   Current state of the quota usage.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `USAGE_STATE_UNSPECIFIED`
                   - `USAGE_STATE_USED` - Quota is actively in use.
                   - `USAGE_STATE_NOT_USED` - Quota is not currently in use.
                   - `USAGE_STATE_UNKNOWN`:
-                     Quota region is unreachable, the current usage is therefore unknown.
-                     Please, retry the request later.
-                  
+                Quota region is unreachable, the current usage is therefore unknown.
+                Please, retry the request later.
+               
                   - `USAGE_STATE_NOT_APPLICABLE` - Quota usage is not applicable
         """
         if description is not None:
@@ -12536,11 +12537,11 @@ class QuotasV1QuotaAllowanceStatus(dict):
         :
 
            Current state of the quota.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `STATE_PROVISIONING` - Quota is being allocated; the process can take up to several minutes.
            - `STATE_ACTIVE` - Quota is allocated and can be used.
@@ -12588,18 +12589,18 @@ class QuotasV1QuotaAllowanceStatus(dict):
         :
 
            Current state of the quota usage.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `USAGE_STATE_UNSPECIFIED`
            - `USAGE_STATE_USED` - Quota is actively in use.
            - `USAGE_STATE_NOT_USED` - Quota is not currently in use.
            - `USAGE_STATE_UNKNOWN`:
-              Quota region is unreachable, the current usage is therefore unknown.
-              Please, retry the request later.
-           
+         Quota region is unreachable, the current usage is therefore unknown.
+         Please, retry the request later.
+
            - `USAGE_STATE_NOT_APPLICABLE` - Quota usage is not applicable
         """
         return pulumi.get(self, "usage_state")
@@ -12640,10 +12641,10 @@ class RegistryV1RegistryStatus(dict):
         :param _builtins.str registry_fqdn: regional fqdn "cr.eu-north1.nebius.cloud"
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `CREATING`
                   - `ACTIVE`
                   - `DELETING`
@@ -12675,10 +12676,10 @@ class RegistryV1RegistryStatus(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `CREATING`
            - `ACTIVE`
            - `DELETING`
@@ -12740,12 +12741,12 @@ class StorageV1BucketBucketPolicyRule(dict):
         :param 'StorageV1BucketBucketPolicyRuleAnonymousArgs' anonymous: :
                
                   Enable anonymous access. Only read-only roles are allowed in anonymous mode.
-                  
+               
                   *Cannot be set alongside group_id.*
         :param _builtins.str group_id: :
                
                   Group ID to grant access to.
-                  
+               
                   *Cannot be set alongside anonymous.*
         :param Sequence[_builtins.str] paths: :
                
@@ -12770,7 +12771,7 @@ class StorageV1BucketBucketPolicyRule(dict):
         :
 
            Enable anonymous access. Only read-only roles are allowed in anonymous mode.
-           
+
            *Cannot be set alongside group_id.*
         """
         return pulumi.get(self, "anonymous")
@@ -12782,7 +12783,7 @@ class StorageV1BucketBucketPolicyRule(dict):
         :
 
            Group ID to grant access to.
-           
+
            *Cannot be set alongside anonymous.*
         """
         return pulumi.get(self, "group_id")
@@ -12961,9 +12962,9 @@ class StorageV1BucketLifecycleConfiguration(dict):
         :param 'StorageV1BucketLifecycleConfigurationLastAccessFilterArgs' last_access_filter: :
                
                   Specifies which requests are included in <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> calculations for all transition rules.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Specifies which requests are included in <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> calculations.
         """
         if last_access_filter is not None:
@@ -12978,9 +12979,9 @@ class StorageV1BucketLifecycleConfiguration(dict):
         :
 
            Specifies which requests are included in <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> calculations for all transition rules.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Specifies which requests are included in <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> calculations.
         """
         return pulumi.get(self, "last_access_filter")
@@ -13000,7 +13001,7 @@ class StorageV1BucketLifecycleConfigurationLastAccessFilter(dict):
                
                   A request is included in <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> calculations if:
                   - The first condition matching the request has `INCLUDE` type.
-                  OR
+                       OR
                   - The request doesn't match any conditions
         """
         if conditions is not None:
@@ -13014,7 +13015,7 @@ class StorageV1BucketLifecycleConfigurationLastAccessFilter(dict):
 
            A request is included in <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> calculations if:
            - The first condition matching the request has `INCLUDE` type.
-           OR
+                OR
            - The request doesn't match any conditions
         """
         return pulumi.get(self, "conditions")
@@ -13046,38 +13047,38 @@ class StorageV1BucketLifecycleConfigurationLastAccessFilterCondition(dict):
         """
         :param _builtins.str type: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `TYPE_UNSPECIFIED`
                   - `INCLUDE`:
-                     If an include type condition is the first condition that the request match, the request will be included in
-                     <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> calculation.
-                  
+                If an include type condition is the first condition that the request match, the request will be included in
+                <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> calculation.
+               
                   - `EXCLUDE`:
-                     If an exclude type condition is the first condition that the request match, the request will be ignored in <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span>
-                     calculation.
+                If an exclude type condition is the first condition that the request match, the request will be ignored in <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span>
+                calculation.
         :param Sequence[_builtins.str] methods: :
                
                   The s3 methods to match.
                   An empty list matches all methods
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `METHOD_UNSPECIFIED`
                   - `GET_OBJECT`
                   - `HEAD_OBJECT`
                   - `GET_OBJECT_TAGGING`
                   - `COPY_OBJECT`:
-                     Copy object method reads the source object.
-                     We account for those operations as source object accesses when calculating <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> for source object.
-                  
+                Copy object method reads the source object.
+                We account for those operations as source object accesses when calculating <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> for source object.
+               
                   - `UPLOAD_PART_COPY`:
-                     Upload part copy method reads the source object.
-                     We account for those operations as source object accesses when calculating <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> for source object.
+                Upload part copy method reads the source object.
+                We account for those operations as source object accesses when calculating <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> for source object.
         :param Sequence[_builtins.str] user_agents: :
                
                   User agents to match. Condition is satisfied if the request's user agent contains any of these substrings.
@@ -13095,18 +13096,18 @@ class StorageV1BucketLifecycleConfigurationLastAccessFilterCondition(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `TYPE_UNSPECIFIED`
            - `INCLUDE`:
-              If an include type condition is the first condition that the request match, the request will be included in
-              <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> calculation.
-           
+         If an include type condition is the first condition that the request match, the request will be included in
+         <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> calculation.
+
            - `EXCLUDE`:
-              If an exclude type condition is the first condition that the request match, the request will be ignored in <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span>
-              calculation.
+         If an exclude type condition is the first condition that the request match, the request will be ignored in <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span>
+         calculation.
         """
         return pulumi.get(self, "type")
 
@@ -13118,22 +13119,22 @@ class StorageV1BucketLifecycleConfigurationLastAccessFilterCondition(dict):
 
            The s3 methods to match.
            An empty list matches all methods
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `METHOD_UNSPECIFIED`
            - `GET_OBJECT`
            - `HEAD_OBJECT`
            - `GET_OBJECT_TAGGING`
            - `COPY_OBJECT`:
-              Copy object method reads the source object.
-              We account for those operations as source object accesses when calculating <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> for source object.
-           
+         Copy object method reads the source object.
+         We account for those operations as source object accesses when calculating <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> for source object.
+
            - `UPLOAD_PART_COPY`:
-              Upload part copy method reads the source object.
-              We account for those operations as source object accesses when calculating <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> for source object.
+         Upload part copy method reads the source object.
+         We account for those operations as source object accesses when calculating <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> for source object.
         """
         return pulumi.get(self, "methods")
 
@@ -13188,10 +13189,10 @@ class StorageV1BucketLifecycleConfigurationRule(dict):
                   The value cannot be longer than 255 characters.
         :param _builtins.str status: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATUS_UNSPECIFIED`
                   - `ENABLED`
                   - `DISABLED`
@@ -13253,10 +13254,10 @@ class StorageV1BucketLifecycleConfigurationRule(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `STATUS_UNSPECIFIED`
            - `ENABLED`
            - `DISABLED`
@@ -13400,15 +13401,15 @@ class StorageV1BucketLifecycleConfigurationRuleExpiration(dict):
         :param _builtins.str date: :
                
                   Indicates at what date the object will be deleted. The time is always midnight UTC.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
-                  
+               
                   *Cannot be set alongside days.*
         :param _builtins.float days: :
                
                   Indicates the lifetime, in days, of the objects that are subject to the rule.
                   The value must be a non-zero positive integer.
-                  
+               
                   *Cannot be set alongside date.*
         :param _builtins.bool expired_object_delete_marker: :
                
@@ -13431,9 +13432,9 @@ class StorageV1BucketLifecycleConfigurationRuleExpiration(dict):
         :
 
            Indicates at what date the object will be deleted. The time is always midnight UTC.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
-           
+
            *Cannot be set alongside days.*
         """
         return pulumi.get(self, "date")
@@ -13446,7 +13447,7 @@ class StorageV1BucketLifecycleConfigurationRuleExpiration(dict):
 
            Indicates the lifetime, in days, of the objects that are subject to the rule.
            The value must be a non-zero positive integer.
-           
+
            *Cannot be set alongside date.*
         """
         return pulumi.get(self, "days")
@@ -13655,11 +13656,11 @@ class StorageV1BucketLifecycleConfigurationRuleNoncurrentVersionTransition(dict)
         :param _builtins.str storage_class: :
                
                   Target storage class to transit to.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STORAGE_CLASS_UNSPECIFIED`
                   - `STANDARD`
                   - `ENHANCED_THROUGHPUT`
@@ -13696,11 +13697,11 @@ class StorageV1BucketLifecycleConfigurationRuleNoncurrentVersionTransition(dict)
         :
 
            Target storage class to transit to.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `STORAGE_CLASS_UNSPECIFIED`
            - `STANDARD`
            - `ENHANCED_THROUGHPUT`
@@ -13740,29 +13741,29 @@ class StorageV1BucketLifecycleConfigurationRuleTransition(dict):
         :param _builtins.str date: :
                
                   Indicates at what date the object will be transited. The time is always midnight UTC.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
-                  
+               
                   *Cannot be set alongside days or days_since_last_access.*
         :param _builtins.float days: :
                
                   Amount of days since object was uploaded before it's transited to a new storage class.
                   The value must be a non-zero positive integer.
-                  
+               
                   *Cannot be set alongside date or days_since_last_access.*
         :param _builtins.float days_since_last_access: :
                
                   The number of days since the object was last accessed before it is transitioned.
-                  
+               
                   *Cannot be set alongside date or days.*
         :param _builtins.str storage_class: :
                
                   Target storage class to transit to.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STORAGE_CLASS_UNSPECIFIED`
                   - `STANDARD`
                   - `ENHANCED_THROUGHPUT`
@@ -13785,9 +13786,9 @@ class StorageV1BucketLifecycleConfigurationRuleTransition(dict):
         :
 
            Indicates at what date the object will be transited. The time is always midnight UTC.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
-           
+
            *Cannot be set alongside days or days_since_last_access.*
         """
         return pulumi.get(self, "date")
@@ -13800,7 +13801,7 @@ class StorageV1BucketLifecycleConfigurationRuleTransition(dict):
 
            Amount of days since object was uploaded before it's transited to a new storage class.
            The value must be a non-zero positive integer.
-           
+
            *Cannot be set alongside date or days_since_last_access.*
         """
         return pulumi.get(self, "days")
@@ -13812,7 +13813,7 @@ class StorageV1BucketLifecycleConfigurationRuleTransition(dict):
         :
 
            The number of days since the object was last accessed before it is transitioned.
-           
+
            *Cannot be set alongside date or days.*
         """
         return pulumi.get(self, "days_since_last_access")
@@ -13824,11 +13825,11 @@ class StorageV1BucketLifecycleConfigurationRuleTransition(dict):
         :
 
            Target storage class to transit to.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `STORAGE_CLASS_UNSPECIFIED`
            - `STANDARD`
            - `ENHANCED_THROUGHPUT`
@@ -13889,7 +13890,7 @@ class StorageV1BucketStatus(dict):
                
                   The time when the bucket was deleted (or scheduled for deletion).
                   It resets to null if the bucket is undeleted.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param _builtins.str domain_name: :
                
@@ -13898,31 +13899,31 @@ class StorageV1BucketStatus(dict):
         :param _builtins.str purge_at: :
                
                   The time when the bucket will be automatically purged in case it was soft-deleted.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param _builtins.str region: The name of the region where the bucket is located for use with S3 clients, i.e. "eu-west1".
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `CREATING` - Bucket is under creation and cannot be used yet.
                   - `ACTIVE` - Bucket is active and ready for usage.
                   - `UPDATING`:
-                     Bucket is being updated.
-                     It can be used, but some settings are being modified and you can observe their inconsistency.
-                  
+                Bucket is being updated.
+                It can be used, but some settings are being modified and you can observe their inconsistency.
+               
                   - `SCHEDULED_FOR_DELETION`:
-                     Bucket is scheduled for deletion.
-                     It cannot be used in s3 api anymore.
+                Bucket is scheduled for deletion.
+                It cannot be used in s3 api anymore.
         :param _builtins.str suspension_state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `SUSPENSION_STATE_UNSPECIFIED`
                   - `NOT_SUSPENDED`
                   - `SUSPENDED`
@@ -13968,7 +13969,7 @@ class StorageV1BucketStatus(dict):
 
            The time when the bucket was deleted (or scheduled for deletion).
            It resets to null if the bucket is undeleted.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "deleted_at")
@@ -13991,7 +13992,7 @@ class StorageV1BucketStatus(dict):
         :
 
            The time when the bucket will be automatically purged in case it was soft-deleted.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "purge_at")
@@ -14010,20 +14011,20 @@ class StorageV1BucketStatus(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `CREATING` - Bucket is under creation and cannot be used yet.
            - `ACTIVE` - Bucket is active and ready for usage.
            - `UPDATING`:
-              Bucket is being updated.
-              It can be used, but some settings are being modified and you can observe their inconsistency.
-           
+         Bucket is being updated.
+         It can be used, but some settings are being modified and you can observe their inconsistency.
+
            - `SCHEDULED_FOR_DELETION`:
-              Bucket is scheduled for deletion.
-              It cannot be used in s3 api anymore.
+         Bucket is scheduled for deletion.
+         It cannot be used in s3 api anymore.
         """
         return pulumi.get(self, "state")
 
@@ -14033,10 +14034,10 @@ class StorageV1BucketStatus(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `SUSPENSION_STATE_UNSPECIFIED`
            - `NOT_SUSPENDED`
            - `SUSPENDED`
@@ -14072,15 +14073,15 @@ class StorageV1BucketStatusCounter(dict):
         """
         :param 'StorageV1BucketStatusCounterNonCurrentCountersArgs' non_current_counters: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Counters for non-current object versions (for versioning buckets).
         :param _builtins.str storage_class: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STORAGE_CLASS_UNSPECIFIED`
                   - `STANDARD`
                   - `ENHANCED_THROUGHPUT`
@@ -14105,8 +14106,8 @@ class StorageV1BucketStatusCounter(dict):
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Counters for non-current object versions (for versioning buckets).
         """
         return pulumi.get(self, "non_current_counters")
@@ -14117,10 +14118,10 @@ class StorageV1BucketStatusCounter(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `STORAGE_CLASS_UNSPECIFIED`
            - `STANDARD`
            - `ENHANCED_THROUGHPUT`
@@ -15753,12 +15754,12 @@ class StorageV1TransferStatus(dict):
         :param _builtins.str state: :
                
                   Current transfer state.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Transfer state.
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `ACTIVE`
                   - `STOPPING`
@@ -15769,12 +15770,12 @@ class StorageV1TransferStatus(dict):
         :param _builtins.str suspension_state: :
                
                   If the transfer is suspended, transfer's suspension state becomes SUSPENDED.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Transfer suspension state.
                   Possible values:
-                  
+               
                   - `SUSPENSION_STATE_UNSPECIFIED`
                   - `NOT_SUSPENDED`
                   - `SUSPENDED`
@@ -15815,12 +15816,12 @@ class StorageV1TransferStatus(dict):
         :
 
            Current transfer state.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Transfer state.
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `ACTIVE`
            - `STOPPING`
@@ -15838,12 +15839,12 @@ class StorageV1TransferStatus(dict):
         :
 
            If the transfer is suspended, transfer's suspension state becomes SUSPENDED.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Transfer suspension state.
            Possible values:
-           
+
            - `SUSPENSION_STATE_UNSPECIFIED`
            - `NOT_SUSPENDED`
            - `SUSPENDED`
@@ -15863,11 +15864,11 @@ class StorageV1TransferStatusError(dict):
         :param _builtins.str origin: :
                
                   Endpoint where the error occurred.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `ORIGIN_UNSPECIFIED`
                   - `SOURCE` - Error originated from the source.
                   - `DESTINATION` - Error originated from the destination.
@@ -15902,11 +15903,11 @@ class StorageV1TransferStatusError(dict):
         :
 
            Endpoint where the error occurred.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `ORIGIN_UNSPECIFIED`
            - `SOURCE` - Error originated from the source.
            - `DESTINATION` - Error originated from the destination.
@@ -15960,7 +15961,7 @@ class StorageV1TransferStatusLastIteration(dict):
         :param _builtins.str end_time: :
                
                   Iteration end time.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param 'StorageV1TransferStatusLastIterationErrorArgs' error: Human-readable error description. Populated only if state is FAILED.
         :param _builtins.float objects_deleted_count: Number of objects deleted from destination bucket during this iteration.
@@ -15970,17 +15971,17 @@ class StorageV1TransferStatusLastIteration(dict):
         :param _builtins.str start_time: :
                
                   Iteration start time.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param _builtins.str state: :
                
                   Current iteration state.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Iteration state.
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `IN_PROGRESS`
                   - `COMPLETED`
@@ -16021,7 +16022,7 @@ class StorageV1TransferStatusLastIteration(dict):
         :
 
            Iteration end time.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "end_time")
@@ -16073,7 +16074,7 @@ class StorageV1TransferStatusLastIteration(dict):
         :
 
            Iteration start time.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "start_time")
@@ -16085,12 +16086,12 @@ class StorageV1TransferStatusLastIteration(dict):
         :
 
            Current iteration state.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Iteration state.
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `IN_PROGRESS`
            - `COMPLETED`
@@ -16112,11 +16113,11 @@ class StorageV1TransferStatusLastIterationError(dict):
         :param _builtins.str origin: :
                
                   Endpoint where the error occurred.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `ORIGIN_UNSPECIFIED`
                   - `SOURCE` - Error originated from the source.
                   - `DESTINATION` - Error originated from the destination.
@@ -16151,11 +16152,11 @@ class StorageV1TransferStatusLastIterationError(dict):
         :
 
            Endpoint where the error occurred.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `ORIGIN_UNSPECIFIED`
            - `SOURCE` - Error originated from the source.
            - `DESTINATION` - Error originated from the destination.
@@ -16891,7 +16892,7 @@ class StorageV1alpha1TransferSource(dict):
                   Limiters applied to source bucket operations. These limits include all operations
                   required for transfer (HeadObject, GetObject, ListObjects). For details about
                   which operations are used, see public documentation: http://docs.nebius.com/object-storage/transfer/quickstart#background.
-                  
+               
                   Note: Since the service performs comparable request volumes and data transfers
                   to both source and destination, these limits will indirectly constrain
                   destination operations as well.
@@ -16955,7 +16956,7 @@ class StorageV1alpha1TransferSource(dict):
            Limiters applied to source bucket operations. These limits include all operations
            required for transfer (HeadObject, GetObject, ListObjects). For details about
            which operations are used, see public documentation: http://docs.nebius.com/object-storage/transfer/quickstart#background.
-           
+
            Note: Since the service performs comparable request volumes and data transfers
            to both source and destination, these limits will indirectly constrain
            destination operations as well.
@@ -17205,10 +17206,10 @@ class StorageV1alpha1TransferStatus(dict):
         :param _builtins.str error: Error information if the transfer has failed.
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `ACTIVE`
                   - `STOPPING`
@@ -17217,10 +17218,10 @@ class StorageV1alpha1TransferStatus(dict):
                   - `FAILED`
         :param _builtins.str suspension_state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `SUSPENSION_STATE_UNSPECIFIED`
                   - `NOT_SUSPENDED`
                   - `SUSPENDED`
@@ -17253,10 +17254,10 @@ class StorageV1alpha1TransferStatus(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `ACTIVE`
            - `STOPPING`
@@ -17272,10 +17273,10 @@ class StorageV1alpha1TransferStatus(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `SUSPENSION_STATE_UNSPECIFIED`
            - `NOT_SUSPENDED`
            - `SUSPENDED`
@@ -17333,10 +17334,10 @@ class StorageV1alpha1TransferStatusLastIteration(dict):
         :param _builtins.str start_time: A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `IN_PROGRESS`
                   - `COMPLETED`
@@ -17424,10 +17425,10 @@ class StorageV1alpha1TransferStatusLastIteration(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `IN_PROGRESS`
            - `COMPLETED`
@@ -17451,12 +17452,12 @@ class TunnelV1TunnelStatus(dict):
         :param _builtins.str state: :
                
                   Current lifecycle state of the tunnel.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   State represents the lifecycle state of the tunnel.
                   Possible values:
-                  
+               
                   - `UNSPECIFIED` - Default unspecified state.
                   - `CREATED` - The tunnel has been created and is active.
                   - `DELETED` - The tunnel has been deleted.
@@ -17471,12 +17472,12 @@ class TunnelV1TunnelStatus(dict):
         :
 
            Current lifecycle state of the tunnel.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            State represents the lifecycle state of the tunnel.
            Possible values:
-           
+
            - `UNSPECIFIED` - Default unspecified state.
            - `CREATED` - The tunnel has been created and is active.
            - `DELETED` - The tunnel has been deleted.
@@ -17520,7 +17521,7 @@ class VpcV1AllocationIpv4Private(dict):
         :param _builtins.str pool_id: :
                
                   ID of the pool that allocation will receive its IP address from.
-                  
+               
                   *Cannot be set alongside subnet_id.*
         :param _builtins.str subnet_id: :
                
@@ -17529,7 +17530,7 @@ class VpcV1AllocationIpv4Private(dict):
                   with this subnet.
                   In order to assign an allocation to a resource (i.e. network interface)
                   both must be associated with the same subnet.
-                  
+               
                   *Cannot be set alongside pool_id.*
         """
         if cidr is not None:
@@ -17560,7 +17561,7 @@ class VpcV1AllocationIpv4Private(dict):
         :
 
            ID of the pool that allocation will receive its IP address from.
-           
+
            *Cannot be set alongside subnet_id.*
         """
         return pulumi.get(self, "pool_id")
@@ -17576,7 +17577,7 @@ class VpcV1AllocationIpv4Private(dict):
            with this subnet.
            In order to assign an allocation to a resource (i.e. network interface)
            both must be associated with the same subnet.
-           
+
            *Cannot be set alongside pool_id.*
         """
         return pulumi.get(self, "subnet_id")
@@ -17618,7 +17619,7 @@ class VpcV1AllocationIpv4Public(dict):
         :param _builtins.str pool_id: :
                
                   ID of the pool that allocation will receive its IP address from.
-                  
+               
                   *Cannot be set alongside subnet_id.*
         :param _builtins.str subnet_id: :
                
@@ -17627,7 +17628,7 @@ class VpcV1AllocationIpv4Public(dict):
                   this subnet.
                   Assigning an allocation to a resource (i.e. network interface) requires
                   both to be associated with the same subnet.
-                  
+               
                   *Cannot be set alongside pool_id.*
         """
         if cidr is not None:
@@ -17658,7 +17659,7 @@ class VpcV1AllocationIpv4Public(dict):
         :
 
            ID of the pool that allocation will receive its IP address from.
-           
+
            *Cannot be set alongside subnet_id.*
         """
         return pulumi.get(self, "pool_id")
@@ -17674,7 +17675,7 @@ class VpcV1AllocationIpv4Public(dict):
            this subnet.
            Assigning an allocation to a resource (i.e. network interface) requires
            both to be associated with the same subnet.
-           
+
            *Cannot be set alongside pool_id.*
         """
         return pulumi.get(self, "subnet_id")
@@ -17705,12 +17706,12 @@ class VpcV1AllocationStatus(dict):
         :param _builtins.str state: :
                
                   This field represents the current state of the allocation.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Enumeration of possible states of the Allocation.
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED` - Default state, unspecified.
                   - `CREATING` - Allocation is being created.
                   - `ALLOCATED` - Allocation is ready for use.
@@ -17756,12 +17757,12 @@ class VpcV1AllocationStatus(dict):
         :
 
            This field represents the current state of the allocation.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Enumeration of possible states of the Allocation.
            Possible values:
-           
+
            - `STATE_UNSPECIFIED` - Default state, unspecified.
            - `CREATING` - Allocation is being created.
            - `ALLOCATED` - Allocation is ready for use.
@@ -17877,11 +17878,11 @@ class VpcV1AllocationStatusAssignmentNetworkInterface(dict):
         :param _builtins.str type: :
                
                   Type of allocation attachment on the network interface.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `TYPE_UNSPECIFIED`
                   - `PRIMARY` - Allocation is attached as the interface private IPv4 address.
                   - `ALIAS` - Allocation is attached as an IP alias.
@@ -17917,11 +17918,11 @@ class VpcV1AllocationStatusAssignmentNetworkInterface(dict):
         :
 
            Type of allocation attachment on the network interface.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `TYPE_UNSPECIFIED`
            - `PRIMARY` - Allocation is attached as the interface private IPv4 address.
            - `ALIAS` - Allocation is attached as an IP alias.
@@ -17969,11 +17970,11 @@ class VpcV1AllocationStatusDetails(dict):
         :param _builtins.str version: :
                
                   The IP version of this allocation (IPv4 or IPv6).
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `IP_VERSION_UNSPECIFIED` - Default, unspecified IP version.
                   - `IPV4` - IPv4 address.
                   - `IPV6` - IPv6 address.
@@ -18022,11 +18023,11 @@ class VpcV1AllocationStatusDetails(dict):
         :
 
            The IP version of this allocation (IPv4 or IPv6).
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `IP_VERSION_UNSPECIFIED` - Default, unspecified IP version.
            - `IPV4` - IPv4 address.
            - `IPV6` - IPv6 address.
@@ -18131,12 +18132,12 @@ class VpcV1NetworkStatus(dict):
         :param _builtins.str state: :
                
                   Current state of the network.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Enumeration of possible states of the network.
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED` - Default state, unspecified.
                   - `CREATING` - Network is being created.
                   - `READY` - Network is ready for use.
@@ -18162,12 +18163,12 @@ class VpcV1NetworkStatus(dict):
         :
 
            Current state of the network.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Enumeration of possible states of the network.
            Possible values:
-           
+
            - `STATE_UNSPECIFIED` - Default state, unspecified.
            - `CREATING` - Network is being created.
            - `READY` - Network is ready for use.
@@ -18213,13 +18214,13 @@ class VpcV1PoolCidr(dict):
                
                   Controls provisioning of IP addresses from the CIDR block to other pools
                   or allocations. Defaults to AVAILABLE.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Controls provisioning of IP addresses from this pool to other pools
                   or allocations. Defaults to AVAILABLE.
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED` - Not used, mandated by the protocol.
                   - `AVAILABLE` - Default state. Provision of the IP addresses from this CIDR block is allowed.
                   - `DISABLED` - Provision of the IP addresses from this CIDR block is denied.
@@ -18261,13 +18262,13 @@ class VpcV1PoolCidr(dict):
 
            Controls provisioning of IP addresses from the CIDR block to other pools
            or allocations. Defaults to AVAILABLE.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Controls provisioning of IP addresses from this pool to other pools
            or allocations. Defaults to AVAILABLE.
            Possible values:
-           
+
            - `STATE_UNSPECIFIED` - Not used, mandated by the protocol.
            - `AVAILABLE` - Default state. Provision of the IP addresses from this CIDR block is allowed.
            - `DISABLED` - Provision of the IP addresses from this CIDR block is denied.
@@ -18312,12 +18313,12 @@ class VpcV1PoolStatus(dict):
         :param _builtins.str state: :
                
                   Current state of the Pool.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible states of the Pool.
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED` - Default, unspecified state.
                   - `CREATING` - Pool is being created.
                   - `READY` - Pool is ready for use.
@@ -18363,12 +18364,12 @@ class VpcV1PoolStatus(dict):
         :
 
            Current state of the Pool.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible states of the Pool.
            Possible values:
-           
+
            - `STATE_UNSPECIFIED` - Default, unspecified state.
            - `CREATING` - Pool is being created.
            - `READY` - Pool is ready for use.
@@ -18470,18 +18471,18 @@ class VpcV1RouteNextHop(dict):
                   The allocation must be assigned to either a Compute instance or a Load Balancer.
                   Warning: If the allocation exists but is not assigned to any resource,
                   traffic will be forwarded to a "black hole" and dropped.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   AllocationNextHop specifies an IP allocation as the next hop.
-                  
+               
                   *Cannot be set alongside default_egress_gateway.*
         :param _builtins.bool default_egress_gateway: :
                
                   Use the default egress gateway for outbound traffic.
                   Note: For VMs with public addresses (Floating IPs/FIPs), the FIP-specific route
                   takes precedence over this default egress gateway route.
-                  
+               
                   *Cannot be set alongside allocation.*
         """
         if allocation is not None:
@@ -18500,11 +18501,11 @@ class VpcV1RouteNextHop(dict):
            The allocation must be assigned to either a Compute instance or a Load Balancer.
            Warning: If the allocation exists but is not assigned to any resource,
            traffic will be forwarded to a "black hole" and dropped.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            AllocationNextHop specifies an IP allocation as the next hop.
-           
+
            *Cannot be set alongside default_egress_gateway.*
         """
         return pulumi.get(self, "allocation")
@@ -18518,7 +18519,7 @@ class VpcV1RouteNextHop(dict):
            Use the default egress gateway for outbound traffic.
            Note: For VMs with public addresses (Floating IPs/FIPs), the FIP-specific route
            takes precedence over this default egress gateway route.
-           
+
            *Cannot be set alongside allocation.*
         """
         return pulumi.get(self, "default_egress_gateway")
@@ -18576,23 +18577,23 @@ class VpcV1RouteStatus(dict):
         :param _builtins.str state: :
                
                   Current state of the route.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED` - The state is unknown or not yet set.
                   - `READY` - The route is configured and operational.
         :param _builtins.str type: :
                
                   Indicates the route type.
                   REDISTRIBUTED routes cannot be deleted directly.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Route type.
                   Possible values:
-                  
+               
                   - `TYPE_UNSPECIFIED`
                   - `STATIC`
                   - `REDISTRIBUTED`
@@ -18633,11 +18634,11 @@ class VpcV1RouteStatus(dict):
         :
 
            Current state of the route.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED` - The state is unknown or not yet set.
            - `READY` - The route is configured and operational.
         """
@@ -18651,12 +18652,12 @@ class VpcV1RouteStatus(dict):
 
            Indicates the route type.
            REDISTRIBUTED routes cannot be deleted directly.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Route type.
            Possible values:
-           
+
            - `TYPE_UNSPECIFIED`
            - `STATIC`
            - `REDISTRIBUTED`
@@ -18690,12 +18691,12 @@ class VpcV1RouteStatusNextHop(dict):
         :param 'VpcV1RouteStatusNextHopAllocationArgs' allocation: :
                
                   Status of an allocation-based next hop.
-                  
+               
                   *Cannot be set alongside default_egress_gateway.*
         :param 'VpcV1RouteStatusNextHopDefaultEgressGatewayArgs' default_egress_gateway: :
                
                   Status of the default egress gateway configuration.
-                  
+               
                   *Cannot be set alongside allocation.*
         """
         if allocation is not None:
@@ -18710,7 +18711,7 @@ class VpcV1RouteStatusNextHop(dict):
         :
 
            Status of an allocation-based next hop.
-           
+
            *Cannot be set alongside default_egress_gateway.*
         """
         return pulumi.get(self, "allocation")
@@ -18722,7 +18723,7 @@ class VpcV1RouteStatusNextHop(dict):
         :
 
            Status of the default egress gateway configuration.
-           
+
            *Cannot be set alongside allocation.*
         """
         return pulumi.get(self, "default_egress_gateway")
@@ -18774,12 +18775,12 @@ class VpcV1RouteTableStatus(dict):
         :param _builtins.str state: :
                
                   Current state of the route table.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   State indicates the current operational state of the route table.
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED` - The state is unknown or not yet set.
                   - `READY` - The route table is configured and operational.
         """
@@ -18816,12 +18817,12 @@ class VpcV1RouteTableStatus(dict):
         :
 
            Current state of the route table.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            State indicates the current operational state of the route table.
            Possible values:
-           
+
            - `STATE_UNSPECIFIED` - The state is unknown or not yet set.
            - `READY` - The route table is configured and operational.
         """
@@ -18867,12 +18868,12 @@ class VpcV1SecurityGroupStatus(dict):
         :param _builtins.str state: :
                
                   Current state of the security group.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Enumeration of possible states of the security group.
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED` - Default state, unspecified.
                   - `READY` - Security group is ready for use.
         """
@@ -18900,12 +18901,12 @@ class VpcV1SecurityGroupStatus(dict):
         :
 
            Current state of the security group.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Enumeration of possible states of the security group.
            Possible values:
-           
+
            - `STATE_UNSPECIFIED` - Default state, unspecified.
            - `READY` - Security group is ready for use.
         """
@@ -19116,12 +19117,12 @@ class VpcV1SecurityRuleStatus(dict):
         :param _builtins.str direction: :
                
                   Direction of traffic affected by the rule.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Direction specifies whether traffic is INGRESS (incoming) or EGRESS (outgoing).
                   Possible values:
-                  
+               
                   - `DIRECTION_UNSPECIFIED`
                   - `INGRESS`
                   - `EGRESS`
@@ -19133,11 +19134,11 @@ class VpcV1SecurityRuleStatus(dict):
         :param 'VpcV1SecurityRuleStatusSourceArgs' source: Source of the traffic that matched the rule.
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   State describes lifecycle phases of a security rule.
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `CREATING`
                   - `READY`
@@ -19169,12 +19170,12 @@ class VpcV1SecurityRuleStatus(dict):
         :
 
            Direction of traffic affected by the rule.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Direction specifies whether traffic is INGRESS (incoming) or EGRESS (outgoing).
            Possible values:
-           
+
            - `DIRECTION_UNSPECIFIED`
            - `INGRESS`
            - `EGRESS`
@@ -19207,11 +19208,11 @@ class VpcV1SecurityRuleStatus(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            State describes lifecycle phases of a security rule.
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `CREATING`
            - `READY`
@@ -19448,13 +19449,13 @@ class VpcV1SubnetIpv4PrivatePoolsPoolCidr(dict):
         :param _builtins.str state: :
                
                   Controls provisioning of IP addresses from the CIDR block. Defaults to AVAILABLE.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Controls provisioning of IP addresses from this pool to other pools
                   or allocations. Defaults to AVAILABLE.
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED` - Not used, mandated by the protocol.
                   - `AVAILABLE` - Default state. Provision of the IP addresses from this CIDR block is allowed.
                   - `DISABLED` - Provision of the IP addresses from this CIDR block is denied.
@@ -19493,13 +19494,13 @@ class VpcV1SubnetIpv4PrivatePoolsPoolCidr(dict):
         :
 
            Controls provisioning of IP addresses from the CIDR block. Defaults to AVAILABLE.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Controls provisioning of IP addresses from this pool to other pools
            or allocations. Defaults to AVAILABLE.
            Possible values:
-           
+
            - `STATE_UNSPECIFIED` - Not used, mandated by the protocol.
            - `AVAILABLE` - Default state. Provision of the IP addresses from this CIDR block is allowed.
            - `DISABLED` - Provision of the IP addresses from this CIDR block is denied.
@@ -19615,13 +19616,13 @@ class VpcV1SubnetIpv4PublicPoolsPoolCidr(dict):
         :param _builtins.str state: :
                
                   Controls provisioning of IP addresses from the CIDR block. Defaults to AVAILABLE.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Controls provisioning of IP addresses from this pool to other pools
                   or allocations. Defaults to AVAILABLE.
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED` - Not used, mandated by the protocol.
                   - `AVAILABLE` - Default state. Provision of the IP addresses from this CIDR block is allowed.
                   - `DISABLED` - Provision of the IP addresses from this CIDR block is denied.
@@ -19660,13 +19661,13 @@ class VpcV1SubnetIpv4PublicPoolsPoolCidr(dict):
         :
 
            Controls provisioning of IP addresses from the CIDR block. Defaults to AVAILABLE.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Controls provisioning of IP addresses from this pool to other pools
            or allocations. Defaults to AVAILABLE.
            Possible values:
-           
+
            - `STATE_UNSPECIFIED` - Not used, mandated by the protocol.
            - `AVAILABLE` - Default state. Provision of the IP addresses from this CIDR block is allowed.
            - `DISABLED` - Provision of the IP addresses from this CIDR block is denied.
@@ -19732,12 +19733,12 @@ class VpcV1SubnetStatus(dict):
         :param _builtins.str state: :
                
                   Current state of the subnet.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Enumeration of possible states of the subnet.
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED` - Default state, unspecified.
                   - `CREATING` - Subnet is being created.
                   - `READY` - Subnet is ready for use.
@@ -19814,12 +19815,12 @@ class VpcV1SubnetStatus(dict):
         :
 
            Current state of the subnet.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Enumeration of possible states of the subnet.
            Possible values:
-           
+
            - `STATE_UNSPECIFIED` - Default state, unspecified.
            - `CREATING` - Subnet is being created.
            - `READY` - Subnet is ready for use.
@@ -19998,13 +19999,13 @@ class VpcV1alpha1AllocationIpv4Private(dict):
         :param _builtins.str pool_id: :
                
                   Pool for the IPv4 private allocation.
-                  
+               
                   *Cannot be set alongside subnet_id.*
         :param _builtins.str subnet_id: :
                
                   Subnet ID.
                   Required same subnet to use allocation in subnet-resources (e.g. Network Interface)
-                  
+               
                   *Cannot be set alongside pool_id.*
         """
         if cidr is not None:
@@ -20034,7 +20035,7 @@ class VpcV1alpha1AllocationIpv4Private(dict):
         :
 
            Pool for the IPv4 private allocation.
-           
+
            *Cannot be set alongside subnet_id.*
         """
         return pulumi.get(self, "pool_id")
@@ -20047,7 +20048,7 @@ class VpcV1alpha1AllocationIpv4Private(dict):
 
            Subnet ID.
            Required same subnet to use allocation in subnet-resources (e.g. Network Interface)
-           
+
            *Cannot be set alongside pool_id.*
         """
         return pulumi.get(self, "subnet_id")
@@ -20136,12 +20137,12 @@ class VpcV1alpha1AllocationStatus(dict):
         :param _builtins.str state: :
                
                   This field represents the current state of the allocation.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Enumeration of possible states of the Allocation.
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED` - Default state, unspecified.
                   - `CREATING` - Allocation is being created.
                   - `ALLOCATED` - Allocation is ready for use.
@@ -20187,12 +20188,12 @@ class VpcV1alpha1AllocationStatus(dict):
         :
 
            This field represents the current state of the allocation.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Enumeration of possible states of the Allocation.
            Possible values:
-           
+
            - `STATE_UNSPECIFIED` - Default state, unspecified.
            - `CREATING` - Allocation is being created.
            - `ALLOCATED` - Allocation is ready for use.
@@ -20308,11 +20309,11 @@ class VpcV1alpha1AllocationStatusAssignmentNetworkInterface(dict):
         :param _builtins.str type: :
                
                   Type of allocation attachment on the network interface.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `TYPE_UNSPECIFIED`
                   - `PRIMARY` - Allocation is attached as the interface private IPv4 address.
                   - `ALIAS` - Allocation is attached as an IP alias.
@@ -20348,11 +20349,11 @@ class VpcV1alpha1AllocationStatusAssignmentNetworkInterface(dict):
         :
 
            Type of allocation attachment on the network interface.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `TYPE_UNSPECIFIED`
            - `PRIMARY` - Allocation is attached as the interface private IPv4 address.
            - `ALIAS` - Allocation is attached as an IP alias.
@@ -20389,10 +20390,10 @@ class VpcV1alpha1AllocationStatusDetails(dict):
         """
         :param _builtins.str version: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `IP_VERSION_UNSPECIFIED` - Default, unspecified IP version.
                   - `IPV4` - IPv4 address.
                   - `IPV6` - IPv6 address.
@@ -20420,10 +20421,10 @@ class VpcV1alpha1AllocationStatusDetails(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `IP_VERSION_UNSPECIFIED` - Default, unspecified IP version.
            - `IPV4` - IPv4 address.
            - `IPV6` - IPv6 address.
@@ -20445,10 +20446,10 @@ class GetApplicationsV1alpha1K8sReleaseStatusResult(dict):
         """
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `CREATED`
                   - `RUNNING`
@@ -20470,10 +20471,10 @@ class GetApplicationsV1alpha1K8sReleaseStatusResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `CREATED`
            - `RUNNING`
@@ -20533,11 +20534,11 @@ class GetCapacityV1CapacityAllowanceStatusResult(dict):
         :param _builtins.str state: :
                
                   Current state of the capacity allowance.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `STATE_PROVISIONING` - Capacity Allowance is being allocated; the process can take up to several minutes.
                   - `STATE_ACTIVE` - Capacity Allowance is allocated and can be used.
@@ -20551,11 +20552,11 @@ class GetCapacityV1CapacityAllowanceStatusResult(dict):
         :param _builtins.str usage_state: :
                
                   Current state of the capacity allowance usage.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `USAGE_STATE_UNSPECIFIED`
                   - `USAGE_STATE_USED` - Capacity allowance is actively in use.
                   - `USAGE_STATE_NOT_USED` - Capacity allowance is not currently in use.
@@ -20585,11 +20586,11 @@ class GetCapacityV1CapacityAllowanceStatusResult(dict):
         :
 
            Current state of the capacity allowance.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `STATE_PROVISIONING` - Capacity Allowance is being allocated; the process can take up to several minutes.
            - `STATE_ACTIVE` - Capacity Allowance is allocated and can be used.
@@ -20631,11 +20632,11 @@ class GetCapacityV1CapacityAllowanceStatusResult(dict):
         :
 
            Current state of the capacity allowance usage.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `USAGE_STATE_UNSPECIFIED`
            - `USAGE_STATE_USED` - Capacity allowance is actively in use.
            - `USAGE_STATE_NOT_USED` - Capacity allowance is not currently in use.
@@ -20661,9 +20662,9 @@ class GetCapacityV1CapacityBlockGroupByResourceAffinityResult(dict):
         :param 'GetCapacityV1CapacityBlockGroupByResourceAffinityResourceAffinityArgs' resource_affinity: :
                
                   Specifications of the Capacity Block Group.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Specification of the Capacity Block Group.
         """
         pulumi.set(__self__, "parent_id", parent_id)
@@ -20696,9 +20697,9 @@ class GetCapacityV1CapacityBlockGroupByResourceAffinityResult(dict):
         :
 
            Specifications of the Capacity Block Group.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Specification of the Capacity Block Group.
         """
         return pulumi.get(self, "resource_affinity")
@@ -20712,9 +20713,9 @@ class GetCapacityV1CapacityBlockGroupByResourceAffinityResourceAffinityResult(di
         :param 'GetCapacityV1CapacityBlockGroupByResourceAffinityResourceAffinityComputeV1Args' compute_v1: :
                
                   First version of the compute Resource Affinity.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   First version of Compute service resource affinity
         """
         if compute_v1 is not None:
@@ -20727,9 +20728,9 @@ class GetCapacityV1CapacityBlockGroupByResourceAffinityResourceAffinityResult(di
         :
 
            First version of the compute Resource Affinity.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            First version of Compute service resource affinity
         """
         return pulumi.get(self, "compute_v1")
@@ -20792,15 +20793,15 @@ class GetCapacityV1CapacityBlockGroupStatusResult(dict):
                   Current concatenation of non-zero Capacity Intervals that overlap or follow each other without a break.
                   If all Capacity Intervals are in the past, returns the last Continuous Interval.
                   If all Capacity Intervals are in the future, returns the first Continuous Interval scheduled.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Current, last or future concatenation of Capacity Intervals in a Capacity Block Group.
         :param _builtins.float current_limit: Capacity Block Group current quota limit.
         :param _builtins.str next_change_at: :
                
                   Time of the next Capacity Block Group quota change.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param _builtins.float next_change_to: :
                
@@ -20814,9 +20815,9 @@ class GetCapacityV1CapacityBlockGroupStatusResult(dict):
         :param 'GetCapacityV1CapacityBlockGroupStatusResourceAffinityArgs' resource_affinity: :
                
                   Specification of the Capacity Block Group.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Specification of the Capacity Block Group.
         :param _builtins.str service: :
                
@@ -20825,12 +20826,12 @@ class GetCapacityV1CapacityBlockGroupStatusResult(dict):
         :param _builtins.str state: :
                
                   Capacity Block Group state with respect to quota allocation.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Shows the state of a Capacity Block Group with respect to its quota.
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED` - Shouldn't happen.
                   - `STATE_ALLOCATING` - Capacity Block Group quota is being allocated as one or more capacity intervals have started.
                   - `STATE_ACTIVE` - Capacity Block Group quota is already allocated and active as one or more capacity intervals are active.
@@ -20841,12 +20842,12 @@ class GetCapacityV1CapacityBlockGroupStatusResult(dict):
         :param _builtins.str usage_state: :
                
                   Capacity Block Group quota usage state.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Shows the usage state if a Capacity Block Group quota.
                   Possible values:
-                  
+               
                   - `USAGE_STATE_UNSPECIFIED` - Shouldn't happen.
                   - `USAGE_STATE_USED` - Capacity Block Group quota is actively in use.
                   - `USAGE_STATE_NOT_USED` - Capacity Block Group quota is not currently in use.
@@ -20876,9 +20877,9 @@ class GetCapacityV1CapacityBlockGroupStatusResult(dict):
            Current concatenation of non-zero Capacity Intervals that overlap or follow each other without a break.
            If all Capacity Intervals are in the past, returns the last Continuous Interval.
            If all Capacity Intervals are in the future, returns the first Continuous Interval scheduled.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Current, last or future concatenation of Capacity Intervals in a Capacity Block Group.
         """
         return pulumi.get(self, "current_continuous_interval")
@@ -20898,7 +20899,7 @@ class GetCapacityV1CapacityBlockGroupStatusResult(dict):
         :
 
            Time of the next Capacity Block Group quota change.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "next_change_at")
@@ -20940,9 +20941,9 @@ class GetCapacityV1CapacityBlockGroupStatusResult(dict):
         :
 
            Specification of the Capacity Block Group.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Specification of the Capacity Block Group.
         """
         return pulumi.get(self, "resource_affinity")
@@ -20965,12 +20966,12 @@ class GetCapacityV1CapacityBlockGroupStatusResult(dict):
         :
 
            Capacity Block Group state with respect to quota allocation.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Shows the state of a Capacity Block Group with respect to its quota.
            Possible values:
-           
+
            - `STATE_UNSPECIFIED` - Shouldn't happen.
            - `STATE_ALLOCATING` - Capacity Block Group quota is being allocated as one or more capacity intervals have started.
            - `STATE_ACTIVE` - Capacity Block Group quota is already allocated and active as one or more capacity intervals are active.
@@ -21002,12 +21003,12 @@ class GetCapacityV1CapacityBlockGroupStatusResult(dict):
         :
 
            Capacity Block Group quota usage state.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Shows the usage state if a Capacity Block Group quota.
            Possible values:
-           
+
            - `USAGE_STATE_UNSPECIFIED` - Shouldn't happen.
            - `USAGE_STATE_USED` - Capacity Block Group quota is actively in use.
            - `USAGE_STATE_NOT_USED` - Capacity Block Group quota is not currently in use.
@@ -21029,7 +21030,7 @@ class GetCapacityV1CapacityBlockGroupStatusCurrentContinuousIntervalResult(dict)
         :param _builtins.str end_time: :
                
                   End time of the last interval(s) in Continuous Interval.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param _builtins.float quantity: :
                
@@ -21044,17 +21045,17 @@ class GetCapacityV1CapacityBlockGroupStatusCurrentContinuousIntervalResult(dict)
         :param _builtins.str start_time: :
                
                   Start time of the first interval(s) in Continuous Interval.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param _builtins.str state: :
                
                   Continuous Interval state.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Shows a state of a Continuous Interval.
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED` - Shouldn't happen.
                   - `STATE_SCHEDULED` - Continuous Interval is in the future.
                   - `STATE_ACTIVE` - Continuous Interval is active.
@@ -21072,7 +21073,7 @@ class GetCapacityV1CapacityBlockGroupStatusCurrentContinuousIntervalResult(dict)
         :
 
            End time of the last interval(s) in Continuous Interval.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "end_time")
@@ -21101,7 +21102,7 @@ class GetCapacityV1CapacityBlockGroupStatusCurrentContinuousIntervalResult(dict)
         :
 
            Start time of the first interval(s) in Continuous Interval.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "start_time")
@@ -21113,12 +21114,12 @@ class GetCapacityV1CapacityBlockGroupStatusCurrentContinuousIntervalResult(dict)
         :
 
            Continuous Interval state.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Shows a state of a Continuous Interval.
            Possible values:
-           
+
            - `STATE_UNSPECIFIED` - Shouldn't happen.
            - `STATE_SCHEDULED` - Continuous Interval is in the future.
            - `STATE_ACTIVE` - Continuous Interval is active.
@@ -21135,9 +21136,9 @@ class GetCapacityV1CapacityBlockGroupStatusResourceAffinityResult(dict):
         :param 'GetCapacityV1CapacityBlockGroupStatusResourceAffinityComputeV1Args' compute_v1: :
                
                   First version of the compute Resource Affinity.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   First version of Compute service resource affinity
         """
         pulumi.set(__self__, "compute_v1", compute_v1)
@@ -21149,9 +21150,9 @@ class GetCapacityV1CapacityBlockGroupStatusResourceAffinityResult(dict):
         :
 
            First version of the compute Resource Affinity.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            First version of Compute service resource affinity
         """
         return pulumi.get(self, "compute_v1")
@@ -21193,10 +21194,10 @@ class GetComputeV1DiskDiskEncryptionResult(dict):
         """
         :param _builtins.str type: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `DISK_ENCRYPTION_UNSPECIFIED` - No encryption is applied unless explicitly specified.
                   - `DISK_ENCRYPTION_MANAGED`:
                      Enables encryption using the platform's default root key from KMS.
@@ -21210,10 +21211,10 @@ class GetComputeV1DiskDiskEncryptionResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `DISK_ENCRYPTION_UNSPECIFIED` - No encryption is applied unless explicitly specified.
            - `DISK_ENCRYPTION_MANAGED`:
               Enables encryption using the platform's default root key from KMS.
@@ -21252,22 +21253,22 @@ class GetComputeV1DiskSnapshotStatusResult(dict):
                
                   CPU architecture associated with the source disk.
                   Not set if the architecture is unknown.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Right now UNDEFINED is an alias for AMD64, but that might change in the future
                   Possible values:
-                  
+               
                   - `UNDEFINED`
                   - `AMD64`
                   - `ARM64`
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   All possible states for DiskSnapshot resource
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `CREATING`
                   - `READY`
@@ -21313,12 +21314,12 @@ class GetComputeV1DiskSnapshotStatusResult(dict):
 
            CPU architecture associated with the source disk.
            Not set if the architecture is unknown.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Right now UNDEFINED is an alias for AMD64, but that might change in the future
            Possible values:
-           
+
            - `UNDEFINED`
            - `AMD64`
            - `ARM64`
@@ -21331,11 +21332,11 @@ class GetComputeV1DiskSnapshotStatusResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            All possible states for DiskSnapshot resource
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `CREATING`
            - `READY`
@@ -21434,19 +21435,19 @@ class GetComputeV1DiskStatusResult(dict):
         :param _builtins.bool reconciling: Indicates whether there is an ongoing operation
         :param _builtins.str source_image_cpu_architecture: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `SOURCE_IMAGE_CPU_UNSPECIFIED`
                   - `AMD64`
                   - `ARM64`
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `CREATING`
                   - `READY`
@@ -21532,10 +21533,10 @@ class GetComputeV1DiskStatusResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `SOURCE_IMAGE_CPU_UNSPECIFIED`
            - `AMD64`
            - `ARM64`
@@ -21553,10 +21554,10 @@ class GetComputeV1DiskStatusResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `CREATING`
            - `READY`
@@ -21634,10 +21635,10 @@ class GetComputeV1FilesystemStatusResult(dict):
         :param _builtins.bool reconciling: Indicates whether there is an ongoing operation
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `CREATING`
                   - `READY`
@@ -21687,10 +21688,10 @@ class GetComputeV1FilesystemStatusResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `CREATING`
            - `READY`
@@ -21812,16 +21813,16 @@ class GetComputeV1ImageStatusResult(dict):
         """
         :param 'GetComputeV1ImageStatusImageFamilyDeprecationArgs' image_family_deprecation: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Impossible create a disk using image family after the deprecation time, but still possible to create disk using image id.
         :param _builtins.bool reconciling: Indicates whether there is an ongoing operation
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `CREATING`
                   - `READY`
@@ -21842,8 +21843,8 @@ class GetComputeV1ImageStatusResult(dict):
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Impossible create a disk using image family after the deprecation time, but still possible to create disk using image id.
         """
         return pulumi.get(self, "image_family_deprecation")
@@ -21867,10 +21868,10 @@ class GetComputeV1ImageStatusResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `CREATING`
            - `READY`
@@ -21917,6 +21918,32 @@ class GetComputeV1ImageStatusImageFamilyDeprecationResult(dict):
 
 
 @pulumi.output_type
+class GetComputeV1ImageUnsupportedPresetResult(dict):
+    def __init__(__self__, *,
+                 platform: _builtins.str,
+                 preset: _builtins.str,
+                 reason: _builtins.str):
+        pulumi.set(__self__, "platform", platform)
+        pulumi.set(__self__, "preset", preset)
+        pulumi.set(__self__, "reason", reason)
+
+    @_builtins.property
+    @pulumi.getter
+    def platform(self) -> _builtins.str:
+        return pulumi.get(self, "platform")
+
+    @_builtins.property
+    @pulumi.getter
+    def preset(self) -> _builtins.str:
+        return pulumi.get(self, "preset")
+
+    @_builtins.property
+    @pulumi.getter
+    def reason(self) -> _builtins.str:
+        return pulumi.get(self, "reason")
+
+
+@pulumi.output_type
 class GetComputeV1InstanceBootDiskResult(dict):
     def __init__(__self__, *,
                  attach_mode: _builtins.str,
@@ -21926,10 +21953,10 @@ class GetComputeV1InstanceBootDiskResult(dict):
         """
         :param _builtins.str attach_mode: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `READ_ONLY`
                   - `READ_WRITE`
@@ -21937,10 +21964,10 @@ class GetComputeV1InstanceBootDiskResult(dict):
         :param 'GetComputeV1InstanceBootDiskExistingDiskArgs' existing_disk: :
                
                   Attach an existing disk.
-                  
+               
                   Lifecycle:
                   - The disk is preserved when the instance is deleted (it will be detached).
-                  
+               
                   Switching to a managed disk:
                   - To delete the disk together with the instance, switch to ManagedDisk in the instance spec.
                   - For the switch, `ManagedDisk.name` MUST match the current disk <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span>
@@ -21949,47 +21976,47 @@ class GetComputeV1InstanceBootDiskResult(dict):
                     exactly as they are currently defined in the disk resource.
                     Obtain the current values via `DiskService.Get` and copy them verbatim.
                     If `ManagedDisk.spec` differs from the current disk spec, the instance update will fail.
-                  
+               
                   *Cannot be set alongside managed_disk.*
         :param 'GetComputeV1InstanceBootDiskManagedDiskArgs' managed_disk: :
                
                   Attach a managed disk.
-                  
+               
                   Lifecycle:
                   - The disk is deleted when the instance is deleted.
-                  
+               
                   Semantics:
                   - Specifying a ManagedDisk expresses an intent to have that managed disk attached.
                   - If this intent cannot be satisfied, the entire operation fails.
                   - You can check the intent status in `instance.status.disk_attachments`.
-                  
+               
                   Updates and matching:
                   - Managed disks can be updated only via instance spec updates. Updates via DiskService are not allowed.
                   - During updates, disks are matched by <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span>.
-                  
+               
                   Renaming and data loss:
                   - Changing the disk <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span> triggers disk replacement (create a new disk and delete the old one),
                     which causes data loss.
                   - To rename a managed disk safely:
                     1) switch it to ExistingDisk in the instance spec, and
                     2) update/rename it via DiskService.
-                  
+               
                   Conflicts:
                   - Instance create/update fails if there is already a disk with the same <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span>.
                     as requested by any ManagedDisk.
-                  
+               
                   Finding the disk ID:
                   - The disk ID is available in `instance.status.disk_attachments` after it is created.
                     Use `DiskAttachmentStatus.name` to find the desired disk which matches <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span>.
-                  
+               
                   Switching to an existing (non-managed) disk:
                   - To preserve the disk after instance deletion, switch it to ExistingDisk in the instance spec,
                     use the disk ID from `instance.status.disk_attachments`.
-                  
+               
                   Deletion protection:
                   - Switching ExistingDisk to ManagedDisk fails if `Disk.spec.deletion_protection` is enabled.
                   - Deleting an instance that has a ManagedDisk fails if `Disk.spec.deletion_protection` is enabled.
-                  
+               
                   *Cannot be set alongside existing_disk.*
         """
         pulumi.set(__self__, "attach_mode", attach_mode)
@@ -22003,10 +22030,10 @@ class GetComputeV1InstanceBootDiskResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `READ_ONLY`
            - `READ_WRITE`
@@ -22028,10 +22055,10 @@ class GetComputeV1InstanceBootDiskResult(dict):
         :
 
            Attach an existing disk.
-           
+
            Lifecycle:
            - The disk is preserved when the instance is deleted (it will be detached).
-           
+
            Switching to a managed disk:
            - To delete the disk together with the instance, switch to ManagedDisk in the instance spec.
            - For the switch, `ManagedDisk.name` MUST match the current disk <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span>
@@ -22040,7 +22067,7 @@ class GetComputeV1InstanceBootDiskResult(dict):
              exactly as they are currently defined in the disk resource.
              Obtain the current values via `DiskService.Get` and copy them verbatim.
              If `ManagedDisk.spec` differs from the current disk spec, the instance update will fail.
-           
+
            *Cannot be set alongside managed_disk.*
         """
         return pulumi.get(self, "existing_disk")
@@ -22052,42 +22079,42 @@ class GetComputeV1InstanceBootDiskResult(dict):
         :
 
            Attach a managed disk.
-           
+
            Lifecycle:
            - The disk is deleted when the instance is deleted.
-           
+
            Semantics:
            - Specifying a ManagedDisk expresses an intent to have that managed disk attached.
            - If this intent cannot be satisfied, the entire operation fails.
            - You can check the intent status in `instance.status.disk_attachments`.
-           
+
            Updates and matching:
            - Managed disks can be updated only via instance spec updates. Updates via DiskService are not allowed.
            - During updates, disks are matched by <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span>.
-           
+
            Renaming and data loss:
            - Changing the disk <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span> triggers disk replacement (create a new disk and delete the old one),
              which causes data loss.
            - To rename a managed disk safely:
              1) switch it to ExistingDisk in the instance spec, and
              2) update/rename it via DiskService.
-           
+
            Conflicts:
            - Instance create/update fails if there is already a disk with the same <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span>.
              as requested by any ManagedDisk.
-           
+
            Finding the disk ID:
            - The disk ID is available in `instance.status.disk_attachments` after it is created.
              Use `DiskAttachmentStatus.name` to find the desired disk which matches <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span>.
-           
+
            Switching to an existing (non-managed) disk:
            - To preserve the disk after instance deletion, switch it to ExistingDisk in the instance spec,
              use the disk ID from `instance.status.disk_attachments`.
-           
+
            Deletion protection:
            - Switching ExistingDisk to ManagedDisk fails if `Disk.spec.deletion_protection` is enabled.
            - Deleting an instance that has a ManagedDisk fails if `Disk.spec.deletion_protection` is enabled.
-           
+
            *Cannot be set alongside existing_disk.*
         """
         return pulumi.get(self, "managed_disk")
@@ -22186,12 +22213,12 @@ class GetComputeV1InstanceBootDiskManagedDiskSpecResult(dict):
                
                   The type of disk defines the performance and reliability characteristics of the block device.
                   For details, see https://docs.nebius.com/compute/storage/types#disks-types
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   the list of available types will be clarified later, it is not final version
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `NETWORK_SSD`
                   - `NETWORK_HDD`
@@ -22302,12 +22329,12 @@ class GetComputeV1InstanceBootDiskManagedDiskSpecResult(dict):
 
            The type of disk defines the performance and reliability characteristics of the block device.
            For details, see https://docs.nebius.com/compute/storage/types#disks-types
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            the list of available types will be clarified later, it is not final version
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `NETWORK_SSD`
            - `NETWORK_HDD`
@@ -22324,10 +22351,10 @@ class GetComputeV1InstanceBootDiskManagedDiskSpecDiskEncryptionResult(dict):
         """
         :param _builtins.str type: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `DISK_ENCRYPTION_UNSPECIFIED` - No encryption is applied unless explicitly specified.
                   - `DISK_ENCRYPTION_MANAGED`:
                      Enables encryption using the platform's default root key from KMS.
@@ -22341,10 +22368,10 @@ class GetComputeV1InstanceBootDiskManagedDiskSpecDiskEncryptionResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `DISK_ENCRYPTION_UNSPECIFIED` - No encryption is applied unless explicitly specified.
            - `DISK_ENCRYPTION_MANAGED`:
               Enables encryption using the platform's default root key from KMS.
@@ -22381,10 +22408,10 @@ class GetComputeV1InstanceFilesystemResult(dict):
         """
         :param _builtins.str attach_mode: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `READ_ONLY`
                   - `READ_WRITE`
@@ -22400,10 +22427,10 @@ class GetComputeV1InstanceFilesystemResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `READ_ONLY`
            - `READ_WRITE`
@@ -22498,7 +22525,7 @@ class GetComputeV1InstanceLocalDisksPassthroughGroupResult(dict):
         :param _builtins.bool requested: :
                
                   Passthrough local disks from the underlying host.
-                  
+               
                   Devices are expected to appear in the guest as NVMe devices (nvme0, nvme1, ...),
                   but the exact number depends on the preset.
                   Enabled only when this field is explicitly set.
@@ -22512,7 +22539,7 @@ class GetComputeV1InstanceLocalDisksPassthroughGroupResult(dict):
         :
 
            Passthrough local disks from the underlying host.
-           
+
            Devices are expected to appear in the guest as NVMe devices (nvme0, nvme1, ...),
            but the exact number depends on the preset.
            Enabled only when this field is explicitly set.
@@ -22540,9 +22567,9 @@ class GetComputeV1InstanceNetworkInterfaceResult(dict):
         :param 'GetComputeV1InstanceNetworkInterfaceIpAddressArgs' ip_address: :
                
                   Private IPv4 address associated with the interface.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Describes an IPv4 address.
         :param _builtins.str name: :
                
@@ -22552,9 +22579,9 @@ class GetComputeV1InstanceNetworkInterfaceResult(dict):
         :param 'GetComputeV1InstanceNetworkInterfacePublicIpAddressArgs' public_ip_address: :
                
                   Public IPv4 address associated with the interface.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Describes a public IP address.
         :param Sequence['GetComputeV1InstanceNetworkInterfaceSecurityGroupArgs'] security_groups: :
                
@@ -22585,9 +22612,9 @@ class GetComputeV1InstanceNetworkInterfaceResult(dict):
         :
 
            Private IPv4 address associated with the interface.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Describes an IPv4 address.
         """
         return pulumi.get(self, "ip_address")
@@ -22611,9 +22638,9 @@ class GetComputeV1InstanceNetworkInterfaceResult(dict):
         :
 
            Public IPv4 address associated with the interface.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Describes a public IP address.
         """
         return pulumi.get(self, "public_ip_address")
@@ -22740,11 +22767,11 @@ class GetComputeV1InstancePreemptibleResult(dict):
                
                   Specifies what happens when the VM is preempted. The only supported value is STOP:
                   Compute stops the VM without deleting or restarting it.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `STOP`
         """
@@ -22759,11 +22786,11 @@ class GetComputeV1InstancePreemptibleResult(dict):
 
            Specifies what happens when the VM is preempted. The only supported value is STOP:
            Compute stops the VM without deleting or restarting it.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `STOP`
         """
@@ -22784,20 +22811,20 @@ class GetComputeV1InstanceReservationPolicyResult(dict):
         """
         :param _builtins.str policy: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `AUTO`:
                      1) Will try to launch instance in any<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>if provided.
                      2) Will try to launch instance in any of the available capacity block.
                      3) Will try to launch instance in PAYG if 1 & 2 are not satisfied.
-                  
+               
                   - `FORBID`:
-                     The instance is launched only using on-demand (PAYG) capacity.
-                     No attempt is made to find or use a Capacity Block.
-                     It's an error to provide<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>with policy = FORBID
-                  
+                The instance is launched only using on-demand (PAYG) capacity.
+                No attempt is made to find or use a Capacity Block.
+                It's an error to provide<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>with policy = FORBID
+               
                   - `STRICT`:
                      1) Will try to launch the instance in Capacity Blocks from<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>if provided.
                      2) If<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>are not provided will try to launch instance in suitable & available Capacity Block.
@@ -22813,20 +22840,20 @@ class GetComputeV1InstanceReservationPolicyResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `AUTO`:
               1) Will try to launch instance in any<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>if provided.
               2) Will try to launch instance in any of the available capacity block.
               3) Will try to launch instance in PAYG if 1 & 2 are not satisfied.
-           
+
            - `FORBID`:
-              The instance is launched only using on-demand (PAYG) capacity.
-              No attempt is made to find or use a Capacity Block.
-              It's an error to provide<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>with policy = FORBID
-           
+         The instance is launched only using on-demand (PAYG) capacity.
+         No attempt is made to find or use a Capacity Block.
+         It's an error to provide<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>with policy = FORBID
+
            - `STRICT`:
               1) Will try to launch the instance in Capacity Blocks from<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>if provided.
               2) If<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>are not provided will try to launch instance in suitable & available Capacity Block.
@@ -22872,10 +22899,10 @@ class GetComputeV1InstanceSecondaryDiskResult(dict):
         """
         :param _builtins.str attach_mode: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `READ_ONLY`
                   - `READ_WRITE`
@@ -22883,10 +22910,10 @@ class GetComputeV1InstanceSecondaryDiskResult(dict):
         :param 'GetComputeV1InstanceSecondaryDiskExistingDiskArgs' existing_disk: :
                
                   Attach an existing disk.
-                  
+               
                   Lifecycle:
                   - The disk is preserved when the instance is deleted (it will be detached).
-                  
+               
                   Switching to a managed disk:
                   - To delete the disk together with the instance, switch to ManagedDisk in the instance spec.
                   - For the switch, `ManagedDisk.name` MUST match the current disk <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span>
@@ -22895,47 +22922,47 @@ class GetComputeV1InstanceSecondaryDiskResult(dict):
                     exactly as they are currently defined in the disk resource.
                     Obtain the current values via `DiskService.Get` and copy them verbatim.
                     If `ManagedDisk.spec` differs from the current disk spec, the instance update will fail.
-                  
+               
                   *Cannot be set alongside managed_disk.*
         :param 'GetComputeV1InstanceSecondaryDiskManagedDiskArgs' managed_disk: :
                
                   Attach a managed disk.
-                  
+               
                   Lifecycle:
                   - The disk is deleted when the instance is deleted.
-                  
+               
                   Semantics:
                   - Specifying a ManagedDisk expresses an intent to have that managed disk attached.
                   - If this intent cannot be satisfied, the entire operation fails.
                   - You can check the intent status in `instance.status.disk_attachments`.
-                  
+               
                   Updates and matching:
                   - Managed disks can be updated only via instance spec updates. Updates via DiskService are not allowed.
                   - During updates, disks are matched by <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span>.
-                  
+               
                   Renaming and data loss:
                   - Changing the disk <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span> triggers disk replacement (create a new disk and delete the old one),
                     which causes data loss.
                   - To rename a managed disk safely:
                     1) switch it to ExistingDisk in the instance spec, and
                     2) update/rename it via DiskService.
-                  
+               
                   Conflicts:
                   - Instance create/update fails if there is already a disk with the same <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span>.
                     as requested by any ManagedDisk.
-                  
+               
                   Finding the disk ID:
                   - The disk ID is available in `instance.status.disk_attachments` after it is created.
                     Use `DiskAttachmentStatus.name` to find the desired disk which matches <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span>.
-                  
+               
                   Switching to an existing (non-managed) disk:
                   - To preserve the disk after instance deletion, switch it to ExistingDisk in the instance spec,
                     use the disk ID from `instance.status.disk_attachments`.
-                  
+               
                   Deletion protection:
                   - Switching ExistingDisk to ManagedDisk fails if `Disk.spec.deletion_protection` is enabled.
                   - Deleting an instance that has a ManagedDisk fails if `Disk.spec.deletion_protection` is enabled.
-                  
+               
                   *Cannot be set alongside existing_disk.*
         """
         pulumi.set(__self__, "attach_mode", attach_mode)
@@ -22949,10 +22976,10 @@ class GetComputeV1InstanceSecondaryDiskResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `READ_ONLY`
            - `READ_WRITE`
@@ -22974,10 +23001,10 @@ class GetComputeV1InstanceSecondaryDiskResult(dict):
         :
 
            Attach an existing disk.
-           
+
            Lifecycle:
            - The disk is preserved when the instance is deleted (it will be detached).
-           
+
            Switching to a managed disk:
            - To delete the disk together with the instance, switch to ManagedDisk in the instance spec.
            - For the switch, `ManagedDisk.name` MUST match the current disk <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span>
@@ -22986,7 +23013,7 @@ class GetComputeV1InstanceSecondaryDiskResult(dict):
              exactly as they are currently defined in the disk resource.
              Obtain the current values via `DiskService.Get` and copy them verbatim.
              If `ManagedDisk.spec` differs from the current disk spec, the instance update will fail.
-           
+
            *Cannot be set alongside managed_disk.*
         """
         return pulumi.get(self, "existing_disk")
@@ -22998,42 +23025,42 @@ class GetComputeV1InstanceSecondaryDiskResult(dict):
         :
 
            Attach a managed disk.
-           
+
            Lifecycle:
            - The disk is deleted when the instance is deleted.
-           
+
            Semantics:
            - Specifying a ManagedDisk expresses an intent to have that managed disk attached.
            - If this intent cannot be satisfied, the entire operation fails.
            - You can check the intent status in `instance.status.disk_attachments`.
-           
+
            Updates and matching:
            - Managed disks can be updated only via instance spec updates. Updates via DiskService are not allowed.
            - During updates, disks are matched by <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span>.
-           
+
            Renaming and data loss:
            - Changing the disk <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span> triggers disk replacement (create a new disk and delete the old one),
              which causes data loss.
            - To rename a managed disk safely:
              1) switch it to ExistingDisk in the instance spec, and
              2) update/rename it via DiskService.
-           
+
            Conflicts:
            - Instance create/update fails if there is already a disk with the same <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span>.
              as requested by any ManagedDisk.
-           
+
            Finding the disk ID:
            - The disk ID is available in `instance.status.disk_attachments` after it is created.
              Use `DiskAttachmentStatus.name` to find the desired disk which matches <span pulumi-lang-nodejs="`name`" pulumi-lang-dotnet="`Name`" pulumi-lang-go="`name`" pulumi-lang-python="`name`" pulumi-lang-yaml="`name`" pulumi-lang-java="`name`" pulumi-lang-hcl="`name`">`name`</span>.
-           
+
            Switching to an existing (non-managed) disk:
            - To preserve the disk after instance deletion, switch it to ExistingDisk in the instance spec,
              use the disk ID from `instance.status.disk_attachments`.
-           
+
            Deletion protection:
            - Switching ExistingDisk to ManagedDisk fails if `Disk.spec.deletion_protection` is enabled.
            - Deleting an instance that has a ManagedDisk fails if `Disk.spec.deletion_protection` is enabled.
-           
+
            *Cannot be set alongside existing_disk.*
         """
         return pulumi.get(self, "managed_disk")
@@ -23132,12 +23159,12 @@ class GetComputeV1InstanceSecondaryDiskManagedDiskSpecResult(dict):
                
                   The type of disk defines the performance and reliability characteristics of the block device.
                   For details, see https://docs.nebius.com/compute/storage/types#disks-types
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   the list of available types will be clarified later, it is not final version
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `NETWORK_SSD`
                   - `NETWORK_HDD`
@@ -23248,12 +23275,12 @@ class GetComputeV1InstanceSecondaryDiskManagedDiskSpecResult(dict):
 
            The type of disk defines the performance and reliability characteristics of the block device.
            For details, see https://docs.nebius.com/compute/storage/types#disks-types
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            the list of available types will be clarified later, it is not final version
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `NETWORK_SSD`
            - `NETWORK_HDD`
@@ -23270,10 +23297,10 @@ class GetComputeV1InstanceSecondaryDiskManagedDiskSpecDiskEncryptionResult(dict)
         """
         :param _builtins.str type: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `DISK_ENCRYPTION_UNSPECIFIED` - No encryption is applied unless explicitly specified.
                   - `DISK_ENCRYPTION_MANAGED`:
                      Enables encryption using the platform's default root key from KMS.
@@ -23287,10 +23314,10 @@ class GetComputeV1InstanceSecondaryDiskManagedDiskSpecDiskEncryptionResult(dict)
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `DISK_ENCRYPTION_UNSPECIFIED` - No encryption is applied unless explicitly specified.
            - `DISK_ENCRYPTION_MANAGED`:
               Enables encryption using the platform's default root key from KMS.
@@ -23332,16 +23359,16 @@ class GetComputeV1InstanceStatusResult(dict):
         :param Sequence['GetComputeV1InstanceStatusDiskAttachmentArgs'] disk_attachments: Status of the requested disk attachments.
         :param Sequence['GetComputeV1InstanceStatusNetworkInterfaceArgs'] network_interfaces: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Describes the status of a network interface.
         :param _builtins.bool reconciling: Indicates whether there is an ongoing operation
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `CREATING`
                   - `UPDATING`
@@ -23384,8 +23411,8 @@ class GetComputeV1InstanceStatusResult(dict):
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Describes the status of a network interface.
         """
         return pulumi.get(self, "network_interfaces")
@@ -23409,10 +23436,10 @@ class GetComputeV1InstanceStatusResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `CREATING`
            - `UPDATING`
@@ -23447,7 +23474,7 @@ class GetComputeV1InstanceStatusDiskAttachmentResult(dict):
                
                   Disk name used to match this status entry with the desired attachment
                   from the instance specification.
-                  
+               
                   Consistency:
                   - For ManagedDisk, this value is derived from the instance spec (ManagedDisk.name).
                   - For ExistingDisk, this value is derived from the disk resource name and may lag behind
@@ -23489,7 +23516,7 @@ class GetComputeV1InstanceStatusDiskAttachmentResult(dict):
 
            Disk name used to match this status entry with the desired attachment
            from the instance specification.
-           
+
            Consistency:
            - For ManagedDisk, this value is derived from the instance spec (ManagedDisk.name).
            - For ExistingDisk, this value is derived from the disk resource name and may lag behind
@@ -23761,11 +23788,11 @@ class GetComputeV1NvlInstanceGroupStatusInstancesResult(dict):
         :param _builtins.str instance_state: :
                
                   Current state of the instance.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `CREATING`
                   - `UPDATING`
@@ -23785,11 +23812,11 @@ class GetComputeV1NvlInstanceGroupStatusInstancesResult(dict):
         :
 
            Current state of the instance.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `CREATING`
            - `UPDATING`
@@ -24032,10 +24059,10 @@ class GetIamV1AuthPublicKeyStatusResult(dict):
         """
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `ACTIVE`
                   - `INACTIVE`
@@ -24069,10 +24096,10 @@ class GetIamV1AuthPublicKeyStatusResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `ACTIVE`
            - `INACTIVE`
@@ -24152,10 +24179,10 @@ class GetIamV1FederationCertificateStatusResult(dict):
         :param _builtins.str not_before: A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `ACTIVE`
                   - `EXPIRED`
@@ -24204,10 +24231,10 @@ class GetIamV1FederationCertificateStatusResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `ACTIVE`
            - `EXPIRED`
@@ -24272,11 +24299,11 @@ class GetIamV1FederationStatusResult(dict):
         :param _builtins.str state: :
                
                   Federation state.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `ACTIVE`
                   - `INACTIVE`
@@ -24301,11 +24328,11 @@ class GetIamV1FederationStatusResult(dict):
         :
 
            Federation state.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `ACTIVE`
            - `INACTIVE`
@@ -24336,8 +24363,8 @@ class GetIamV1GroupMembershipStatusResult(dict):
         """
         :param 'GetIamV1GroupMembershipStatusGroupMemberMetadataArgs' group_member_metadata: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Common resource metadata.
         :param 'GetIamV1GroupMembershipStatusServiceAccountStatusArgs' service_account_status: *Cannot be set alongside tenant_user_account_status.*
         :param 'GetIamV1GroupMembershipStatusTenantUserAccountStatusArgs' tenant_user_account_status: *Cannot be set alongside service_account_status.*
@@ -24352,8 +24379,8 @@ class GetIamV1GroupMembershipStatusResult(dict):
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Common resource metadata.
         """
         return pulumi.get(self, "group_member_metadata")
@@ -24389,7 +24416,7 @@ class GetIamV1GroupMembershipStatusGroupMemberMetadataResult(dict):
         :param _builtins.str created_at: :
                
                   Timestamp indicating when the resource was created.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param _builtins.str id: Identifier for the resource, unique for its resource type.
         :param Mapping[str, _builtins.str] labels: Labels associated with the resource.
@@ -24404,7 +24431,7 @@ class GetIamV1GroupMembershipStatusGroupMemberMetadataResult(dict):
         :param _builtins.str updated_at: :
                
                   Timestamp indicating when the resource was last updated.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         pulumi.set(__self__, "created_at", created_at)
@@ -24422,7 +24449,7 @@ class GetIamV1GroupMembershipStatusGroupMemberMetadataResult(dict):
         :
 
            Timestamp indicating when the resource was created.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "created_at")
@@ -24479,7 +24506,7 @@ class GetIamV1GroupMembershipStatusGroupMemberMetadataResult(dict):
         :
 
            Timestamp indicating when the resource was last updated.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "updated_at")
@@ -24515,16 +24542,16 @@ class GetIamV1GroupMembershipStatusTenantUserAccountStatusResult(dict):
                   once invitation is accepted it looses this reference (and internally gets a reference to their global federated user account)
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `ACTIVE`:
                      - in case of ordinary tenant user account a corresponding user can log into the system and use granted tenant resources
                      - in case of invited tenant user account once the invitation is accepted a corresponding user can start using granted resources
                        immediately
-                  
+               
                   - `INACTIVE` - unused
                   - `BLOCKED`:
                      - in case of ordinary tenant user account a corresponding user can log into the system but cannot be authorized to use tenant
@@ -24534,11 +24561,11 @@ class GetIamV1GroupMembershipStatusTenantUserAccountStatusResult(dict):
         :param _builtins.str user_account_state: :
                
                   user account state can help distinguish case when account is blocked globally
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `ACTIVE` - usual state when federated user can log into the system and view/manage granted resources in one or more tenants
                   - `INACTIVE` - federated user can be blocked (manually or by any specific automated process), in this state user cannot log into the system
@@ -24579,16 +24606,16 @@ class GetIamV1GroupMembershipStatusTenantUserAccountStatusResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `ACTIVE`:
               - in case of ordinary tenant user account a corresponding user can log into the system and use granted tenant resources
               - in case of invited tenant user account once the invitation is accepted a corresponding user can start using granted resources
                 immediately
-           
+
            - `INACTIVE` - unused
            - `BLOCKED`:
               - in case of ordinary tenant user account a corresponding user can log into the system but cannot be authorized to use tenant
@@ -24605,11 +24632,11 @@ class GetIamV1GroupMembershipStatusTenantUserAccountStatusResult(dict):
         :
 
            user account state can help distinguish case when account is blocked globally
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `ACTIVE` - usual state when federated user can log into the system and view/manage granted resources in one or more tenants
            - `INACTIVE` - federated user can be blocked (manually or by any specific automated process), in this state user cannot log into the system
@@ -24636,10 +24663,10 @@ class GetIamV1GroupStatusResult(dict):
         """
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `ACTIVE`
         """
@@ -24664,10 +24691,10 @@ class GetIamV1GroupStatusResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `ACTIVE`
         """
@@ -24695,10 +24722,10 @@ class GetIamV1InvitationStatusResult(dict):
         :param _builtins.str expires_at: A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `CREATING` - contacts data is not stored in pds yet. probably will GC it later
                   - `CREATED` - notification is not sent yet
@@ -24724,10 +24751,10 @@ class GetIamV1InvitationStatusResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `CREATING` - contacts data is not stored in pds yet. probably will GC it later
            - `CREATED` - notification is not sent yet
@@ -24758,10 +24785,10 @@ class GetIamV1ProjectStatusResult(dict):
         """
         :param _builtins.str container_state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `ACTIVE`
                   - `SCHEDULING_FOR_DELETION`
@@ -24778,10 +24805,10 @@ class GetIamV1ProjectStatusResult(dict):
                   - `CREATING` - DRAFT = 1000;
         :param _builtins.str suspension_state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `SUSPENSION_STATE_UNSPECIFIED`
                   - `NONE`
                   - `SUSPENDING`
@@ -24798,10 +24825,10 @@ class GetIamV1ProjectStatusResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `ACTIVE`
            - `SCHEDULING_FOR_DELETION`
@@ -24830,10 +24857,10 @@ class GetIamV1ProjectStatusResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `SUSPENSION_STATE_UNSPECIFIED`
            - `NONE`
            - `SUSPENDING`
@@ -24876,10 +24903,10 @@ class GetIamV1TenantStatusResult(dict):
         """
         :param _builtins.str container_state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `ACTIVE`
                   - `SCHEDULING_FOR_DELETION`
@@ -24896,10 +24923,10 @@ class GetIamV1TenantStatusResult(dict):
                   - `CREATING` - DRAFT = 1000;
         :param _builtins.str suspension_state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `SUSPENSION_STATE_UNSPECIFIED`
                   - `NONE`
                   - `SUSPENDING`
@@ -24916,10 +24943,10 @@ class GetIamV1TenantStatusResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `ACTIVE`
            - `SCHEDULING_FOR_DELETION`
@@ -24948,10 +24975,10 @@ class GetIamV1TenantStatusResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `SUSPENSION_STATE_UNSPECIFIED`
            - `NONE`
            - `SUSPENDING`
@@ -24985,16 +25012,16 @@ class GetIamV1TenantUserAccountStatusResult(dict):
                   once invitation is accepted it looses this reference (and internally gets a reference to their global federated user account)
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `ACTIVE`:
                      - in case of ordinary tenant user account a corresponding user can log into the system and use granted tenant resources
                      - in case of invited tenant user account once the invitation is accepted a corresponding user can start using granted resources
                        immediately
-                  
+               
                   - `INACTIVE` - unused
                   - `BLOCKED`:
                      - in case of ordinary tenant user account a corresponding user can log into the system but cannot be authorized to use tenant
@@ -25004,11 +25031,11 @@ class GetIamV1TenantUserAccountStatusResult(dict):
         :param _builtins.str user_account_state: :
                
                   user account state can help distinguish case when account is blocked globally
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `ACTIVE` - usual state when federated user can log into the system and view/manage granted resources in one or more tenants
                   - `INACTIVE` - federated user can be blocked (manually or by any specific automated process), in this state user cannot log into the system
@@ -25049,16 +25076,16 @@ class GetIamV1TenantUserAccountStatusResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `ACTIVE`:
               - in case of ordinary tenant user account a corresponding user can log into the system and use granted tenant resources
               - in case of invited tenant user account once the invitation is accepted a corresponding user can start using granted resources
                 immediately
-           
+
            - `INACTIVE` - unused
            - `BLOCKED`:
               - in case of ordinary tenant user account a corresponding user can log into the system but cannot be authorized to use tenant
@@ -25075,11 +25102,11 @@ class GetIamV1TenantUserAccountStatusResult(dict):
         :
 
            user account state can help distinguish case when account is blocked globally
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `ACTIVE` - usual state when federated user can log into the system and view/manage granted resources in one or more tenants
            - `INACTIVE` - federated user can be blocked (manually or by any specific automated process), in this state user cannot log into the system
@@ -25191,10 +25218,10 @@ class GetIamV2AccessKeyStatusResult(dict):
         """
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `ACTIVE`
                   - `INACTIVE`
@@ -25246,10 +25273,10 @@ class GetIamV2AccessKeyStatusResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `ACTIVE`
            - `INACTIVE`
@@ -25274,11 +25301,11 @@ class GetIamV2ProjectStatusResult(dict):
         :param _builtins.str project_state: :
                
                   Current state of the project.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `CREATING`
                   - `ACTIVE`
@@ -25297,11 +25324,11 @@ class GetIamV2ProjectStatusResult(dict):
         :
 
            Current state of the project.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `CREATING`
            - `ACTIVE`
@@ -25327,10 +25354,10 @@ class GetIamV2TenantStatusResult(dict):
         """
         :param _builtins.str tenant_state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `CREATING`
                   - `ACTIVE`
@@ -25347,10 +25374,10 @@ class GetIamV2TenantStatusResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `CREATING`
            - `ACTIVE`
@@ -25378,22 +25405,22 @@ class GetKmsV1AsymmetricKeyStatusResult(dict):
         :param _builtins.str deleted_at: :
                
                   Time when the key was scheduled for deletion.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param _builtins.str purge_at: :
                
                   Time when the key will be permanently deleted.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param _builtins.str state: :
                
                   State (ACTIVE, SCHEDULED_FOR_DELETION)
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Key state
                   Possible values:
-                  
+               
                   - `KEY_STATE_UNSPECIFIED`
                   - `ACTIVE` - Key is active, ready for use
                   - `SCHEDULED_FOR_DELETION` - Key is scheduled for deletion.
@@ -25409,7 +25436,7 @@ class GetKmsV1AsymmetricKeyStatusResult(dict):
         :
 
            Time when the key was scheduled for deletion.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "deleted_at")
@@ -25421,7 +25448,7 @@ class GetKmsV1AsymmetricKeyStatusResult(dict):
         :
 
            Time when the key will be permanently deleted.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "purge_at")
@@ -25433,12 +25460,12 @@ class GetKmsV1AsymmetricKeyStatusResult(dict):
         :
 
            State (ACTIVE, SCHEDULED_FOR_DELETION)
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Key state
            Possible values:
-           
+
            - `KEY_STATE_UNSPECIFIED`
            - `ACTIVE` - Key is active, ready for use
            - `SCHEDULED_FOR_DELETION` - Key is scheduled for deletion.
@@ -25462,22 +25489,22 @@ class GetKmsV1SymmetricKeyStatusResult(dict):
         :param _builtins.str deleted_at: :
                
                   Time when the key was scheduled for deletion.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param _builtins.str purge_at: :
                
                   Time when the key will be permanently deleted.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param _builtins.str state: :
                
                   State (ACTIVE, SCHEDULED_FOR_DELETION).
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Key state
                   Possible values:
-                  
+               
                   - `KEY_STATE_UNSPECIFIED`
                   - `ACTIVE` - Key is active, ready for use
                   - `SCHEDULED_FOR_DELETION` - Key is scheduled for deletion.
@@ -25493,7 +25520,7 @@ class GetKmsV1SymmetricKeyStatusResult(dict):
         :
 
            Time when the key was scheduled for deletion.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "deleted_at")
@@ -25505,7 +25532,7 @@ class GetKmsV1SymmetricKeyStatusResult(dict):
         :
 
            Time when the key will be permanently deleted.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "purge_at")
@@ -25517,12 +25544,12 @@ class GetKmsV1SymmetricKeyStatusResult(dict):
         :
 
            State (ACTIVE, SCHEDULED_FOR_DELETION).
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Key state
            Possible values:
-           
+
            - `KEY_STATE_UNSPECIFIED`
            - `ACTIVE` - Key is active, ready for use
            - `SCHEDULED_FOR_DELETION` - Key is scheduled for deletion.
@@ -25556,7 +25583,7 @@ class GetMk8sV1ClusterControlPlaneResult(dict):
                   Enables installation of the Karpenter inside a cluster.
                   Karpenter will be installed as a helm chart inside cluster
                   so it requires creation of at least one CPU public node group.
-                  
+               
                   Please note that there is no feature parity between Karpenter node pools and
                   public node groups.
                   By default cluster will be created without it.
@@ -25617,7 +25644,7 @@ class GetMk8sV1ClusterControlPlaneResult(dict):
            Enables installation of the Karpenter inside a cluster.
            Karpenter will be installed as a helm chart inside cluster
            so it requires creation of at least one CPU public node group.
-           
+
            Please note that there is no feature parity between Karpenter node pools and
            public node groups.
            By default cluster will be created without it.
@@ -25751,16 +25778,16 @@ class GetMk8sV1ClusterStatusResult(dict):
         """
         :param Sequence['GetMk8sV1ClusterStatusEventArgs'] events: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   A resource event that has occurred (more or less in the same way) multiple times across a service-defined aggregation interval
         :param _builtins.bool reconciling: Show that changes are in flight
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `PROVISIONING`
                   - `RUNNING`
@@ -25782,8 +25809,8 @@ class GetMk8sV1ClusterStatusResult(dict):
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            A resource event that has occurred (more or less in the same way) multiple times across a service-defined aggregation interval
         """
         return pulumi.get(self, "events")
@@ -25802,10 +25829,10 @@ class GetMk8sV1ClusterStatusResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `PROVISIONING`
            - `RUNNING`
@@ -25824,8 +25851,8 @@ class GetMk8sV1ClusterStatusControlPlaneResult(dict):
         """
         :param 'GetMk8sV1ClusterStatusControlPlaneEndpointsArgs' endpoints: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Endpoints of Kubernetes control plane. Kubernetes API can be accessed at `https://endpoint/`.
         :param _builtins.float etcd_cluster_size: Number of instances in etcd cluster.
         :param _builtins.str version: :
@@ -25852,8 +25879,8 @@ class GetMk8sV1ClusterStatusControlPlaneResult(dict):
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Endpoints of Kubernetes control plane. Kubernetes API can be accessed at `https://endpoint/`.
         """
         return pulumi.get(self, "endpoints")
@@ -25938,14 +25965,14 @@ class GetMk8sV1ClusterStatusEventResult(dict):
         :param _builtins.str first_occurred_at: :
                
                   Time of the first occurrence of a recurrent event
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param 'GetMk8sV1ClusterStatusEventLastOccurrenceArgs' last_occurrence: :
                
                   Last occurrence of a recurrent event
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Represents an API Resource-related event which is potentially important to the end-user. What exactly constitutes an *event* to be
                   reported is service-dependent
         :param _builtins.float occurrence_count: The number of times this event has occurred between <span pulumi-lang-nodejs="`firstOccurredAt`" pulumi-lang-dotnet="`FirstOccurredAt`" pulumi-lang-go="`firstOccurredAt`" pulumi-lang-python="`first_occurred_at`" pulumi-lang-yaml="`firstOccurredAt`" pulumi-lang-java="`firstOccurredAt`" pulumi-lang-hcl="`first_occurred_at`">`firstOccurredAt`</span> and `last_occurrence.occurred_at`. Must be > 0
@@ -25961,7 +25988,7 @@ class GetMk8sV1ClusterStatusEventResult(dict):
         :
 
            Time of the first occurrence of a recurrent event
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "first_occurred_at")
@@ -25973,9 +26000,9 @@ class GetMk8sV1ClusterStatusEventResult(dict):
         :
 
            Last occurrence of a recurrent event
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Represents an API Resource-related event which is potentially important to the end-user. What exactly constitutes an *event* to be
            reported is service-dependent
         """
@@ -26002,18 +26029,18 @@ class GetMk8sV1ClusterStatusEventLastOccurrenceResult(dict):
         :param _builtins.str level: :
                
                   Severity level for the event
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED` - Unspecified event severity level
                   - `DEBUG` - A debug event providing detailed insight. Such events are used to debug problems with specific resource(s) and process(es)
                   - `INFO` - A normal event or state change. Informs what is happening with the API resource. Does not require user attention or interaction
                   - `WARN`:
-                     Warning event. Indicates a potential or minor problem with the API resource and/or the corresponding processes. Needs user attention,
-                     but requires no immediate action (yet)
-                  
+                Warning event. Indicates a potential or minor problem with the API resource and/or the corresponding processes. Needs user attention,
+                but requires no immediate action (yet)
+               
                   - `ERROR` - Error event. Indicates a serious problem with the API resource and/or the corresponding processes. Requires immediate user action
         :param _builtins.str message: :
                
@@ -26022,7 +26049,7 @@ class GetMk8sV1ClusterStatusEventLastOccurrenceResult(dict):
         :param _builtins.str occurred_at: :
                
                   Time at which the event has occurred
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         pulumi.set(__self__, "code", code)
@@ -26045,18 +26072,18 @@ class GetMk8sV1ClusterStatusEventLastOccurrenceResult(dict):
         :
 
            Severity level for the event
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED` - Unspecified event severity level
            - `DEBUG` - A debug event providing detailed insight. Such events are used to debug problems with specific resource(s) and process(es)
            - `INFO` - A normal event or state change. Informs what is happening with the API resource. Does not require user attention or interaction
            - `WARN`:
-              Warning event. Indicates a potential or minor problem with the API resource and/or the corresponding processes. Needs user attention,
-              but requires no immediate action (yet)
-           
+         Warning event. Indicates a potential or minor problem with the API resource and/or the corresponding processes. Needs user attention,
+         but requires no immediate action (yet)
+
            - `ERROR` - Error event. Indicates a serious problem with the API resource and/or the corresponding processes. Requires immediate user action
         """
         return pulumi.get(self, "level")
@@ -26079,7 +26106,7 @@ class GetMk8sV1ClusterStatusEventLastOccurrenceResult(dict):
         :
 
            Time at which the event has occurred
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "occurred_at")
@@ -26114,16 +26141,16 @@ class GetMk8sV1NodeGroupAutoRepairConditionResult(dict):
         :param _builtins.bool disabled: :
                
                   When true, disables the default auto-repair condition rules.
-                  
+               
                   *Cannot be set alongside timeout.*
         :param _builtins.str status: :
                
                   Node condition status.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `CONDITION_STATUS_UNSPECIFIED`
                   - `TRUE`
                   - `FALSE`
@@ -26131,9 +26158,9 @@ class GetMk8sV1NodeGroupAutoRepairConditionResult(dict):
         :param _builtins.str timeout: :
                
                   The duration after which the node is automatically repaired if the condition remains in the specified status.
-                  
+               
                   Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as <span pulumi-lang-nodejs="`300ms`" pulumi-lang-dotnet="`300ms`" pulumi-lang-go="`300ms`" pulumi-lang-python="`300ms`" pulumi-lang-yaml="`300ms`" pulumi-lang-java="`300ms`" pulumi-lang-hcl="`300ms`">`300ms`</span>, `-1.5h` or <span pulumi-lang-nodejs="`2h45m`" pulumi-lang-dotnet="`2h45m`" pulumi-lang-go="`2h45m`" pulumi-lang-python="`2h45m`" pulumi-lang-yaml="`2h45m`" pulumi-lang-java="`2h45m`" pulumi-lang-hcl="`2h45m`">`2h45m`</span>. Valid time units are <span pulumi-lang-nodejs="`ns`" pulumi-lang-dotnet="`Ns`" pulumi-lang-go="`ns`" pulumi-lang-python="`ns`" pulumi-lang-yaml="`ns`" pulumi-lang-java="`ns`" pulumi-lang-hcl="`ns`">`ns`</span>, <span pulumi-lang-nodejs="`us`" pulumi-lang-dotnet="`Us`" pulumi-lang-go="`us`" pulumi-lang-python="`us`" pulumi-lang-yaml="`us`" pulumi-lang-java="`us`" pulumi-lang-hcl="`us`">`us`</span> (or `µs`), <span pulumi-lang-nodejs="`ms`" pulumi-lang-dotnet="`Ms`" pulumi-lang-go="`ms`" pulumi-lang-python="`ms`" pulumi-lang-yaml="`ms`" pulumi-lang-java="`ms`" pulumi-lang-hcl="`ms`">`ms`</span>, <span pulumi-lang-nodejs="`s`" pulumi-lang-dotnet="`S`" pulumi-lang-go="`s`" pulumi-lang-python="`s`" pulumi-lang-yaml="`s`" pulumi-lang-java="`s`" pulumi-lang-hcl="`s`">`s`</span>, <span pulumi-lang-nodejs="`m`" pulumi-lang-dotnet="`M`" pulumi-lang-go="`m`" pulumi-lang-python="`m`" pulumi-lang-yaml="`m`" pulumi-lang-java="`m`" pulumi-lang-hcl="`m`">`m`</span>, <span pulumi-lang-nodejs="`h`" pulumi-lang-dotnet="`H`" pulumi-lang-go="`h`" pulumi-lang-python="`h`" pulumi-lang-yaml="`h`" pulumi-lang-java="`h`" pulumi-lang-hcl="`h`">`h`</span>, <span pulumi-lang-nodejs="`d`" pulumi-lang-dotnet="`D`" pulumi-lang-go="`d`" pulumi-lang-python="`d`" pulumi-lang-yaml="`d`" pulumi-lang-java="`d`" pulumi-lang-hcl="`d`">`d`</span>.
-                  
+               
                   *Cannot be set alongside disabled.*
         :param _builtins.str type: Node condition type.
         """
@@ -26149,7 +26176,7 @@ class GetMk8sV1NodeGroupAutoRepairConditionResult(dict):
         :
 
            When true, disables the default auto-repair condition rules.
-           
+
            *Cannot be set alongside timeout.*
         """
         return pulumi.get(self, "disabled")
@@ -26161,11 +26188,11 @@ class GetMk8sV1NodeGroupAutoRepairConditionResult(dict):
         :
 
            Node condition status.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `CONDITION_STATUS_UNSPECIFIED`
            - `TRUE`
            - `FALSE`
@@ -26180,9 +26207,9 @@ class GetMk8sV1NodeGroupAutoRepairConditionResult(dict):
         :
 
            The duration after which the node is automatically repaired if the condition remains in the specified status.
-           
+
            Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as <span pulumi-lang-nodejs="`300ms`" pulumi-lang-dotnet="`300ms`" pulumi-lang-go="`300ms`" pulumi-lang-python="`300ms`" pulumi-lang-yaml="`300ms`" pulumi-lang-java="`300ms`" pulumi-lang-hcl="`300ms`">`300ms`</span>, `-1.5h` or <span pulumi-lang-nodejs="`2h45m`" pulumi-lang-dotnet="`2h45m`" pulumi-lang-go="`2h45m`" pulumi-lang-python="`2h45m`" pulumi-lang-yaml="`2h45m`" pulumi-lang-java="`2h45m`" pulumi-lang-hcl="`2h45m`">`2h45m`</span>. Valid time units are <span pulumi-lang-nodejs="`ns`" pulumi-lang-dotnet="`Ns`" pulumi-lang-go="`ns`" pulumi-lang-python="`ns`" pulumi-lang-yaml="`ns`" pulumi-lang-java="`ns`" pulumi-lang-hcl="`ns`">`ns`</span>, <span pulumi-lang-nodejs="`us`" pulumi-lang-dotnet="`Us`" pulumi-lang-go="`us`" pulumi-lang-python="`us`" pulumi-lang-yaml="`us`" pulumi-lang-java="`us`" pulumi-lang-hcl="`us`">`us`</span> (or `µs`), <span pulumi-lang-nodejs="`ms`" pulumi-lang-dotnet="`Ms`" pulumi-lang-go="`ms`" pulumi-lang-python="`ms`" pulumi-lang-yaml="`ms`" pulumi-lang-java="`ms`" pulumi-lang-hcl="`ms`">`ms`</span>, <span pulumi-lang-nodejs="`s`" pulumi-lang-dotnet="`S`" pulumi-lang-go="`s`" pulumi-lang-python="`s`" pulumi-lang-yaml="`s`" pulumi-lang-java="`s`" pulumi-lang-hcl="`s`">`s`</span>, <span pulumi-lang-nodejs="`m`" pulumi-lang-dotnet="`M`" pulumi-lang-go="`m`" pulumi-lang-python="`m`" pulumi-lang-yaml="`m`" pulumi-lang-java="`m`" pulumi-lang-hcl="`m`">`m`</span>, <span pulumi-lang-nodejs="`h`" pulumi-lang-dotnet="`H`" pulumi-lang-go="`h`" pulumi-lang-python="`h`" pulumi-lang-yaml="`h`" pulumi-lang-java="`h`" pulumi-lang-hcl="`h`">`h`</span>, <span pulumi-lang-nodejs="`d`" pulumi-lang-dotnet="`D`" pulumi-lang-go="`d`" pulumi-lang-python="`d`" pulumi-lang-yaml="`d`" pulumi-lang-java="`d`" pulumi-lang-hcl="`d`">`d`</span>.
-           
+
            *Cannot be set alongside disabled.*
         """
         return pulumi.get(self, "timeout")
@@ -26236,8 +26263,8 @@ class GetMk8sV1NodeGroupStatusResult(dict):
         """
         :param Sequence['GetMk8sV1NodeGroupStatusEventArgs'] events: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   A resource event that has occurred (more or less in the same way) multiple times across a service-defined aggregation interval
         :param _builtins.float node_count: :
                
@@ -26254,10 +26281,10 @@ class GetMk8sV1NodeGroupStatusResult(dict):
         :param _builtins.bool reconciling: Show that there are changes are in flight.
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `PROVISIONING`
                   - `RUNNING`
@@ -26294,8 +26321,8 @@ class GetMk8sV1NodeGroupStatusResult(dict):
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            A resource event that has occurred (more or less in the same way) multiple times across a service-defined aggregation interval
         """
         return pulumi.get(self, "events")
@@ -26347,10 +26374,10 @@ class GetMk8sV1NodeGroupStatusResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `PROVISIONING`
            - `RUNNING`
@@ -26405,14 +26432,14 @@ class GetMk8sV1NodeGroupStatusEventResult(dict):
         :param _builtins.str first_occurred_at: :
                
                   Time of the first occurrence of a recurrent event
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param 'GetMk8sV1NodeGroupStatusEventLastOccurrenceArgs' last_occurrence: :
                
                   Last occurrence of a recurrent event
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Represents an API Resource-related event which is potentially important to the end-user. What exactly constitutes an *event* to be
                   reported is service-dependent
         :param _builtins.float occurrence_count: The number of times this event has occurred between <span pulumi-lang-nodejs="`firstOccurredAt`" pulumi-lang-dotnet="`FirstOccurredAt`" pulumi-lang-go="`firstOccurredAt`" pulumi-lang-python="`first_occurred_at`" pulumi-lang-yaml="`firstOccurredAt`" pulumi-lang-java="`firstOccurredAt`" pulumi-lang-hcl="`first_occurred_at`">`firstOccurredAt`</span> and `last_occurrence.occurred_at`. Must be > 0
@@ -26428,7 +26455,7 @@ class GetMk8sV1NodeGroupStatusEventResult(dict):
         :
 
            Time of the first occurrence of a recurrent event
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "first_occurred_at")
@@ -26440,9 +26467,9 @@ class GetMk8sV1NodeGroupStatusEventResult(dict):
         :
 
            Last occurrence of a recurrent event
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Represents an API Resource-related event which is potentially important to the end-user. What exactly constitutes an *event* to be
            reported is service-dependent
         """
@@ -26469,18 +26496,18 @@ class GetMk8sV1NodeGroupStatusEventLastOccurrenceResult(dict):
         :param _builtins.str level: :
                
                   Severity level for the event
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED` - Unspecified event severity level
                   - `DEBUG` - A debug event providing detailed insight. Such events are used to debug problems with specific resource(s) and process(es)
                   - `INFO` - A normal event or state change. Informs what is happening with the API resource. Does not require user attention or interaction
                   - `WARN`:
-                     Warning event. Indicates a potential or minor problem with the API resource and/or the corresponding processes. Needs user attention,
-                     but requires no immediate action (yet)
-                  
+                Warning event. Indicates a potential or minor problem with the API resource and/or the corresponding processes. Needs user attention,
+                but requires no immediate action (yet)
+               
                   - `ERROR` - Error event. Indicates a serious problem with the API resource and/or the corresponding processes. Requires immediate user action
         :param _builtins.str message: :
                
@@ -26489,7 +26516,7 @@ class GetMk8sV1NodeGroupStatusEventLastOccurrenceResult(dict):
         :param _builtins.str occurred_at: :
                
                   Time at which the event has occurred
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         pulumi.set(__self__, "code", code)
@@ -26512,18 +26539,18 @@ class GetMk8sV1NodeGroupStatusEventLastOccurrenceResult(dict):
         :
 
            Severity level for the event
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED` - Unspecified event severity level
            - `DEBUG` - A debug event providing detailed insight. Such events are used to debug problems with specific resource(s) and process(es)
            - `INFO` - A normal event or state change. Informs what is happening with the API resource. Does not require user attention or interaction
            - `WARN`:
-              Warning event. Indicates a potential or minor problem with the API resource and/or the corresponding processes. Needs user attention,
-              but requires no immediate action (yet)
-           
+         Warning event. Indicates a potential or minor problem with the API resource and/or the corresponding processes. Needs user attention,
+         but requires no immediate action (yet)
+
            - `ERROR` - Error event. Indicates a serious problem with the API resource and/or the corresponding processes. Requires immediate user action
         """
         return pulumi.get(self, "level")
@@ -26546,7 +26573,7 @@ class GetMk8sV1NodeGroupStatusEventLastOccurrenceResult(dict):
         :
 
            Time at which the event has occurred
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "occurred_at")
@@ -26567,35 +26594,35 @@ class GetMk8sV1NodeGroupStatusStrategyResult(dict):
                   Important consequence of that is if PodDisruptionBudget doesn't allow evicting a pod,
                   then NodeGroup update with node re-creation will hang on that pod eviction.
                   Note that this is different from `kubectl drain --timeout`, which gives up and returns an error.
-                  
+               
                   On 2026-08-01, defaults to 0.
                   IMPORTANT: starting from Q3 2026 new default is 10m;
                   for new clusters it will default to 10m,
                   node groups in existing clusters will be gradually migrated during Q3 to the default of 10m as well.
                   To get the actual value for your node group, please see 'strategy' in its status.
-                  
+               
                   Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as <span pulumi-lang-nodejs="`300ms`" pulumi-lang-dotnet="`300ms`" pulumi-lang-go="`300ms`" pulumi-lang-python="`300ms`" pulumi-lang-yaml="`300ms`" pulumi-lang-java="`300ms`" pulumi-lang-hcl="`300ms`">`300ms`</span>, `-1.5h` or <span pulumi-lang-nodejs="`2h45m`" pulumi-lang-dotnet="`2h45m`" pulumi-lang-go="`2h45m`" pulumi-lang-python="`2h45m`" pulumi-lang-yaml="`2h45m`" pulumi-lang-java="`2h45m`" pulumi-lang-hcl="`2h45m`">`2h45m`</span>. Valid time units are <span pulumi-lang-nodejs="`ns`" pulumi-lang-dotnet="`Ns`" pulumi-lang-go="`ns`" pulumi-lang-python="`ns`" pulumi-lang-yaml="`ns`" pulumi-lang-java="`ns`" pulumi-lang-hcl="`ns`">`ns`</span>, <span pulumi-lang-nodejs="`us`" pulumi-lang-dotnet="`Us`" pulumi-lang-go="`us`" pulumi-lang-python="`us`" pulumi-lang-yaml="`us`" pulumi-lang-java="`us`" pulumi-lang-hcl="`us`">`us`</span> (or `µs`), <span pulumi-lang-nodejs="`ms`" pulumi-lang-dotnet="`Ms`" pulumi-lang-go="`ms`" pulumi-lang-python="`ms`" pulumi-lang-yaml="`ms`" pulumi-lang-java="`ms`" pulumi-lang-hcl="`ms`">`ms`</span>, <span pulumi-lang-nodejs="`s`" pulumi-lang-dotnet="`S`" pulumi-lang-go="`s`" pulumi-lang-python="`s`" pulumi-lang-yaml="`s`" pulumi-lang-java="`s`" pulumi-lang-hcl="`s`">`s`</span>, <span pulumi-lang-nodejs="`m`" pulumi-lang-dotnet="`M`" pulumi-lang-go="`m`" pulumi-lang-python="`m`" pulumi-lang-yaml="`m`" pulumi-lang-java="`m`" pulumi-lang-hcl="`m`">`m`</span>, <span pulumi-lang-nodejs="`h`" pulumi-lang-dotnet="`H`" pulumi-lang-go="`h`" pulumi-lang-python="`h`" pulumi-lang-yaml="`h`" pulumi-lang-java="`h`" pulumi-lang-hcl="`h`">`h`</span>, <span pulumi-lang-nodejs="`d`" pulumi-lang-dotnet="`D`" pulumi-lang-go="`d`" pulumi-lang-python="`d`" pulumi-lang-yaml="`d`" pulumi-lang-java="`d`" pulumi-lang-hcl="`d`">`d`</span>.
         :param 'GetMk8sV1NodeGroupStatusStrategyMaxSurgeArgs' max_surge: :
                
                   The maximum number of additional nodes that can be provisioned above the desired number of nodes during the update process.
-                  
+               
                   This value can be specified either as an absolute number (for example 3) or as a percentage of the desired
                   number of nodes (for example 5%).
-                  
+               
                   When specified as a percentage, the actual number is calculated by rounding up to the nearest whole number.
                   This value cannot be 0 if <span pulumi-lang-nodejs="`maxUnavailable`" pulumi-lang-dotnet="`MaxUnavailable`" pulumi-lang-go="`maxUnavailable`" pulumi-lang-python="`max_unavailable`" pulumi-lang-yaml="`maxUnavailable`" pulumi-lang-java="`maxUnavailable`" pulumi-lang-hcl="`max_unavailable`">`maxUnavailable`</span> is also set to 0.
-                  
+               
                   On 2026-08-01, defaults to 1.
                   IMPORTANT: starting from Q3 2026 new default is 0;
                   for new clusters it will default to 0,
                   node groups in existing clusters will be gradually migrated during Q3 to the default of 0 as well.
                   To get the actual value for your node group, please see 'strategy' in its status.
-                  
+               
                   Example: If set to 25%, the node group can scale up by an additional 25% during the update,
                   allowing new nodes to be added before old nodes are removed, which helps minimize workload disruption.
-                  
+               
                   NOTE:
-                  
+               
                   it is user responsibility to ensure that there are enough quota for provision nodes above the desired number.
                   Available quota effectively limits <span pulumi-lang-nodejs="`maxSurge`" pulumi-lang-dotnet="`MaxSurge`" pulumi-lang-go="`maxSurge`" pulumi-lang-python="`max_surge`" pulumi-lang-yaml="`maxSurge`" pulumi-lang-java="`maxSurge`" pulumi-lang-hcl="`max_surge`">`maxSurge`</span>.
                   In case of not enough quota even for one extra node, update operation will hung because of quota exhausted error.
@@ -26603,19 +26630,19 @@ class GetMk8sV1NodeGroupStatusStrategyResult(dict):
         :param 'GetMk8sV1NodeGroupStatusStrategyMaxUnavailableArgs' max_unavailable: :
                
                   The maximum number of nodes that can be simultaneously unavailable during the update process.
-                  
+               
                   This value can be specified either as an absolute number (for example 3) or as a percentage of the desired
                   number of nodes (for example 5%).
-                  
+               
                   When specified as a percentage, the actual number is calculated by rounding down to the nearest whole number.
                   This value cannot be 0 if <span pulumi-lang-nodejs="`maxSurge`" pulumi-lang-dotnet="`MaxSurge`" pulumi-lang-go="`maxSurge`" pulumi-lang-python="`max_surge`" pulumi-lang-yaml="`maxSurge`" pulumi-lang-java="`maxSurge`" pulumi-lang-hcl="`max_surge`">`maxSurge`</span> is also set to 0.
-                  
+               
                   On 2026-08-01, defaults to 0.
                   IMPORTANT: starting from Q3 2026 new default is 1;
                   for new clusters it will default to 1,
                   node groups in existing clusters will be gradually migrated during Q3 to the default of 1 as well.
                   To get the actual value for your node group, please see 'strategy' in its status.
-                  
+               
                   Example: If set to 20%, up to 20% of the nodes can be taken offline at once during the update,
                   ensuring that at least 80% of the desired nodes remain operational.
         """
@@ -26635,13 +26662,13 @@ class GetMk8sV1NodeGroupStatusStrategyResult(dict):
            Important consequence of that is if PodDisruptionBudget doesn't allow evicting a pod,
            then NodeGroup update with node re-creation will hang on that pod eviction.
            Note that this is different from `kubectl drain --timeout`, which gives up and returns an error.
-           
+
            On 2026-08-01, defaults to 0.
            IMPORTANT: starting from Q3 2026 new default is 10m;
            for new clusters it will default to 10m,
            node groups in existing clusters will be gradually migrated during Q3 to the default of 10m as well.
            To get the actual value for your node group, please see 'strategy' in its status.
-           
+
            Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as <span pulumi-lang-nodejs="`300ms`" pulumi-lang-dotnet="`300ms`" pulumi-lang-go="`300ms`" pulumi-lang-python="`300ms`" pulumi-lang-yaml="`300ms`" pulumi-lang-java="`300ms`" pulumi-lang-hcl="`300ms`">`300ms`</span>, `-1.5h` or <span pulumi-lang-nodejs="`2h45m`" pulumi-lang-dotnet="`2h45m`" pulumi-lang-go="`2h45m`" pulumi-lang-python="`2h45m`" pulumi-lang-yaml="`2h45m`" pulumi-lang-java="`2h45m`" pulumi-lang-hcl="`2h45m`">`2h45m`</span>. Valid time units are <span pulumi-lang-nodejs="`ns`" pulumi-lang-dotnet="`Ns`" pulumi-lang-go="`ns`" pulumi-lang-python="`ns`" pulumi-lang-yaml="`ns`" pulumi-lang-java="`ns`" pulumi-lang-hcl="`ns`">`ns`</span>, <span pulumi-lang-nodejs="`us`" pulumi-lang-dotnet="`Us`" pulumi-lang-go="`us`" pulumi-lang-python="`us`" pulumi-lang-yaml="`us`" pulumi-lang-java="`us`" pulumi-lang-hcl="`us`">`us`</span> (or `µs`), <span pulumi-lang-nodejs="`ms`" pulumi-lang-dotnet="`Ms`" pulumi-lang-go="`ms`" pulumi-lang-python="`ms`" pulumi-lang-yaml="`ms`" pulumi-lang-java="`ms`" pulumi-lang-hcl="`ms`">`ms`</span>, <span pulumi-lang-nodejs="`s`" pulumi-lang-dotnet="`S`" pulumi-lang-go="`s`" pulumi-lang-python="`s`" pulumi-lang-yaml="`s`" pulumi-lang-java="`s`" pulumi-lang-hcl="`s`">`s`</span>, <span pulumi-lang-nodejs="`m`" pulumi-lang-dotnet="`M`" pulumi-lang-go="`m`" pulumi-lang-python="`m`" pulumi-lang-yaml="`m`" pulumi-lang-java="`m`" pulumi-lang-hcl="`m`">`m`</span>, <span pulumi-lang-nodejs="`h`" pulumi-lang-dotnet="`H`" pulumi-lang-go="`h`" pulumi-lang-python="`h`" pulumi-lang-yaml="`h`" pulumi-lang-java="`h`" pulumi-lang-hcl="`h`">`h`</span>, <span pulumi-lang-nodejs="`d`" pulumi-lang-dotnet="`D`" pulumi-lang-go="`d`" pulumi-lang-python="`d`" pulumi-lang-yaml="`d`" pulumi-lang-java="`d`" pulumi-lang-hcl="`d`">`d`</span>.
         """
         return pulumi.get(self, "drain_timeout")
@@ -26653,24 +26680,24 @@ class GetMk8sV1NodeGroupStatusStrategyResult(dict):
         :
 
            The maximum number of additional nodes that can be provisioned above the desired number of nodes during the update process.
-           
+
            This value can be specified either as an absolute number (for example 3) or as a percentage of the desired
            number of nodes (for example 5%).
-           
+
            When specified as a percentage, the actual number is calculated by rounding up to the nearest whole number.
            This value cannot be 0 if <span pulumi-lang-nodejs="`maxUnavailable`" pulumi-lang-dotnet="`MaxUnavailable`" pulumi-lang-go="`maxUnavailable`" pulumi-lang-python="`max_unavailable`" pulumi-lang-yaml="`maxUnavailable`" pulumi-lang-java="`maxUnavailable`" pulumi-lang-hcl="`max_unavailable`">`maxUnavailable`</span> is also set to 0.
-           
+
            On 2026-08-01, defaults to 1.
            IMPORTANT: starting from Q3 2026 new default is 0;
            for new clusters it will default to 0,
            node groups in existing clusters will be gradually migrated during Q3 to the default of 0 as well.
            To get the actual value for your node group, please see 'strategy' in its status.
-           
+
            Example: If set to 25%, the node group can scale up by an additional 25% during the update,
            allowing new nodes to be added before old nodes are removed, which helps minimize workload disruption.
-           
+
            NOTE:
-           
+
            it is user responsibility to ensure that there are enough quota for provision nodes above the desired number.
            Available quota effectively limits <span pulumi-lang-nodejs="`maxSurge`" pulumi-lang-dotnet="`MaxSurge`" pulumi-lang-go="`maxSurge`" pulumi-lang-python="`max_surge`" pulumi-lang-yaml="`maxSurge`" pulumi-lang-java="`maxSurge`" pulumi-lang-hcl="`max_surge`">`maxSurge`</span>.
            In case of not enough quota even for one extra node, update operation will hung because of quota exhausted error.
@@ -26685,19 +26712,19 @@ class GetMk8sV1NodeGroupStatusStrategyResult(dict):
         :
 
            The maximum number of nodes that can be simultaneously unavailable during the update process.
-           
+
            This value can be specified either as an absolute number (for example 3) or as a percentage of the desired
            number of nodes (for example 5%).
-           
+
            When specified as a percentage, the actual number is calculated by rounding down to the nearest whole number.
            This value cannot be 0 if <span pulumi-lang-nodejs="`maxSurge`" pulumi-lang-dotnet="`MaxSurge`" pulumi-lang-go="`maxSurge`" pulumi-lang-python="`max_surge`" pulumi-lang-yaml="`maxSurge`" pulumi-lang-java="`maxSurge`" pulumi-lang-hcl="`max_surge`">`maxSurge`</span> is also set to 0.
-           
+
            On 2026-08-01, defaults to 0.
            IMPORTANT: starting from Q3 2026 new default is 1;
            for new clusters it will default to 1,
            node groups in existing clusters will be gradually migrated during Q3 to the default of 1 as well.
            To get the actual value for your node group, please see 'strategy' in its status.
-           
+
            Example: If set to 20%, up to 20% of the nodes can be taken offline at once during the update,
            ensuring that at least 80% of the desired nodes remain operational.
         """
@@ -26777,35 +26804,35 @@ class GetMk8sV1NodeGroupStrategyResult(dict):
                   Important consequence of that is if PodDisruptionBudget doesn't allow evicting a pod,
                   then NodeGroup update with node re-creation will hang on that pod eviction.
                   Note that this is different from `kubectl drain --timeout`, which gives up and returns an error.
-                  
+               
                   On 2026-08-01, defaults to 0.
                   IMPORTANT: starting from Q3 2026 new default is 10m;
                   for new clusters it will default to 10m,
                   node groups in existing clusters will be gradually migrated during Q3 to the default of 10m as well.
                   To get the actual value for your node group, please see 'strategy' in its status.
-                  
+               
                   Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as <span pulumi-lang-nodejs="`300ms`" pulumi-lang-dotnet="`300ms`" pulumi-lang-go="`300ms`" pulumi-lang-python="`300ms`" pulumi-lang-yaml="`300ms`" pulumi-lang-java="`300ms`" pulumi-lang-hcl="`300ms`">`300ms`</span>, `-1.5h` or <span pulumi-lang-nodejs="`2h45m`" pulumi-lang-dotnet="`2h45m`" pulumi-lang-go="`2h45m`" pulumi-lang-python="`2h45m`" pulumi-lang-yaml="`2h45m`" pulumi-lang-java="`2h45m`" pulumi-lang-hcl="`2h45m`">`2h45m`</span>. Valid time units are <span pulumi-lang-nodejs="`ns`" pulumi-lang-dotnet="`Ns`" pulumi-lang-go="`ns`" pulumi-lang-python="`ns`" pulumi-lang-yaml="`ns`" pulumi-lang-java="`ns`" pulumi-lang-hcl="`ns`">`ns`</span>, <span pulumi-lang-nodejs="`us`" pulumi-lang-dotnet="`Us`" pulumi-lang-go="`us`" pulumi-lang-python="`us`" pulumi-lang-yaml="`us`" pulumi-lang-java="`us`" pulumi-lang-hcl="`us`">`us`</span> (or `µs`), <span pulumi-lang-nodejs="`ms`" pulumi-lang-dotnet="`Ms`" pulumi-lang-go="`ms`" pulumi-lang-python="`ms`" pulumi-lang-yaml="`ms`" pulumi-lang-java="`ms`" pulumi-lang-hcl="`ms`">`ms`</span>, <span pulumi-lang-nodejs="`s`" pulumi-lang-dotnet="`S`" pulumi-lang-go="`s`" pulumi-lang-python="`s`" pulumi-lang-yaml="`s`" pulumi-lang-java="`s`" pulumi-lang-hcl="`s`">`s`</span>, <span pulumi-lang-nodejs="`m`" pulumi-lang-dotnet="`M`" pulumi-lang-go="`m`" pulumi-lang-python="`m`" pulumi-lang-yaml="`m`" pulumi-lang-java="`m`" pulumi-lang-hcl="`m`">`m`</span>, <span pulumi-lang-nodejs="`h`" pulumi-lang-dotnet="`H`" pulumi-lang-go="`h`" pulumi-lang-python="`h`" pulumi-lang-yaml="`h`" pulumi-lang-java="`h`" pulumi-lang-hcl="`h`">`h`</span>, <span pulumi-lang-nodejs="`d`" pulumi-lang-dotnet="`D`" pulumi-lang-go="`d`" pulumi-lang-python="`d`" pulumi-lang-yaml="`d`" pulumi-lang-java="`d`" pulumi-lang-hcl="`d`">`d`</span>.
         :param 'GetMk8sV1NodeGroupStrategyMaxSurgeArgs' max_surge: :
                
                   The maximum number of additional nodes that can be provisioned above the desired number of nodes during the update process.
-                  
+               
                   This value can be specified either as an absolute number (for example 3) or as a percentage of the desired
                   number of nodes (for example 5%).
-                  
+               
                   When specified as a percentage, the actual number is calculated by rounding up to the nearest whole number.
                   This value cannot be 0 if <span pulumi-lang-nodejs="`maxUnavailable`" pulumi-lang-dotnet="`MaxUnavailable`" pulumi-lang-go="`maxUnavailable`" pulumi-lang-python="`max_unavailable`" pulumi-lang-yaml="`maxUnavailable`" pulumi-lang-java="`maxUnavailable`" pulumi-lang-hcl="`max_unavailable`">`maxUnavailable`</span> is also set to 0.
-                  
+               
                   On 2026-08-01, defaults to 1.
                   IMPORTANT: starting from Q3 2026 new default is 0;
                   for new clusters it will default to 0,
                   node groups in existing clusters will be gradually migrated during Q3 to the default of 0 as well.
                   To get the actual value for your node group, please see 'strategy' in its status.
-                  
+               
                   Example: If set to 25%, the node group can scale up by an additional 25% during the update,
                   allowing new nodes to be added before old nodes are removed, which helps minimize workload disruption.
-                  
+               
                   NOTE:
-                  
+               
                   it is user responsibility to ensure that there are enough quota for provision nodes above the desired number.
                   Available quota effectively limits <span pulumi-lang-nodejs="`maxSurge`" pulumi-lang-dotnet="`MaxSurge`" pulumi-lang-go="`maxSurge`" pulumi-lang-python="`max_surge`" pulumi-lang-yaml="`maxSurge`" pulumi-lang-java="`maxSurge`" pulumi-lang-hcl="`max_surge`">`maxSurge`</span>.
                   In case of not enough quota even for one extra node, update operation will hung because of quota exhausted error.
@@ -26813,19 +26840,19 @@ class GetMk8sV1NodeGroupStrategyResult(dict):
         :param 'GetMk8sV1NodeGroupStrategyMaxUnavailableArgs' max_unavailable: :
                
                   The maximum number of nodes that can be simultaneously unavailable during the update process.
-                  
+               
                   This value can be specified either as an absolute number (for example 3) or as a percentage of the desired
                   number of nodes (for example 5%).
-                  
+               
                   When specified as a percentage, the actual number is calculated by rounding down to the nearest whole number.
                   This value cannot be 0 if <span pulumi-lang-nodejs="`maxSurge`" pulumi-lang-dotnet="`MaxSurge`" pulumi-lang-go="`maxSurge`" pulumi-lang-python="`max_surge`" pulumi-lang-yaml="`maxSurge`" pulumi-lang-java="`maxSurge`" pulumi-lang-hcl="`max_surge`">`maxSurge`</span> is also set to 0.
-                  
+               
                   On 2026-08-01, defaults to 0.
                   IMPORTANT: starting from Q3 2026 new default is 1;
                   for new clusters it will default to 1,
                   node groups in existing clusters will be gradually migrated during Q3 to the default of 1 as well.
                   To get the actual value for your node group, please see 'strategy' in its status.
-                  
+               
                   Example: If set to 20%, up to 20% of the nodes can be taken offline at once during the update,
                   ensuring that at least 80% of the desired nodes remain operational.
         """
@@ -26845,13 +26872,13 @@ class GetMk8sV1NodeGroupStrategyResult(dict):
            Important consequence of that is if PodDisruptionBudget doesn't allow evicting a pod,
            then NodeGroup update with node re-creation will hang on that pod eviction.
            Note that this is different from `kubectl drain --timeout`, which gives up and returns an error.
-           
+
            On 2026-08-01, defaults to 0.
            IMPORTANT: starting from Q3 2026 new default is 10m;
            for new clusters it will default to 10m,
            node groups in existing clusters will be gradually migrated during Q3 to the default of 10m as well.
            To get the actual value for your node group, please see 'strategy' in its status.
-           
+
            Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as <span pulumi-lang-nodejs="`300ms`" pulumi-lang-dotnet="`300ms`" pulumi-lang-go="`300ms`" pulumi-lang-python="`300ms`" pulumi-lang-yaml="`300ms`" pulumi-lang-java="`300ms`" pulumi-lang-hcl="`300ms`">`300ms`</span>, `-1.5h` or <span pulumi-lang-nodejs="`2h45m`" pulumi-lang-dotnet="`2h45m`" pulumi-lang-go="`2h45m`" pulumi-lang-python="`2h45m`" pulumi-lang-yaml="`2h45m`" pulumi-lang-java="`2h45m`" pulumi-lang-hcl="`2h45m`">`2h45m`</span>. Valid time units are <span pulumi-lang-nodejs="`ns`" pulumi-lang-dotnet="`Ns`" pulumi-lang-go="`ns`" pulumi-lang-python="`ns`" pulumi-lang-yaml="`ns`" pulumi-lang-java="`ns`" pulumi-lang-hcl="`ns`">`ns`</span>, <span pulumi-lang-nodejs="`us`" pulumi-lang-dotnet="`Us`" pulumi-lang-go="`us`" pulumi-lang-python="`us`" pulumi-lang-yaml="`us`" pulumi-lang-java="`us`" pulumi-lang-hcl="`us`">`us`</span> (or `µs`), <span pulumi-lang-nodejs="`ms`" pulumi-lang-dotnet="`Ms`" pulumi-lang-go="`ms`" pulumi-lang-python="`ms`" pulumi-lang-yaml="`ms`" pulumi-lang-java="`ms`" pulumi-lang-hcl="`ms`">`ms`</span>, <span pulumi-lang-nodejs="`s`" pulumi-lang-dotnet="`S`" pulumi-lang-go="`s`" pulumi-lang-python="`s`" pulumi-lang-yaml="`s`" pulumi-lang-java="`s`" pulumi-lang-hcl="`s`">`s`</span>, <span pulumi-lang-nodejs="`m`" pulumi-lang-dotnet="`M`" pulumi-lang-go="`m`" pulumi-lang-python="`m`" pulumi-lang-yaml="`m`" pulumi-lang-java="`m`" pulumi-lang-hcl="`m`">`m`</span>, <span pulumi-lang-nodejs="`h`" pulumi-lang-dotnet="`H`" pulumi-lang-go="`h`" pulumi-lang-python="`h`" pulumi-lang-yaml="`h`" pulumi-lang-java="`h`" pulumi-lang-hcl="`h`">`h`</span>, <span pulumi-lang-nodejs="`d`" pulumi-lang-dotnet="`D`" pulumi-lang-go="`d`" pulumi-lang-python="`d`" pulumi-lang-yaml="`d`" pulumi-lang-java="`d`" pulumi-lang-hcl="`d`">`d`</span>.
         """
         return pulumi.get(self, "drain_timeout")
@@ -26863,24 +26890,24 @@ class GetMk8sV1NodeGroupStrategyResult(dict):
         :
 
            The maximum number of additional nodes that can be provisioned above the desired number of nodes during the update process.
-           
+
            This value can be specified either as an absolute number (for example 3) or as a percentage of the desired
            number of nodes (for example 5%).
-           
+
            When specified as a percentage, the actual number is calculated by rounding up to the nearest whole number.
            This value cannot be 0 if <span pulumi-lang-nodejs="`maxUnavailable`" pulumi-lang-dotnet="`MaxUnavailable`" pulumi-lang-go="`maxUnavailable`" pulumi-lang-python="`max_unavailable`" pulumi-lang-yaml="`maxUnavailable`" pulumi-lang-java="`maxUnavailable`" pulumi-lang-hcl="`max_unavailable`">`maxUnavailable`</span> is also set to 0.
-           
+
            On 2026-08-01, defaults to 1.
            IMPORTANT: starting from Q3 2026 new default is 0;
            for new clusters it will default to 0,
            node groups in existing clusters will be gradually migrated during Q3 to the default of 0 as well.
            To get the actual value for your node group, please see 'strategy' in its status.
-           
+
            Example: If set to 25%, the node group can scale up by an additional 25% during the update,
            allowing new nodes to be added before old nodes are removed, which helps minimize workload disruption.
-           
+
            NOTE:
-           
+
            it is user responsibility to ensure that there are enough quota for provision nodes above the desired number.
            Available quota effectively limits <span pulumi-lang-nodejs="`maxSurge`" pulumi-lang-dotnet="`MaxSurge`" pulumi-lang-go="`maxSurge`" pulumi-lang-python="`max_surge`" pulumi-lang-yaml="`maxSurge`" pulumi-lang-java="`maxSurge`" pulumi-lang-hcl="`max_surge`">`maxSurge`</span>.
            In case of not enough quota even for one extra node, update operation will hung because of quota exhausted error.
@@ -26895,19 +26922,19 @@ class GetMk8sV1NodeGroupStrategyResult(dict):
         :
 
            The maximum number of nodes that can be simultaneously unavailable during the update process.
-           
+
            This value can be specified either as an absolute number (for example 3) or as a percentage of the desired
            number of nodes (for example 5%).
-           
+
            When specified as a percentage, the actual number is calculated by rounding down to the nearest whole number.
            This value cannot be 0 if <span pulumi-lang-nodejs="`maxSurge`" pulumi-lang-dotnet="`MaxSurge`" pulumi-lang-go="`maxSurge`" pulumi-lang-python="`max_surge`" pulumi-lang-yaml="`maxSurge`" pulumi-lang-java="`maxSurge`" pulumi-lang-hcl="`max_surge`">`maxSurge`</span> is also set to 0.
-           
+
            On 2026-08-01, defaults to 0.
            IMPORTANT: starting from Q3 2026 new default is 1;
            for new clusters it will default to 1,
            node groups in existing clusters will be gradually migrated during Q3 to the default of 1 as well.
            To get the actual value for your node group, please see 'strategy' in its status.
-           
+
            Example: If set to 20%, up to 20% of the nodes can be taken offline at once during the update,
            ensuring that at least 80% of the desired nodes remain operational.
         """
@@ -27005,9 +27032,9 @@ class GetMk8sV1NodeGroupTemplateResult(dict):
         :param 'GetMk8sV1NodeGroupTemplateGpuSettingsArgs' gpu_settings: :
                
                   GPU-related settings.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   GPU-related settings.
         :param 'GetMk8sV1NodeGroupTemplateLocalDisksArgs' local_disks: :
                
@@ -27054,9 +27081,9 @@ class GetMk8sV1NodeGroupTemplateResult(dict):
         :param 'GetMk8sV1NodeGroupTemplateReservationPolicyArgs' reservation_policy: :
                
                  <span pulumi-lang-nodejs=" reservationPolicy " pulumi-lang-dotnet=" ReservationPolicy " pulumi-lang-go=" reservationPolicy " pulumi-lang-python=" reservation_policy " pulumi-lang-yaml=" reservationPolicy " pulumi-lang-java=" reservationPolicy " pulumi-lang-hcl=" reservation_policy "> reservationPolicy </span>is an interface of the "capacity block" (or "capacity block group") mechanism of Nebius Compute.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   ReservationPolicy is copied as-is from NebiusAPI `compute/v1/instance.proto`.
         :param 'GetMk8sV1NodeGroupTemplateResourcesArgs' resources: Resources that will have Nebius Compute Instance where Node kubelet will run.
         :param _builtins.str service_account_id: :
@@ -27065,7 +27092,7 @@ class GetMk8sV1NodeGroupTemplateResult(dict):
                   With these credentials, it is possible to make <span pulumi-lang-nodejs="`nebius`" pulumi-lang-dotnet="`Nebius`" pulumi-lang-go="`nebius`" pulumi-lang-python="`nebius`" pulumi-lang-yaml="`nebius`" pulumi-lang-java="`nebius`" pulumi-lang-hcl="`nebius`">`nebius`</span> CLI or public API requests from the nodes
                   without the need for extra authentication.
                   This service account is also used to make requests to container registry.
-                  
+               
                   `resource.serviceaccount.issueAccessToken` permission is required to use this field.
         :param Sequence['GetMk8sV1NodeGroupTemplateTaintArgs'] taints: :
                
@@ -27074,9 +27101,9 @@ class GetMk8sV1NodeGroupTemplateResult(dict):
                   That behaviour may change later.
                   So, for now you will need to manually set them to existing nodes, if that is needed.
                   Field change will NOT trigger NodeGroup roll out.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   See https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
         """
         pulumi.set(__self__, "boot_disk", boot_disk)
@@ -27141,9 +27168,9 @@ class GetMk8sV1NodeGroupTemplateResult(dict):
         :
 
            GPU-related settings.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            GPU-related settings.
         """
         return pulumi.get(self, "gpu_settings")
@@ -27242,9 +27269,9 @@ class GetMk8sV1NodeGroupTemplateResult(dict):
         :
 
           <span pulumi-lang-nodejs=" reservationPolicy " pulumi-lang-dotnet=" ReservationPolicy " pulumi-lang-go=" reservationPolicy " pulumi-lang-python=" reservation_policy " pulumi-lang-yaml=" reservationPolicy " pulumi-lang-java=" reservationPolicy " pulumi-lang-hcl=" reservation_policy "> reservationPolicy </span>is an interface of the "capacity block" (or "capacity block group") mechanism of Nebius Compute.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            ReservationPolicy is copied as-is from NebiusAPI `compute/v1/instance.proto`.
         """
         return pulumi.get(self, "reservation_policy")
@@ -27267,7 +27294,7 @@ class GetMk8sV1NodeGroupTemplateResult(dict):
            With these credentials, it is possible to make <span pulumi-lang-nodejs="`nebius`" pulumi-lang-dotnet="`Nebius`" pulumi-lang-go="`nebius`" pulumi-lang-python="`nebius`" pulumi-lang-yaml="`nebius`" pulumi-lang-java="`nebius`" pulumi-lang-hcl="`nebius`">`nebius`</span> CLI or public API requests from the nodes
            without the need for extra authentication.
            This service account is also used to make requests to container registry.
-           
+
            `resource.serviceaccount.issueAccessToken` permission is required to use this field.
         """
         return pulumi.get(self, "service_account_id")
@@ -27283,9 +27310,9 @@ class GetMk8sV1NodeGroupTemplateResult(dict):
            That behaviour may change later.
            So, for now you will need to manually set them to existing nodes, if that is needed.
            Field change will NOT trigger NodeGroup roll out.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            See https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
         """
         return pulumi.get(self, "taints")
@@ -27307,10 +27334,10 @@ class GetMk8sV1NodeGroupTemplateBootDiskResult(dict):
         :param _builtins.float size_mebibytes: *Cannot be set alongside size_bytes,<span pulumi-lang-nodejs=" sizeKibibytes " pulumi-lang-dotnet=" SizeKibibytes " pulumi-lang-go=" sizeKibibytes " pulumi-lang-python=" size_kibibytes " pulumi-lang-yaml=" sizeKibibytes " pulumi-lang-java=" sizeKibibytes " pulumi-lang-hcl=" size_kibibytes "> sizeKibibytes </span>or size_gibibytes.*
         :param _builtins.str type: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `NETWORK_SSD`
                   - `NETWORK_HDD`
@@ -27367,10 +27394,10 @@ class GetMk8sV1NodeGroupTemplateBootDiskResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `NETWORK_SSD`
            - `NETWORK_HDD`
@@ -27389,10 +27416,10 @@ class GetMk8sV1NodeGroupTemplateFilesystemResult(dict):
         """
         :param _builtins.str attach_mode: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `READ_ONLY`
                   - `READ_WRITE`
@@ -27408,10 +27435,10 @@ class GetMk8sV1NodeGroupTemplateFilesystemResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `READ_ONLY`
            - `READ_WRITE`
@@ -27504,11 +27531,11 @@ class GetMk8sV1NodeGroupTemplateLocalDisksResult(dict):
                
                   config defines actions that managed Kubernetes service performs on mounted local disks
                   to provide them inside Kubernetes cluster with a convenient interface.
-                  
+               
                   When omitted, a default value is generated.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   LocalDisksSpecConfig defines actions that managed Kubernetes service performs on mounted local disks
                   to provide them inside Kubernetes cluster with a convenient interface.
         :param 'GetMk8sV1NodeGroupTemplateLocalDisksPassthroughGroupArgs' passthrough_group: :
@@ -27528,11 +27555,11 @@ class GetMk8sV1NodeGroupTemplateLocalDisksResult(dict):
 
            config defines actions that managed Kubernetes service performs on mounted local disks
            to provide them inside Kubernetes cluster with a convenient interface.
-           
+
            When omitted, a default value is generated.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            LocalDisksSpecConfig defines actions that managed Kubernetes service performs on mounted local disks
            to provide them inside Kubernetes cluster with a convenient interface.
         """
@@ -27561,14 +27588,14 @@ class GetMk8sV1NodeGroupTemplateLocalDisksConfigResult(dict):
                
                   kubelet_ephemeral: combine all local disks into a single storage volume and use it as kubelet's local ephemeral storage on the node
                   See also https://kubernetes.io/docs/concepts/storage/ephemeral-storage/
-                  
+               
                   The default when LocalDisksSpecConfig is not set.
-                  
+               
                   *Cannot be set alongside none.*
         :param _builtins.bool none: :
                
                   none: "do nothing" - local disks will be provisioned as on a regular compute instance.
-                  
+               
                   *Cannot be set alongside kubelet_ephemeral.*
         """
         pulumi.set(__self__, "kubelet_ephemeral", kubelet_ephemeral)
@@ -27582,9 +27609,9 @@ class GetMk8sV1NodeGroupTemplateLocalDisksConfigResult(dict):
 
            kubelet_ephemeral: combine all local disks into a single storage volume and use it as kubelet's local ephemeral storage on the node
            See also https://kubernetes.io/docs/concepts/storage/ephemeral-storage/
-           
+
            The default when LocalDisksSpecConfig is not set.
-           
+
            *Cannot be set alongside none.*
         """
         return pulumi.get(self, "kubelet_ephemeral")
@@ -27596,7 +27623,7 @@ class GetMk8sV1NodeGroupTemplateLocalDisksConfigResult(dict):
         :
 
            none: "do nothing" - local disks will be provisioned as on a regular compute instance.
-           
+
            *Cannot be set alongside kubelet_ephemeral.*
         """
         return pulumi.get(self, "none")
@@ -27610,7 +27637,7 @@ class GetMk8sV1NodeGroupTemplateLocalDisksPassthroughGroupResult(dict):
         :param _builtins.bool requested: :
                
                   Passthrough local disks from the underlying host.
-                  
+               
                   Devices are expected to appear in the guest as NVMe devices (nvme0, nvme1, ...),
                   but the exact number depends on the preset.
                   Enabled only when this field is explicitly set.
@@ -27624,7 +27651,7 @@ class GetMk8sV1NodeGroupTemplateLocalDisksPassthroughGroupResult(dict):
         :
 
            Passthrough local disks from the underlying host.
-           
+
            Devices are expected to appear in the guest as NVMe devices (nvme0, nvme1, ...),
            but the exact number depends on the preset.
            Enabled only when this field is explicitly set.
@@ -27640,14 +27667,14 @@ class GetMk8sV1NodeGroupTemplateMetadataResult(dict):
         :param Mapping[str, _builtins.str] labels: :
                
                   Kubernetes Node labels.
-                  
+               
                   Keys and values must follow Kubernetes label syntax:
                   https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
-                  
+               
                   For now change will not be propagated to existing nodes, so will be applied only to Kubernetes Nodes created after the field change.
                   That behavior may change later.
                   So, for now you will need to manually set them to existing nodes, if that is needed.
-                  
+               
                   System labels containing "kubernetes.io" and "k8s.io" will be ignored.
                   Field change will NOT trigger NodeGroup roll out.
         """
@@ -27660,14 +27687,14 @@ class GetMk8sV1NodeGroupTemplateMetadataResult(dict):
         :
 
            Kubernetes Node labels.
-           
+
            Keys and values must follow Kubernetes label syntax:
            https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
-           
+
            For now change will not be propagated to existing nodes, so will be applied only to Kubernetes Nodes created after the field change.
            That behavior may change later.
            So, for now you will need to manually set them to existing nodes, if that is needed.
-           
+
            System labels containing "kubernetes.io" and "k8s.io" will be ignored.
            Field change will NOT trigger NodeGroup roll out.
         """
@@ -27685,9 +27712,9 @@ class GetMk8sV1NodeGroupTemplateNetworkInterfaceResult(dict):
                
                   Parameters for Public IPv4 address associated with the interface.
                   Set to empty value, to enable it.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Describes a public IP address.
         :param Sequence['GetMk8sV1NodeGroupTemplateNetworkInterfaceSecurityGroupArgs'] security_groups: User provided VPC Security Groups which will be assigned to all nodes of this NodeGroup.
         :param _builtins.str subnet_id: :
@@ -27708,9 +27735,9 @@ class GetMk8sV1NodeGroupTemplateNetworkInterfaceResult(dict):
 
            Parameters for Public IPv4 address associated with the interface.
            Set to empty value, to enable it.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Describes a public IP address.
         """
         return pulumi.get(self, "public_ip_address")
@@ -27786,20 +27813,20 @@ class GetMk8sV1NodeGroupTemplateReservationPolicyResult(dict):
         """
         :param _builtins.str policy: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `AUTO`:
                      1) Will try to launch instance in any<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>if provided.
                      2) Will try to launch instance in any of the available capacity block.
                      3) Will try to launch instance in PAYG if 1 & 2 are not satisfied.
-                  
+               
                   - `FORBID`:
-                     The instance is launched only using on-demand (PAYG) capacity.
-                     No attempt is made to find or use a Capacity Block.
-                     It's an error to provide<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>with policy = FORBID
-                  
+                The instance is launched only using on-demand (PAYG) capacity.
+                No attempt is made to find or use a Capacity Block.
+                It's an error to provide<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>with policy = FORBID
+               
                   - `STRICT`:
                      1) Will try to launch the instance in Capacity Blocks from<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>if provided.
                      2) If<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>are not provided will try to launch instance in suitable & available Capacity Block.
@@ -27815,20 +27842,20 @@ class GetMk8sV1NodeGroupTemplateReservationPolicyResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `AUTO`:
               1) Will try to launch instance in any<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>if provided.
               2) Will try to launch instance in any of the available capacity block.
               3) Will try to launch instance in PAYG if 1 & 2 are not satisfied.
-           
+
            - `FORBID`:
-              The instance is launched only using on-demand (PAYG) capacity.
-              No attempt is made to find or use a Capacity Block.
-              It's an error to provide<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>with policy = FORBID
-           
+         The instance is launched only using on-demand (PAYG) capacity.
+         No attempt is made to find or use a Capacity Block.
+         It's an error to provide<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>with policy = FORBID
+
            - `STRICT`:
               1) Will try to launch the instance in Capacity Blocks from<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>if provided.
               2) If<span pulumi-lang-nodejs=" reservationIds " pulumi-lang-dotnet=" ReservationIds " pulumi-lang-go=" reservationIds " pulumi-lang-python=" reservation_ids " pulumi-lang-yaml=" reservationIds " pulumi-lang-java=" reservationIds " pulumi-lang-hcl=" reservation_ids "> reservationIds </span>are not provided will try to launch instance in suitable & available Capacity Block.
@@ -27873,10 +27900,10 @@ class GetMk8sV1NodeGroupTemplateTaintResult(dict):
         """
         :param _builtins.str effect: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `EFFECT_UNSPECIFIED`
                   - `NO_EXECUTE`
                   - `NO_SCHEDULE`
@@ -27892,10 +27919,10 @@ class GetMk8sV1NodeGroupTemplateTaintResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `EFFECT_UNSPECIFIED`
            - `NO_EXECUTE`
            - `NO_SCHEDULE`
@@ -28051,10 +28078,10 @@ class GetMk8sV1alpha1ClusterStatusResult(dict):
         :param _builtins.bool reconciling: Show that changes are in flight
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `PROVISIONING`
                   - `RUNNING`
@@ -28083,10 +28110,10 @@ class GetMk8sV1alpha1ClusterStatusResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `PROVISIONING`
            - `RUNNING`
@@ -28105,8 +28132,8 @@ class GetMk8sV1alpha1ClusterStatusControlPlaneResult(dict):
         """
         :param 'GetMk8sV1alpha1ClusterStatusControlPlaneEndpointsArgs' endpoints: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Endpoints of Kubernetes control plane. Kubernetes API can be accessed at `https://endpoint/`.
         :param _builtins.float etcd_cluster_size: Number of instances in etcd cluster.
         :param _builtins.str version: Version have format `major.minor.patch-nebius-cp.n` like "1.30.0-nebius-cp.3".
@@ -28127,8 +28154,8 @@ class GetMk8sV1alpha1ClusterStatusControlPlaneResult(dict):
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Endpoints of Kubernetes control plane. Kubernetes API can be accessed at `https://endpoint/`.
         """
         return pulumi.get(self, "endpoints")
@@ -28220,16 +28247,16 @@ class GetMk8sV1alpha1NodeGroupAutoRepairConditionResult(dict):
         :param _builtins.bool disabled: :
                
                   When true, disables the default auto-repair condition rules.
-                  
+               
                   *Cannot be set alongside timeout.*
         :param _builtins.str status: :
                
                   Node condition status.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `CONDITION_STATUS_UNSPECIFIED`
                   - `TRUE`
                   - `FALSE`
@@ -28237,9 +28264,9 @@ class GetMk8sV1alpha1NodeGroupAutoRepairConditionResult(dict):
         :param _builtins.str timeout: :
                
                   The duration after which the node is automatically repaired if the condition remains in the specified status.
-                  
+               
                   Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as <span pulumi-lang-nodejs="`300ms`" pulumi-lang-dotnet="`300ms`" pulumi-lang-go="`300ms`" pulumi-lang-python="`300ms`" pulumi-lang-yaml="`300ms`" pulumi-lang-java="`300ms`" pulumi-lang-hcl="`300ms`">`300ms`</span>, `-1.5h` or <span pulumi-lang-nodejs="`2h45m`" pulumi-lang-dotnet="`2h45m`" pulumi-lang-go="`2h45m`" pulumi-lang-python="`2h45m`" pulumi-lang-yaml="`2h45m`" pulumi-lang-java="`2h45m`" pulumi-lang-hcl="`2h45m`">`2h45m`</span>. Valid time units are <span pulumi-lang-nodejs="`ns`" pulumi-lang-dotnet="`Ns`" pulumi-lang-go="`ns`" pulumi-lang-python="`ns`" pulumi-lang-yaml="`ns`" pulumi-lang-java="`ns`" pulumi-lang-hcl="`ns`">`ns`</span>, <span pulumi-lang-nodejs="`us`" pulumi-lang-dotnet="`Us`" pulumi-lang-go="`us`" pulumi-lang-python="`us`" pulumi-lang-yaml="`us`" pulumi-lang-java="`us`" pulumi-lang-hcl="`us`">`us`</span> (or `µs`), <span pulumi-lang-nodejs="`ms`" pulumi-lang-dotnet="`Ms`" pulumi-lang-go="`ms`" pulumi-lang-python="`ms`" pulumi-lang-yaml="`ms`" pulumi-lang-java="`ms`" pulumi-lang-hcl="`ms`">`ms`</span>, <span pulumi-lang-nodejs="`s`" pulumi-lang-dotnet="`S`" pulumi-lang-go="`s`" pulumi-lang-python="`s`" pulumi-lang-yaml="`s`" pulumi-lang-java="`s`" pulumi-lang-hcl="`s`">`s`</span>, <span pulumi-lang-nodejs="`m`" pulumi-lang-dotnet="`M`" pulumi-lang-go="`m`" pulumi-lang-python="`m`" pulumi-lang-yaml="`m`" pulumi-lang-java="`m`" pulumi-lang-hcl="`m`">`m`</span>, <span pulumi-lang-nodejs="`h`" pulumi-lang-dotnet="`H`" pulumi-lang-go="`h`" pulumi-lang-python="`h`" pulumi-lang-yaml="`h`" pulumi-lang-java="`h`" pulumi-lang-hcl="`h`">`h`</span>, <span pulumi-lang-nodejs="`d`" pulumi-lang-dotnet="`D`" pulumi-lang-go="`d`" pulumi-lang-python="`d`" pulumi-lang-yaml="`d`" pulumi-lang-java="`d`" pulumi-lang-hcl="`d`">`d`</span>.
-                  
+               
                   *Cannot be set alongside disabled.*
         :param _builtins.str type: Node condition type.
         """
@@ -28255,7 +28282,7 @@ class GetMk8sV1alpha1NodeGroupAutoRepairConditionResult(dict):
         :
 
            When true, disables the default auto-repair condition rules.
-           
+
            *Cannot be set alongside timeout.*
         """
         return pulumi.get(self, "disabled")
@@ -28267,11 +28294,11 @@ class GetMk8sV1alpha1NodeGroupAutoRepairConditionResult(dict):
         :
 
            Node condition status.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `CONDITION_STATUS_UNSPECIFIED`
            - `TRUE`
            - `FALSE`
@@ -28286,9 +28313,9 @@ class GetMk8sV1alpha1NodeGroupAutoRepairConditionResult(dict):
         :
 
            The duration after which the node is automatically repaired if the condition remains in the specified status.
-           
+
            Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as <span pulumi-lang-nodejs="`300ms`" pulumi-lang-dotnet="`300ms`" pulumi-lang-go="`300ms`" pulumi-lang-python="`300ms`" pulumi-lang-yaml="`300ms`" pulumi-lang-java="`300ms`" pulumi-lang-hcl="`300ms`">`300ms`</span>, `-1.5h` or <span pulumi-lang-nodejs="`2h45m`" pulumi-lang-dotnet="`2h45m`" pulumi-lang-go="`2h45m`" pulumi-lang-python="`2h45m`" pulumi-lang-yaml="`2h45m`" pulumi-lang-java="`2h45m`" pulumi-lang-hcl="`2h45m`">`2h45m`</span>. Valid time units are <span pulumi-lang-nodejs="`ns`" pulumi-lang-dotnet="`Ns`" pulumi-lang-go="`ns`" pulumi-lang-python="`ns`" pulumi-lang-yaml="`ns`" pulumi-lang-java="`ns`" pulumi-lang-hcl="`ns`">`ns`</span>, <span pulumi-lang-nodejs="`us`" pulumi-lang-dotnet="`Us`" pulumi-lang-go="`us`" pulumi-lang-python="`us`" pulumi-lang-yaml="`us`" pulumi-lang-java="`us`" pulumi-lang-hcl="`us`">`us`</span> (or `µs`), <span pulumi-lang-nodejs="`ms`" pulumi-lang-dotnet="`Ms`" pulumi-lang-go="`ms`" pulumi-lang-python="`ms`" pulumi-lang-yaml="`ms`" pulumi-lang-java="`ms`" pulumi-lang-hcl="`ms`">`ms`</span>, <span pulumi-lang-nodejs="`s`" pulumi-lang-dotnet="`S`" pulumi-lang-go="`s`" pulumi-lang-python="`s`" pulumi-lang-yaml="`s`" pulumi-lang-java="`s`" pulumi-lang-hcl="`s`">`s`</span>, <span pulumi-lang-nodejs="`m`" pulumi-lang-dotnet="`M`" pulumi-lang-go="`m`" pulumi-lang-python="`m`" pulumi-lang-yaml="`m`" pulumi-lang-java="`m`" pulumi-lang-hcl="`m`">`m`</span>, <span pulumi-lang-nodejs="`h`" pulumi-lang-dotnet="`H`" pulumi-lang-go="`h`" pulumi-lang-python="`h`" pulumi-lang-yaml="`h`" pulumi-lang-java="`h`" pulumi-lang-hcl="`h`">`h`</span>, <span pulumi-lang-nodejs="`d`" pulumi-lang-dotnet="`D`" pulumi-lang-go="`d`" pulumi-lang-python="`d`" pulumi-lang-yaml="`d`" pulumi-lang-java="`d`" pulumi-lang-hcl="`d`">`d`</span>.
-           
+
            *Cannot be set alongside disabled.*
         """
         return pulumi.get(self, "timeout")
@@ -28353,10 +28380,10 @@ class GetMk8sV1alpha1NodeGroupStatusResult(dict):
         :param _builtins.bool reconciling: Show that changes are in flight
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `PROVISIONING`
                   - `RUNNING`
@@ -28422,10 +28449,10 @@ class GetMk8sV1alpha1NodeGroupStatusResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `PROVISIONING`
            - `RUNNING`
@@ -28465,7 +28492,7 @@ class GetMk8sV1alpha1NodeGroupStrategyResult(dict):
                   DrainTimeout is the total amount of time that the service will spend on draining a node.
                   By default, node can be drained without any time limitations.
                   NOTE: NodeDrainTimeout is different from `kubectl drain --timeout`
-                  
+               
                   Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as <span pulumi-lang-nodejs="`300ms`" pulumi-lang-dotnet="`300ms`" pulumi-lang-go="`300ms`" pulumi-lang-python="`300ms`" pulumi-lang-yaml="`300ms`" pulumi-lang-java="`300ms`" pulumi-lang-hcl="`300ms`">`300ms`</span>, `-1.5h` or <span pulumi-lang-nodejs="`2h45m`" pulumi-lang-dotnet="`2h45m`" pulumi-lang-go="`2h45m`" pulumi-lang-python="`2h45m`" pulumi-lang-yaml="`2h45m`" pulumi-lang-java="`2h45m`" pulumi-lang-hcl="`2h45m`">`2h45m`</span>. Valid time units are <span pulumi-lang-nodejs="`ns`" pulumi-lang-dotnet="`Ns`" pulumi-lang-go="`ns`" pulumi-lang-python="`ns`" pulumi-lang-yaml="`ns`" pulumi-lang-java="`ns`" pulumi-lang-hcl="`ns`">`ns`</span>, <span pulumi-lang-nodejs="`us`" pulumi-lang-dotnet="`Us`" pulumi-lang-go="`us`" pulumi-lang-python="`us`" pulumi-lang-yaml="`us`" pulumi-lang-java="`us`" pulumi-lang-hcl="`us`">`us`</span> (or `µs`), <span pulumi-lang-nodejs="`ms`" pulumi-lang-dotnet="`Ms`" pulumi-lang-go="`ms`" pulumi-lang-python="`ms`" pulumi-lang-yaml="`ms`" pulumi-lang-java="`ms`" pulumi-lang-hcl="`ms`">`ms`</span>, <span pulumi-lang-nodejs="`s`" pulumi-lang-dotnet="`S`" pulumi-lang-go="`s`" pulumi-lang-python="`s`" pulumi-lang-yaml="`s`" pulumi-lang-java="`s`" pulumi-lang-hcl="`s`">`s`</span>, <span pulumi-lang-nodejs="`m`" pulumi-lang-dotnet="`M`" pulumi-lang-go="`m`" pulumi-lang-python="`m`" pulumi-lang-yaml="`m`" pulumi-lang-java="`m`" pulumi-lang-hcl="`m`">`m`</span>, <span pulumi-lang-nodejs="`h`" pulumi-lang-dotnet="`H`" pulumi-lang-go="`h`" pulumi-lang-python="`h`" pulumi-lang-yaml="`h`" pulumi-lang-java="`h`" pulumi-lang-hcl="`h`">`h`</span>, <span pulumi-lang-nodejs="`d`" pulumi-lang-dotnet="`D`" pulumi-lang-go="`d`" pulumi-lang-python="`d`" pulumi-lang-yaml="`d`" pulumi-lang-java="`d`" pulumi-lang-hcl="`d`">`d`</span>.
         :param 'GetMk8sV1alpha1NodeGroupStrategyMaxSurgeArgs' max_surge: :
                
@@ -28510,7 +28537,7 @@ class GetMk8sV1alpha1NodeGroupStrategyResult(dict):
            DrainTimeout is the total amount of time that the service will spend on draining a node.
            By default, node can be drained without any time limitations.
            NOTE: NodeDrainTimeout is different from `kubectl drain --timeout`
-           
+
            Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as <span pulumi-lang-nodejs="`300ms`" pulumi-lang-dotnet="`300ms`" pulumi-lang-go="`300ms`" pulumi-lang-python="`300ms`" pulumi-lang-yaml="`300ms`" pulumi-lang-java="`300ms`" pulumi-lang-hcl="`300ms`">`300ms`</span>, `-1.5h` or <span pulumi-lang-nodejs="`2h45m`" pulumi-lang-dotnet="`2h45m`" pulumi-lang-go="`2h45m`" pulumi-lang-python="`2h45m`" pulumi-lang-yaml="`2h45m`" pulumi-lang-java="`2h45m`" pulumi-lang-hcl="`2h45m`">`2h45m`</span>. Valid time units are <span pulumi-lang-nodejs="`ns`" pulumi-lang-dotnet="`Ns`" pulumi-lang-go="`ns`" pulumi-lang-python="`ns`" pulumi-lang-yaml="`ns`" pulumi-lang-java="`ns`" pulumi-lang-hcl="`ns`">`ns`</span>, <span pulumi-lang-nodejs="`us`" pulumi-lang-dotnet="`Us`" pulumi-lang-go="`us`" pulumi-lang-python="`us`" pulumi-lang-yaml="`us`" pulumi-lang-java="`us`" pulumi-lang-hcl="`us`">`us`</span> (or `µs`), <span pulumi-lang-nodejs="`ms`" pulumi-lang-dotnet="`Ms`" pulumi-lang-go="`ms`" pulumi-lang-python="`ms`" pulumi-lang-yaml="`ms`" pulumi-lang-java="`ms`" pulumi-lang-hcl="`ms`">`ms`</span>, <span pulumi-lang-nodejs="`s`" pulumi-lang-dotnet="`S`" pulumi-lang-go="`s`" pulumi-lang-python="`s`" pulumi-lang-yaml="`s`" pulumi-lang-java="`s`" pulumi-lang-hcl="`s`">`s`</span>, <span pulumi-lang-nodejs="`m`" pulumi-lang-dotnet="`M`" pulumi-lang-go="`m`" pulumi-lang-python="`m`" pulumi-lang-yaml="`m`" pulumi-lang-java="`m`" pulumi-lang-hcl="`m`">`m`</span>, <span pulumi-lang-nodejs="`h`" pulumi-lang-dotnet="`H`" pulumi-lang-go="`h`" pulumi-lang-python="`h`" pulumi-lang-yaml="`h`" pulumi-lang-java="`h`" pulumi-lang-hcl="`h`">`h`</span>, <span pulumi-lang-nodejs="`d`" pulumi-lang-dotnet="`D`" pulumi-lang-go="`d`" pulumi-lang-python="`d`" pulumi-lang-yaml="`d`" pulumi-lang-java="`d`" pulumi-lang-hcl="`d`">`d`</span>.
         """
         return pulumi.get(self, "drain_timeout")
@@ -28637,9 +28664,9 @@ class GetMk8sV1alpha1NodeGroupTemplateResult(dict):
         :param 'GetMk8sV1alpha1NodeGroupTemplateGpuSettingsArgs' gpu_settings: :
                
                   GPU-related settings.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   GPU-related settings.
         :param _builtins.str os: :
                
@@ -28677,12 +28704,12 @@ class GetMk8sV1alpha1NodeGroupTemplateResult(dict):
                   the Nebius service account whose credentials will be available on the nodes of the group. With these credentials, it is possible to
                   make <span pulumi-lang-nodejs="`nebius`" pulumi-lang-dotnet="`Nebius`" pulumi-lang-go="`nebius`" pulumi-lang-python="`nebius`" pulumi-lang-yaml="`nebius`" pulumi-lang-java="`nebius`" pulumi-lang-hcl="`nebius`">`nebius`</span> CLI or public API requests from the nodes without the need for extra authentication. This service account is also used to
                   make requests to container registry.
-                  
+               
                   `resource.serviceaccount.issueAccessToken` permission is required to use this field.
         :param Sequence['GetMk8sV1alpha1NodeGroupTemplateTaintArgs'] taints: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   See https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
         """
         pulumi.set(__self__, "boot_disk", boot_disk)
@@ -28728,9 +28755,9 @@ class GetMk8sV1alpha1NodeGroupTemplateResult(dict):
         :
 
            GPU-related settings.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            GPU-related settings.
         """
         return pulumi.get(self, "gpu_settings")
@@ -28804,7 +28831,7 @@ class GetMk8sV1alpha1NodeGroupTemplateResult(dict):
            the Nebius service account whose credentials will be available on the nodes of the group. With these credentials, it is possible to
            make <span pulumi-lang-nodejs="`nebius`" pulumi-lang-dotnet="`Nebius`" pulumi-lang-go="`nebius`" pulumi-lang-python="`nebius`" pulumi-lang-yaml="`nebius`" pulumi-lang-java="`nebius`" pulumi-lang-hcl="`nebius`">`nebius`</span> CLI or public API requests from the nodes without the need for extra authentication. This service account is also used to
            make requests to container registry.
-           
+
            `resource.serviceaccount.issueAccessToken` permission is required to use this field.
         """
         return pulumi.get(self, "service_account_id")
@@ -28815,8 +28842,8 @@ class GetMk8sV1alpha1NodeGroupTemplateResult(dict):
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            See https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
         """
         return pulumi.get(self, "taints")
@@ -28838,10 +28865,10 @@ class GetMk8sV1alpha1NodeGroupTemplateBootDiskResult(dict):
         :param _builtins.float size_mebibytes: *Cannot be set alongside size_bytes,<span pulumi-lang-nodejs=" sizeKibibytes " pulumi-lang-dotnet=" SizeKibibytes " pulumi-lang-go=" sizeKibibytes " pulumi-lang-python=" size_kibibytes " pulumi-lang-yaml=" sizeKibibytes " pulumi-lang-java=" sizeKibibytes " pulumi-lang-hcl=" size_kibibytes "> sizeKibibytes </span>or size_gibibytes.*
         :param _builtins.str type: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `NETWORK_SSD` - the list of available types will be clarified later, it is not final version
                   - `NETWORK_HDD`
@@ -28898,10 +28925,10 @@ class GetMk8sV1alpha1NodeGroupTemplateBootDiskResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `NETWORK_SSD` - the list of available types will be clarified later, it is not final version
            - `NETWORK_HDD`
@@ -28920,10 +28947,10 @@ class GetMk8sV1alpha1NodeGroupTemplateFilesystemResult(dict):
         """
         :param _builtins.str attach_mode: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `UNSPECIFIED`
                   - `READ_ONLY`
                   - `READ_WRITE`
@@ -28938,10 +28965,10 @@ class GetMk8sV1alpha1NodeGroupTemplateFilesystemResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `UNSPECIFIED`
            - `READ_ONLY`
            - `READ_WRITE`
@@ -29056,9 +29083,9 @@ class GetMk8sV1alpha1NodeGroupTemplateNetworkInterfaceResult(dict):
         :param 'GetMk8sV1alpha1NodeGroupTemplateNetworkInterfacePublicIpAddressArgs' public_ip_address: :
                
                   Public IPv4 address associated with the interface.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Describes a public IP address.
         :param _builtins.str subnet_id: :
                
@@ -29076,9 +29103,9 @@ class GetMk8sV1alpha1NodeGroupTemplateNetworkInterfaceResult(dict):
         :
 
            Public IPv4 address associated with the interface.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Describes a public IP address.
         """
         return pulumi.get(self, "public_ip_address")
@@ -29136,10 +29163,10 @@ class GetMk8sV1alpha1NodeGroupTemplateTaintResult(dict):
         """
         :param _builtins.str effect: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `EFFECT_UNSPECIFIED`
                   - `NO_EXECUTE`
                   - `NO_SCHEDULE`
@@ -29155,10 +29182,10 @@ class GetMk8sV1alpha1NodeGroupTemplateTaintResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `EFFECT_UNSPECIFIED`
            - `NO_EXECUTE`
            - `NO_SCHEDULE`
@@ -29200,11 +29227,11 @@ class GetMspMlflowV1alpha1ClusterStatusResult(dict):
         :param _builtins.str phase: :
                
                   Current phase of the cluster.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `PHASE_UNSPECIFIED`
                   - `PHASE_PROVISIONING`
                   - `PHASE_RUNNING`
@@ -29217,11 +29244,11 @@ class GetMspMlflowV1alpha1ClusterStatusResult(dict):
         :param _builtins.str state: :
                
                   State reflects substatus of the phase to define whether it's healthy or not.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `STATE_IN_PROGRESS`
                   - `STATE_FINISHED`
@@ -29273,11 +29300,11 @@ class GetMspMlflowV1alpha1ClusterStatusResult(dict):
         :
 
            Current phase of the cluster.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `PHASE_UNSPECIFIED`
            - `PHASE_PROVISIONING`
            - `PHASE_RUNNING`
@@ -29297,11 +29324,11 @@ class GetMspMlflowV1alpha1ClusterStatusResult(dict):
         :
 
            State reflects substatus of the phase to define whether it's healthy or not.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `STATE_IN_PROGRESS`
            - `STATE_FINISHED`
@@ -29496,11 +29523,11 @@ class GetMspPostgresqlV1alpha1ClusterConfigPoolerConfigResult(dict):
         :param _builtins.str pooling_mode: :
                
                   Mode that the connection pooler is working in.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `POOLING_MODE_UNSPECIFIED`
                   - `SESSION` - Session pooling mode.
                   - `TRANSACTION` - Transaction pooling mode.
@@ -29523,11 +29550,11 @@ class GetMspPostgresqlV1alpha1ClusterConfigPoolerConfigResult(dict):
         :
 
            Mode that the connection pooler is working in.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `POOLING_MODE_UNSPECIFIED`
            - `SESSION` - Session pooling mode.
            - `TRANSACTION` - Transaction pooling mode.
@@ -29750,11 +29777,11 @@ class GetMspPostgresqlV1alpha1ClusterStatusResult(dict):
         :param _builtins.str phase: :
                
                   Current phase of the cluster.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `PHASE_UNSPECIFIED`
                   - `PHASE_PROVISIONING`
                   - `PHASE_RUNNING`
@@ -29768,11 +29795,11 @@ class GetMspPostgresqlV1alpha1ClusterStatusResult(dict):
         :param _builtins.str state: :
                
                   State reflects substatus of the phase to define whether it's healthy or not.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `STATE_IN_PROGRESS`
                   - `STATE_FINISHED`
@@ -29800,11 +29827,11 @@ class GetMspPostgresqlV1alpha1ClusterStatusResult(dict):
         :
 
            Current phase of the cluster.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `PHASE_UNSPECIFIED`
            - `PHASE_PROVISIONING`
            - `PHASE_RUNNING`
@@ -29832,11 +29859,11 @@ class GetMspPostgresqlV1alpha1ClusterStatusResult(dict):
         :
 
            State reflects substatus of the phase to define whether it's healthy or not.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `STATE_IN_PROGRESS`
            - `STATE_FINISHED`
@@ -29940,13 +29967,13 @@ class GetMysteryboxV1SecretPayloadEntryDataResult(dict):
         :param _builtins.str binary_value: :
                
                   The binary data to encrypt and store in the version of the secret.
-                  
+               
                   *Cannot be set alongside string_value.*
         :param _builtins.str key: Non-confidential key of the payload entry.
         :param _builtins.str string_value: :
                
                   The text data to encrypt and store in the version of the secret.
-                  
+               
                   *Cannot be set alongside binary_value.*
         """
         pulumi.set(__self__, "binary_value", binary_value)
@@ -29960,7 +29987,7 @@ class GetMysteryboxV1SecretPayloadEntryDataResult(dict):
         :
 
            The binary data to encrypt and store in the version of the secret.
-           
+
            *Cannot be set alongside string_value.*
         """
         return pulumi.get(self, "binary_value")
@@ -29980,7 +30007,7 @@ class GetMysteryboxV1SecretPayloadEntryDataResult(dict):
         :
 
            The text data to encrypt and store in the version of the secret.
-           
+
            *Cannot be set alongside binary_value.*
         """
         return pulumi.get(self, "string_value")
@@ -29997,21 +30024,21 @@ class GetMysteryboxV1SecretStatusResult(dict):
         :param _builtins.str deleted_at: :
                
                   Time when user called soft delete method
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param _builtins.str purge_at: :
                
                   Time when key should be totally deleted from DB
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param _builtins.str state: :
                
                   State (ACTIVE, SCHEDULED_FOR_DELETION)
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `ACTIVE` - Resource is active, ready for use
                   - `SCHEDULED_FOR_DELETION` - Resource was marked as soft deleted
@@ -30028,7 +30055,7 @@ class GetMysteryboxV1SecretStatusResult(dict):
         :
 
            Time when user called soft delete method
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "deleted_at")
@@ -30045,7 +30072,7 @@ class GetMysteryboxV1SecretStatusResult(dict):
         :
 
            Time when key should be totally deleted from DB
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "purge_at")
@@ -30057,11 +30084,11 @@ class GetMysteryboxV1SecretStatusResult(dict):
         :
 
            State (ACTIVE, SCHEDULED_FOR_DELETION)
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `ACTIVE` - Resource is active, ready for use
            - `SCHEDULED_FOR_DELETION` - Resource was marked as soft deleted
@@ -30085,21 +30112,21 @@ class GetMysteryboxV1SecretVersionStatusResult(dict):
         :param _builtins.str deleted_at: :
                
                   Time when user called soft delete method
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param _builtins.str purge_at: :
                
                   Time when key should be totally deleted from DB
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param _builtins.str state: :
                
                   State (ACTIVE, SCHEDULED_FOR_DELETION)
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `ACTIVE` - Resource is active, ready for use
                   - `SCHEDULED_FOR_DELETION` - Resource was marked as soft deleted
@@ -30115,7 +30142,7 @@ class GetMysteryboxV1SecretVersionStatusResult(dict):
         :
 
            Time when user called soft delete method
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "deleted_at")
@@ -30127,7 +30154,7 @@ class GetMysteryboxV1SecretVersionStatusResult(dict):
         :
 
            Time when key should be totally deleted from DB
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "purge_at")
@@ -30139,11 +30166,11 @@ class GetMysteryboxV1SecretVersionStatusResult(dict):
         :
 
            State (ACTIVE, SCHEDULED_FOR_DELETION)
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `ACTIVE` - Resource is active, ready for use
            - `SCHEDULED_FOR_DELETION` - Resource was marked as soft deleted
@@ -30236,11 +30263,11 @@ class GetQuotasV1QuotaAllowanceStatusResult(dict):
         :param _builtins.str state: :
                
                   Current state of the quota.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `STATE_PROVISIONING` - Quota is being allocated; the process can take up to several minutes.
                   - `STATE_ACTIVE` - Quota is allocated and can be used.
@@ -30260,18 +30287,18 @@ class GetQuotasV1QuotaAllowanceStatusResult(dict):
         :param _builtins.str usage_state: :
                
                   Current state of the quota usage.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `USAGE_STATE_UNSPECIFIED`
                   - `USAGE_STATE_USED` - Quota is actively in use.
                   - `USAGE_STATE_NOT_USED` - Quota is not currently in use.
                   - `USAGE_STATE_UNKNOWN`:
-                     Quota region is unreachable, the current usage is therefore unknown.
-                     Please, retry the request later.
-                  
+                Quota region is unreachable, the current usage is therefore unknown.
+                Please, retry the request later.
+               
                   - `USAGE_STATE_NOT_APPLICABLE` - Quota usage is not applicable
         """
         pulumi.set(__self__, "description", description)
@@ -30323,11 +30350,11 @@ class GetQuotasV1QuotaAllowanceStatusResult(dict):
         :
 
            Current state of the quota.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `STATE_PROVISIONING` - Quota is being allocated; the process can take up to several minutes.
            - `STATE_ACTIVE` - Quota is allocated and can be used.
@@ -30375,18 +30402,18 @@ class GetQuotasV1QuotaAllowanceStatusResult(dict):
         :
 
            Current state of the quota usage.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `USAGE_STATE_UNSPECIFIED`
            - `USAGE_STATE_USED` - Quota is actively in use.
            - `USAGE_STATE_NOT_USED` - Quota is not currently in use.
            - `USAGE_STATE_UNKNOWN`:
-              Quota region is unreachable, the current usage is therefore unknown.
-              Please, retry the request later.
-           
+         Quota region is unreachable, the current usage is therefore unknown.
+         Please, retry the request later.
+
            - `USAGE_STATE_NOT_APPLICABLE` - Quota usage is not applicable
         """
         return pulumi.get(self, "usage_state")
@@ -30408,10 +30435,10 @@ class GetRegistryV1RegistryStatusResult(dict):
         :param _builtins.str registry_fqdn: regional fqdn "cr.eu-north1.nebius.cloud"
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `CREATING`
                   - `ACTIVE`
                   - `DELETING`
@@ -30440,10 +30467,10 @@ class GetRegistryV1RegistryStatusResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `CREATING`
            - `ACTIVE`
            - `DELETING`
@@ -30487,12 +30514,12 @@ class GetStorageV1BucketBucketPolicyRuleResult(dict):
         :param 'GetStorageV1BucketBucketPolicyRuleAnonymousArgs' anonymous: :
                
                   Enable anonymous access. Only read-only roles are allowed in anonymous mode.
-                  
+               
                   *Cannot be set alongside group_id.*
         :param _builtins.str group_id: :
                
                   Group ID to grant access to.
-                  
+               
                   *Cannot be set alongside anonymous.*
         :param Sequence[_builtins.str] paths: :
                
@@ -30513,7 +30540,7 @@ class GetStorageV1BucketBucketPolicyRuleResult(dict):
         :
 
            Enable anonymous access. Only read-only roles are allowed in anonymous mode.
-           
+
            *Cannot be set alongside group_id.*
         """
         return pulumi.get(self, "anonymous")
@@ -30525,7 +30552,7 @@ class GetStorageV1BucketBucketPolicyRuleResult(dict):
         :
 
            Group ID to grant access to.
-           
+
            *Cannot be set alongside anonymous.*
         """
         return pulumi.get(self, "group_id")
@@ -30657,9 +30684,9 @@ class GetStorageV1BucketLifecycleConfigurationResult(dict):
         :param 'GetStorageV1BucketLifecycleConfigurationLastAccessFilterArgs' last_access_filter: :
                
                   Specifies which requests are included in <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> calculations for all transition rules.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   Specifies which requests are included in <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> calculations.
         """
         pulumi.set(__self__, "last_access_filter", last_access_filter)
@@ -30672,9 +30699,9 @@ class GetStorageV1BucketLifecycleConfigurationResult(dict):
         :
 
            Specifies which requests are included in <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> calculations for all transition rules.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            Specifies which requests are included in <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> calculations.
         """
         return pulumi.get(self, "last_access_filter")
@@ -30694,7 +30721,7 @@ class GetStorageV1BucketLifecycleConfigurationLastAccessFilterResult(dict):
                
                   A request is included in <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> calculations if:
                   - The first condition matching the request has `INCLUDE` type.
-                  OR
+                       OR
                   - The request doesn't match any conditions
         """
         pulumi.set(__self__, "conditions", conditions)
@@ -30707,7 +30734,7 @@ class GetStorageV1BucketLifecycleConfigurationLastAccessFilterResult(dict):
 
            A request is included in <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> calculations if:
            - The first condition matching the request has `INCLUDE` type.
-           OR
+                OR
            - The request doesn't match any conditions
         """
         return pulumi.get(self, "conditions")
@@ -30724,36 +30751,36 @@ class GetStorageV1BucketLifecycleConfigurationLastAccessFilterConditionResult(di
                
                   The s3 methods to match.
                   An empty list matches all methods
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `METHOD_UNSPECIFIED`
                   - `GET_OBJECT`
                   - `HEAD_OBJECT`
                   - `GET_OBJECT_TAGGING`
                   - `COPY_OBJECT`:
-                     Copy object method reads the source object.
-                     We account for those operations as source object accesses when calculating <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> for source object.
-                  
+                Copy object method reads the source object.
+                We account for those operations as source object accesses when calculating <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> for source object.
+               
                   - `UPLOAD_PART_COPY`:
-                     Upload part copy method reads the source object.
-                     We account for those operations as source object accesses when calculating <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> for source object.
+                Upload part copy method reads the source object.
+                We account for those operations as source object accesses when calculating <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> for source object.
         :param _builtins.str type: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `TYPE_UNSPECIFIED`
                   - `INCLUDE`:
-                     If an include type condition is the first condition that the request match, the request will be included in
-                     <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> calculation.
-                  
+                If an include type condition is the first condition that the request match, the request will be included in
+                <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> calculation.
+               
                   - `EXCLUDE`:
-                     If an exclude type condition is the first condition that the request match, the request will be ignored in <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span>
-                     calculation.
+                If an exclude type condition is the first condition that the request match, the request will be ignored in <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span>
+                calculation.
         :param Sequence[_builtins.str] user_agents: :
                
                   User agents to match. Condition is satisfied if the request's user agent contains any of these substrings.
@@ -30771,22 +30798,22 @@ class GetStorageV1BucketLifecycleConfigurationLastAccessFilterConditionResult(di
 
            The s3 methods to match.
            An empty list matches all methods
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `METHOD_UNSPECIFIED`
            - `GET_OBJECT`
            - `HEAD_OBJECT`
            - `GET_OBJECT_TAGGING`
            - `COPY_OBJECT`:
-              Copy object method reads the source object.
-              We account for those operations as source object accesses when calculating <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> for source object.
-           
+         Copy object method reads the source object.
+         We account for those operations as source object accesses when calculating <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> for source object.
+
            - `UPLOAD_PART_COPY`:
-              Upload part copy method reads the source object.
-              We account for those operations as source object accesses when calculating <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> for source object.
+         Upload part copy method reads the source object.
+         We account for those operations as source object accesses when calculating <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> for source object.
         """
         return pulumi.get(self, "methods")
 
@@ -30796,18 +30823,18 @@ class GetStorageV1BucketLifecycleConfigurationLastAccessFilterConditionResult(di
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `TYPE_UNSPECIFIED`
            - `INCLUDE`:
-              If an include type condition is the first condition that the request match, the request will be included in
-              <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> calculation.
-           
+         If an include type condition is the first condition that the request match, the request will be included in
+         <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span> calculation.
+
            - `EXCLUDE`:
-              If an exclude type condition is the first condition that the request match, the request will be ignored in <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span>
-              calculation.
+         If an exclude type condition is the first condition that the request match, the request will be ignored in <span pulumi-lang-nodejs="`daysSinceLastAccess`" pulumi-lang-dotnet="`DaysSinceLastAccess`" pulumi-lang-go="`daysSinceLastAccess`" pulumi-lang-python="`days_since_last_access`" pulumi-lang-yaml="`daysSinceLastAccess`" pulumi-lang-java="`daysSinceLastAccess`" pulumi-lang-hcl="`days_since_last_access`">`daysSinceLastAccess`</span>
+         calculation.
         """
         return pulumi.get(self, "type")
 
@@ -30862,10 +30889,10 @@ class GetStorageV1BucketLifecycleConfigurationRuleResult(dict):
                   It works only on a bucket that has versioning enabled (or suspended).
         :param _builtins.str status: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATUS_UNSPECIFIED`
                   - `ENABLED`
                   - `DISABLED`
@@ -30956,10 +30983,10 @@ class GetStorageV1BucketLifecycleConfigurationRuleResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `STATUS_UNSPECIFIED`
            - `ENABLED`
            - `DISABLED`
@@ -31012,15 +31039,15 @@ class GetStorageV1BucketLifecycleConfigurationRuleExpirationResult(dict):
         :param _builtins.str date: :
                
                   Indicates at what date the object will be deleted. The time is always midnight UTC.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
-                  
+               
                   *Cannot be set alongside days.*
         :param _builtins.float days: :
                
                   Indicates the lifetime, in days, of the objects that are subject to the rule.
                   The value must be a non-zero positive integer.
-                  
+               
                   *Cannot be set alongside date.*
         :param _builtins.bool expired_object_delete_marker: :
                
@@ -31040,9 +31067,9 @@ class GetStorageV1BucketLifecycleConfigurationRuleExpirationResult(dict):
         :
 
            Indicates at what date the object will be deleted. The time is always midnight UTC.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
-           
+
            *Cannot be set alongside days.*
         """
         return pulumi.get(self, "date")
@@ -31055,7 +31082,7 @@ class GetStorageV1BucketLifecycleConfigurationRuleExpirationResult(dict):
 
            Indicates the lifetime, in days, of the objects that are subject to the rule.
            The value must be a non-zero positive integer.
-           
+
            *Cannot be set alongside date.*
         """
         return pulumi.get(self, "days")
@@ -31197,11 +31224,11 @@ class GetStorageV1BucketLifecycleConfigurationRuleNoncurrentVersionTransitionRes
         :param _builtins.str storage_class: :
                
                   Target storage class to transit to.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STORAGE_CLASS_UNSPECIFIED`
                   - `STANDARD`
                   - `ENHANCED_THROUGHPUT`
@@ -31235,11 +31262,11 @@ class GetStorageV1BucketLifecycleConfigurationRuleNoncurrentVersionTransitionRes
         :
 
            Target storage class to transit to.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `STORAGE_CLASS_UNSPECIFIED`
            - `STANDARD`
            - `ENHANCED_THROUGHPUT`
@@ -31260,29 +31287,29 @@ class GetStorageV1BucketLifecycleConfigurationRuleTransitionResult(dict):
         :param _builtins.str date: :
                
                   Indicates at what date the object will be transited. The time is always midnight UTC.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
-                  
+               
                   *Cannot be set alongside days or days_since_last_access.*
         :param _builtins.float days: :
                
                   Amount of days since object was uploaded before it's transited to a new storage class.
                   The value must be a non-zero positive integer.
-                  
+               
                   *Cannot be set alongside date or days_since_last_access.*
         :param _builtins.float days_since_last_access: :
                
                   The number of days since the object was last accessed before it is transitioned.
-                  
+               
                   *Cannot be set alongside date or days.*
         :param _builtins.str storage_class: :
                
                   Target storage class to transit to.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STORAGE_CLASS_UNSPECIFIED`
                   - `STANDARD`
                   - `ENHANCED_THROUGHPUT`
@@ -31301,9 +31328,9 @@ class GetStorageV1BucketLifecycleConfigurationRuleTransitionResult(dict):
         :
 
            Indicates at what date the object will be transited. The time is always midnight UTC.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
-           
+
            *Cannot be set alongside days or days_since_last_access.*
         """
         return pulumi.get(self, "date")
@@ -31316,7 +31343,7 @@ class GetStorageV1BucketLifecycleConfigurationRuleTransitionResult(dict):
 
            Amount of days since object was uploaded before it's transited to a new storage class.
            The value must be a non-zero positive integer.
-           
+
            *Cannot be set alongside date or days_since_last_access.*
         """
         return pulumi.get(self, "days")
@@ -31328,7 +31355,7 @@ class GetStorageV1BucketLifecycleConfigurationRuleTransitionResult(dict):
         :
 
            The number of days since the object was last accessed before it is transitioned.
-           
+
            *Cannot be set alongside date or days.*
         """
         return pulumi.get(self, "days_since_last_access")
@@ -31340,11 +31367,11 @@ class GetStorageV1BucketLifecycleConfigurationRuleTransitionResult(dict):
         :
 
            Target storage class to transit to.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `STORAGE_CLASS_UNSPECIFIED`
            - `STANDARD`
            - `ENHANCED_THROUGHPUT`
@@ -31380,7 +31407,7 @@ class GetStorageV1BucketStatusResult(dict):
                
                   The time when the bucket was deleted (or scheduled for deletion).
                   It resets to null if the bucket is undeleted.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param _builtins.str domain_name: :
                
@@ -31389,31 +31416,31 @@ class GetStorageV1BucketStatusResult(dict):
         :param _builtins.str purge_at: :
                
                   The time when the bucket will be automatically purged in case it was soft-deleted.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param _builtins.str region: The name of the region where the bucket is located for use with S3 clients, i.e. "eu-west1".
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `CREATING` - Bucket is under creation and cannot be used yet.
                   - `ACTIVE` - Bucket is active and ready for usage.
                   - `UPDATING`:
-                     Bucket is being updated.
-                     It can be used, but some settings are being modified and you can observe their inconsistency.
-                  
+                Bucket is being updated.
+                It can be used, but some settings are being modified and you can observe their inconsistency.
+               
                   - `SCHEDULED_FOR_DELETION`:
-                     Bucket is scheduled for deletion.
-                     It cannot be used in s3 api anymore.
+                Bucket is scheduled for deletion.
+                It cannot be used in s3 api anymore.
         :param _builtins.str suspension_state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `SUSPENSION_STATE_UNSPECIFIED`
                   - `NOT_SUSPENDED`
                   - `SUSPENDED`
@@ -31451,7 +31478,7 @@ class GetStorageV1BucketStatusResult(dict):
 
            The time when the bucket was deleted (or scheduled for deletion).
            It resets to null if the bucket is undeleted.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "deleted_at")
@@ -31474,7 +31501,7 @@ class GetStorageV1BucketStatusResult(dict):
         :
 
            The time when the bucket will be automatically purged in case it was soft-deleted.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "purge_at")
@@ -31493,20 +31520,20 @@ class GetStorageV1BucketStatusResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `CREATING` - Bucket is under creation and cannot be used yet.
            - `ACTIVE` - Bucket is active and ready for usage.
            - `UPDATING`:
-              Bucket is being updated.
-              It can be used, but some settings are being modified and you can observe their inconsistency.
-           
+         Bucket is being updated.
+         It can be used, but some settings are being modified and you can observe their inconsistency.
+
            - `SCHEDULED_FOR_DELETION`:
-              Bucket is scheduled for deletion.
-              It cannot be used in s3 api anymore.
+         Bucket is scheduled for deletion.
+         It cannot be used in s3 api anymore.
         """
         return pulumi.get(self, "state")
 
@@ -31516,10 +31543,10 @@ class GetStorageV1BucketStatusResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `SUSPENSION_STATE_UNSPECIFIED`
            - `NOT_SUSPENDED`
            - `SUSPENDED`
@@ -31536,15 +31563,15 @@ class GetStorageV1BucketStatusCounterResult(dict):
         """
         :param 'GetStorageV1BucketStatusCounterNonCurrentCountersArgs' non_current_counters: :
                
-                  #### Inner value description
-                  
+               #### Inner value description
+               
                   Counters for non-current object versions (for versioning buckets).
         :param _builtins.str storage_class: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STORAGE_CLASS_UNSPECIFIED`
                   - `STANDARD`
                   - `ENHANCED_THROUGHPUT`
@@ -31566,8 +31593,8 @@ class GetStorageV1BucketStatusCounterResult(dict):
         """
         :
 
-           #### Inner value description
-           
+        #### Inner value description
+
            Counters for non-current object versions (for versioning buckets).
         """
         return pulumi.get(self, "non_current_counters")
@@ -31578,10 +31605,10 @@ class GetStorageV1BucketStatusCounterResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `STORAGE_CLASS_UNSPECIFIED`
            - `STANDARD`
            - `ENHANCED_THROUGHPUT`
@@ -32275,12 +32302,12 @@ class GetStorageV1TransferStatusResult(dict):
         :param _builtins.str state: :
                
                   Current transfer state.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Transfer state.
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `ACTIVE`
                   - `STOPPING`
@@ -32291,12 +32318,12 @@ class GetStorageV1TransferStatusResult(dict):
         :param _builtins.str suspension_state: :
                
                   If the transfer is suspended, transfer's suspension state becomes SUSPENDED.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Transfer suspension state.
                   Possible values:
-                  
+               
                   - `SUSPENSION_STATE_UNSPECIFIED`
                   - `NOT_SUSPENDED`
                   - `SUSPENDED`
@@ -32333,12 +32360,12 @@ class GetStorageV1TransferStatusResult(dict):
         :
 
            Current transfer state.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Transfer state.
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `ACTIVE`
            - `STOPPING`
@@ -32356,12 +32383,12 @@ class GetStorageV1TransferStatusResult(dict):
         :
 
            If the transfer is suspended, transfer's suspension state becomes SUSPENDED.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Transfer suspension state.
            Possible values:
-           
+
            - `SUSPENSION_STATE_UNSPECIFIED`
            - `NOT_SUSPENDED`
            - `SUSPENDED`
@@ -32381,11 +32408,11 @@ class GetStorageV1TransferStatusErrorResult(dict):
         :param _builtins.str origin: :
                
                   Endpoint where the error occurred.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `ORIGIN_UNSPECIFIED`
                   - `SOURCE` - Error originated from the source.
                   - `DESTINATION` - Error originated from the destination.
@@ -32417,11 +32444,11 @@ class GetStorageV1TransferStatusErrorResult(dict):
         :
 
            Endpoint where the error occurred.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `ORIGIN_UNSPECIFIED`
            - `SOURCE` - Error originated from the source.
            - `DESTINATION` - Error originated from the destination.
@@ -32446,7 +32473,7 @@ class GetStorageV1TransferStatusLastIterationResult(dict):
         :param _builtins.str end_time: :
                
                   Iteration end time.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param 'GetStorageV1TransferStatusLastIterationErrorArgs' error: Human-readable error description. Populated only if state is FAILED.
         :param _builtins.float objects_deleted_count: Number of objects deleted from destination bucket during this iteration.
@@ -32456,17 +32483,17 @@ class GetStorageV1TransferStatusLastIterationResult(dict):
         :param _builtins.str start_time: :
                
                   Iteration start time.
-                  
+               
                   A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param _builtins.str state: :
                
                   Current iteration state.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Iteration state.
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `IN_PROGRESS`
                   - `COMPLETED`
@@ -32498,7 +32525,7 @@ class GetStorageV1TransferStatusLastIterationResult(dict):
         :
 
            Iteration end time.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "end_time")
@@ -32550,7 +32577,7 @@ class GetStorageV1TransferStatusLastIterationResult(dict):
         :
 
            Iteration start time.
-           
+
            A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         """
         return pulumi.get(self, "start_time")
@@ -32562,12 +32589,12 @@ class GetStorageV1TransferStatusLastIterationResult(dict):
         :
 
            Current iteration state.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Iteration state.
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `IN_PROGRESS`
            - `COMPLETED`
@@ -32589,11 +32616,11 @@ class GetStorageV1TransferStatusLastIterationErrorResult(dict):
         :param _builtins.str origin: :
                
                   Endpoint where the error occurred.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `ORIGIN_UNSPECIFIED`
                   - `SOURCE` - Error originated from the source.
                   - `DESTINATION` - Error originated from the destination.
@@ -32625,11 +32652,11 @@ class GetStorageV1TransferStatusLastIterationErrorResult(dict):
         :
 
            Endpoint where the error occurred.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `ORIGIN_UNSPECIFIED`
            - `SOURCE` - Error originated from the source.
            - `DESTINATION` - Error originated from the destination.
@@ -32755,7 +32782,7 @@ class GetStorageV1alpha1TransferSourceResult(dict):
                   Limiters applied to source bucket operations. These limits include all operations
                   required for transfer (HeadObject, GetObject, ListObjects). For details about
                   which operations are used, see public documentation: http://docs.nebius.com/object-storage/transfer/quickstart#background.
-                  
+               
                   Note: Since the service performs comparable request volumes and data transfers
                   to both source and destination, these limits will indirectly constrain
                   destination operations as well.
@@ -32799,7 +32826,7 @@ class GetStorageV1alpha1TransferSourceResult(dict):
            Limiters applied to source bucket operations. These limits include all operations
            required for transfer (HeadObject, GetObject, ListObjects). For details about
            which operations are used, see public documentation: http://docs.nebius.com/object-storage/transfer/quickstart#background.
-           
+
            Note: Since the service performs comparable request volumes and data transfers
            to both source and destination, these limits will indirectly constrain
            destination operations as well.
@@ -32866,10 +32893,10 @@ class GetStorageV1alpha1TransferStatusResult(dict):
         :param _builtins.str error: Error information if the transfer has failed.
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `ACTIVE`
                   - `STOPPING`
@@ -32878,10 +32905,10 @@ class GetStorageV1alpha1TransferStatusResult(dict):
                   - `FAILED`
         :param _builtins.str suspension_state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `SUSPENSION_STATE_UNSPECIFIED`
                   - `NOT_SUSPENDED`
                   - `SUSPENDED`
@@ -32910,10 +32937,10 @@ class GetStorageV1alpha1TransferStatusResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `ACTIVE`
            - `STOPPING`
@@ -32929,10 +32956,10 @@ class GetStorageV1alpha1TransferStatusResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `SUSPENSION_STATE_UNSPECIFIED`
            - `NOT_SUSPENDED`
            - `SUSPENDED`
@@ -32959,10 +32986,10 @@ class GetStorageV1alpha1TransferStatusLastIterationResult(dict):
         :param _builtins.str start_time: A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `IN_PROGRESS`
                   - `COMPLETED`
@@ -33040,10 +33067,10 @@ class GetStorageV1alpha1TransferStatusLastIterationResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `IN_PROGRESS`
            - `COMPLETED`
@@ -33067,12 +33094,12 @@ class GetTunnelV1TunnelStatusResult(dict):
         :param _builtins.str state: :
                
                   Current lifecycle state of the tunnel.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   State represents the lifecycle state of the tunnel.
                   Possible values:
-                  
+               
                   - `UNSPECIFIED` - Default unspecified state.
                   - `CREATED` - The tunnel has been created and is active.
                   - `DELETED` - The tunnel has been deleted.
@@ -33086,12 +33113,12 @@ class GetTunnelV1TunnelStatusResult(dict):
         :
 
            Current lifecycle state of the tunnel.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            State represents the lifecycle state of the tunnel.
            Possible values:
-           
+
            - `UNSPECIFIED` - Default unspecified state.
            - `CREATED` - The tunnel has been created and is active.
            - `DELETED` - The tunnel has been deleted.
@@ -33116,7 +33143,7 @@ class GetVpcV1AllocationIpv4PrivateResult(dict):
         :param _builtins.str pool_id: :
                
                   ID of the pool that allocation will receive its IP address from.
-                  
+               
                   *Cannot be set alongside subnet_id.*
         :param _builtins.str subnet_id: :
                
@@ -33125,7 +33152,7 @@ class GetVpcV1AllocationIpv4PrivateResult(dict):
                   with this subnet.
                   In order to assign an allocation to a resource (i.e. network interface)
                   both must be associated with the same subnet.
-                  
+               
                   *Cannot be set alongside pool_id.*
         """
         pulumi.set(__self__, "cidr", cidr)
@@ -33153,7 +33180,7 @@ class GetVpcV1AllocationIpv4PrivateResult(dict):
         :
 
            ID of the pool that allocation will receive its IP address from.
-           
+
            *Cannot be set alongside subnet_id.*
         """
         return pulumi.get(self, "pool_id")
@@ -33169,7 +33196,7 @@ class GetVpcV1AllocationIpv4PrivateResult(dict):
            with this subnet.
            In order to assign an allocation to a resource (i.e. network interface)
            both must be associated with the same subnet.
-           
+
            *Cannot be set alongside pool_id.*
         """
         return pulumi.get(self, "subnet_id")
@@ -33192,7 +33219,7 @@ class GetVpcV1AllocationIpv4PublicResult(dict):
         :param _builtins.str pool_id: :
                
                   ID of the pool that allocation will receive its IP address from.
-                  
+               
                   *Cannot be set alongside subnet_id.*
         :param _builtins.str subnet_id: :
                
@@ -33201,7 +33228,7 @@ class GetVpcV1AllocationIpv4PublicResult(dict):
                   this subnet.
                   Assigning an allocation to a resource (i.e. network interface) requires
                   both to be associated with the same subnet.
-                  
+               
                   *Cannot be set alongside pool_id.*
         """
         pulumi.set(__self__, "cidr", cidr)
@@ -33229,7 +33256,7 @@ class GetVpcV1AllocationIpv4PublicResult(dict):
         :
 
            ID of the pool that allocation will receive its IP address from.
-           
+
            *Cannot be set alongside subnet_id.*
         """
         return pulumi.get(self, "pool_id")
@@ -33245,7 +33272,7 @@ class GetVpcV1AllocationIpv4PublicResult(dict):
            this subnet.
            Assigning an allocation to a resource (i.e. network interface) requires
            both to be associated with the same subnet.
-           
+
            *Cannot be set alongside pool_id.*
         """
         return pulumi.get(self, "subnet_id")
@@ -33276,12 +33303,12 @@ class GetVpcV1AllocationStatusResult(dict):
         :param _builtins.str state: :
                
                   This field represents the current state of the allocation.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Enumeration of possible states of the Allocation.
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED` - Default state, unspecified.
                   - `CREATING` - Allocation is being created.
                   - `ALLOCATED` - Allocation is ready for use.
@@ -33323,12 +33350,12 @@ class GetVpcV1AllocationStatusResult(dict):
         :
 
            This field represents the current state of the allocation.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Enumeration of possible states of the Allocation.
            Possible values:
-           
+
            - `STATE_UNSPECIFIED` - Default state, unspecified.
            - `CREATING` - Allocation is being created.
            - `ALLOCATED` - Allocation is ready for use.
@@ -33405,11 +33432,11 @@ class GetVpcV1AllocationStatusAssignmentNetworkInterfaceResult(dict):
         :param _builtins.str type: :
                
                   Type of allocation attachment on the network interface.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `TYPE_UNSPECIFIED`
                   - `PRIMARY` - Allocation is attached as the interface private IPv4 address.
                   - `ALIAS` - Allocation is attached as an IP alias.
@@ -33442,11 +33469,11 @@ class GetVpcV1AllocationStatusAssignmentNetworkInterfaceResult(dict):
         :
 
            Type of allocation attachment on the network interface.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `TYPE_UNSPECIFIED`
            - `PRIMARY` - Allocation is attached as the interface private IPv4 address.
            - `ALIAS` - Allocation is attached as an IP alias.
@@ -33473,11 +33500,11 @@ class GetVpcV1AllocationStatusDetailsResult(dict):
         :param _builtins.str version: :
                
                   The IP version of this allocation (IPv4 or IPv6).
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `IP_VERSION_UNSPECIFIED` - Default, unspecified IP version.
                   - `IPV4` - IPv4 address.
                   - `IPV6` - IPv6 address.
@@ -33522,11 +33549,11 @@ class GetVpcV1AllocationStatusDetailsResult(dict):
         :
 
            The IP version of this allocation (IPv4 or IPv6).
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `IP_VERSION_UNSPECIFIED` - Default, unspecified IP version.
            - `IPV4` - IPv4 address.
            - `IPV6` - IPv6 address.
@@ -33610,12 +33637,12 @@ class GetVpcV1NetworkStatusResult(dict):
         :param _builtins.str state: :
                
                   Current state of the network.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Enumeration of possible states of the network.
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED` - Default state, unspecified.
                   - `CREATING` - Network is being created.
                   - `READY` - Network is ready for use.
@@ -33639,12 +33666,12 @@ class GetVpcV1NetworkStatusResult(dict):
         :
 
            Current state of the network.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Enumeration of possible states of the network.
            Possible values:
-           
+
            - `STATE_UNSPECIFIED` - Default state, unspecified.
            - `CREATING` - Network is being created.
            - `READY` - Network is ready for use.
@@ -33673,13 +33700,13 @@ class GetVpcV1PoolCidrResult(dict):
                
                   Controls provisioning of IP addresses from the CIDR block to other pools
                   or allocations. Defaults to AVAILABLE.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Controls provisioning of IP addresses from this pool to other pools
                   or allocations. Defaults to AVAILABLE.
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED` - Not used, mandated by the protocol.
                   - `AVAILABLE` - Default state. Provision of the IP addresses from this CIDR block is allowed.
                   - `DISABLED` - Provision of the IP addresses from this CIDR block is denied.
@@ -33719,13 +33746,13 @@ class GetVpcV1PoolCidrResult(dict):
 
            Controls provisioning of IP addresses from the CIDR block to other pools
            or allocations. Defaults to AVAILABLE.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Controls provisioning of IP addresses from this pool to other pools
            or allocations. Defaults to AVAILABLE.
            Possible values:
-           
+
            - `STATE_UNSPECIFIED` - Not used, mandated by the protocol.
            - `AVAILABLE` - Default state. Provision of the IP addresses from this CIDR block is allowed.
            - `DISABLED` - Provision of the IP addresses from this CIDR block is denied.
@@ -33753,12 +33780,12 @@ class GetVpcV1PoolStatusResult(dict):
         :param _builtins.str state: :
                
                   Current state of the Pool.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible states of the Pool.
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED` - Default, unspecified state.
                   - `CREATING` - Pool is being created.
                   - `READY` - Pool is ready for use.
@@ -33800,12 +33827,12 @@ class GetVpcV1PoolStatusResult(dict):
         :
 
            Current state of the Pool.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible states of the Pool.
            Possible values:
-           
+
            - `STATE_UNSPECIFIED` - Default, unspecified state.
            - `CREATING` - Pool is being created.
            - `READY` - Pool is ready for use.
@@ -33888,18 +33915,18 @@ class GetVpcV1RouteNextHopResult(dict):
                   The allocation must be assigned to either a Compute instance or a Load Balancer.
                   Warning: If the allocation exists but is not assigned to any resource,
                   traffic will be forwarded to a "black hole" and dropped.
-                  
-                  #### Inner value description
-                  
+               
+               #### Inner value description
+               
                   AllocationNextHop specifies an IP allocation as the next hop.
-                  
+               
                   *Cannot be set alongside default_egress_gateway.*
         :param _builtins.bool default_egress_gateway: :
                
                   Use the default egress gateway for outbound traffic.
                   Note: For VMs with public addresses (Floating IPs/FIPs), the FIP-specific route
                   takes precedence over this default egress gateway route.
-                  
+               
                   *Cannot be set alongside allocation.*
         """
         pulumi.set(__self__, "allocation", allocation)
@@ -33916,11 +33943,11 @@ class GetVpcV1RouteNextHopResult(dict):
            The allocation must be assigned to either a Compute instance or a Load Balancer.
            Warning: If the allocation exists but is not assigned to any resource,
            traffic will be forwarded to a "black hole" and dropped.
-           
-           #### Inner value description
-           
+
+        #### Inner value description
+
            AllocationNextHop specifies an IP allocation as the next hop.
-           
+
            *Cannot be set alongside default_egress_gateway.*
         """
         return pulumi.get(self, "allocation")
@@ -33934,7 +33961,7 @@ class GetVpcV1RouteNextHopResult(dict):
            Use the default egress gateway for outbound traffic.
            Note: For VMs with public addresses (Floating IPs/FIPs), the FIP-specific route
            takes precedence over this default egress gateway route.
-           
+
            *Cannot be set alongside allocation.*
         """
         return pulumi.get(self, "default_egress_gateway")
@@ -33975,23 +34002,23 @@ class GetVpcV1RouteStatusResult(dict):
         :param _builtins.str state: :
                
                   Current state of the route.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED` - The state is unknown or not yet set.
                   - `READY` - The route is configured and operational.
         :param _builtins.str type: :
                
                   Indicates the route type.
                   REDISTRIBUTED routes cannot be deleted directly.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Route type.
                   Possible values:
-                  
+               
                   - `TYPE_UNSPECIFIED`
                   - `STATIC`
                   - `REDISTRIBUTED`
@@ -34028,11 +34055,11 @@ class GetVpcV1RouteStatusResult(dict):
         :
 
            Current state of the route.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED` - The state is unknown or not yet set.
            - `READY` - The route is configured and operational.
         """
@@ -34046,12 +34073,12 @@ class GetVpcV1RouteStatusResult(dict):
 
            Indicates the route type.
            REDISTRIBUTED routes cannot be deleted directly.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Route type.
            Possible values:
-           
+
            - `TYPE_UNSPECIFIED`
            - `STATIC`
            - `REDISTRIBUTED`
@@ -34068,12 +34095,12 @@ class GetVpcV1RouteStatusNextHopResult(dict):
         :param 'GetVpcV1RouteStatusNextHopAllocationArgs' allocation: :
                
                   Status of an allocation-based next hop.
-                  
+               
                   *Cannot be set alongside default_egress_gateway.*
         :param 'GetVpcV1RouteStatusNextHopDefaultEgressGatewayArgs' default_egress_gateway: :
                
                   Status of the default egress gateway configuration.
-                  
+               
                   *Cannot be set alongside allocation.*
         """
         pulumi.set(__self__, "allocation", allocation)
@@ -34086,7 +34113,7 @@ class GetVpcV1RouteStatusNextHopResult(dict):
         :
 
            Status of an allocation-based next hop.
-           
+
            *Cannot be set alongside default_egress_gateway.*
         """
         return pulumi.get(self, "allocation")
@@ -34098,7 +34125,7 @@ class GetVpcV1RouteStatusNextHopResult(dict):
         :
 
            Status of the default egress gateway configuration.
-           
+
            *Cannot be set alongside allocation.*
         """
         return pulumi.get(self, "default_egress_gateway")
@@ -34149,12 +34176,12 @@ class GetVpcV1RouteTableStatusResult(dict):
         :param _builtins.str state: :
                
                   Current state of the route table.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   State indicates the current operational state of the route table.
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED` - The state is unknown or not yet set.
                   - `READY` - The route table is configured and operational.
         """
@@ -34188,12 +34215,12 @@ class GetVpcV1RouteTableStatusResult(dict):
         :
 
            Current state of the route table.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            State indicates the current operational state of the route table.
            Possible values:
-           
+
            - `STATE_UNSPECIFIED` - The state is unknown or not yet set.
            - `READY` - The route table is configured and operational.
         """
@@ -34238,12 +34265,12 @@ class GetVpcV1SecurityGroupStatusResult(dict):
         :param _builtins.str state: :
                
                   Current state of the security group.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Enumeration of possible states of the security group.
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED` - Default state, unspecified.
                   - `READY` - Security group is ready for use.
         """
@@ -34269,12 +34296,12 @@ class GetVpcV1SecurityGroupStatusResult(dict):
         :
 
            Current state of the security group.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Enumeration of possible states of the security group.
            Possible values:
-           
+
            - `STATE_UNSPECIFIED` - Default state, unspecified.
            - `READY` - Security group is ready for use.
         """
@@ -34420,12 +34447,12 @@ class GetVpcV1SecurityRuleStatusResult(dict):
         :param _builtins.str direction: :
                
                   Direction of traffic affected by the rule.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Direction specifies whether traffic is INGRESS (incoming) or EGRESS (outgoing).
                   Possible values:
-                  
+               
                   - `DIRECTION_UNSPECIFIED`
                   - `INGRESS`
                   - `EGRESS`
@@ -34437,11 +34464,11 @@ class GetVpcV1SecurityRuleStatusResult(dict):
         :param 'GetVpcV1SecurityRuleStatusSourceArgs' source: Source of the traffic that matched the rule.
         :param _builtins.str state: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   State describes lifecycle phases of a security rule.
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED`
                   - `CREATING`
                   - `READY`
@@ -34468,12 +34495,12 @@ class GetVpcV1SecurityRuleStatusResult(dict):
         :
 
            Direction of traffic affected by the rule.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Direction specifies whether traffic is INGRESS (incoming) or EGRESS (outgoing).
            Possible values:
-           
+
            - `DIRECTION_UNSPECIFIED`
            - `INGRESS`
            - `EGRESS`
@@ -34506,11 +34533,11 @@ class GetVpcV1SecurityRuleStatusResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            State describes lifecycle phases of a security rule.
            Possible values:
-           
+
            - `STATE_UNSPECIFIED`
            - `CREATING`
            - `READY`
@@ -34670,13 +34697,13 @@ class GetVpcV1SubnetIpv4PrivatePoolsPoolCidrResult(dict):
         :param _builtins.str state: :
                
                   Controls provisioning of IP addresses from the CIDR block. Defaults to AVAILABLE.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Controls provisioning of IP addresses from this pool to other pools
                   or allocations. Defaults to AVAILABLE.
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED` - Not used, mandated by the protocol.
                   - `AVAILABLE` - Default state. Provision of the IP addresses from this CIDR block is allowed.
                   - `DISABLED` - Provision of the IP addresses from this CIDR block is denied.
@@ -34712,13 +34739,13 @@ class GetVpcV1SubnetIpv4PrivatePoolsPoolCidrResult(dict):
         :
 
            Controls provisioning of IP addresses from the CIDR block. Defaults to AVAILABLE.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Controls provisioning of IP addresses from this pool to other pools
            or allocations. Defaults to AVAILABLE.
            Possible values:
-           
+
            - `STATE_UNSPECIFIED` - Not used, mandated by the protocol.
            - `AVAILABLE` - Default state. Provision of the IP addresses from this CIDR block is allowed.
            - `DISABLED` - Provision of the IP addresses from this CIDR block is denied.
@@ -34797,13 +34824,13 @@ class GetVpcV1SubnetIpv4PublicPoolsPoolCidrResult(dict):
         :param _builtins.str state: :
                
                   Controls provisioning of IP addresses from the CIDR block. Defaults to AVAILABLE.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Controls provisioning of IP addresses from this pool to other pools
                   or allocations. Defaults to AVAILABLE.
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED` - Not used, mandated by the protocol.
                   - `AVAILABLE` - Default state. Provision of the IP addresses from this CIDR block is allowed.
                   - `DISABLED` - Provision of the IP addresses from this CIDR block is denied.
@@ -34839,13 +34866,13 @@ class GetVpcV1SubnetIpv4PublicPoolsPoolCidrResult(dict):
         :
 
            Controls provisioning of IP addresses from the CIDR block. Defaults to AVAILABLE.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Controls provisioning of IP addresses from this pool to other pools
            or allocations. Defaults to AVAILABLE.
            Possible values:
-           
+
            - `STATE_UNSPECIFIED` - Not used, mandated by the protocol.
            - `AVAILABLE` - Default state. Provision of the IP addresses from this CIDR block is allowed.
            - `DISABLED` - Provision of the IP addresses from this CIDR block is denied.
@@ -34886,12 +34913,12 @@ class GetVpcV1SubnetStatusResult(dict):
         :param _builtins.str state: :
                
                   Current state of the subnet.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Enumeration of possible states of the subnet.
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED` - Default state, unspecified.
                   - `CREATING` - Subnet is being created.
                   - `READY` - Subnet is ready for use.
@@ -34962,12 +34989,12 @@ class GetVpcV1SubnetStatusResult(dict):
         :
 
            Current state of the subnet.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Enumeration of possible states of the subnet.
            Possible values:
-           
+
            - `STATE_UNSPECIFIED` - Default state, unspecified.
            - `CREATING` - Subnet is being created.
            - `READY` - Subnet is ready for use.
@@ -35087,13 +35114,13 @@ class GetVpcV1alpha1AllocationIpv4PrivateResult(dict):
         :param _builtins.str pool_id: :
                
                   Pool for the IPv4 private allocation.
-                  
+               
                   *Cannot be set alongside subnet_id.*
         :param _builtins.str subnet_id: :
                
                   Subnet ID.
                   Required same subnet to use allocation in subnet-resources (e.g. Network Interface)
-                  
+               
                   *Cannot be set alongside pool_id.*
         """
         pulumi.set(__self__, "cidr", cidr)
@@ -35120,7 +35147,7 @@ class GetVpcV1alpha1AllocationIpv4PrivateResult(dict):
         :
 
            Pool for the IPv4 private allocation.
-           
+
            *Cannot be set alongside subnet_id.*
         """
         return pulumi.get(self, "pool_id")
@@ -35133,7 +35160,7 @@ class GetVpcV1alpha1AllocationIpv4PrivateResult(dict):
 
            Subnet ID.
            Required same subnet to use allocation in subnet-resources (e.g. Network Interface)
-           
+
            *Cannot be set alongside pool_id.*
         """
         return pulumi.get(self, "subnet_id")
@@ -35203,12 +35230,12 @@ class GetVpcV1alpha1AllocationStatusResult(dict):
         :param _builtins.str state: :
                
                   This field represents the current state of the allocation.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Enumeration of possible states of the Allocation.
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED` - Default state, unspecified.
                   - `CREATING` - Allocation is being created.
                   - `ALLOCATED` - Allocation is ready for use.
@@ -35250,12 +35277,12 @@ class GetVpcV1alpha1AllocationStatusResult(dict):
         :
 
            This field represents the current state of the allocation.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Enumeration of possible states of the Allocation.
            Possible values:
-           
+
            - `STATE_UNSPECIFIED` - Default state, unspecified.
            - `CREATING` - Allocation is being created.
            - `ALLOCATED` - Allocation is ready for use.
@@ -35332,11 +35359,11 @@ class GetVpcV1alpha1AllocationStatusAssignmentNetworkInterfaceResult(dict):
         :param _builtins.str type: :
                
                   Type of allocation attachment on the network interface.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `TYPE_UNSPECIFIED`
                   - `PRIMARY` - Allocation is attached as the interface private IPv4 address.
                   - `ALIAS` - Allocation is attached as an IP alias.
@@ -35369,11 +35396,11 @@ class GetVpcV1alpha1AllocationStatusAssignmentNetworkInterfaceResult(dict):
         :
 
            Type of allocation attachment on the network interface.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `TYPE_UNSPECIFIED`
            - `PRIMARY` - Allocation is attached as the interface private IPv4 address.
            - `ALIAS` - Allocation is attached as an IP alias.
@@ -35391,10 +35418,10 @@ class GetVpcV1alpha1AllocationStatusDetailsResult(dict):
         """
         :param _builtins.str version: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `IP_VERSION_UNSPECIFIED` - Default, unspecified IP version.
                   - `IPV4` - IPv4 address.
                   - `IPV6` - IPv6 address.
@@ -35419,10 +35446,10 @@ class GetVpcV1alpha1AllocationStatusDetailsResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `IP_VERSION_UNSPECIFIED` - Default, unspecified IP version.
            - `IPV4` - IPv4 address.
            - `IPV6` - IPv6 address.
@@ -35458,12 +35485,12 @@ class GetVpcV1alpha1NetworkStatusResult(dict):
         :param _builtins.str state: :
                
                   Current state of the network.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Enumeration of possible states of the network.
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED` - Default state, unspecified.
                   - `CREATING` - Network is being created.
                   - `READY` - Network is ready for use.
@@ -35487,12 +35514,12 @@ class GetVpcV1alpha1NetworkStatusResult(dict):
         :
 
            Current state of the network.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Enumeration of possible states of the network.
            Possible values:
-           
+
            - `STATE_UNSPECIFIED` - Default state, unspecified.
            - `CREATING` - Network is being created.
            - `READY` - Network is ready for use.
@@ -35517,11 +35544,11 @@ class GetVpcV1alpha1PoolCidrResult(dict):
         :param _builtins.str state: :
                
                   State of the Cidr.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED` - Default, unspecified state.
                   - `AVAILABLE` - Allocation from range is available.
                   - `DISABLED` - New allocation would not be created.
@@ -35557,11 +35584,11 @@ class GetVpcV1alpha1PoolCidrResult(dict):
         :
 
            State of the Cidr.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED` - Default, unspecified state.
            - `AVAILABLE` - Allocation from range is available.
            - `DISABLED` - New allocation would not be created.
@@ -35587,12 +35614,12 @@ class GetVpcV1alpha1PoolStatusResult(dict):
         :param _builtins.str state: :
                
                   Current state of the Pool.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible states of the Pool.
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED` - Default, unspecified state.
                   - `CREATING` - Pool is being created.
                   - `READY` - Pool is ready for use.
@@ -35625,12 +35652,12 @@ class GetVpcV1alpha1PoolStatusResult(dict):
         :
 
            Current state of the Pool.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible states of the Pool.
            Possible values:
-           
+
            - `STATE_UNSPECIFIED` - Default, unspecified state.
            - `CREATING` - Pool is being created.
            - `READY` - Pool is ready for use.
@@ -35653,12 +35680,12 @@ class GetVpcV1alpha1ScopeStatusResult(dict):
         :param _builtins.str state: :
                
                   Current state of the Scope.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible states of the Scope.
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED` - Default, unspecified state.
                   - `CREATING` - Scope is being created.
                   - `READY` - Scope is ready for use.
@@ -35673,12 +35700,12 @@ class GetVpcV1alpha1ScopeStatusResult(dict):
         :
 
            Current state of the Scope.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible states of the Scope.
            Possible values:
-           
+
            - `STATE_UNSPECIFIED` - Default, unspecified state.
            - `CREATING` - Scope is being created.
            - `READY` - Scope is ready for use.
@@ -35730,10 +35757,10 @@ class GetVpcV1alpha1SubnetPoolSpecResult(dict):
         """
         :param _builtins.str version: :
                
-                  #### Supported values
-                  
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `IP_VERSION_UNSPECIFIED` - Default, unspecified IP version.
                   - `IPV4` - IPv4 address.
                   - `IPV6` - IPv6 address.
@@ -35752,10 +35779,10 @@ class GetVpcV1alpha1SubnetPoolSpecResult(dict):
         """
         :
 
-           #### Supported values
-           
+        #### Supported values
+
            Possible values:
-           
+
            - `IP_VERSION_UNSPECIFIED` - Default, unspecified IP version.
            - `IPV4` - IPv4 address.
            - `IPV6` - IPv6 address.
@@ -35778,11 +35805,11 @@ class GetVpcV1alpha1SubnetPoolSpecCidrResult(dict):
         :param _builtins.str state: :
                
                   State of the Cidr.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED` - Default, unspecified state.
                   - `AVAILABLE` - Allocation from range is available.
                   - `DISABLED` - New allocation would not be created.
@@ -35817,11 +35844,11 @@ class GetVpcV1alpha1SubnetPoolSpecCidrResult(dict):
         :
 
            State of the Cidr.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Possible values:
-           
+
            - `STATE_UNSPECIFIED` - Default, unspecified state.
            - `AVAILABLE` - Allocation from range is available.
            - `DISABLED` - New allocation would not be created.
@@ -35839,12 +35866,12 @@ class GetVpcV1alpha1SubnetStatusResult(dict):
         :param _builtins.str state: :
                
                   Current state of the subnet.
-                  
-                  #### Supported values
-                  
+               
+               #### Supported values
+               
                   Enumeration of possible states of the subnet.
                   Possible values:
-                  
+               
                   - `STATE_UNSPECIFIED` - Default state, unspecified.
                   - `CREATING` - Subnet is being created.
                   - `READY` - Subnet is ready for use.
@@ -35868,12 +35895,12 @@ class GetVpcV1alpha1SubnetStatusResult(dict):
         :
 
            Current state of the subnet.
-           
-           #### Supported values
-           
+
+        #### Supported values
+
            Enumeration of possible states of the subnet.
            Possible values:
-           
+
            - `STATE_UNSPECIFIED` - Default state, unspecified.
            - `CREATING` - Subnet is being created.
            - `READY` - Subnet is ready for use.

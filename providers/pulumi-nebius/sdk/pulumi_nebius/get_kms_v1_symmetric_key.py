@@ -173,9 +173,9 @@ def get_kms_v1_symmetric_key(id: Optional[_builtins.str] = None,
         rotation_period=pulumi.get(__ret__, 'rotation_period'),
         status=pulumi.get(__ret__, 'status'),
         updated_at=pulumi.get(__ret__, 'updated_at'))
-def get_kms_v1_symmetric_key_output(id: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
-                                    name: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
-                                    parent_id: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
+def get_kms_v1_symmetric_key_output(id: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
+                                    name: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
+                                    parent_id: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
                                     opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetKmsV1SymmetricKeyResult]:
     """
     Use this data source to access information about an existing resource.

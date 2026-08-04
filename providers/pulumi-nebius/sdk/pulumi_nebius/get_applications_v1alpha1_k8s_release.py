@@ -179,7 +179,7 @@ def get_applications_v1alpha1_k8s_release(id: Optional[_builtins.str] = None,
         resource_version=pulumi.get(__ret__, 'resource_version'),
         status=pulumi.get(__ret__, 'status'),
         updated_at=pulumi.get(__ret__, 'updated_at'))
-def get_applications_v1alpha1_k8s_release_output(id: Optional[pulumi.Input[_builtins.str]] = None,
+def get_applications_v1alpha1_k8s_release_output(id: pulumi.Input[Optional[_builtins.str]] = None,
                                                  opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetApplicationsV1alpha1K8sReleaseResult]:
     """
     Use this data source to access information about an existing resource.

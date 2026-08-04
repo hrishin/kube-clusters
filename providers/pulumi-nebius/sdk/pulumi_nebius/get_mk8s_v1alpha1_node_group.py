@@ -203,9 +203,9 @@ def get_mk8s_v1alpha1_node_group(id: Optional[_builtins.str] = None,
         template=pulumi.get(__ret__, 'template'),
         updated_at=pulumi.get(__ret__, 'updated_at'),
         version=pulumi.get(__ret__, 'version'))
-def get_mk8s_v1alpha1_node_group_output(id: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
-                                        name: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
-                                        parent_id: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
+def get_mk8s_v1alpha1_node_group_output(id: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
+                                        name: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
+                                        parent_id: pulumi.Input[Optional[Optional[_builtins.str]]] = None,
                                         opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetMk8sV1alpha1NodeGroupResult]:
     """
     Use this data source to access information about an existing resource.

@@ -61,3 +61,34 @@ node_groups:
       - key: nvidia.com/gpu
         value: "true"
         effect: NoSchedule
+
+  # Multi-node NVLink serving (H100 SXM, NVLink4 fabric)
+  # Two nodes joined by an NvlInstanceGroup — 16 H100s accessible as one NVLink domain.
+  gpu-nvlink:
+    platform: gpu-h100-sxm
+    preset: 8gpu-640gb          # 8 × H100 80 GB SXM per node
+    desired_size: 2
+    min_size: 2
+    max_size: 2
+    preemptible: false
+    nvlink_group: nvlink-h100   # references nvlink_groups entry below
+    labels:
+      node-type: gpu-nvlink
+      workload: inference-nvlink
+      environment: production
+      accelerator: nvidia-h100-sxm
+    taints:
+      - key: nvidia.com/gpu
+        value: "true"
+        effect: NoSchedule
+      - key: workload
+        value: inference-nvlink
+        effect: NoSchedule
+
+# NVLink instance groups — Nebius provisions the NVLink Switch fabric
+# before nodes join the cluster. type is the NvlInstanceGroup type:
+#   GB200 = NVIDIA GB200 NVLink rack (Blackwell), GB300 = GB300 rack.
+nvlink_groups:
+  nvlink-h100:
+    type: GB200
+    size: 2

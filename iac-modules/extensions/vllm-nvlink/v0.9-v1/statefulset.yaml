@@ -1,0 +1,117 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: vllm-nvlink
+spec:
+  replicas: 2
+  serviceName: vllm-nvlink-headless
+  selector:
+    matchLabels:
+      app: vllm-nvlink
+  template:
+    metadata:
+      labels:
+        app: vllm-nvlink
+    spec:
+      nodeSelector:
+        node-type: gpu-nvlink
+      tolerations:
+      - key: nvidia.com/gpu
+        operator: Exists
+        effect: NoSchedule
+      - key: workload
+        operator: Equal
+        value: inference-nvlink
+        effect: NoSchedule
+      resourceClaims:
+      - name: gpus
+        resourceClaimTemplateName: vllm-nvlink-gpus
+      volumes:
+      - name: hf-cache
+        emptyDir: {}
+      - name: shm
+        emptyDir:
+          medium: Memory
+          sizeLimit: 64Gi
+      containers:
+      - name: vllm
+        image: vllm/vllm-openai:v0.9.1
+        command: ["bash", "-c"]
+        args:
+        - |
+          set -euo pipefail
+          RAY_HEAD="vllm-nvlink-0.vllm-nvlink-headless.${MY_NAMESPACE}.svc.cluster.local"
+
+          if [[ "$(hostname)" == "vllm-nvlink-0" ]]; then
+            # Head node: start Ray then vLLM once all workers are ready.
+            ray start --head --port=6379 --num-gpus=8 --block &
+            RAY_PID=$!
+            echo "Ray head started (pid $RAY_PID), waiting for all workers..."
+            # Wait until 2 nodes (head + 1 worker) are joined before serving.
+            until ray status --address=localhost:6379 2>/dev/null | grep -q "2 node"; do sleep 5; done
+            echo "All nodes connected — starting vLLM"
+            vllm serve Qwen/Qwen2.5-72B-Instruct \
+              --tensor-parallel-size=16 \
+              --max-model-len=32768 \
+              --gpu-memory-utilization=0.90 \
+              --port=8000 \
+              --served-model-name=qwen2.5-72b \
+              --trust-remote-code
+          else
+            # Worker node: join the Ray cluster.
+            echo "Joining Ray cluster at ${RAY_HEAD}:6379"
+            ray start --address="${RAY_HEAD}:6379" --num-gpus=8 --block
+          fi
+        env:
+        - name: MY_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: HF_HOME
+          value: /data/huggingface
+        # NCCL auto-detects NVLink via topology files; no EFA vars needed.
+        - name: NCCL_DEBUG
+          value: WARN
+        - name: NCCL_IB_DISABLE
+          value: "0"
+        ports:
+        - name: http
+          containerPort: 8000
+          protocol: TCP
+        - name: ray-gcs
+          containerPort: 6379
+          protocol: TCP
+        - name: ray-dashboard
+          containerPort: 8265
+          protocol: TCP
+        resources:
+          requests:
+            cpu: "32"
+            memory: "256Gi"
+          limits:
+            cpu: "64"
+            memory: "512Gi"
+          claims:
+          - name: gpus
+        volumeMounts:
+        - name: hf-cache
+          mountPath: /data/huggingface
+        - name: shm
+          mountPath: /dev/shm
+        # vLLM on 72B takes ~15 min to load weights across 16 GPUs
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 120
+          periodSeconds: 30
+          timeoutSeconds: 15
+          failureThreshold: 40
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 600
+          periodSeconds: 60
+          timeoutSeconds: 15
+          failureThreshold: 5

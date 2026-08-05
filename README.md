@@ -54,7 +54,8 @@ All providers use the same config schema in each cluster's `config.yaml`:
 | `scw-alpha` (Scaleway) | `logging` | `DEV1-L` | 1–3 | Logging |
 | `nebius-alpha` (Nebius) | `core` | `cpu-d3` 16vcpu-64gb | 1–2 | System workloads |
 | `nebius-alpha` (Nebius) | `mimir` | `cpu-d3` 16vcpu-64gb | 1–3 | Metrics |
-| `nebius-alpha` (Nebius) | `gpu-inference` | `gpu-l40s-a` 8×L40S | 0–2 | GPU inference (preemptible) |
+| `nebius-alpha` (Nebius) | `gpu-inference` | `gpu-l40s-d` 1×L40S | 1–4 | Single-GPU inference (preemptible) |
+| `nebius-alpha` (Nebius) | `gpu-nvlink` | `gpu-h100-sxm` 8×H100 SXM | 2 | Multi-node NVLink serving (GB200 fabric) |
 
 ## Extensions (all providers)
 
@@ -66,7 +67,8 @@ Extensions are managed by Flux using a base/overlay Kustomize pattern under `iac
 - **Cluster Autoscaler** — node scaling
 - **Mimir + Grafana** — metrics storage and dashboards
 - **ELK** — log aggregation
-- **vLLM** — GPU inference serving (AWS only)
+- **vLLM** — single-GPU inference serving (7B, 1×L40S, DRA)
+- **vLLM NVLink** — multi-node NVLink serving (72B, 16×H100 SXM, TP=16, Ray)
 
 ## Repository Layout
 

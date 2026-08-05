@@ -19,6 +19,7 @@ def main(
     project_id: str,
     kubernetes_version: str,
     node_groups_config: Dict[str, Any],
+    nvlink_groups_config: Optional[Dict[str, Any]] = None,
     provider: nebius.Provider,
     flux_values_path: Optional[str] = None,
     flux_git_url: Optional[str] = None,
@@ -31,14 +32,15 @@ def main(
     flux_kustomization_interval: str = "10m0s",
 ) -> None:
     """
-    Provision Nebius VPC, MK8s cluster, and node groups.
+    Provision Nebius VPC, MK8s cluster, node groups, and optional NVLink fabric groups.
 
     Args:
-        cluster_name:        Cluster and resource name prefix.
-        project_id:          Nebius IAM project/folder ID (parent for all resources).
-        kubernetes_version:  Kubernetes version string (e.g. "1.35").
-        node_groups_config:  Dict of node group name → config dict (from config.yaml).
-        provider:            Configured nebius.Provider instance.
+        cluster_name:          Cluster and resource name prefix.
+        project_id:            Nebius IAM project/folder ID (parent for all resources).
+        kubernetes_version:    Kubernetes version string (e.g. "1.35").
+        node_groups_config:    Dict of node group name → config dict (from config.yaml).
+        nvlink_groups_config:  Optional dict of nvlink group name → {type, size} config.
+        provider:              Configured nebius.Provider instance.
     """
 
     base_opts = pulumi.ResourceOptions(provider=provider)
@@ -83,6 +85,24 @@ def main(
         opts=pulumi.ResourceOptions(provider=provider, depends_on=[subnet]),
     )
 
+    # ── NVLink instance groups ────────────────────────────────────────────────
+    # Must be created before node groups; node groups reference the fabric ID.
+
+    nvlink_group_ids: Dict[str, pulumi.Output] = {}
+    if nvlink_groups_config:
+        pulumi.log.info("Creating NVLink instance groups...")
+        for nvl_name, nvl_cfg in nvlink_groups_config.items():
+            nvl_group = nebius.ComputeV1NvlInstanceGroup(
+                f"{cluster_name}-{nvl_name}",
+                parent_id=project_id,
+                name=f"{cluster_name}-{nvl_name}",
+                type=nvl_cfg["type"],
+                size=float(nvl_cfg["size"]),
+                opts=base_opts,
+            )
+            nvlink_group_ids[nvl_name] = nvl_group.id
+            pulumi.export(f"nvlink_group_id_{nvl_name}", nvl_group.id)
+
     # ── Node groups ───────────────────────────────────────────────────────────
 
     pulumi.log.info("Creating node groups...")
@@ -91,6 +111,7 @@ def main(
         cluster_id=cluster.id,
         subnet_id=subnet.id,
         node_groups=node_groups_config,
+        nvlink_group_ids=nvlink_group_ids,
         provider=provider,
     )
 

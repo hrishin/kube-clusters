@@ -22,12 +22,13 @@ def create_node_groups(
     subnet_id: pulumi.Output,
     node_groups: Dict[str, Any],
     provider: nebius.Provider,
+    nvlink_group_ids: Dict[str, pulumi.Output] = {},
 ) -> Dict[str, Any]:
     """
     Create Nebius MK8s node groups from config.
 
     Config keys per node group (mirrors the AWS YAML schema):
-        platform       str   Nebius compute platform (e.g. cpu-e2, gpu-l40s-a)
+        platform       str   Nebius compute platform (e.g. cpu-e2, gpu-l40s-a, gpu-h100-sxm)
         preset         str   Resource preset (e.g. 2vcpu-80gb, 8vcpu-320gb)
         desired_size   int   Initial / fixed node count
         min_size       int   Autoscaling minimum  (ignored if min==max)
@@ -35,6 +36,7 @@ def create_node_groups(
         preemptible    bool  Preemptible (spot-equivalent) nodes
         labels         dict  Kubernetes node labels
         taints         list  [{key, value, effect}] — effect in K8s style (NoSchedule etc.)
+        nvlink_group   str   Name key in nvlink_group_ids — attaches node to NVLink fabric
     """
     node_group_resources: Dict[str, nebius.Mk8sV1NodeGroup] = {}
     prev_ng: nebius.Mk8sV1NodeGroup | None = None  # enforce sequential creation
@@ -80,6 +82,18 @@ def create_node_groups(
                 drivers_preset=ng_cfg["drivers_preset"],
             )
 
+        nvlink = None
+        if nvl_key := ng_cfg.get("nvlink_group"):
+            if nvl_key not in nvlink_group_ids:
+                raise ValueError(
+                    f"Node group '{ng_name}' references nvlink_group '{nvl_key}' "
+                    f"which is not defined in nvlink_groups. "
+                    f"Available: {list(nvlink_group_ids.keys())}"
+                )
+            nvlink = nebius.Mk8sV1NodeGroupTemplateNvlinkArgs(
+                nvl_instance_group_id=nvlink_group_ids[nvl_key],
+            )
+
         ng = nebius.Mk8sV1NodeGroup(
             f"{cluster_name}-{ng_name}",
             parent_id=cluster_id,
@@ -93,6 +107,7 @@ def create_node_groups(
                 ),
                 gpu_settings=gpu_settings,
                 preemptible=preemptible,
+                nvlink=nvlink,
                 network_interfaces=[
                     nebius.Mk8sV1NodeGroupTemplateNetworkInterfaceArgs(
                         subnet_id=subnet_id,

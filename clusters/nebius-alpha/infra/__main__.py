@@ -75,6 +75,7 @@ main(
     project_id=cfg["project_id"],
     kubernetes_version=cfg["kubernetes_version"],
     node_groups_config=cfg["node_groups"],
+    nvlink_groups_config=cfg.get("nvlink_groups"),
     provider=nebius_provider,
     flux_values_path=FLUX_VALUES_PATH,
     flux_git_url=flux_git_url,

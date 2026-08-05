@@ -188,3 +188,5 @@ pip install --upgrade pulumi-nebius
 ```
 
 See [docs/nebius.md](docs/nebius.md) for the full setup guide.
+
+For the NVLink multi-node serving design, see [docs/nvlink-multinode-serving.md](docs/nvlink-multinode-serving.md).

@@ -45,22 +45,22 @@ node_groups:
         effect: NoSchedule
 
 
-  gpu-inference:
-    platform: gpu-l40s-d
-    preset: 1gpu-32vcpu-192gb
-    desired_size: 1
-    min_size: 1
-    max_size: 4
-    preemptible: true
-    labels:
-      node-type: gpu
-      workload: inference
-      environment: production
-      accelerator: nvidia-l40s
-    taints:
-      - key: nvidia.com/gpu
-        value: "true"
-        effect: NoSchedule
+  # gpu-inference:
+  #   platform: gpu-l40s-d
+  #   preset: 1gpu-32vcpu-192gb
+  #   desired_size: 1
+  #   min_size: 1
+  #   max_size: 4
+  #   preemptible: true
+  #   labels:
+  #     node-type: gpu
+  #     workload: inference
+  #     environment: production
+  #     accelerator: nvidia-l40s
+  #   taints:
+  #     - key: nvidia.com/gpu
+  #       value: "true"
+  #       effect: NoSchedule
 
   # Multi-node H100 SXM serving, clustered via InfiniBand (NOT cross-node NVLink —
   # NVLink Switch fabric across servers only exists for GB200/GB300 platforms.

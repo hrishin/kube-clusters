@@ -13,6 +13,10 @@ spec:
   path: ./clusters/nebius-alpha/extensions/infra/
   prune: true
   wait: true
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
   dependsOn:
     - name: crds
   postBuild:

@@ -12,12 +12,27 @@ spec:
         app: node-lifecycle-tracer
     spec:
       serviceAccountName: node-lifecycle-tracer
-      nodeSelector:
-        node-type: gpu
+      # nodeSelector can't express OR-of-values, so node-type: gpu (single-GPU
+      # vLLM, e.g. L40S/T4) and node-type: gpu-nvlink (Kimi K3 multi-node,
+      # H100 SXM) both need node affinity instead.
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: node-type
+                    operator: In
+                    values:
+                      - gpu
+                      - gpu-nvlink
       tolerations:
         - key: workload
           operator: Equal
           value: inference
+          effect: NoSchedule
+        - key: workload
+          operator: Equal
+          value: inference-nvlink
           effect: NoSchedule
         - key: nvidia.com/gpu
           operator: Exists
@@ -53,6 +68,8 @@ spec:
               value: "node-lifecycle-tracer"
             - name: VLLM_SERVICE_URL
               value: "http://vllm-qwen2-5-7b.vllm.svc.cluster.local:8000"
+            - name: KIMI_SERVICE_URL
+              value: "http://kimi-k3.vllm.svc.cluster.local:30000"
             - name: PYTHONPATH
               value: "/deps"
           resources:

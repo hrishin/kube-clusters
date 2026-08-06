@@ -75,26 +75,26 @@ node_groups:
   # node-type/workload label values below still say "nvlink" for historical
   # reasons (matches existing nodeSelectors/tolerations/taints across the repo);
   # not renamed to avoid a wide, purely-cosmetic rename across many files.
-  gpu-nvlink:
-    platform: gpu-h100-sxm
-    preset: 8gpu-128vcpu-1600gb        # 8 × H100 80 GB SXM per node
-    desired_size: 4
-    min_size: 4
-    max_size: 4
-    preemptible: false
-    gpu_cluster: h100-cluster   # references gpu_clusters entry below
-    labels:
-      node-type: gpu-nvlink
-      workload: inference-nvlink
-      environment: production
-      accelerator: nvidia-h100-sxm
-    taints:
-      - key: nvidia.com/gpu
-        value: "true"
-        effect: NoSchedule
-      - key: workload
-        value: inference-nvlink
-        effect: NoSchedule
+  # gpu-nvlink:
+  #   platform: gpu-h100-sxm
+  #   preset: 8gpu-128vcpu-1600gb        # 8 × H100 80 GB SXM per node
+  #   desired_size: 4
+  #   min_size: 4
+  #   max_size: 4
+  #   preemptible: false
+  #   gpu_cluster: h100-cluster   # references gpu_clusters entry below
+  #   labels:
+  #     node-type: gpu-nvlink
+  #     workload: inference-nvlink
+  #     environment: production
+  #     accelerator: nvidia-h100-sxm
+  #   taints:
+  #     - key: nvidia.com/gpu
+  #       value: "true"
+  #       effect: NoSchedule
+  #     - key: workload
+  #       value: inference-nvlink
+  #       effect: NoSchedule
 
 # GPU clusters — Nebius ComputeV1GpuCluster, InfiniBand-fabric-based multi-node
 # GPU networking (labeled "NVIDIA H100 NVLink" in the Nebius console, which is
@@ -105,6 +105,6 @@ node_groups:
 # infiniband_fabric must be a valid fabric ID for your Nebius project/region —
 # check the Nebius console: Compute → GPU Clusters → Create, or
 # https://docs.nebius.com/compute/clusters/gpu#fabrics
-gpu_clusters:
-  h100-cluster:
-    infiniband_fabric: fabric-2
+# gpu_clusters:
+#   h100-cluster:
+#     infiniband_fabric: fabric-2

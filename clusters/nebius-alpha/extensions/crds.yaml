@@ -13,3 +13,7 @@ spec:
   path: ./clusters/nebius-alpha/extensions/crds/
   prune: true
   wait: true
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age

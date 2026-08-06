@@ -17,6 +17,14 @@ spec:
   # the DRA driver (ResourceClaimTemplate support), and the LWS controller to
   # already exist, or pod creation fails outright rather than just staying
   # pending.
+  # decryption: needed because secret-hf-token.enc.yaml lives under this
+  # Kustomization's path — without this, kustomize-controller hands the raw
+  # ciphertext straight to its internal kustomize build (apiVersion/kind
+  # included), which panics rather than erroring cleanly.
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
   dependsOn:
     - name: crds
     - name: llm-infra

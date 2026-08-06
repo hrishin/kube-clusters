@@ -16,6 +16,10 @@ spec:
   # controller may sit pending for a while if GPU nodes are scaling from 0.
   # Same rationale as gpu.yaml. Decoupled from infra/system/crs so cold
   # GPU node scale-up never blocks core cluster bootstrap.
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
   dependsOn:
     - name: crds
   postBuild:

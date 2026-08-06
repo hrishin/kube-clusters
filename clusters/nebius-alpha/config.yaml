@@ -69,42 +69,28 @@ node_groups:
   # referenced below).
   # Sized for Kimi K3 (MXFP4, ~1.6TB weights): 3 nodes fit the weights but leave
   # too little KV headroom, 4 nodes is the practical minimum (see
-  # docs/multi-node-inference-options.md — NOTE: that doc's bandwidth claims for
-  # this node group need revisiting now that the interconnect is confirmed to
-  # be InfiniBand, not NVLink Switch).
-  # node-type/workload label values below still say "nvlink" for historical
-  # reasons (matches existing nodeSelectors/tolerations/taints across the repo);
-  # not renamed to avoid a wide, purely-cosmetic rename across many files.
-  # gpu-nvlink:
-  #   platform: gpu-h100-sxm
-  #   preset: 8gpu-128vcpu-1600gb        # 8 × H100 80 GB SXM per node
-  #   desired_size: 4
-  #   min_size: 4
-  #   max_size: 4
-  #   preemptible: false
-  #   gpu_cluster: h100-cluster   # references gpu_clusters entry below
-  #   labels:
-  #     node-type: gpu-nvlink
-  #     workload: inference-nvlink
-  #     environment: production
-  #     accelerator: nvidia-h100-sxm
-  #   taints:
-  #     - key: nvidia.com/gpu
-  #       value: "true"
-  #       effect: NoSchedule
-  #     - key: workload
-  #       value: inference-nvlink
-  #       effect: NoSchedule
+  # docs/multi-node-inference-options.md
+  gpu-nvlink:
+    platform: gpu-h100-sxm
+    preset: 8gpu-128vcpu-1600gb        # 8 × H100 80 GB SXM per node
+    desired_size: 4
+    min_size: 4
+    max_size: 4
+    preemptible: false
+    gpu_cluster: h100-cluster   # references gpu_clusters entry below
+    labels:
+      node-type: gpu-nvlink
+      workload: inference-nvlink
+      environment: production
+      accelerator: nvidia-h100-sxm
+    taints:
+      - key: nvidia.com/gpu
+        value: "true"
+        effect: NoSchedule
+      - key: workload
+        value: inference-nvlink
+        effect: NoSchedule
 
-# GPU clusters — Nebius ComputeV1GpuCluster, InfiniBand-fabric-based multi-node
-# GPU networking (labeled "NVIDIA H100 NVLink" in the Nebius console, which is
-# a marketing/UI label — the underlying resource and interconnect is
-# InfiniBand, confirmed via the Pulumi provider SDK: ComputeV1NvlInstanceGroup
-# (actual cross-node NVLink Switch) only accepts type GB200/GB300, and does
-# not support gpu-h100-sxm at all).
-# infiniband_fabric must be a valid fabric ID for your Nebius project/region —
-# check the Nebius console: Compute → GPU Clusters → Create, or
-# https://docs.nebius.com/compute/clusters/gpu#fabrics
-# gpu_clusters:
-#   h100-cluster:
-#     infiniband_fabric: fabric-2
+gpu_clusters:
+  h100-cluster:
+    infiniband_fabric: fabric-2

@@ -268,27 +268,197 @@ DRA is used instead of `nvidia.com/gpu` limits because it allows fine-grained al
 
 ---
 
+## Ray vs torchrun — orchestration trade-offs
+
+The initial design used Ray as the worker orchestrator. This section explains why torchrun is the preferred approach and what the difference means in practice.
+
+### Ray-based orchestration (replaced)
+
+In the Ray approach:
+- Pod 0 runs `ray start --head` + `vllm serve`
+- Pod 1 runs `ray start --address=<head>:6379 --block`
+- vLLM internally creates `RayWorkerWrapper` actors; Ray places them on pod 1's GPUs
+
+**Ray bottlenecks:**
+
+| Bottleneck | Cause | Impact |
+|---|---|---|
+| GCS serialisation | Every batch dispatch goes through Ray's Global Control Store on pod 0 | +1–10 ms per iteration at high QPS |
+| Single point of failure | GCS crash on pod 0 kills all 16 workers simultaneously | No fault isolation |
+| Process startup overhead | Ray actor creation involves GCS round-trips | Slower cold start |
+| Implicit contract | Pod 1's role (GPU provider to Ray) is not visible in the pod spec | Hard to debug |
+
+### torchrun-based orchestration (current)
+
+`torchrun` is PyTorch's native distributed launcher. All pods run the same command; each pod determines its role from its ordinal:
+
+```
+torchrun \
+  --nproc-per-node=8 \
+  --nnodes=2 \
+  --node-rank=<ordinal> \          # 0 on pod 0, 1 on pod 1
+  --master-addr=<pod-0-dns> \
+  --master-port=29500 \
+  -m vllm.entrypoints.openai.api_server \
+  --tensor-parallel-size=16
+```
+
+`torchrun` handles process spawning and the initial rendezvous (connecting all 16 processes into one `torch.distributed` process group). After rendezvous, all coordination uses NCCL directly — there is no Ray daemon, no GCS, no actor scheduling overhead.
+
+**What each rank does:**
+
+```
+Rank 0  (pod 0, 8 processes on GPUs 0–7):
+  Starts the vLLM HTTP API server on :8000.
+  Runs the continuous batching scheduler.
+  Dispatches forward-pass calls to all 16 ranks via NCCL.
+  Gathers output logits, streams tokens back to clients.
+
+Rank 1  (pod 1, 8 processes on GPUs 8–15):
+  Joins the torch.distributed process group.
+  Loads its weight shard from HF_HOME.
+  Waits in the forward-pass loop — executes compute when rank 0 dispatches.
+  Never starts an HTTP server. Never receives client requests.
+```
+
+**No Ray means no GCS overhead.** Batch dispatch is a direct NCCL collective — the same mechanism used for the all-reduce itself. Control-plane latency drops from milliseconds to microseconds.
+
+### Why requests cannot land on pod 1
+
+Pod 1 is incapable of serving inference requests at two independent layers:
+
+**Layer 1 — process level.** `torchrun` rank 1+ processes do not call `uvicorn.run()`. Port 8000 is never bound on pod 1. A connection attempt to pod 1:8000 gets `connection refused` (outside of the placeholder health server, explained below).
+
+**Layer 2 — network level.** The ClusterIP Service selector pins to pod 0 explicitly:
+
+```yaml
+selector:
+  app: vllm-nvlink
+  statefulset.kubernetes.io/pod-name: vllm-nvlink-0  # pod 1 never matches this
+```
+
+kgateway routes to this Service; pod 1's IP is never in the Service's endpoint set. Even if the process-level protection were removed, the network layer would still block traffic to pod 1.
+
+**What the placeholder health server is for.** Both pods share the same StatefulSet pod spec, so both get the same readiness probe (`httpGet /health :8000`). Pod 0's real vLLM server answers this probe. Pod 1 runs a minimal Python HTTP server in a background thread that always returns 200 — this lets Kubernetes mark pod 1 as Ready without requiring a real vLLM instance. The placeholder is unreachable from outside because the ClusterIP Service selector excludes pod 1.
+
+### Horizontal scaling — when requests should go to multiple pods
+
+If a single TP=16 group cannot handle the total request rate, the solution is multiple independent TP groups, each with its own head pod. At that point, requests legitimately go to multiple pods — but they are head pods of different groups, not worker pods within the same group:
+
+```
+kgateway  (round-robin or least-connections)
+  │                    │
+  ▼                    ▼
+vllm-a-0:8000        vllm-b-0:8000       ← two independent ClusterIP Services
+  │                    │
+vllm-a-1 (worker)   vllm-b-1 (worker)   ← workers, never exposed to kgateway
+```
+
+Each group is a separate StatefulSet with its own NvlInstanceGroup. There is no shared state between groups.
+
+---
+
+## How the worker node loads and serves vLLM
+
+The worker pod (pod 1) runs the same `torchrun` command as pod 0, but with `--node-rank=1`. torchrun spawns 8 processes on pod 1's GPUs (TP ranks 8–15). These processes join the `torch.distributed` process group, load their weight shards, then enter a forward-pass loop — waiting for rank 0 to dispatch work.
+
+There is no Ray daemon. There is no actor placement step. The `torch.distributed` process group is the only coordination layer.
+
+### torchrun process model
+
+```
+Pod 0 (rank 0 — scheduler + API server)
+  torchrun --node-rank=0 --nproc-per-node=8
+  Spawns 8 processes (TP ranks 0–7):
+    - Rank 0/process 0:  starts HTTP API server on :8000, runs scheduler
+    - Rank 0/process 1–7: participate in forward pass, no HTTP server
+
+Pod 1 (rank 1 — pure worker)
+  torchrun --node-rank=1 --nproc-per-node=8
+  Spawns 8 processes (TP ranks 8–15):
+    - No HTTP server on any process
+    - Each process: initialises GPU, loads weight shard, waits in forward-pass loop
+```
+
+**Pod 1 does run vLLM code and does load model weights** — through its own `torchrun` processes, not through Ray actors. The distinction from the old Ray design: pod 1 is self-starting, not driven by pod 0's actor scheduler. Both pods start independently; `torch.distributed` rendezvous (on port 29500 at pod 0's DNS) synchronises them once both are up.
+
+### Weight loading on the worker
+
+Each actor on pod 1 calls `load_weights()` independently. It reads the full checkpoint from `HF_HOME`, identifies the tensor slices belonging to its TP rank (8–15), loads those into its GPU's HBM, and discards the rest. Both pods read the same checkpoint files — they do not transfer weights to each other over the network.
+
+```
+Pod 0 actors (TP 0–7):   read checkpoint → keep columns [0 : hidden/2]   → GPU 0–7 HBM
+Pod 1 actors (TP 8–15):  read checkpoint → keep columns [hidden/2 : end]  → GPU 8–15 HBM
+```
+
+For this reason, **both pods must have access to the model weights**. In the current StatefulSet, `HF_HOME` uses an `emptyDir` — each pod independently downloads the full checkpoint from Hugging Face on first start (~144 GB for 72B FP16). For production, replace `emptyDir` with a shared PVC backed by Nebius object storage or a ReadOnlyMany NFS volume so the checkpoint is downloaded once and reused:
+
+```yaml
+volumes:
+- name: hf-cache
+  persistentVolumeClaim:
+    claimName: vllm-model-cache   # ReadOnlyMany, pre-populated with checkpoint
+```
+
+### Forward-pass execution on the worker
+
+Once both pods have loaded their weight shards, inference proceeds in lockstep:
+
+```
+Incoming request → pod 0 API server (port 8000)
+  │
+  vLLM scheduler on pod 0 batches the request
+  │
+  ┌──────────────────────────────────────────────────┐
+  │  Forward pass (each transformer layer):           │
+  │                                                  │
+  │  Pod 0 actors (TP 0–7):                          │
+  │    compute attention/MLP on local weight slice   │
+  │    emit partial output                           │
+  │                    ↕ NCCL all-reduce (NVLink)    │
+  │  Pod 1 actors (TP 8–15):                         │
+  │    compute attention/MLP on local weight slice   │
+  │    emit partial output                           │
+  │                                                  │
+  │  All-reduce merges partial outputs → full result │
+  └──────────────────────────────────────────────────┘
+  │
+  Logits gathered to GPU 0 (pod 0) → next token
+  │
+  ← streaming token response to client
+```
+
+Pod 0's scheduler sends a forward-pass RPC to all 16 actors simultaneously. They all compute in parallel, synchronise via NVLink all-reduce, and the result is gathered back on pod 0. From the client's perspective there is one API endpoint; internally every request recruits all 16 GPUs across both pods.
+
+### NCCL communicator setup
+
+During `torch.distributed` rendezvous, all 16 processes (8 on pod 0, 8 on pod 1) exchange peer information and establish an NCCL communicator group. This happens once at startup, before any request is served. NCCL reads the CUDA topology file and selects the NVLink Switch transport automatically. All subsequent tensor communication — all-reduces, peer-to-peer transfers — goes: GPU HBM → NVLink Switch → GPU HBM, bypassing the CPU and host network stack entirely.
+
+---
+
 ## Pod startup sequence
 
 ```
-t=0   Kubernetes schedules pod 0 → node 0, pod 1 → node 1
-      (NVLink fabric already active — provisioned by Nebius before node join)
+t=0    Kubernetes schedules pod 0 → node 0, pod 1 → node 1
+       (NVLink fabric already active — Nebius provisions it before nodes join)
 
-t=5s  Pod 0: ray start --head --port=6379 --num-gpus=8
-      Pod 1: ray start --address=vllm-nvlink-0.vllm-nvlink-headless.<ns>.svc:6379
+t=2s   Pod 1: placeholder health server starts on :8000 (background thread)
+       Pod 0: torchrun --node-rank=0 starts, listens on rendezvous port 29500
+       Pod 1: torchrun --node-rank=1 connects to pod-0:29500
 
-t=10s Ray cluster formed: 2 nodes, 16 GPUs total visible to the scheduler
+t=5s   torch.distributed rendezvous complete — 16 processes across 2 pods
+       All processes initialise CUDA contexts and NCCL communicator group
 
-t=15s Pod 0: ray status reports 2 nodes — launches:
-      vllm serve Qwen/Qwen2.5-72B-Instruct --tensor-parallel-size=16
+t=6s   Rank 0/process 0 (pod 0) starts the vLLM HTTP API server on :8000
+       All 16 processes begin loading weight shards from HF_HOME in parallel
+       (~144 GB checkpoint, each pod reads independently, loads ~72 GB to its GPUs)
 
-t=~15m vLLM downloads weights (first start) and shards them across 16 GPUs
-       Each GPU holds 1/16 of every weight matrix (~9 GB per GPU for 72B FP16)
-
-t=~16m Readiness probe passes → Service routes traffic to pod 0:8000
+t=~15m All weight shards loaded; KV cache allocated from remaining HBM
+       vLLM readiness probe on pod 0 (:8000/health) passes
+       Service routes traffic to pod 0:8000
 ```
 
-On subsequent restarts, weight download is skipped if the `HF_HOME` volume is backed by persistent storage.
+On subsequent restarts, the checkpoint download is skipped if `HF_HOME` is backed by a pre-populated persistent volume.
 
 ---
 
@@ -477,15 +647,17 @@ iac-modules/cluster-infra/nebius-mk8s-v1.34-v1/
   main.py                          # creates ComputeV1NvlInstanceGroup, passes IDs to node groups
   node_groups/node_groups.py       # wires Mk8sV1NodeGroupTemplateNvlinkArgs per node group
 
-iac-modules/extensions/vllm-nvlink/v0.9-v1/
-  statefulset.yaml                 # 2-pod StatefulSet, Ray head/worker entrypoint
-  resourceclaimtemplate.yaml       # DRA: 8 GPUs per pod
-  service.yaml                     # headless (Ray) + ClusterIP (inference)
-  httproute.yaml                   # inference-nvlink.nebius.internal
+iac-modules/extensions/vllm-nvlink-lws/v0.9-v1/
+  leadeworkerset.yaml               # LeaderWorkerSet, torchrun leader/worker entrypoints
+  resourceclaimtemplate.yaml        # DRA: 8 GPUs per pod
+  service.yaml                      # routes to role: leader pods only
+  httproute.yaml                    # inference-nvlink.nebius.internal
   kustomization.yaml
 
 clusters/nebius-alpha/
   config.yaml                      # nvlink_groups + gpu-nvlink node group
-  extensions/gpu/vllm-nvlink/      # Flux overlay pointing at the extension above
+  extensions/gpu/vllm-nvlink-lws/  # Flux overlay pointing at the extension above
   extensions/gpu.yaml              # Flux Kustomization for the gpu layer
 ```
+
+Note: this document's body still describes the original StatefulSet + Ray design in detail (pod naming, Ray GCS, the `vllm-nvlink-0`/`vllm-nvlink-1` pod scheme). That design has been superseded by LeaderWorkerSet + torchrun — see [multi-node-inference-options.md](multi-node-inference-options.md) for the current architecture and rationale. The StatefulSet extension itself has been removed; this doc is kept for the NVLink/DRA/parallelism-strategy background, which still applies.

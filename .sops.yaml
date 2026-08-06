@@ -1,3 +1,13 @@
 creation_rules:
   - path_regex:  ^config/.*\.enc\.yaml$
     age: age1ppc0g76en84sppjk7qxljz75wkdvryj87q852pmxuw8k8cwxevqsgpwz3l
+  - path_regex:  ^iac-modules/extensions/.*\.enc\.yaml$
+    age: age1ppc0g76en84sppjk7qxljz75wkdvryj87q852pmxuw8k8cwxevqsgpwz3l
+  - path_regex:  ^clusters/.*\.enc\.yaml$
+    # Kubernetes-shaped manifests (Secrets applied via kustomize/Flux) — only
+    # encrypt the actual secret payload. Without this, sops encrypts every
+    # leaf value including apiVersion/kind, which breaks kustomize (and
+    # likely Flux's kustomize-controller) before decryption even runs, since
+    # they need a plaintext kind to identify the resource at all.
+    encrypted_regex: ^(data|stringData)$
+    age: age1ppc0g76en84sppjk7qxljz75wkdvryj87q852pmxuw8k8cwxevqsgpwz3l

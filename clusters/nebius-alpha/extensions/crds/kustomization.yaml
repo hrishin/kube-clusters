@@ -4,3 +4,4 @@ resources:
   - ../../../../iac-modules/extensions/crds/cert-manager/v1.17.0/
   - ../../../../iac-modules/extensions/crds/kgateway/v2.3.0/
   - ../../../../iac-modules/extensions/crds/nvidia-gpu-operator/v26.3.3/
+  - ../../../../iac-modules/extensions/crds/lws/v0.9.0/

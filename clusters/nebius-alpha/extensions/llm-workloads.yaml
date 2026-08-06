@@ -1,7 +1,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: gpu
+  name: llm-workloads
   namespace: flux-system
 spec:
   interval: 5m
@@ -10,10 +10,16 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./clusters/nebius-alpha/extensions/gpu/
+  path: ./clusters/nebius-alpha/extensions/llm-workloads/
   prune: true
   # No wait: true — GPU nodes scale from 0 so pods may be pending for a while.
-  # No dependsOn — runs independently; doesn't block crs or any other layer.
+  # dependsOn crds + llm-infra: these workloads need the LeaderWorkerSet CRD,
+  # the DRA driver (ResourceClaimTemplate support), and the LWS controller to
+  # already exist, or pod creation fails outright rather than just staying
+  # pending.
+  dependsOn:
+    - name: crds
+    - name: llm-infra
   postBuild:
     substituteFrom:
       - kind: ConfigMap

@@ -5,4 +5,5 @@ resources:
   - infra.yaml
   - system.yaml
   - crs.yaml
-  - gpu.yaml
+  - llm-infra.yaml
+  - llm-workloads.yaml

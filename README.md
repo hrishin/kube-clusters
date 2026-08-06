@@ -190,3 +190,7 @@ pip install --upgrade pulumi-nebius
 See [docs/nebius.md](docs/nebius.md) for the full setup guide.
 
 For the NVLink multi-node serving design, see [docs/nvlink-multinode-serving.md](docs/nvlink-multinode-serving.md).
+For orchestration options (StatefulSet vs LeaderWorkerSet vs NVIDIA Dynamo), see [docs/multi-node-inference-options.md](docs/multi-node-inference-options.md).
+
+For Kimi K3 API integration (Moonshot AI, 2.8T MoE), see [docs/kimi-k3.md](docs/kimi-k3.md).
+For Kimi K3 self-hosted deployment engineering reference, see [docs/kimi-k3-self-hosted.md](docs/kimi-k3-self-hosted.md).

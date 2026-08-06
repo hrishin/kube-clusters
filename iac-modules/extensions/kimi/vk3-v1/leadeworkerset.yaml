@@ -1,0 +1,221 @@
+apiVersion: leaderworkerset.x-k8s.io/v1
+kind: LeaderWorkerSet
+metadata:
+  name: kimi-k3
+spec:
+  # replicas = number of independent TP+EP groups.
+  # Kimi K3 (MXFP4, ~1.6TB) needs 4 nodes per group — see
+  # docs/multi-node-inference-options.md for the sizing rationale.
+  replicas: 1
+  leaderWorkerTemplate:
+    # size = total pods per group (1 leader + 3 workers = 4 nodes, 32 GPUs).
+    size: 4
+    # Restart the entire group if any pod in it restarts.
+    # This is required for multi-node TP/EP: a worker crash invalidates the
+    # NCCL communicator group, so the leader cannot continue serving anyway.
+    restartPolicy: RecreateGroupOnPodRestart
+    leaderTemplate:
+      metadata:
+        labels:
+          app: kimi-k3
+          role: leader
+      spec:
+        nodeSelector:
+          node-type: gpu-nvlink
+        tolerations:
+        - key: nvidia.com/gpu
+          operator: Exists
+          effect: NoSchedule
+        - key: workload
+          operator: Equal
+          value: inference-nvlink
+          effect: NoSchedule
+        resourceClaims:
+        - name: gpus
+          resourceClaimTemplateName: kimi-k3-gpus
+        volumes:
+        - name: hf-cache
+          emptyDir: {}
+        # Larger shm than the 72B/TP16 config — more experts, more all-to-all
+        # traffic per step under EP=32.
+        - name: shm
+          emptyDir:
+            medium: Memory
+            sizeLimit: 128Gi
+        containers:
+        - name: sglang
+          image: lmsysorg/sglang:kimi-k3
+          command: ["bash", "-c"]
+          args:
+          - |
+            set -euo pipefail
+            # LWS injects LWS_LEADER_ADDRESS (DNS of this pod) and
+            # LWS_WORKER_INDEX ("0" on the leader) into all pods automatically.
+            # SGLang uses these the same way torchrun uses --node-rank/--master-addr.
+            exec sglang serve \
+              --model-path moonshotai/Kimi-K3 \
+              --tp-size 32 \
+              --ep-size 32 \
+              --nnodes 4 \
+              --node-rank="${LWS_WORKER_INDEX}" \
+              --dist-init-addr="${LWS_LEADER_ADDRESS}:20000" \
+              --moe-runner-backend marlin \
+              --reasoning-parser kimi_k3 \
+              --tool-call-parser kimi_k3 \
+              --context-length 32768 \
+              --mem-fraction-static 0.90 \
+              --host 0.0.0.0 \
+              --port 30000 \
+              --trust-remote-code
+          env:
+          - name: LWS_WORKER_INDEX
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.annotations['leaderworkerset.sigs.k8s.io/worker-index']
+          - name: HF_HOME
+            value: /data/huggingface
+          - name: HF_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: hf-token
+                key: hf_token
+                optional: true
+          - name: NCCL_DEBUG
+            value: WARN
+          ports:
+          - name: http
+            containerPort: 30000
+          - name: sglang-rdvz
+            containerPort: 20000
+          resources:
+            # gpu-nvlink nodes use preset 8gpu-128vcpu-1600gb (128 vCPU / 1600GiB
+            # RAM per node, per clusters/nebius-alpha/config.yaml) — these
+            # requests/limits fit within that budget with headroom left for
+            # kubelet, the NVIDIA DRA driver, and other node-level DaemonSets.
+            requests:
+              cpu: "64"
+              memory: "512Gi"
+            limits:
+              cpu: "96"
+              memory: "768Gi"
+            claims:
+            - name: gpus
+          volumeMounts:
+          - name: hf-cache
+            mountPath: /data/huggingface
+          - name: shm
+            mountPath: /dev/shm
+          # Leader runs the real SGLang HTTP server — standard HTTP probe.
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 30000
+            initialDelaySeconds: 180
+            periodSeconds: 30
+            timeoutSeconds: 15
+            failureThreshold: 60
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 30000
+            initialDelaySeconds: 900
+            periodSeconds: 60
+            timeoutSeconds: 15
+            failureThreshold: 5
+    workerTemplate:
+      metadata:
+        labels:
+          app: kimi-k3
+          role: worker
+      spec:
+        nodeSelector:
+          node-type: gpu-nvlink
+        tolerations:
+        - key: nvidia.com/gpu
+          operator: Exists
+          effect: NoSchedule
+        - key: workload
+          operator: Equal
+          value: inference-nvlink
+          effect: NoSchedule
+        resourceClaims:
+        - name: gpus
+          resourceClaimTemplateName: kimi-k3-gpus
+        volumes:
+        - name: hf-cache
+          emptyDir: {}
+        - name: shm
+          emptyDir:
+            medium: Memory
+            sizeLimit: 128Gi
+        containers:
+        - name: sglang
+          image: lmsysorg/sglang:kimi-k3
+          command: ["bash", "-c"]
+          args:
+          - |
+            set -euo pipefail
+            # LWS_WORKER_INDEX = "1" on first worker, "2" on second, "3" on third.
+            # LWS_LEADER_ADDRESS = stable DNS of the leader pod (auto-injected).
+            # node-rank 1+ joins the process group; SGLang never starts an HTTP
+            # server on non-zero ranks.
+            exec sglang serve \
+              --model-path moonshotai/Kimi-K3 \
+              --tp-size 32 \
+              --ep-size 32 \
+              --nnodes 4 \
+              --node-rank="${LWS_WORKER_INDEX}" \
+              --dist-init-addr="${LWS_LEADER_ADDRESS}:20000" \
+              --moe-runner-backend marlin \
+              --reasoning-parser kimi_k3 \
+              --tool-call-parser kimi_k3 \
+              --context-length 32768 \
+              --mem-fraction-static 0.90 \
+              --host 0.0.0.0 \
+              --port 30000 \
+              --trust-remote-code
+          env:
+          - name: LWS_WORKER_INDEX
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.annotations['leaderworkerset.sigs.k8s.io/worker-index']
+          - name: HF_HOME
+            value: /data/huggingface
+          - name: HF_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: hf-token
+                key: hf_token
+                optional: true
+          - name: NCCL_DEBUG
+            value: WARN
+          ports:
+          - name: sglang-rdvz
+            containerPort: 20000
+          resources:
+            requests:
+              cpu: "64"
+              memory: "512Gi"
+            limits:
+              cpu: "96"
+              memory: "768Gi"
+            claims:
+            - name: gpus
+          volumeMounts:
+          - name: hf-cache
+            mountPath: /data/huggingface
+          - name: shm
+            mountPath: /dev/shm
+          # Workers never start an HTTP server — probe the sglang process directly.
+          readinessProbe:
+            exec:
+              command: ["pgrep", "-f", "sglang"]
+            initialDelaySeconds: 90
+            periodSeconds: 30
+            failureThreshold: 60
+          livenessProbe:
+            exec:
+              command: ["pgrep", "-f", "sglang"]
+            initialDelaySeconds: 900
+            periodSeconds: 60
+            failureThreshold: 5

@@ -19,7 +19,7 @@ def main(
     project_id: str,
     kubernetes_version: str,
     node_groups_config: Dict[str, Any],
-    nvlink_groups_config: Optional[Dict[str, Any]] = None,
+    gpu_clusters_config: Optional[Dict[str, Any]] = None,
     provider: nebius.Provider,
     flux_values_path: Optional[str] = None,
     flux_git_url: Optional[str] = None,
@@ -32,14 +32,23 @@ def main(
     flux_kustomization_interval: str = "10m0s",
 ) -> None:
     """
-    Provision Nebius VPC, MK8s cluster, node groups, and optional NVLink fabric groups.
+    Provision Nebius VPC, MK8s cluster, node groups, and optional GPU clusters
+    (InfiniBand-fabric-based multi-node GPU networking).
 
     Args:
         cluster_name:          Cluster and resource name prefix.
         project_id:            Nebius IAM project/folder ID (parent for all resources).
         kubernetes_version:    Kubernetes version string (e.g. "1.35").
         node_groups_config:    Dict of node group name → config dict (from config.yaml).
-        nvlink_groups_config:  Optional dict of nvlink group name → {type, size} config.
+        gpu_clusters_config:   Optional dict of gpu cluster name → {infiniband_fabric} config.
+                                NOTE: this is InfiniBand-based multi-node GPU clustering
+                                (ComputeV1GpuCluster), for platforms like gpu-h100-sxm.
+                                It is unrelated to ComputeV1NvlInstanceGroup, which is a
+                                different resource for cross-node NVLink Switch fabric —
+                                that only exists for GB200/GB300 (Blackwell rack-scale)
+                                platforms, not H100 SXM. H100 SXM NVLink is intra-node
+                                only (8 GPUs/server); cross-node always goes over
+                                InfiniBand, which is what this wires up.
         provider:              Configured nebius.Provider instance.
     """
 
@@ -85,23 +94,22 @@ def main(
         opts=pulumi.ResourceOptions(provider=provider, depends_on=[subnet]),
     )
 
-    # ── NVLink instance groups ────────────────────────────────────────────────
-    # Must be created before node groups; node groups reference the fabric ID.
+    # ── GPU clusters (InfiniBand fabric) ────────────────────────────────────────
+    # Must be created before node groups; node groups reference the cluster ID.
 
-    nvlink_group_ids: Dict[str, pulumi.Output] = {}
-    if nvlink_groups_config:
-        pulumi.log.info("Creating NVLink instance groups...")
-        for nvl_name, nvl_cfg in nvlink_groups_config.items():
-            nvl_group = nebius.ComputeV1NvlInstanceGroup(
-                f"{cluster_name}-{nvl_name}",
+    gpu_cluster_ids: Dict[str, pulumi.Output] = {}
+    if gpu_clusters_config:
+        pulumi.log.info("Creating GPU clusters (InfiniBand fabric)...")
+        for gc_name, gc_cfg in gpu_clusters_config.items():
+            gpu_cluster = nebius.ComputeV1GpuCluster(
+                f"{cluster_name}-{gc_name}",
                 parent_id=project_id,
-                name=f"{cluster_name}-{nvl_name}",
-                type=nvl_cfg["type"],
-                size=float(nvl_cfg["size"]),
+                name=f"{cluster_name}-{gc_name}",
+                infiniband_fabric=gc_cfg["infiniband_fabric"],
                 opts=base_opts,
             )
-            nvlink_group_ids[nvl_name] = nvl_group.id
-            pulumi.export(f"nvlink_group_id_{nvl_name}", nvl_group.id)
+            gpu_cluster_ids[gc_name] = gpu_cluster.id
+            pulumi.export(f"gpu_cluster_id_{gc_name}", gpu_cluster.id)
 
     # ── Node groups ───────────────────────────────────────────────────────────
 
@@ -111,7 +119,7 @@ def main(
         cluster_id=cluster.id,
         subnet_id=subnet.id,
         node_groups=node_groups_config,
-        nvlink_group_ids=nvlink_group_ids,
+        gpu_cluster_ids=gpu_cluster_ids,
         provider=provider,
     )
 

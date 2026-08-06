@@ -22,7 +22,7 @@ def create_node_groups(
     subnet_id: pulumi.Output,
     node_groups: Dict[str, Any],
     provider: nebius.Provider,
-    nvlink_group_ids: Dict[str, pulumi.Output] = {},
+    gpu_cluster_ids: Dict[str, pulumi.Output] = {},
 ) -> Dict[str, Any]:
     """
     Create Nebius MK8s node groups from config.
@@ -36,7 +36,12 @@ def create_node_groups(
         preemptible    bool  Preemptible (spot-equivalent) nodes
         labels         dict  Kubernetes node labels
         taints         list  [{key, value, effect}] — effect in K8s style (NoSchedule etc.)
-        nvlink_group   str   Name key in nvlink_group_ids — attaches node to NVLink fabric
+        gpu_cluster    str   Name key in gpu_cluster_ids — attaches node to an InfiniBand-
+                              fabric GPU cluster for cross-node multi-node GPU networking
+                              (e.g. TP/EP across nodes). NOT NVLink — cross-node NVLink
+                              Switch fabric only exists for GB200/GB300 platforms via a
+                              different resource (ComputeV1NvlInstanceGroup), which does
+                              not apply to gpu-h100-sxm or similar Hopper-generation nodes.
     """
     node_group_resources: Dict[str, nebius.Mk8sV1NodeGroup] = {}
     prev_ng: nebius.Mk8sV1NodeGroup | None = None  # enforce sequential creation
@@ -82,16 +87,16 @@ def create_node_groups(
                 drivers_preset=ng_cfg["drivers_preset"],
             )
 
-        nvlink = None
-        if nvl_key := ng_cfg.get("nvlink_group"):
-            if nvl_key not in nvlink_group_ids:
+        gpu_cluster = None
+        if gc_key := ng_cfg.get("gpu_cluster"):
+            if gc_key not in gpu_cluster_ids:
                 raise ValueError(
-                    f"Node group '{ng_name}' references nvlink_group '{nvl_key}' "
-                    f"which is not defined in nvlink_groups. "
-                    f"Available: {list(nvlink_group_ids.keys())}"
+                    f"Node group '{ng_name}' references gpu_cluster '{gc_key}' "
+                    f"which is not defined in gpu_clusters. "
+                    f"Available: {list(gpu_cluster_ids.keys())}"
                 )
-            nvlink = nebius.Mk8sV1NodeGroupTemplateNvlinkArgs(
-                nvl_instance_group_id=nvlink_group_ids[nvl_key],
+            gpu_cluster = nebius.Mk8sV1NodeGroupTemplateGpuClusterArgs(
+                id=gpu_cluster_ids[gc_key],
             )
 
         ng = nebius.Mk8sV1NodeGroup(
@@ -107,7 +112,7 @@ def create_node_groups(
                 ),
                 gpu_settings=gpu_settings,
                 preemptible=preemptible,
-                nvlink=nvlink,
+                gpu_cluster=gpu_cluster,
                 network_interfaces=[
                     nebius.Mk8sV1NodeGroupTemplateNetworkInterfaceArgs(
                         subnet_id=subnet_id,

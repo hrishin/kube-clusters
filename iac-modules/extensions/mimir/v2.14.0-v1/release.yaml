@@ -51,6 +51,12 @@ spec:
         ingester:
           ring:
             replication_factor: 1
+        # Default (150000) is sized for a demo/single-app setup. kube-state-metrics
+        # + kubelet/cadvisor + node-exporter across even a handful of nodes
+        # routinely exceeds that on their own, which was silently dropping
+        # ~97% of remote_write samples (err-mimir-max-series-per-user).
+        limits:
+          max_global_series_per_user: 1000000
 
     ingester:
       replicas: 1

@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: image-prefetch
+spec:
+  selector:
+    matchLabels:
+      app: image-prefetch
+  template:
+    metadata:
+      labels:
+        app: image-prefetch
+    spec:
+      # Runs on the always-on core nodes rather than the GPU node group —
+      # the GPU node is the one that actually needs the fast pull. Landing
+      # the image in containerd's content store here lets Spegel's P2P
+      # mirror serve it to a cold GPU node instead of that node pulling the
+      # full image straight from Docker Hub itself.
+      nodeSelector:
+        node-type: core
+      containers:
+        - name: vllm-openai
+          # Keep in sync with iac-modules/extensions/qwen/v0.9-v1/deployment.yaml
+          image: vllm/vllm-openai:v0.9.1
+          # Override the entrypoint: this container only needs to exist long
+          # enough for containerd to pull the image. Running vLLM's actual
+          # entrypoint would look for a GPU and crash-loop on a core node.
+          command: ["sleep", "infinity"]
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              cpu: 50m
+              memory: 64Mi
+      terminationGracePeriodSeconds: 5

@@ -5,3 +5,4 @@ resources:
   - ./lws
   - ./node-lifecycle-tracer
   - ./spegel
+  - ./image-prefetch

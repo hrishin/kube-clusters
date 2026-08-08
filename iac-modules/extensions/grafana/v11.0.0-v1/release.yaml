@@ -33,7 +33,7 @@ spec:
         datasources:
           - name: Mimir
             type: prometheus
-            url: http://main-gateway.kgateway-system.svc.cluster.local:3080/mimir/prometheus
+            url: http://main-gateway.kgateway-system.svc.cluster.local:80/mimir/prometheus
             access: proxy
             isDefault: true
           - name: Tempo

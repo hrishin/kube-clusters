@@ -141,7 +141,7 @@ data:
 
     def wait_vllm_on_node(v1, node_name: str, deadline: float):
         """Wait for a vLLM pod to be scheduled AND running on this specific node.
-        Returns (scheduled_at, pull_start, pull_complete, started_at, pod_ip)."""
+        Returns (scheduled_at, pull_start, pull_complete, started_at, pod_ip, pod_uid)."""
         while time.time() < deadline:
             pods = v1.list_pod_for_all_namespaces(
                 label_selector="app=vllm-qwen2-5-7b",
@@ -161,7 +161,7 @@ data:
                 if started_at:
                     pull_start, pull_complete = get_image_pull_times(v1, pod)
                     log.info(f"vLLM container started at {started_at}, pod IP {pod_ip}")
-                    return scheduled_at, pull_start, pull_complete, started_at, pod_ip
+                    return scheduled_at, pull_start, pull_complete, started_at, pod_ip, pod.metadata.uid
                 if scheduled_at:
                     log.info(f"vLLM scheduled at {scheduled_at}, waiting for container start...")
             log.info("Waiting for vLLM pod on this node...")
@@ -190,7 +190,7 @@ data:
     def wait_kimi_pod_on_node(v1, node_name: str, deadline: float):
         """Wait for a kimi-k3 pod (leader OR worker) to be scheduled AND running
         on this specific node.
-        Returns (scheduled_at, pull_start, pull_complete, started_at, pod_ip, role)."""
+        Returns (scheduled_at, pull_start, pull_complete, started_at, pod_ip, role, pod_uid)."""
         while time.time() < deadline:
             pods = v1.list_pod_for_all_namespaces(
                 label_selector="app=kimi-k3",
@@ -211,7 +211,7 @@ data:
                 if started_at:
                     pull_start, pull_complete = get_image_pull_times(v1, pod)
                     log.info(f"Kimi K3 ({role}) container started at {started_at}, pod IP {pod_ip}")
-                    return scheduled_at, pull_start, pull_complete, started_at, pod_ip, role
+                    return scheduled_at, pull_start, pull_complete, started_at, pod_ip, role, pod.metadata.uid
                 if scheduled_at:
                     log.info(f"Kimi K3 ({role}) scheduled at {scheduled_at}, waiting for container start...")
             log.info("Waiting for kimi-k3 pod on this node...")
@@ -243,12 +243,129 @@ data:
         raise TimeoutError("Timed out waiting for kimi-k3 health")
 
 
-    def emit(tracer, attrs: dict, spans: list[tuple]):
+    def container_state(pod, container_name: str):
+        """(started_at, pod_ip, restart_count) for the named container, or
+        (None, None, restart_count) if it isn't running right now."""
+        restart_count = 0
+        for cs in pod.status.container_statuses or []:
+            if cs.name == container_name:
+                restart_count = cs.restart_count
+                if cs.state and cs.state.running:
+                    return cs.state.running.started_at, pod.status.pod_ip, restart_count
+        return None, None, restart_count
+
+
+    def trace_one_start(tracer, v1, node_name: str, app: str, pod, started_at,
+                         pod_ip: str, restart_count: int, is_new_pod: bool,
+                         health_check, extra_attrs: dict):
+        """Build and emit a single trace for one observed container start —
+        either a brand-new pod (a Deployment/LWS rollout) or a restart of an
+        already-running pod's container."""
+        scheduled_at = None
+        for cond in pod.status.conditions or []:
+            if cond.type == "PodScheduled":
+                scheduled_at = cond.last_transition_time
+        # A same-pod restart normally reuses the already-cached image (no new
+        # Pulling/Pulled event), so pull_start/pull_complete legitimately stay
+        # None here — emit() already skips spans whose start is None.
+        pull_start, pull_complete = get_image_pull_times(v1, pod)
+
+        deadline = time.time() + TIMEOUT
+        try:
+            _, ready = health_check(pod_ip, deadline)
+        except TimeoutError:
+            log.warning(f"{app} on {pod.metadata.name} did not become healthy after "
+                        f"{'start' if is_new_pod else 'restart'}; skipping trace for this event")
+            return
+
+        event = "new-pod" if is_new_pod else "container-restart"
+        log.info(f"{app} {event}: pod={pod.metadata.name} restart_count={restart_count}")
+
+        spans = [
+            (f"{app}-scheduled-to-image-pull-start",  scheduled_at,  pull_start,     {"phase": "runtime"}),
+            (f"{app}-image-pull",                     pull_start,    pull_complete,  {"phase": "runtime", "description": "image pull time"}),
+            (f"{app}-image-pull-to-container-start",  pull_complete, started_at,     {"phase": "runtime"}),
+            (f"{app}-container-start-to-model-ready",  started_at,   ready,          {"phase": "model-load"}),
+        ]
+        emit(tracer, {
+            "node.name": node_name,
+            "app": app,
+            "pod.name": pod.metadata.name,
+            "pod.uid": pod.metadata.uid,
+            "restart_count": restart_count,
+            "event.type": event,
+            **extra_attrs,
+        }, spans, root_name=f"{app}-pod-lifecycle")
+
+
+    def watch_vllm_lifecycle(tracer, v1, node_name: str, seen: dict):
+        """
+        Runs forever: watches for new vllm-qwen2-5-7b pods (a Deployment
+        rollout replacing the pod) or container restarts on this node, and
+        emits a fresh trace for each one. `seen` maps pod UID to the last
+        started_at we've already traced for it, so the pod the initial full
+        trace already covered isn't re-emitted.
+        """
+        while True:
+            try:
+                pods = v1.list_pod_for_all_namespaces(
+                    label_selector="app=vllm-qwen2-5-7b",
+                    field_selector=f"spec.nodeName={node_name}",
+                ).items
+                for pod in pods:
+                    started_at, pod_ip, restart_count = container_state(pod, "qwen")
+                    if started_at is None:
+                        continue
+                    uid = pod.metadata.uid
+                    key = str(started_at)
+                    if seen.get(uid) == key:
+                        continue
+                    is_new_pod = uid not in seen
+                    seen[uid] = key
+                    trace_one_start(
+                        tracer, v1, node_name, "vllm", pod, started_at, pod_ip,
+                        restart_count, is_new_pod, wait_vllm_health, {},
+                    )
+            except Exception:
+                log.exception("Error while watching for vLLM pod restarts")
+            time.sleep(POLL)
+
+
+    def watch_kimi_lifecycle(tracer, v1, node_name: str, kimi_service_url: str, seen: dict):
+        """Same as watch_vllm_lifecycle, for the kimi-k3 LeaderWorkerSet."""
+        while True:
+            try:
+                pods = v1.list_pod_for_all_namespaces(
+                    label_selector="app=kimi-k3",
+                    field_selector=f"spec.nodeName={node_name}",
+                ).items
+                for pod in pods:
+                    started_at, pod_ip, restart_count = container_state(pod, "sglang")
+                    if started_at is None:
+                        continue
+                    uid = pod.metadata.uid
+                    key = str(started_at)
+                    if seen.get(uid) == key:
+                        continue
+                    is_new_pod = uid not in seen
+                    seen[uid] = key
+                    role = pod.metadata.labels.get("role", "unknown")
+                    health_check = lambda ip, dl, role=role: wait_kimi_ready(ip, role, kimi_service_url, dl)
+                    trace_one_start(
+                        tracer, v1, node_name, "kimi-k3", pod, started_at, pod_ip,
+                        restart_count, is_new_pod, health_check, {"kimi.role": role},
+                    )
+            except Exception:
+                log.exception("Error while watching for kimi-k3 pod restarts")
+            time.sleep(POLL)
+
+
+    def emit(tracer, attrs: dict, spans: list[tuple], root_name: str = "gpu-node-cold-start"):
         if not spans:
             return
         root_start = spans[0][1]
         root_end = spans[-1][2] or spans[-1][1]
-        root = tracer.start_span("gpu-node-cold-start", start_time=to_ns(root_start))
+        root = tracer.start_span(root_name, start_time=to_ns(root_start))
         for k, v in attrs.items():
             root.set_attribute(k, v)
         root_ctx = set_span_in_context(root)
@@ -308,12 +425,12 @@ data:
         if workload == "inference-nvlink":
             app = "kimi-k3"
             kimi_service_url = os.environ.get("KIMI_SERVICE_URL", "http://kimi-k3.vllm.svc.cluster.local:30000")
-            app_scheduled, pull_start, pull_complete, app_started, pod_ip, role = wait_kimi_pod_on_node(v1, node_name, deadline)
+            app_scheduled, pull_start, pull_complete, app_started, pod_ip, role, first_pod_uid = wait_kimi_pod_on_node(v1, node_name, deadline)
             _, app_ready = wait_kimi_ready(pod_ip, role, kimi_service_url, deadline)
             extra_attrs["kimi.role"] = role
         else:
             app = "vllm"
-            app_scheduled, pull_start, pull_complete, app_started, pod_ip = wait_vllm_on_node(v1, node_name, deadline)
+            app_scheduled, pull_start, pull_complete, app_started, pod_ip, first_pod_uid = wait_vllm_on_node(v1, node_name, deadline)
             _, app_ready = wait_vllm_health(pod_ip, deadline)
 
         spans = [
@@ -340,9 +457,17 @@ data:
         # log summary
         total = (app_ready - launch_time).total_seconds()
         log.info(f"Total cold-start: {total:.0f}s ({total/60:.1f}min)")
-        log.info("Sleeping to prevent DaemonSet restart loop.")
-        while True:
-            time.sleep(3600)
+
+        # Keep watching this node for new app pods (a rollout replacing the
+        # pod) or container restarts, emitting a fresh trace for each one.
+        # Seed `seen` with the pod the trace above already covered so it
+        # isn't immediately re-emitted as a "new" start.
+        seen = {first_pod_uid: str(app_started)}
+        log.info("Watching for further vLLM/Kimi pod rollouts and restarts on this node...")
+        if workload == "inference-nvlink":
+            watch_kimi_lifecycle(tracer, v1, node_name, kimi_service_url, seen)
+        else:
+            watch_vllm_lifecycle(tracer, v1, node_name, seen)
 
 
     if __name__ == "__main__":

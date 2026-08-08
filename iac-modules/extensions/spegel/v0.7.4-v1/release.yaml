@@ -16,3 +16,9 @@ spec:
   values:
     spegel:
       containerdMirrorAdd: false
+      # DEBUG surfaces more router/libp2p-level detail, but Spegel's own code
+      # has no per-request success log line even at this level (registry.go
+      # only logs on failure) — the actual "is P2P serving this pull" signal
+      # is the spegel_mirror_requests_total{cache="hit"|"miss"} metric, not
+      # logs. See https://spegel.dev metrics docs if that's what you need.
+      logLevel: "DEBUG"

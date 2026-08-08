@@ -47,6 +47,15 @@ def _build_node_cloud_init() -> str:
     than write_files for that one.
     https://spegel.dev/docs/usage/node-configuration/
 
+    No `systemctl restart containerd` here on purpose — it used to be here,
+    but by the time runcmd fires containerd is already serving real
+    workloads (kubelet has it pulling system pod images), and restarting it
+    mid-pull was observed killing in-flight image pulls ("connection reset
+    by peer") and crashing Spegel (which also holds the socket open). It's
+    also unnecessary: certs.d/*/hosts.toml is read fresh by containerd on
+    every pull, not cached at daemon startup, so the mirror config here
+    takes effect without a restart.
+
     Also authorizes the local operator's SSH key (see _default_ssh_public_key)
     so nodes are reachable by IP for debugging.
     """
@@ -74,7 +83,6 @@ def _build_node_cloud_init() -> str:
                 "dial_timeout = '200ms'\n"
                 "EOF\n"
             ),
-            "systemctl restart containerd",
         ],
     }
 

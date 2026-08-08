@@ -2,6 +2,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: vllm-qwen2-5-7b
+  labels:
+    app: vllm-qwen2-5-7b
 spec:
   selector:
     app: vllm-qwen2-5-7b

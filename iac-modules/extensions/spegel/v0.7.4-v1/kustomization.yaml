@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - repo.yaml
   - release.yaml
+  - servicemonitor.yaml

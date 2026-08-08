@@ -33,6 +33,7 @@ spec:
       containers:
       - name: qwen
         image: vllm/vllm-openai:v0.9.1
+        imagePullPolicy: Always
         command: ["vllm", "serve"]
         args:
         - "Qwen/Qwen2.5-7B-Instruct-AWQ"

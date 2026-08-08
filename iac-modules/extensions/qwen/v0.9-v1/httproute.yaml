@@ -6,8 +6,6 @@ spec:
   parentRefs:
   - name: main-gateway
     namespace: kgateway-system
-  hostnames:
-  - "cluster1.eu-north-1.kube.nebius.hrishi.dev"
   rules:
   - matches:
     - path:

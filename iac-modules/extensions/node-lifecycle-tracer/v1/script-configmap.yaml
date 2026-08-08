@@ -9,8 +9,9 @@ data:
     GPU node cold-start lifecycle tracer.
 
     Waits for each phase to complete on THIS node before recording its timestamp:
-      EC2 launch → K8s registered → Node Ready → DRA driver ready
-      → app scheduled → container started → model loaded (/health 200)
+      Node launch → K8s registered → Node Ready → NVIDIA initialized
+      → app scheduled → image pull start → image pull complete
+      → container started → model loaded (/health 200)
 
     "app" is workload-specific, picked from the node's own `workload` label:
       workload=inference          → single-GPU vLLM (app=vllm-qwen2-5-7b, port 8000)
@@ -121,9 +122,26 @@ data:
         raise TimeoutError("Timed out waiting for DRA driver")
 
 
+    def get_image_pull_times(v1, pod):
+        """First 'Pulling' event to the 'Pulled' event for this pod (spans any
+        failed retries — 'Pulling' events aggregate repeat attempts of the same
+        image into one Event object, with first_timestamp at the earliest one)."""
+        events = v1.list_namespaced_event(
+            pod.metadata.namespace,
+            field_selector=f"involvedObject.name={pod.metadata.name}",
+        ).items
+        pull_start = pull_complete = None
+        for e in events:
+            if e.reason == "Pulling":
+                pull_start = e.first_timestamp or e.event_time
+            elif e.reason == "Pulled":
+                pull_complete = e.last_timestamp or e.first_timestamp or e.event_time
+        return pull_start, pull_complete
+
+
     def wait_vllm_on_node(v1, node_name: str, deadline: float):
         """Wait for a vLLM pod to be scheduled AND running on this specific node.
-        Returns (scheduled_at, started_at, pod_ip)."""
+        Returns (scheduled_at, pull_start, pull_complete, started_at, pod_ip)."""
         while time.time() < deadline:
             pods = v1.list_pod_for_all_namespaces(
                 label_selector="app=vllm-qwen2-5-7b",
@@ -141,8 +159,9 @@ data:
                         started_at = cs.state.running.started_at
                         pod_ip = pod.status.pod_ip
                 if started_at:
+                    pull_start, pull_complete = get_image_pull_times(v1, pod)
                     log.info(f"vLLM container started at {started_at}, pod IP {pod_ip}")
-                    return scheduled_at, started_at, pod_ip
+                    return scheduled_at, pull_start, pull_complete, started_at, pod_ip
                 if scheduled_at:
                     log.info(f"vLLM scheduled at {scheduled_at}, waiting for container start...")
             log.info("Waiting for vLLM pod on this node...")
@@ -170,7 +189,8 @@ data:
 
     def wait_kimi_pod_on_node(v1, node_name: str, deadline: float):
         """Wait for a kimi-k3 pod (leader OR worker) to be scheduled AND running
-        on this specific node. Returns (scheduled_at, started_at, pod_ip, role)."""
+        on this specific node.
+        Returns (scheduled_at, pull_start, pull_complete, started_at, pod_ip, role)."""
         while time.time() < deadline:
             pods = v1.list_pod_for_all_namespaces(
                 label_selector="app=kimi-k3",
@@ -189,8 +209,9 @@ data:
                         started_at = cs.state.running.started_at
                         pod_ip = pod.status.pod_ip
                 if started_at:
+                    pull_start, pull_complete = get_image_pull_times(v1, pod)
                     log.info(f"Kimi K3 ({role}) container started at {started_at}, pod IP {pod_ip}")
-                    return scheduled_at, started_at, pod_ip, role
+                    return scheduled_at, pull_start, pull_complete, started_at, pod_ip, role
                 if scheduled_at:
                     log.info(f"Kimi K3 ({role}) scheduled at {scheduled_at}, waiting for container start...")
             log.info("Waiting for kimi-k3 pod on this node...")
@@ -279,21 +300,23 @@ data:
         if workload == "inference-nvlink":
             app = "kimi-k3"
             kimi_service_url = os.environ.get("KIMI_SERVICE_URL", "http://kimi-k3.vllm.svc.cluster.local:30000")
-            app_scheduled, app_started, pod_ip, role = wait_kimi_pod_on_node(v1, node_name, deadline)
+            app_scheduled, pull_start, pull_complete, app_started, pod_ip, role = wait_kimi_pod_on_node(v1, node_name, deadline)
             _, app_ready = wait_kimi_ready(pod_ip, role, kimi_service_url, deadline)
             extra_attrs["kimi.role"] = role
         else:
             app = "vllm"
-            app_scheduled, app_started, pod_ip = wait_vllm_on_node(v1, node_name, deadline)
+            app_scheduled, pull_start, pull_complete, app_started, pod_ip = wait_vllm_on_node(v1, node_name, deadline)
             _, app_ready = wait_vllm_health(pod_ip, deadline)
 
         spans = [
-            ("ec2-launch-to-k8s-registered",         launch_time,    node_created,   {"phase": "infrastructure", "description": "userdata, kubelet start"}),
-            ("k8s-registered-to-node-ready",         node_created,   ready_time,     {"phase": "kubelet",        "description": "CNI, kube-proxy, node conditions"}),
-            ("node-ready-to-dra-driver-ready",       ready_time,     dra_ready,      {"phase": "gpu-operator",   "description": "NVIDIA driver install, DRA kubelet plugin"}),
-            (f"dra-ready-to-{app}-scheduled",        dra_ready,      app_scheduled,  {"phase": "scheduler",      "description": "DRA ResourceClaim binding, pod placement"}),
-            (f"{app}-scheduled-to-container-start",  app_scheduled,  app_started,    {"phase": "runtime",        "description": "image pull, container creation"}),
-            (f"{app}-container-start-to-model-ready", app_started,   app_ready,      {"phase": "model-load",     "description": "weight download + GPU load, or NCCL/rendezvous wait for a Kimi K3 worker"}),
+            ("node-launch-to-k8s-registered",          launch_time,    node_created,    {"phase": "infrastructure", "description": "userdata, kubelet start"}),
+            ("k8s-registered-to-node-ready",           node_created,   ready_time,      {"phase": "kubelet",        "description": "CNI, kube-proxy, node conditions"}),
+            ("node-ready-to-nvidia-initialized",       ready_time,     dra_ready,       {"phase": "gpu-operator",   "description": "NVIDIA driver install, DRA kubelet plugin"}),
+            (f"nvidia-initialized-to-{app}-scheduled", dra_ready,      app_scheduled,   {"phase": "scheduler",      "description": "DRA ResourceClaim binding, pod placement"}),
+            (f"{app}-scheduled-to-image-pull-start",   app_scheduled,  pull_start,      {"phase": "runtime",        "description": "kubelet queues the image pull after scheduling"}),
+            (f"{app}-image-pull",                      pull_start,     pull_complete,   {"phase": "runtime",        "description": "image pull time"}),
+            (f"{app}-image-pull-to-container-start",   pull_complete,  app_started,     {"phase": "runtime",        "description": "container creation after image pull"}),
+            (f"{app}-container-start-to-model-ready",  app_started,    app_ready,       {"phase": "model-load",     "description": "weight download + GPU load, or NCCL/rendezvous wait for a Kimi K3 worker"}),
         ]
 
         emit(tracer, {

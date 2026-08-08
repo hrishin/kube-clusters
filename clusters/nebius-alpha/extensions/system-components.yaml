@@ -1,7 +1,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: system
+  name: system-components
   namespace: flux-system
 spec:
   interval: 1m50s
@@ -10,7 +10,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./clusters/nebius-alpha/extensions/system/
+  path: ./clusters/nebius-alpha/extensions/system-components/
   prune: true
   wait: true
   decryption:

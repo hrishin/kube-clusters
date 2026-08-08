@@ -255,10 +255,18 @@ data:
         for name, start, end, extra in spans:
             if start is None:
                 continue
+            end = end or start
+            if end < start:
+                # Two independently-timestamped signals (e.g. a kubelet Ready
+                # condition vs. a scheduler decision) can land a second or two
+                # out of order. Clamp to zero rather than emit a negative
+                # duration — some trace UIs render that as a huge bogus value
+                # via unsigned-integer wraparound.
+                end = start
             s = tracer.start_span(name, context=root_ctx, start_time=to_ns(start))
             for k, v in (extra or {}).items():
                 s.set_attribute(k, v)
-            s.end(end_time=to_ns(end or start))
+            s.end(end_time=to_ns(end))
         root.end(end_time=to_ns(root_end))
 
 

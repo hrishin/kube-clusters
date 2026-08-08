@@ -6,3 +6,4 @@ resources:
   - ./grafana
   - ./tempo
   - ./otel-collector
+  - ./kube-prometheus-stack

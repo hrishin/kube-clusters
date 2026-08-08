@@ -18,7 +18,7 @@ spec:
     secretRef:
       name: sops-age
   dependsOn:
-    - name: infra
+    - name: crds
   postBuild:
     substituteFrom:
       - kind: ConfigMap

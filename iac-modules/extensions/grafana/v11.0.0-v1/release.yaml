@@ -18,10 +18,10 @@ spec:
     tolerations:
       - key: node-type
         operator: Equal
-        value: mimir
+        value: core
         effect: NoSchedule
     nodeSelector:
-      node-type: mimir
+      node-type: core
 
     env:
       GF_SERVER_ROOT_URL: "https://${NLB_DNS}/grafana"

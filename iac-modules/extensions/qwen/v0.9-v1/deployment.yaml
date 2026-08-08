@@ -31,7 +31,7 @@ spec:
       - name: hf-cache
         emptyDir: {}
       containers:
-      - name: vllm
+      - name: qwen
         image: vllm/vllm-openai:v0.9.1
         command: ["vllm", "serve"]
         args:

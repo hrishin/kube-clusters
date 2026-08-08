@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - ./cert-manager
   - ./local-path-provisioner
+  - ./kgateway

@@ -4,3 +4,4 @@ namespace: mimir
 resources:
   - ../../../../../iac-modules/extensions/namespace/v1/
   - ../../../../../iac-modules/extensions/mimir/v2.14.0-v1/
+  - httproute.yaml

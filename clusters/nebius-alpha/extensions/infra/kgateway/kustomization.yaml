@@ -4,3 +4,4 @@ namespace: kgateway-system
 resources:
   - ../../../../../iac-modules/extensions/namespace/v1/
   - ../../../../../iac-modules/extensions/kgateway/v2.3.0-v1/
+  - gateway.yaml

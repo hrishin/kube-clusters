@@ -11,6 +11,43 @@ import pulumi_nebius as nebius
 
 from node_groups.node_groups import create_node_groups
 from flux import bootstrap_flux
+from dns import setup_gateway_dns
+
+# containerd config required by Spegel (P2P image mirror, bootstrapped via Flux
+# under llm-infra/spegel): registry mirror config_path must point at
+# certs.d, and discard_unpacked_layers must be disabled so already-pulled
+# layers stay available for Spegel to serve to peers.
+# https://spegel.dev/docs/getting-started/#containerd-configuration
+#
+# The Helm release sets spegel.containerdMirrorAdd: false, so Spegel's own
+# init container won't manage certs.d/_default/hosts.toml — it's written
+# here instead, pointed at this node's own registry mirror port (30020,
+# the chart's service.registry.hostPort default). NODE_IP has to be resolved
+# at boot (can't be known statically), hence the runcmd rather than
+# write_files for that one.
+# https://spegel.dev/docs/usage/node-configuration/
+_SPEGEL_CONTAINERD_CLOUD_INIT = """#cloud-config
+write_files:
+  - path: /etc/containerd/config.toml
+    permissions: "0644"
+    content: |
+      version = 3
+
+      [plugins."io.containerd.cri.v1.images".registry]
+        config_path = "/etc/containerd/certs.d"
+      [plugins."io.containerd.cri.v1.images"]
+        discard_unpacked_layers = false
+runcmd:
+  - mkdir -p /etc/containerd/certs.d/_default
+  - |
+    NODE_IP=$(hostname -I | awk '{print $1}')
+    cat > /etc/containerd/certs.d/_default/hosts.toml <<EOF
+    [host.'http://${NODE_IP}:30020']
+    capabilities = ['pull', 'resolve']
+    dial_timeout = '200ms'
+    EOF
+  - systemctl restart containerd
+"""
 
 
 def main(
@@ -30,6 +67,11 @@ def main(
     flux_sops_secret_name: Optional[str] = None,
     flux_git_interval: str = "1m0s",
     flux_kustomization_interval: str = "10m0s",
+    dns_zone: Optional[str] = None,
+    dns_record_name: Optional[str] = None,
+    cf_api_token: Optional[str] = None,
+    dns_gateway_namespace: str = "kgateway-system",
+    dns_gateway_service_name: str = "main-gateway",
 ) -> None:
     """
     Provision Nebius VPC, MK8s cluster, node groups, and optional GPU clusters
@@ -50,6 +92,13 @@ def main(
                                 only (8 GPUs/server); cross-node always goes over
                                 InfiniBand, which is what this wires up.
         provider:              Configured nebius.Provider instance.
+        dns_zone:               Cloudflare zone name (e.g. "hrishi.dev") for the
+                                 cluster's gateway A record. Combined with
+                                 dns_record_name and cf_api_token, enables the
+                                 post-Flux Cloudflare DNS upsert.
+        dns_record_name:        Record name relative to dns_zone (e.g.
+                                 "cluster1.eu-north-1.kube.nebius").
+        cf_api_token:            Cloudflare API token (Zone:DNS:Edit) for the zone.
     """
 
     base_opts = pulumi.ResourceOptions(provider=provider)
@@ -121,13 +170,14 @@ def main(
         node_groups=node_groups_config,
         gpu_cluster_ids=gpu_cluster_ids,
         provider=provider,
+        cloud_init_user_data=_SPEGEL_CONTAINERD_CLOUD_INIT,
     )
 
     # ── Flux bootstrap ────────────────────────────────────────────────────────
 
     if flux_git_url:
         pulumi.log.info("Bootstrapping Flux...")
-        bootstrap_flux(
+        flux_result = bootstrap_flux(
             cluster_name=cluster_name,
             cluster=cluster,
             flux_values_path=flux_values_path,
@@ -141,6 +191,23 @@ def main(
             flux_kustomization_interval=flux_kustomization_interval,
             additional_dependencies=list(ng_result["node_groups"].values()),
         )
+
+        # ── Gateway DNS ──────────────────────────────────────────────────────
+        # Waits for Flux to reconcile the kgateway Gateway/LoadBalancer, then
+        # upserts a Cloudflare A record pointing at its external IP.
+
+        if dns_zone and dns_record_name and cf_api_token:
+            pulumi.log.info("Waiting for gateway LoadBalancer IP and upserting Cloudflare DNS record...")
+            setup_gateway_dns(
+                cluster_name=cluster_name,
+                kubeconfig=flux_result["kubeconfig"],
+                cf_api_token=cf_api_token,
+                cf_zone_name=dns_zone,
+                record_name=dns_record_name,
+                gateway_namespace=dns_gateway_namespace,
+                gateway_service_name=dns_gateway_service_name,
+                opts=pulumi.ResourceOptions(depends_on=[flux_result["flux_kustomization"]]),
+            )
 
     # ── Exports ───────────────────────────────────────────────────────────────
 

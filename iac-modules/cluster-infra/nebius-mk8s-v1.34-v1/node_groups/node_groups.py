@@ -2,7 +2,7 @@
 Nebius MK8s node groups — mirrors the structure of the AWS node_groups module.
 """
 
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 import pulumi
 import pulumi_nebius as nebius
@@ -23,6 +23,7 @@ def create_node_groups(
     node_groups: Dict[str, Any],
     provider: nebius.Provider,
     gpu_cluster_ids: Dict[str, pulumi.Output] = {},
+    cloud_init_user_data: Optional[str] = None,
 ) -> Dict[str, Any]:
     """
     Create Nebius MK8s node groups from config.
@@ -42,6 +43,10 @@ def create_node_groups(
                               Switch fabric only exists for GB200/GB300 platforms via a
                               different resource (ComputeV1NvlInstanceGroup), which does
                               not apply to gpu-h100-sxm or similar Hopper-generation nodes.
+
+    cloud_init_user_data: Optional cloud-init user-data applied to every node group
+        (e.g. containerd config required by Spegel). Same content on all groups —
+        there's currently no per-group override.
     """
     node_group_resources: Dict[str, nebius.Mk8sV1NodeGroup] = {}
     prev_ng: nebius.Mk8sV1NodeGroup | None = None  # enforce sequential creation
@@ -123,6 +128,7 @@ def create_node_groups(
                     labels=labels if labels else None,
                 ),
                 taints=taints if taints else None,
+                cloud_init_user_data=cloud_init_user_data,
             ),
             opts=pulumi.ResourceOptions(
                 provider=provider,

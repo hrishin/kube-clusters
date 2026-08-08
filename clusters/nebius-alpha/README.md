@@ -8,13 +8,12 @@ This is a quick reference for provisioning *this specific cluster*. For the full
 
 ```
 clusters/nebius-alpha/
-  config.yaml        # cluster name, project ID, k8s version, node_groups, nvlink_groups
+  config.yaml        # cluster name, project ID, k8s version, node_groups, nvlink_groups, dns
   infra/              # Pulumi program — provisions the cluster + bootstraps Flux
   extensions/         # Flux GitOps tree — everything after bootstrap is reconciled from here
-  scripts/cf-dns.sh   # manual step: point a hostname at the cluster's load balancer
 ```
 
-Provisioning is two-phase: Pulumi creates the network, MK8s control plane, and node groups, then bootstraps Flux pointed at `extensions/` — from there, Flux reconciles everything else (GPU operator, LWS controller, cert-manager, kgateway, inference workloads) directly from git.
+Provisioning is two-phase: Pulumi creates the network, MK8s control plane, and node groups, then bootstraps Flux pointed at `extensions/` — from there, Flux reconciles everything else (GPU operator, LWS controller, cert-manager, kgateway, inference workloads) directly from git. Once Flux has reconciled the kgateway `Gateway`, Pulumi waits for its LoadBalancer to get an external IP and upserts the Cloudflare A record (see [DNS](#dns) below) — all within the same `pulumi up`.
 
 ## Prerequisites
 
@@ -117,13 +116,9 @@ kubectl get leaderworkerset -n vllm
 
 ## DNS
 
-Not managed by Pulumi/Flux — run manually once the cluster's load balancer has an external IP:
+Managed by Pulumi as part of `pulumi up` (see `dns.py` in the `nebius-mk8s-vX.Y-v1` module): after Flux bootstraps, it waits for the kgateway `main-gateway` LoadBalancer Service to get an external IP, then upserts a Cloudflare A record for `dns.name` under `dns.zone` (set in `config.yaml`). Nebius DNS v1 only supports VPC-private zones via API, so public DNS is managed in Cloudflare directly.
 
-```bash
-./scripts/cf-dns.sh <CLOUDFLARE_API_TOKEN>
-```
-
-Upserts an A record in Cloudflare (Nebius DNS v1 only supports VPC-private zones via API).
+Requires a Cloudflare API token (Zone:DNS:Edit on the zone) at `.cf.api-key` in `config/config.enc.yaml` — add it with `sops config/config.enc.yaml`.
 
 ## Teardown
 

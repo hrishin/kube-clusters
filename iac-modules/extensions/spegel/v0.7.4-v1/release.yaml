@@ -1,0 +1,18 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: spegel
+  namespace: spegel
+spec:
+  releaseName: spegel
+  chart:
+    spec:
+      chart: spegel
+      version: "0.7.4"
+      sourceRef:
+        kind: HelmRepository
+        name: spegel
+  interval: 1m
+  values:
+    spegel:
+      containerdMirrorAdd: false

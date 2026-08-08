@@ -4,3 +4,4 @@ resources:
   - ./nvidia-gpu-operator
   - ./lws
   - ./node-lifecycle-tracer
+  - ./spegel

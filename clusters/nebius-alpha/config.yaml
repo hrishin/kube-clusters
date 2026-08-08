@@ -2,6 +2,9 @@
 cluster_name: nebius-alpha
 project_id: "project-e00s6kp7pr00pxcs1xc9m4"
 kubernetes_version: "1.34"
+dns:
+  zone: hrishi.dev
+  name: cluster1.eu-north-1.kube.nebius
 
 node_groups:
   default:

@@ -154,12 +154,12 @@ def bootstrap_flux(
         opts=pulumi.ResourceOptions(depends_on=dependencies),
     )
 
+    result: Dict[str, Any] = {"kubeconfig": kubeconfig, "k8s_provider": k8s_provider}
+
     flux_values_raw: Dict[str, Any] = {}
     if flux_values_path:
         flux_values_raw = _load_yaml_mapping(flux_values_path, "Flux")
     flux_values = deepcopy(flux_values_raw) if flux_values_raw else deepcopy(_DEFAULT_FLUX_VALUES)
-
-    result: Dict[str, Any] = {}
 
     flux_namespace = k8s.core.v1.Namespace(
         "flux-system",

@@ -3,4 +3,4 @@ runtime:
   name: python
   options:
     virtualenv: ../../../venv
-description: Nebius MK8s cluster — GPU inference (L40S preemptible)
+description: Nebius MK8s cluster — GPU inference

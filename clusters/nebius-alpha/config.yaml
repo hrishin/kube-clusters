@@ -70,27 +70,27 @@ node_groups:
   # Sized for Kimi K3 (MXFP4, ~1.6TB weights): 3 nodes fit the weights but leave
   # too little KV headroom, 4 nodes is the practical minimum (see
   # docs/multi-node-inference-options.md
-  gpu-nvlink:
-    platform: gpu-h100-sxm
-    preset: 8gpu-128vcpu-1600gb        # 8 × H100 80 GB SXM per node
-    desired_size: 4
-    min_size: 4
-    max_size: 4
-    preemptible: false
-    gpu_cluster: h100-cluster   # references gpu_clusters entry below
-    labels:
-      node-type: gpu-nvlink
-      workload: inference-nvlink
-      environment: production
-      accelerator: nvidia-h100-sxm
-    taints:
-      - key: nvidia.com/gpu
-        value: "true"
-        effect: NoSchedule
-      - key: workload
-        value: inference-nvlink
-        effect: NoSchedule
+  # gpu-nvlink:
+  #   platform: gpu-h100-sxm
+  #   preset: 8gpu-128vcpu-1600gb        # 8 × H100 80 GB SXM per node
+  #   desired_size: 4
+  #   min_size: 4
+  #   max_size: 4
+  #   preemptible: false
+  #   gpu_cluster: h100-cluster   # references gpu_clusters entry below
+  #   labels:
+  #     node-type: gpu-nvlink
+  #     workload: inference-nvlink
+  #     environment: production
+  #     accelerator: nvidia-h100-sxm
+  #   taints:
+  #     - key: nvidia.com/gpu
+  #       value: "true"
+  #       effect: NoSchedule
+  #     - key: workload
+  #       value: inference-nvlink
+  #       effect: NoSchedule
 
-gpu_clusters:
-  h100-cluster:
-    infiniband_fabric: fabric-2
+# gpu_clusters:
+#   h100-cluster:
+#     infiniband_fabric: fabric-2

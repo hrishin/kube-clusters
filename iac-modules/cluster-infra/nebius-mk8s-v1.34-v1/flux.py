@@ -75,23 +75,14 @@ def _decrypt_sops_mapping(file_path: str, description: str) -> Optional[Dict[str
         return None
 
 
-def _nebius_iam_token() -> str:
-    """Fetch a short-lived IAM access token via the nebius CLI at deploy time."""
-    try:
-        result = subprocess.run(
-            ["nebius", "iam", "get-access-token"],
-            check=True, capture_output=True, text=True,
-        )
-        return result.stdout.strip()
-    except Exception as exc:
-        pulumi.log.warn(f"Could not fetch Nebius IAM token via CLI: {exc}. Kubeconfig will have no token.")
-        return ""
-
-
-def _build_kubeconfig(cluster_name: str, endpoint: str, ca_pem: str, token: str) -> str:
+def _build_kubeconfig(cluster_name: str, endpoint: str, ca_pem: str) -> str:
     ca_b64 = base64.b64encode(ca_pem.encode()).decode()
     # Nebius returns the endpoint with https:// already included
     server = endpoint if endpoint.startswith("https://") else f"https://{endpoint}"
+    # Delegate to the nebius CLI's own exec-credential plugin (same as what
+    # `nebius mk8s v1 cluster get-credentials` writes into ~/.kube/config)
+    # instead of embedding a token: client-go then fetches/refreshes the
+    # token itself, so long-running applies can't outlive a static token.
     return f"""apiVersion: v1
 clusters:
 - cluster:
@@ -109,7 +100,17 @@ preferences: {{}}
 users:
 - name: {cluster_name}
   user:
-    token: {token}
+    exec:
+      apiVersion: client.authentication.k8s.io/v1beta1
+      command: nebius
+      args:
+      - mk8s
+      - v1
+      - cluster
+      - get-token
+      - --format
+      - json
+      interactiveMode: IfAvailable
 """
 
 
@@ -139,16 +140,13 @@ def bootstrap_flux(
     if additional_dependencies:
         dependencies.extend(additional_dependencies)
 
-    # Fetch IAM token eagerly (before any apply) to avoid calling subprocess
-    # inside a Pulumi apply callback — that triggers gRPC fork warnings and
-    # can cause the provider to fail.
-    iam_token = _nebius_iam_token()
-
     # Build kubeconfig from cluster status outputs (resolved at deploy time).
+    # Auth is delegated to an exec-credential plugin (see _build_kubeconfig),
+    # so no token needs to be fetched here.
     kubeconfig = pulumi.Output.all(
         cluster.status.control_plane.endpoints.public_endpoint,
         cluster.status.control_plane.auth.cluster_ca_certificate,
-    ).apply(lambda args: _build_kubeconfig(cluster_name, args[0], args[1], iam_token))
+    ).apply(lambda args: _build_kubeconfig(cluster_name, args[0], args[1]))
 
     k8s_provider = k8s.Provider(
         f"{cluster_name}-flux-k8s-provider",

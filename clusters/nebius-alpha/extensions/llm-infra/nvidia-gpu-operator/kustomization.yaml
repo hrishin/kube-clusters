@@ -4,3 +4,26 @@ namespace: gpu-operator
 resources:
   - ../../../../../iac-modules/extensions/namespace/v1/
   - ../../../../../iac-modules/extensions/nvidia-gpu-operator/v26.3-v1/
+# The nvidia-gpu-operator module is shared with eks-alpha, which has no
+# drivers_preset equivalent and still needs the GPU Operator to install the
+# driver itself. These patches are nebius-alpha-only: the gpu-inference node
+# group now bakes the NVIDIA driver into the node's ComputeImage
+# (drivers_preset in clusters/nebius-alpha/config.yaml), so the operator must
+# stop installing its own redundant copy, and the DRA driver must look for
+# the driver at the host path instead of the operator's containerized-driver
+# path. See node_groups.py's drivers_preset docstring for the full picture.
+patches:
+  - patch: |
+      - op: replace
+        path: /spec/values/driver/enabled
+        value: false
+    target:
+      kind: HelmRelease
+      name: nvidia-gpu-operator
+  - patch: |
+      - op: replace
+        path: /spec/values/nvidiaDriverRoot
+        value: "/"
+    target:
+      kind: HelmRelease
+      name: nvidia-dra-driver-gpu

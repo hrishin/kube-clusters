@@ -3,5 +3,4 @@ kind: Kustomization
 resources:
   - cluster-issuer-letsencrypt.yaml
   - gateway-certificate.yaml
-  # secret-cloudflare-api-token.placeholder.yaml intentionally excluded —
-  # see comment in that file. Create the real Secret out-of-band.
+  - secret-cloudflare-api-token.enc.yaml

@@ -1,0 +1,88 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kube-prometheus-stack
+  namespace: prometheus
+spec:
+  releaseName: kube-prometheus-stack
+  chart:
+    spec:
+      chart: kube-prometheus-stack
+      version: "88.2.0"
+      sourceRef:
+        kind: HelmRepository
+        name: kube-prometheus-stack
+        namespace: prometheus
+  interval: 2m
+  # CRDs are applied separately via the crds Flux Kustomization
+  # (iac-modules/extensions/crds/kube-prometheus-stack/v88.2.0/) — same
+  # reasoning as cert-manager/LWS: `helm upgrade` doesn't reliably update
+  # CRDs, so they're managed outside the Helm release lifecycle.
+  install:
+    crds: Skip
+  upgrade:
+    crds: Skip
+  values:
+    crds:
+      enabled: false
+
+    # Not deploying the chart's bundled Grafana/Alertmanager — Grafana
+    # already exists (querying Mimir, see iac-modules/extensions/grafana/),
+    # and Alertmanager isn't wired to anything yet.
+    grafana:
+      enabled: false
+    alertmanager:
+      enabled: false
+
+    prometheusOperator:
+      nodeSelector:
+        node-type: core
+      tolerations:
+        - key: node-type
+          operator: Equal
+          value: core
+          effect: NoSchedule
+
+    kubeStateMetrics:
+      enabled: true
+    kube-state-metrics:
+      nodeSelector:
+        node-type: core
+      tolerations:
+        - key: node-type
+          operator: Equal
+          value: core
+          effect: NoSchedule
+
+    # DaemonSet — needs to run on every node (including tainted GPU/mimir
+    # ones) to report host-level metrics for all of them.
+    nodeExporter:
+      enabled: true
+    prometheus-node-exporter:
+      tolerations:
+        - operator: Exists
+
+    prometheus:
+      prometheusSpec:
+        nodeSelector:
+          node-type: core
+        tolerations:
+          - key: node-type
+            operator: Equal
+            value: core
+            effect: NoSchedule
+        # Discover ServiceMonitors/PodMonitors/PrometheusRules from any app
+        # in any namespace, not just ones created by this Helm release.
+        serviceMonitorSelectorNilUsesHelmValues: false
+        podMonitorSelectorNilUsesHelmValues: false
+        ruleSelectorNilUsesHelmValues: false
+        externalLabels:
+          cluster: nebius-alpha
+        # Short local retention on purpose — Mimir (via remoteWrite below) is
+        # the durable store. No storageSpec either: local-path PVCs pinned to
+        # a specific node have repeatedly gone stale across node-group churn
+        # this session (see grafana/mimir/tempo), and the WAL only needs to
+        # survive until it's shipped via remote_write, not across restarts.
+        retention: 2h
+        remoteWrite:
+          - url: http://main-gateway.kgateway-system.svc.cluster.local:80/mimir/api/v1/push

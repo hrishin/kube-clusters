@@ -3,51 +3,89 @@ Nebius MK8s cluster — orchestrator module.
 Mirrors the structure of iac-modules/cluster-infra/eks-v1.36-v1/main.py.
 """
 
+import os
 from pathlib import Path
 from typing import Any, Dict, Optional
 
 import pulumi
 import pulumi_nebius as nebius
+import yaml
 
 from node_groups.node_groups import create_node_groups
 from flux import bootstrap_flux
 from dns import setup_gateway_dns
 
-# containerd config required by Spegel (P2P image mirror, bootstrapped via Flux
-# under llm-infra/spegel): registry mirror config_path must point at
-# certs.d, and discard_unpacked_layers must be disabled so already-pulled
-# layers stay available for Spegel to serve to peers.
-# https://spegel.dev/docs/getting-started/#containerd-configuration
-#
-# The Helm release sets spegel.containerdMirrorAdd: false, so Spegel's own
-# init container won't manage certs.d/_default/hosts.toml — it's written
-# here instead, pointed at this node's own registry mirror port (30020,
-# the chart's service.registry.hostPort default). NODE_IP has to be resolved
-# at boot (can't be known statically), hence the runcmd rather than
-# write_files for that one.
-# https://spegel.dev/docs/usage/node-configuration/
-_SPEGEL_CONTAINERD_CLOUD_INIT = """#cloud-config
-write_files:
-  - path: /etc/containerd/config.toml
-    permissions: "0644"
-    content: |
-      version = 3
 
-      [plugins."io.containerd.cri.v1.images".registry]
-        config_path = "/etc/containerd/certs.d"
-      [plugins."io.containerd.cri.v1.images"]
-        discard_unpacked_layers = false
-runcmd:
-  - mkdir -p /etc/containerd/certs.d/_default
-  - |
-    NODE_IP=$(hostname -I | awk '{print $1}')
-    cat > /etc/containerd/certs.d/_default/hosts.toml <<EOF
-    [host.'http://${NODE_IP}:30020']
-    capabilities = ['pull', 'resolve']
-    dial_timeout = '200ms'
-    EOF
-  - systemctl restart containerd
-"""
+def _default_ssh_public_key() -> Optional[str]:
+    """
+    Local operator's SSH public key, added to the default cloud-image user
+    (ubuntu) on every node via cloud-init so nodes are reachable by IP for
+    ad-hoc debugging. Defaults to ~/.ssh/id_ed25519.pub; override with
+    NODE_SSH_PUBLIC_KEY_PATH for a different key.
+    """
+    key_path = Path(os.environ.get("NODE_SSH_PUBLIC_KEY_PATH", "~/.ssh/id_ed25519.pub")).expanduser()
+    try:
+        return key_path.read_text().strip()
+    except FileNotFoundError:
+        pulumi.log.warn(f"SSH public key not found at {key_path}; nodes will have no SSH access configured.")
+        return None
+
+
+def _build_node_cloud_init() -> str:
+    """
+    containerd config required by Spegel (P2P image mirror, bootstrapped via
+    Flux under llm-infra/spegel): registry mirror config_path must point at
+    certs.d, and discard_unpacked_layers must be disabled so already-pulled
+    layers stay available for Spegel to serve to peers.
+    https://spegel.dev/docs/getting-started/#containerd-configuration
+
+    The Helm release sets spegel.containerdMirrorAdd: false, so Spegel's own
+    init container won't manage certs.d/_default/hosts.toml — it's written
+    here instead, pointed at this node's own registry mirror port (30020,
+    the chart's service.registry.hostPort default). NODE_IP has to be
+    resolved at boot (can't be known statically), hence the runcmd rather
+    than write_files for that one.
+    https://spegel.dev/docs/usage/node-configuration/
+
+    Also authorizes the local operator's SSH key (see _default_ssh_public_key)
+    so nodes are reachable by IP for debugging.
+    """
+    cloud_config: Dict[str, Any] = {
+        "write_files": [
+            {
+                "path": "/etc/containerd/config.toml",
+                "permissions": "0644",
+                "content": (
+                    'version = 3\n\n'
+                    '[plugins."io.containerd.cri.v1.images".registry]\n'
+                    '  config_path = "/etc/containerd/certs.d"\n'
+                    '[plugins."io.containerd.cri.v1.images"]\n'
+                    '  discard_unpacked_layers = false\n'
+                ),
+            }
+        ],
+        "runcmd": [
+            "mkdir -p /etc/containerd/certs.d/_default",
+            (
+                "NODE_IP=$(hostname -I | awk '{print $1}')\n"
+                "cat > /etc/containerd/certs.d/_default/hosts.toml <<EOF\n"
+                "[host.'http://${NODE_IP}:30020']\n"
+                "capabilities = ['pull', 'resolve']\n"
+                "dial_timeout = '200ms'\n"
+                "EOF\n"
+            ),
+            "systemctl restart containerd",
+        ],
+    }
+
+    ssh_key = _default_ssh_public_key()
+    if ssh_key:
+        cloud_config["ssh_authorized_keys"] = [ssh_key]
+
+    return "#cloud-config\n" + yaml.safe_dump(cloud_config, sort_keys=False)
+
+
+_SPEGEL_CONTAINERD_CLOUD_INIT = _build_node_cloud_init()
 
 
 def main(

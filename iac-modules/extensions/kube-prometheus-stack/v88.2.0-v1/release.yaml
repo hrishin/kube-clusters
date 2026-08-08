@@ -2,7 +2,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: kube-prometheus-stack
-  namespace: prometheus
+  namespace: monitoring
 spec:
   releaseName: kube-prometheus-stack
   chart:
@@ -12,7 +12,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: kube-prometheus-stack
-        namespace: prometheus
+        namespace: monitoring
   interval: 2m
   # CRDs are applied separately via the crds Flux Kustomization
   # (iac-modules/extensions/crds/kube-prometheus-stack/v88.2.0/) — same
@@ -32,6 +32,23 @@ spec:
     grafana:
       enabled: false
     alertmanager:
+      enabled: false
+
+    # Nebius MK8s runs the control plane outside this node pool — there's no
+    # in-cluster kube-scheduler/controller-manager/etcd static pods or
+    # matching coredns/kube-proxy Service for these to attach to. Left
+    # enabled they fail the Helm install outright (missing Service).
+    # kubeApiServer stays on — it just targets the built-in
+    # kubernetes.default.svc Service, which always exists.
+    coreDns:
+      enabled: false
+    kubeControllerManager:
+      enabled: false
+    kubeScheduler:
+      enabled: false
+    kubeProxy:
+      enabled: false
+    kubeEtcd:
       enabled: false
 
     prometheusOperator:

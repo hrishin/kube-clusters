@@ -137,7 +137,7 @@ data:
                 started_at = None
                 pod_ip = None
                 for cs in pod.status.container_statuses or []:
-                    if cs.name == "vllm" and cs.state and cs.state.running:
+                    if (cs.name == "qwen" or cs.name == "vllm") and cs.state and cs.state.running:
                         started_at = cs.state.running.started_at
                         pod_ip = pod.status.pod_ip
                 if started_at:

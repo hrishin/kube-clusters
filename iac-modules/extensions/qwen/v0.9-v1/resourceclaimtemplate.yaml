@@ -11,4 +11,4 @@ spec:
           deviceClassName: mig.nvidia.com
           selectors:
           - cel:
-              expression: "device.attributes['gpu.nvidia.com'].profile == '4g.40gb'"
+              expression: "device.attributes['gpu.nvidia.com'].profile == '4g.40gb' || device.attributes['gpu.nvidia.com'].profile == '3g.40gb'"

@@ -1,0 +1,21 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: nvidia-gpu-operator
+  namespace: gpu-operator
+spec:
+  values:
+    # Device plugin disabled — GPU exposure is handled by the DRA driver
+    # instead. The two allocation paths aren't meant to manage the same
+    # physical GPU simultaneously.
+    devicePlugin:
+      enabled: false
+    driver:
+      # Tells driver-manager which node label identifies DRA-consumer pods
+      # so it can evict them before reloading the kernel module (e.g. on a
+      # driver version upgrade). Without this it only knows how to evict
+      # classic device-plugin pods, not DRA ResourceClaim consumers.
+      manager:
+        env:
+          - name: NODE_LABEL_FOR_GPU_POD_EVICTION
+            value: nvidia.com/dra-kubelet-plugin

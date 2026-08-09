@@ -5,4 +5,3 @@ resources:
   - mig-parted-config.yaml
   - dcgm-metrics-config.yaml
   - gpu-operator-release.yaml
-  - dra-release.yaml

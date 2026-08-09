@@ -39,16 +39,6 @@ spec:
     driver:
       enabled: true
       kernelModuleType: auto
-      # Tells driver-manager which node label identifies DRA-consumer pods
-      # so it can evict them before reloading the kernel module (e.g. on a
-      # driver version upgrade). Without this it only knows how to evict
-      # classic device-plugin pods, not DRA ResourceClaim consumers — same
-      # class of gap that made mig-manager blind to the qwen pod earlier
-      # (had to scale it down manually before MIG reconfiguration).
-      manager:
-        env:
-          - name: NODE_LABEL_FOR_GPU_POD_EVICTION
-            value: nvidia.com/dra-kubelet-plugin
 
     toolkit:
       enabled: true
@@ -58,9 +48,10 @@ spec:
 
     dcgmExporter:
       # Attributes GPU metrics to the consuming pod/namespace/container.
-      # NOTE: relies on the kubelet podresources API, which classic
-      # device-plugin allocations populate — unverified whether DRA
-      # ResourceClaim allocations do too. Being tested live.
+      # Works under the classic device plugin (podresources API); under
+      # DRA it's a harmless no-op today — verified live that no pod label
+      # ever appears for a DRA-allocated device, since ResourceClaim
+      # allocations don't populate podresources.
       enablePodLabels: true
       serviceMonitor:
         enabled: true
@@ -73,13 +64,11 @@ spec:
     # Custom mig-parted config (mig-parted-config.yaml) so a node can be
     # partitioned as one 4g.40gb + one 3g.40gb instead of only the
     # single-profile "all-<profile>" options the chart ships by default.
+    # Applies regardless of which allocation flavor (DRA or device plugin)
+    # consumes the resulting slices.
     migManager:
       config:
         name: custom-mig-parted-config
-
-    # Device plugin disabled — GPU exposure is handled by the DRA driver instead
-    devicePlugin:
-      enabled: false
 
     # Tolerations applied to ALL GPU Operator DaemonSets (driver, toolkit,
     # dcgm-exporter, gpu-feature-discovery).

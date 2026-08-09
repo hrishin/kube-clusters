@@ -3,4 +3,4 @@ kind: Kustomization
 namespace: gpu-operator
 resources:
   - ../../../../../iac-modules/extensions/namespace/v1/
-  - ../../../../../iac-modules/extensions/nvidia-gpu-operator/v26.3-v1/
+  - ../../../../../iac-modules/extensions/nvidia-gpu-operator/v26.3-v1/overlays/dra/

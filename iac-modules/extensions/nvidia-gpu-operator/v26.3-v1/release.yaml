@@ -13,6 +13,18 @@ spec:
         kind: HelmRepository
         name: nvidia-gpu-operator
   interval: 2m
+  # Default 5m timeout isn't enough for the driver DaemonSet — pulling the
+  # driver image and compiling kernel modules on a fresh node routinely
+  # takes longer, which was hitting "context deadline exceeded" here.
+  # install.remediation.retries defaults to 0 (no retry), so that alone
+  # was enough to push the release straight to a terminal Stalled state.
+  timeout: 15m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   values:
     operator:
       defaultRuntime: containerd

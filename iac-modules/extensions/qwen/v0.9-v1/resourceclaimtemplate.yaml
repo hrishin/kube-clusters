@@ -8,4 +8,7 @@ spec:
       requests:
       - name: gpu
         exactly:
-          deviceClassName: gpu.nvidia.com
+          deviceClassName: mig.nvidia.com
+          selectors:
+          - cel:
+              expression: "device.attributes['gpu.nvidia.com'].profile == '4g.40gb'"

@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: custom-mig-parted-config
+data:
+  config.yaml: |
+    version: v1
+    mig-configs:
+      all-disabled:
+        - devices: all
+          mig-enabled: false
+
+      # Homogeneous single-slice options, kept from the operator's built-in
+      # default-mig-parted-config for when the whole GPU should go to one job.
+      all-4g.40gb:
+        - devices: all
+          mig-enabled: true
+          mig-devices:
+            "4g.40gb": 1
+
+      all-3g.40gb:
+        - devices: all
+          mig-enabled: true
+          mig-devices:
+            "3g.40gb": 2
+
+      all-7g.80gb:
+        - devices: all
+          mig-enabled: true
+          mig-devices:
+            "7g.80gb": 1
+
+      # H100 80GB has 7 compute slices / 8 memory slices total. 4g.40gb (4
+      # compute, 4 memory) + 3g.40gb (3 compute, 4 memory) = 7/7 compute,
+      # 8/8 memory — the whole card, split between qwen's 4g.40gb claim and
+      # one 3g.40gb slice left free for a second workload. "all-4g.40gb"
+      # alone only fits one instance and leaves the rest unpartitioned.
+      4g40gb-plus-3g40gb:
+        - devices: all
+          mig-enabled: true
+          mig-devices:
+            "4g.40gb": 1
+            "3g.40gb": 1

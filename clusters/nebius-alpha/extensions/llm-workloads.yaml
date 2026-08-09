@@ -13,10 +13,13 @@ spec:
   path: ./clusters/nebius-alpha/extensions/llm-workloads/
   prune: true
   # No wait: true — GPU nodes scale from 0 so pods may be pending for a while.
-  # dependsOn crds + llm-infra: these workloads need the LeaderWorkerSet CRD,
-  # the DRA driver (ResourceClaimTemplate support), and the LWS controller to
-  # already exist, or pod creation fails outright rather than just staying
-  # pending.
+  # dependsOn crds + llm-infra: active workloads (qwen) need the DRA driver
+  # (ResourceClaimTemplate support) already present, or pod creation fails
+  # outright rather than just staying pending. kimi (disabled, see
+  # llm-workloads/kustomization.yaml) additionally needs the LeaderWorkerSet
+  # CRD + controller, which were removed from llm-infra — restore
+  # iac-modules/extensions/lws/ and clusters/nebius-alpha/extensions/crds/
+  # before re-enabling it.
   # decryption: needed because secret-hf-token.enc.yaml lives under this
   # Kustomization's path — without this, kustomize-controller hands the raw
   # ciphertext straight to its internal kustomize build (apiVersion/kind

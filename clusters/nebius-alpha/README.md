@@ -95,12 +95,12 @@ crds  ─┬─→ infra ─→ system ─→ crs
 
 | Layer | Contains | Notes |
 |---|---|---|
-| `crds` | cert-manager, kgateway, nvidia-gpu-operator, and LWS CRDs | Applied first, everything else depends on it |
+| `crds` | cert-manager, kgateway, and nvidia-gpu-operator CRDs | Applied first, everything else depends on it |
 | `infra` | cert-manager, local-path-provisioner | Core cluster plumbing only |
-| `llm-infra` | nvidia-gpu-operator (DRA driver), LWS controller | Split out from `infra` deliberately — GPU driver install can take a long time on cold node scale-up, and nothing in `infra`/`system`/`crs` needs it, so it's not allowed to block them (`dependsOn: crds` only, no `wait: true`) |
+| `llm-infra` | nvidia-gpu-operator (DRA driver) | Split out from `infra` deliberately — GPU driver install can take a long time on cold node scale-up, and nothing in `infra`/`system`/`crs` needs it, so it's not allowed to block them (`dependsOn: crds` only, no `wait: true`) |
 | `system` | Flux itself, Grafana, kgateway, Mimir, OTel collector, Tempo, node-lifecycle-tracer | `dependsOn: infra` |
 | `crs` | cert-manager issuers/certs, kgateway routes | `dependsOn: system` |
-| `llm-workloads` | Kimi K3 (LeaderWorkerSet + SGLang), single-GPU vLLM | `dependsOn: crds, llm-infra` — needs the LeaderWorkerSet CRD and the DRA driver/LWS controller actually present before its pods can be admitted |
+| `llm-workloads` | single-GPU vLLM (Kimi K3, LeaderWorkerSet + SGLang, is disabled — see `llm-workloads/kustomization.yaml`) | `dependsOn: crds, llm-infra` — needs the DRA driver actually present before its pods can be admitted. Re-enabling Kimi also requires restoring the LWS controller/CRDs, removed from `llm-infra`/`crds` |
 
 ## Access the cluster
 
@@ -110,8 +110,7 @@ nebius mk8s cluster get-credentials --id <cluster-id> --external
 pulumi stack output cluster_endpoint
 
 kubectl get nodes
-kubectl get pods -n vllm          # Kimi K3 + vLLM workloads
-kubectl get leaderworkerset -n vllm
+kubectl get pods -n vllm          # vLLM workloads
 ```
 
 ## DNS

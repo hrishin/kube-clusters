@@ -11,3 +11,9 @@ spec:
     # reload without any extra configuration.
     devicePlugin:
       enabled: true
+    # mixed exposes each MIG profile as its own resource
+    # (nvidia.com/mig-4g.40gb, nvidia.com/mig-3g.40gb) — required for this
+    # node's heterogeneous layout. "single" only works when every instance
+    # on the node shares one profile.
+    mig:
+      strategy: mixed

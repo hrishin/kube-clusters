@@ -37,7 +37,7 @@ spec:
           value: core
           effect: NoSchedule
     driver:
-      enabled: false
+      enabled: true
       kernelModuleType: auto
 
     toolkit:

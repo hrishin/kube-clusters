@@ -43,6 +43,12 @@ spec:
         - "--gpu-memory-utilization=0.90"
         - "--port=8000"
         - "--served-model-name=qwen2.5-7b"
+        # open-webui sends tool_choice=auto by default; without these, vLLM
+        # rejects every chat request with "'auto' tool choice requires
+        # --enable-auto-tool-choice and --tool-call-parser to be set".
+        # hermes matches Qwen2.5's built-in tool-use chat template.
+        - "--enable-auto-tool-choice"
+        - "--tool-call-parser=hermes"
         - "--otlp-traces-endpoint=http://otel-collector.monitoring.svc.cluster.local:4317"
         - "--collect-detailed-traces=all"
         ports:

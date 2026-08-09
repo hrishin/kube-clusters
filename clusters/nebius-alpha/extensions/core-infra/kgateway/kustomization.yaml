@@ -6,3 +6,4 @@ resources:
   - ../../../../../iac-modules/extensions/kgateway/v2.3.0-v1/
   - gateway.yaml
   - gateway-certificate.yaml
+  - websocket-listener-policy.yaml

@@ -39,6 +39,16 @@ spec:
     driver:
       enabled: true
       kernelModuleType: auto
+      # Tells driver-manager which node label identifies DRA-consumer pods
+      # so it can evict them before reloading the kernel module (e.g. on a
+      # driver version upgrade). Without this it only knows how to evict
+      # classic device-plugin pods, not DRA ResourceClaim consumers — same
+      # class of gap that made mig-manager blind to the qwen pod earlier
+      # (had to scale it down manually before MIG reconfiguration).
+      manager:
+        env:
+          - name: NODE_LABEL_FOR_GPU_POD_EVICTION
+            value: nvidia.com/dra-kubelet-plugin
 
     toolkit:
       enabled: true

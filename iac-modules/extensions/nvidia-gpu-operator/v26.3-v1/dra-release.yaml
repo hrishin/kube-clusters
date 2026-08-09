@@ -49,8 +49,12 @@ spec:
                       - core
 
     # kubeletPlugin is a DaemonSet that must run on every GPU node to register
-    # the DRA driver with the kubelet and publish ResourceSlices.
+    # the DRA driver with the kubelet and publish ResourceSlices. Gated on
+    # the same label gpu-operator's driver.manager.env references for pod
+    # eviction, so the two stay tied to one consistent node label.
     kubeletPlugin:
+      nodeSelector:
+        nvidia.com/dra-kubelet-plugin: "true"
       tolerations:
         - key: nvidia.com/gpu
           operator: Exists

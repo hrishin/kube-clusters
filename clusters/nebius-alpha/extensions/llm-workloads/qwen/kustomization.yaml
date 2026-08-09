@@ -3,4 +3,4 @@ kind: Kustomization
 namespace: qwen
 resources:
   - ../../../../../iac-modules/extensions/namespace/v1/
-  - ../../../../../iac-modules/extensions/qwen/v0.9-v1/
+  - ../../../../../iac-modules/extensions/qwen/v0.9-v1/overlays/device-plugin/

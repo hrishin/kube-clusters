@@ -1,0 +1,15 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vllm-qwen2-5-7b
+spec:
+  template:
+    spec:
+      resourceClaims:
+      - name: gpu
+        resourceClaimTemplateName: vllm-gpu
+      containers:
+      - name: qwen
+        resources:
+          claims:
+          - name: gpu

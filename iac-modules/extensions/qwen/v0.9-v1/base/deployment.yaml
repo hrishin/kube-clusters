@@ -64,20 +64,16 @@ spec:
           value: vllm
         - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
           value: http://otel-collector.monitoring.svc.cluster.local:4317
+        # GPU allocation (DRA resourceClaims vs device-plugin extended
+        # resource) is layered on by the overlay — see overlays/dra and
+        # overlays/device-plugin.
         resources:
-          # Classic device-plugin extended resource — mig.strategy: mixed on
-          # the operator exposes each MIG profile as its own resource name.
-          # No CEL "either profile" selection like DRA had; pins to the
-          # 4g.40gb slice this workload actually runs on. Extended resources
-          # must have requests == limits.
           requests:
             cpu: "2"
             memory: "12Gi"
-            nvidia.com/mig-4g.40gb: 1
           limits:
             cpu: "4"
             memory: "14Gi"
-            nvidia.com/mig-4g.40gb: 1
         volumeMounts:
         - name: hf-cache
           mountPath: /data/huggingface

@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vllm-qwen2-5-7b
+spec:
+  template:
+    spec:
+      containers:
+      - name: qwen
+        resources:
+          # Classic device-plugin extended resource — mig.strategy: mixed on
+          # the operator exposes each MIG profile as its own resource name.
+          # No CEL "either profile" selection like DRA had; pins to the
+          # 4g.40gb slice this workload actually runs on. Extended resources
+          # must have requests == limits.
+          requests:
+            nvidia.com/mig-4g.40gb: 1
+          limits:
+            nvidia.com/mig-4g.40gb: 1

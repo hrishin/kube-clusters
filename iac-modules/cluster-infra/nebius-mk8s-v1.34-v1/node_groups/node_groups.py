@@ -43,16 +43,6 @@ def create_node_groups(
                               Switch fabric only exists for GB200/GB300 platforms via a
                               different resource (ComputeV1NvlInstanceGroup), which does
                               not apply to gpu-h100-sxm or similar Hopper-generation nodes.
-        os             str   ComputeImage OS (e.g. ubuntu24.04). Required alongside
-                              drivers_preset — Nebius pairs specific OS/preset/k8s-version
-                              combinations; check via `nebius mk8s node-group
-                              get-compatibility-matrix` before setting.
-        drivers_preset str   Bakes NVIDIA drivers into the node's ComputeImage instead of
-                              relying on the GPU Operator's driver DaemonSet post-join.
-                              Must be paired with a compatible `os` value (see above), and
-                              with driver.enabled=false + nvidiaDriverRoot=/ on the GPU
-                              Operator / DRA driver HelmReleases, or the operator installs
-                              a redundant driver and DRA looks in the wrong path.
 
     cloud_init_user_data: Optional cloud-init user-data applied to every node group
         (e.g. containerd config required by Spegel). Same content on all groups —
@@ -125,7 +115,6 @@ def create_node_groups(
                     platform=ng_cfg["platform"],
                     preset=ng_cfg["preset"],
                 ),
-                os=ng_cfg.get("os"),
                 gpu_settings=gpu_settings,
                 preemptible=preemptible,
                 gpu_cluster=gpu_cluster,

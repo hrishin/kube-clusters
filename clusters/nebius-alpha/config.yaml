@@ -51,17 +51,6 @@ node_groups:
   gpu-inference:
     platform: gpu-l40s-d
     preset: 1gpu-32vcpu-192gb
-    # Drivers baked into the node's ComputeImage instead of installed by the
-    # GPU Operator's driver DaemonSet after node join — cuts node-ready-to-
-    # GPU-usable time. Only valid pairing for gpu-l40s-d + k8s 1.34, confirmed
-    # via `nebius mk8s node-group get-compatibility-matrix
-    # --cluster-kubernetes-version 1.34 --platform gpu-l40s-d`. Must be
-    # matched by driver.enabled=false + nvidiaDriverRoot=/ in the GPU
-    # Operator / DRA driver HelmReleases (see nebius-alpha's
-    # nvidia-gpu-operator kustomization patch) or the operator will try to
-    # install a redundant driver and DRA will look in the wrong path.
-    os: ubuntu24.04
-    drivers_preset: cuda13.0
     desired_size: 1
     min_size: 1
     max_size: 4

@@ -57,8 +57,18 @@ spec:
       enabled: true
 
     dcgmExporter:
+      # Attributes GPU metrics to the consuming pod/namespace/container.
+      # NOTE: relies on the kubelet podresources API, which classic
+      # device-plugin allocations populate — unverified whether DRA
+      # ResourceClaim allocations do too. Being tested live.
+      enablePodLabels: true
       serviceMonitor:
         enabled: true
+      # Operator's baked-in dcp-metrics-included.csv omits XID/ECC/thermal
+      # and power violation fields — the ones an SLO actually pages on.
+      # dcgm-metrics-config.yaml is a superset that adds them back.
+      config:
+        name: custom-dcgm-metrics
 
     # Custom mig-parted config (mig-parted-config.yaml) so a node can be
     # partitioned as one 4g.40gb + one 3g.40gb instead of only the

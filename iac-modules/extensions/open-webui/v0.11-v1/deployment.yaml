@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: open-webui
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: open-webui
+  template:
+    metadata:
+      labels:
+        app: open-webui
+    spec:
+      nodeSelector:
+        node-type: core
+      tolerations:
+        - key: node-type
+          operator: Equal
+          value: core
+          effect: NoSchedule
+      containers:
+        - name: open-webui
+          image: ghcr.io/open-webui/open-webui:v0.11.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          env:
+            # Qwen is served through the /qwen HTTPRoute (see the qwen module),
+            # which exposes vLLM's OpenAI-compatible API under /qwen/v1.
+            - name: OPENAI_API_BASE_URL
+              value: https://cluster1.eu-north-1.kube.nebius.hrishi.dev/qwen/v1
+            # vLLM isn't started with --api-key, so it accepts any bearer token —
+            # open-webui just needs a non-empty value here.
+            - name: OPENAI_API_KEY
+              value: not-needed
+            - name: WEBUI_NAME
+              value: Qwen Chat
+          volumeMounts:
+            - name: data
+              mountPath: /app/backend/data
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "1"
+              memory: "1Gi"
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 6
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 5
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: open-webui-data

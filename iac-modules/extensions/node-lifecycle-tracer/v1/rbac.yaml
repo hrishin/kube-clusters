@@ -29,4 +29,3 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: node-lifecycle-tracer
-    namespace: monitoring

@@ -1,8 +1,9 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: monitoring
+namespace: grafana
 resources:
   - ../../../../../iac-modules/extensions/namespace/v1/
+  - ../../../../../iac-modules/extensions/mimir/v2.14.0-v1/
   - ../../../../../iac-modules/extensions/grafana/v11.0.0-v1/
 patches:
   - patch: |
@@ -12,3 +13,38 @@ patches:
     target:
       kind: HelmRelease
       name: grafana
+  # mimir and grafana modules each vendor their own HelmRepository named
+  # "grafana" (same grafana.github.io/helm-charts URL), hardcoded to the
+  # namespace they use standalone on other clusters (mimir, monitoring).
+  # Colocating them here means both would land in namespace "grafana" as
+  # the same resource ID, so mimir's copy is renamed to avoid the clash —
+  # one shared HelmRepository is enough for both charts either way.
+  - patch: |
+      - op: replace
+        path: /metadata/name
+        value: mimir-charts
+    target:
+      kind: HelmRepository
+      namespace: mimir
+      name: grafana
+  # Kustomize's namespace transformer only rewrites each resource's own
+  # metadata.namespace, not the sourceRef cross-reference below, so both
+  # HelmReleases need it patched to match where things actually land here.
+  - patch: |
+      - op: replace
+        path: /spec/chart/spec/sourceRef/namespace
+        value: grafana
+    target:
+      kind: HelmRelease
+      name: grafana
+  - patch: |
+      - op: replace
+        path: /spec/chart/spec/sourceRef
+        value:
+          kind: HelmRepository
+          name: mimir-charts
+          namespace: grafana
+    target:
+      kind: HelmRelease
+      name: mimir
+

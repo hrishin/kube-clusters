@@ -23,9 +23,12 @@ spec:
     # standard GPU device plugin (guarded by chart validation until KEP-5004 GA).
     gpuResourcesEnabledOverride: true
 
-    # GPU Operator installs the driver at /run/nvidia/driver (driverInstallDir default).
-    # The DRA driver reads device information from the same path via CDI.
-    nvidiaDriverRoot: /run/nvidia/driver
+    # Driver is pre-installed on the host (gpu-operator-release.yaml sets
+    # driver.enabled: false), so it lives at host root — not the GPU
+    # Operator-managed /run/nvidia/driver path used when the operator
+    # installs the driver itself. DRA driver reads device info via CDI
+    # from this root.
+    nvidiaDriverRoot: /
 
     # Controller is a Deployment — run it on core nodes alongside the operator.
     # affinity overrides the chart's default requiredAffinity for control-plane

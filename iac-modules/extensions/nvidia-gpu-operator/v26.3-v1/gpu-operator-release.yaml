@@ -37,7 +37,7 @@ spec:
           value: core
           effect: NoSchedule
     driver:
-      enabled: true
+      enabled: false
       kernelModuleType: auto
 
     toolkit:
@@ -45,6 +45,10 @@ spec:
 
     nfd:
       enabled: true
+
+    dcgmExporter:
+      serviceMonitor:
+        enabled: true
 
     # Device plugin disabled — GPU exposure is handled by the DRA driver instead
     devicePlugin:

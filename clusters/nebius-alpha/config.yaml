@@ -31,21 +31,21 @@ node_groups:
       workload: system
       environment: production
 
-  mimir:
-    platform: cpu-d3
-    preset: 16vcpu-64gb
-    desired_size: 1
-    min_size: 1
-    max_size: 3
-    preemptible: false
-    labels:
-      node-type: mimir
-      workload: monitoring
-      environment: production
-    taints:
-      - key: node-type
-        value: mimir
-        effect: NoSchedule
+  # mimir:
+  #   platform: cpu-d3
+  #   preset: 16vcpu-64gb
+  #   desired_size: 1
+  #   min_size: 1
+  #   max_size: 3
+  #   preemptible: false
+  #   labels:
+  #     node-type: mimir
+  #     workload: monitoring
+  #     environment: production
+  #   taints:
+  #     - key: node-type
+  #       value: mimir
+  #       effect: NoSchedule
 
 
   gpu-inference:

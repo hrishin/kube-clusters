@@ -7,16 +7,16 @@ spec:
     - name: main-gateway
       namespace: kgateway-system
   rules:
+    # Open WebUI's frontend assets (/_app/..., /static/..., /manifest.json) are
+    # referenced with root-absolute paths and don't support being served from
+    # a subpath (https://github.com/open-webui/open-webui/discussions/25797),
+    # so this claims the gateway root. More specific routes (e.g. qwen's
+    # /qwen prefix) still take precedence per Gateway API path-match
+    # specificity rules.
     - matches:
         - path:
             type: PathPrefix
-            value: /chat
-      filters:
-        - type: URLRewrite
-          urlRewrite:
-            path:
-              type: ReplacePrefixMatch
-              replacePrefixMatch: /
+            value: /
       backendRefs:
         - name: open-webui
           port: 8080

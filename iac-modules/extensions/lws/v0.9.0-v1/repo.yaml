@@ -1,9 +1,0 @@
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
-metadata:
-  name: lws
-  namespace: lws-system
-spec:
-  type: oci
-  interval: 20m
-  url: oci://registry.k8s.io/lws/charts/lws

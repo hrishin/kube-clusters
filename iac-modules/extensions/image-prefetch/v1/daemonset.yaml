@@ -33,4 +33,22 @@ spec:
             limits:
               cpu: 50m
               memory: 64Mi
+        - name: gpu-operator
+          # Keep in sync with chart.spec.version in
+          # iac-modules/extensions/nvidia-gpu-operator/v26.3-v1/base/gpu-operator-release.yaml.
+          # The gpu-operator controller itself runs on core nodes too (see
+          # operator.nodeSelector in that HelmRelease), and its image is what
+          # dominated node-ready-to-device-plugin-initialized on a fresh
+          # node — the controller can't create the driver/toolkit/device-plugin
+          # DaemonSets until its own pod finishes pulling nvcr.io/nvidia/gpu-operator,
+          # which took ~5.5min from cold on nvcr.io with nothing cached yet.
+          image: nvcr.io/nvidia/gpu-operator:v26.3.3
+          command: ["sleep", "infinity"]
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              cpu: 50m
+              memory: 64Mi
       terminationGracePeriodSeconds: 5

@@ -87,14 +87,22 @@ data:
         raise TimeoutError("Timed out waiting for node Ready")
 
 
-    def wait_dra_driver_ready(v1, node_name: str, deadline: float) -> datetime:
-        """Wait for nvidia-dra-driver-gpu-kubelet-plugin pod to be Ready on this node."""
-        selectors = [
+    def wait_gpu_runtime_ready(v1, node_name: str, deadline: float) -> tuple[datetime, str]:
+        """Wait for this node's GPU allocation mechanism to come up, whichever
+        flavor gpu-operator is running here — DRA kubelet plugin (+
+        ResourceSlice) or the classic device plugin. Both are checked every
+        poll rather than picked upfront: node labels like
+        nvidia.com/dra-kubelet-plugin describe node-group/eviction wiring,
+        not which flavor is actually deployed, so they aren't a reliable
+        signal of which one to wait for.
+        Returns (ready_time, flavor) where flavor is "dra" or "device-plugin",
+        so callers can name spans after whichever one was actually seen."""
+        dra_selectors = [
             "app=nvidia-dra-driver-gpu-kubelet-plugin",
             "app.kubernetes.io/name=nvidia-dra-driver-gpu",
         ]
         while time.time() < deadline:
-            for sel in selectors:
+            for sel in dra_selectors:
                 pods = v1.list_pod_for_all_namespaces(
                     label_selector=sel,
                     field_selector=f"spec.nodeName={node_name}",
@@ -103,7 +111,7 @@ data:
                     for cond in pod.status.conditions or []:
                         if cond.type == "Ready" and cond.status == "True":
                             log.info(f"DRA driver ready at {cond.last_transition_time} ({pod.metadata.name})")
-                            return cond.last_transition_time
+                            return cond.last_transition_time, "dra"
             # fallback: ResourceSlice exists for this node
             try:
                 ra = k8s.CustomObjectsApi()
@@ -114,12 +122,23 @@ data:
                 if slices.get("items"):
                     t = datetime.now(timezone.utc)
                     log.info(f"ResourceSlice appeared at {t}")
-                    return t
+                    return t, "dra"
             except Exception:
                 pass
-            log.info("Waiting for DRA driver / ResourceSlice...")
+            # classic device plugin: its daemonset pod goes Ready on this
+            # node once it's registered GPU/MIG resources with kubelet
+            pods = v1.list_pod_for_all_namespaces(
+                label_selector="app=nvidia-device-plugin-daemonset",
+                field_selector=f"spec.nodeName={node_name}",
+            ).items
+            for pod in pods:
+                for cond in pod.status.conditions or []:
+                    if cond.type == "Ready" and cond.status == "True":
+                        log.info(f"Device plugin ready at {cond.last_transition_time} ({pod.metadata.name})")
+                        return cond.last_transition_time, "device-plugin"
+            log.info("Waiting for DRA driver / ResourceSlice / device plugin...")
             time.sleep(POLL)
-        raise TimeoutError("Timed out waiting for DRA driver")
+        raise TimeoutError("Timed out waiting for GPU runtime (DRA driver or device plugin)")
 
 
     def get_image_pull_times(v1, pod):
@@ -419,7 +438,7 @@ data:
         instance_type = node.metadata.labels.get("node.kubernetes.io/instance-type", "unknown")
         workload = node.metadata.labels.get("workload", "inference")
 
-        dra_ready = wait_dra_driver_ready(v1, node_name, deadline)
+        gpu_runtime_ready, gpu_runtime = wait_gpu_runtime_ready(v1, node_name, deadline)
 
         extra_attrs = {}
         if workload == "inference-nvlink":
@@ -436,8 +455,8 @@ data:
         spans = [
             ("node-launch-to-k8s-registered",          launch_time,    node_created,    {"phase": "infrastructure", "description": "userdata, kubelet start"}),
             ("k8s-registered-to-node-ready",           node_created,   ready_time,      {"phase": "kubelet",        "description": "CNI, kube-proxy, node conditions"}),
-            ("node-ready-to-nvidia-initialized",       ready_time,     dra_ready,       {"phase": "gpu-operator",   "description": "NVIDIA driver install, DRA kubelet plugin"}),
-            (f"nvidia-initialized-to-{app}-scheduled", dra_ready,      app_scheduled,   {"phase": "scheduler",      "description": "DRA ResourceClaim binding, pod placement"}),
+            (f"node-ready-to-{gpu_runtime}-initialized",       ready_time,        gpu_runtime_ready, {"phase": "gpu-operator", "description": "NVIDIA driver install, " + ("DRA kubelet plugin" if gpu_runtime == "dra" else "device plugin")}),
+            (f"{gpu_runtime}-initialized-to-{app}-scheduled",  gpu_runtime_ready, app_scheduled,     {"phase": "scheduler",    "description": ("DRA ResourceClaim binding, pod placement" if gpu_runtime == "dra" else "device-plugin resource allocation, pod placement")}),
             (f"{app}-scheduled-to-image-pull-start",   app_scheduled,  pull_start,      {"phase": "runtime",        "description": "kubelet queues the image pull after scheduling"}),
             (f"{app}-image-pull",                      pull_start,     pull_complete,   {"phase": "runtime",        "description": "image pull time"}),
             (f"{app}-image-pull-to-container-start",   pull_complete,  app_started,     {"phase": "runtime",        "description": "container creation after image pull"}),
@@ -449,6 +468,7 @@ data:
             "node.instance_type": instance_type,
             "workload": workload,
             "app": app,
+            "gpu.runtime": gpu_runtime,
             **extra_attrs,
         }, spans)
         provider.force_flush(timeout_millis=10_000)

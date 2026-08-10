@@ -66,10 +66,6 @@ spec:
               value: "http://otel-collector.monitoring.svc.cluster.local:4317"
             - name: OTEL_SERVICE_NAME
               value: "node-lifecycle-tracer"
-            - name: VLLM_SERVICE_URL
-              value: "http://vllm-qwen2-5-7b.vllm.svc.cluster.local:8000"
-            - name: KIMI_SERVICE_URL
-              value: "http://kimi-k3.vllm.svc.cluster.local:30000"
             - name: PYTHONPATH
               value: "/deps"
           resources:

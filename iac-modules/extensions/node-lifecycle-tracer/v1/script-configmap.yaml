@@ -21,16 +21,23 @@ data:
     leader pod ever binds an HTTP server — SGLang doesn't start one on worker
     ranks (see iac-modules/extensions/kimi/vk3-v1/leadeworkerset.yaml). So
     "model ready" for a node running a WORKER pod can't be determined from
-    that pod alone: it's polled via the leader's stable Service instead,
-    since the whole 4-node NCCL/rendezvous group has to complete before the
-    leader's /health goes green — which is the actual "this group can serve
-    requests" signal regardless of which node you're tracing from.
+    that pod alone: it's read off the leader pod's own Ready condition
+    instead, since the whole 4-node NCCL/rendezvous group has to complete
+    before the leader's readinessProbe (also /health) goes green — which is
+    the actual "this group can serve requests" signal regardless of which
+    node you're tracing from.
+
+    "Model ready" timestamps (vLLM, Kimi leader) are read from the pod's own
+    Ready condition rather than polled directly by this script: both already
+    carry an HTTP readinessProbe against /health, so kubelet has already
+    recorded the real transition time. Re-polling here would instead record
+    "ready" as merely the moment THIS script got around to checking — wrong
+    (too late, sometimes wildly so) whenever this DaemonSet pod itself
+    starts, restarts, or gets rescheduled after the app is already healthy.
 
     Uses IMDS for EC2 launch time (no IAM needed; falls back to node creation
     time if IMDS is unavailable, e.g. on non-AWS clouds). Polls node/pod
-    conditions via in-cluster K8s API. Polls the leader pod IP directly where
-    possible to avoid hitting a stale pod via ClusterIP during rolling
-    replacement.
+    conditions via in-cluster K8s API.
     """
 
     import logging
@@ -160,7 +167,7 @@ data:
 
     def wait_vllm_on_node(v1, node_name: str, deadline: float):
         """Wait for a vLLM pod to be scheduled AND running on this specific node.
-        Returns (scheduled_at, pull_start, pull_complete, started_at, pod_ip, pod_uid)."""
+        Returns (scheduled_at, pull_start, pull_complete, started_at, pod, pod_uid)."""
         while time.time() < deadline:
             pods = v1.list_pod_for_all_namespaces(
                 label_selector="app=vllm-qwen2-5-7b",
@@ -172,15 +179,13 @@ data:
                     if cond.type == "PodScheduled":
                         scheduled_at = cond.last_transition_time
                 started_at = None
-                pod_ip = None
                 for cs in pod.status.container_statuses or []:
                     if (cs.name == "qwen" or cs.name == "vllm") and cs.state and cs.state.running:
                         started_at = cs.state.running.started_at
-                        pod_ip = pod.status.pod_ip
                 if started_at:
                     pull_start, pull_complete = get_image_pull_times(v1, pod)
-                    log.info(f"vLLM container started at {started_at}, pod IP {pod_ip}")
-                    return scheduled_at, pull_start, pull_complete, started_at, pod_ip, pod.metadata.uid
+                    log.info(f"vLLM container started at {started_at} ({pod.metadata.name})")
+                    return scheduled_at, pull_start, pull_complete, started_at, pod, pod.metadata.uid
                 if scheduled_at:
                     log.info(f"vLLM scheduled at {scheduled_at}, waiting for container start...")
             log.info("Waiting for vLLM pod on this node...")
@@ -188,20 +193,31 @@ data:
         raise TimeoutError("Timed out waiting for vLLM pod on this node")
 
 
-    def wait_vllm_health(pod_ip: str, deadline: float) -> tuple[datetime, datetime]:
-        """Poll vLLM pod IP directly (not ClusterIP) to avoid hitting old pod."""
-        poll_start = datetime.now(timezone.utc)
-        url = f"http://{pod_ip}:8000/health"
+    def pod_ready_time(v1, namespace: str, name: str):
+        """The Ready condition's lastTransitionTime, or None if not Ready
+        (or the pod is gone — a rollout may have already replaced it)."""
+        try:
+            pod = v1.read_namespaced_pod(name, namespace)
+        except k8s.exceptions.ApiException as e:
+            if e.status == 404:
+                return None
+            raise
+        for cond in pod.status.conditions or []:
+            if cond.type == "Ready" and cond.status == "True":
+                return cond.last_transition_time
+        return None
+
+
+    def wait_vllm_health(v1, pod, deadline: float) -> datetime:
+        """vLLM carries a readinessProbe against /health (see
+        iac-modules/extensions/qwen's deployment.yaml) — read kubelet's own
+        record of when that started passing instead of polling ourselves."""
         while time.time() < deadline:
-            try:
-                r = requests.get(url, timeout=5)
-                if r.status_code == 200:
-                    ready = datetime.now(timezone.utc)
-                    log.info(f"vLLM /health OK at {ready}")
-                    return poll_start, ready
-            except Exception:
-                pass
-            log.info(f"Waiting for vLLM health at {url}...")
+            ready = pod_ready_time(v1, pod.metadata.namespace, pod.metadata.name)
+            if ready:
+                log.info(f"vLLM Ready at {ready} ({pod.metadata.name})")
+                return ready
+            log.info(f"Waiting for vLLM pod {pod.metadata.name} to become Ready...")
             time.sleep(POLL)
         raise TimeoutError("Timed out waiting for vLLM health")
 
@@ -209,7 +225,7 @@ data:
     def wait_kimi_pod_on_node(v1, node_name: str, deadline: float):
         """Wait for a kimi-k3 pod (leader OR worker) to be scheduled AND running
         on this specific node.
-        Returns (scheduled_at, pull_start, pull_complete, started_at, pod_ip, role, pod_uid)."""
+        Returns (scheduled_at, pull_start, pull_complete, started_at, pod, role, pod_uid)."""
         while time.time() < deadline:
             pods = v1.list_pod_for_all_namespaces(
                 label_selector="app=kimi-k3",
@@ -222,15 +238,13 @@ data:
                     if cond.type == "PodScheduled":
                         scheduled_at = cond.last_transition_time
                 started_at = None
-                pod_ip = None
                 for cs in pod.status.container_statuses or []:
                     if cs.name == "sglang" and cs.state and cs.state.running:
                         started_at = cs.state.running.started_at
-                        pod_ip = pod.status.pod_ip
                 if started_at:
                     pull_start, pull_complete = get_image_pull_times(v1, pod)
-                    log.info(f"Kimi K3 ({role}) container started at {started_at}, pod IP {pod_ip}")
-                    return scheduled_at, pull_start, pull_complete, started_at, pod_ip, role, pod.metadata.uid
+                    log.info(f"Kimi K3 ({role}) container started at {started_at} ({pod.metadata.name})")
+                    return scheduled_at, pull_start, pull_complete, started_at, pod, role, pod.metadata.uid
                 if scheduled_at:
                     log.info(f"Kimi K3 ({role}) scheduled at {scheduled_at}, waiting for container start...")
             log.info("Waiting for kimi-k3 pod on this node...")
@@ -238,44 +252,53 @@ data:
         raise TimeoutError("Timed out waiting for kimi-k3 pod on this node")
 
 
-    def wait_kimi_ready(pod_ip: str, role: str, kimi_service_url: str, deadline: float) -> tuple[datetime, datetime]:
+    def wait_kimi_ready(v1, pod, role: str, deadline: float) -> datetime:
         """
-        Leader: poll its own pod IP directly (same rationale as vLLM — avoid a
-        stale pod behind the ClusterIP during rolling replacement).
-        Worker: workers never serve HTTP, so a worker's own "ready" can only be
-        the group's leader becoming ready — poll the stable Service instead,
-        which always selects role=leader regardless of which node hosts it.
+        Leader: it carries a readinessProbe against /health (same rationale
+        as vLLM) — read kubelet's own record of when that started passing.
+        Worker: a worker's own readinessProbe is just `pgrep sglang` (SGLang
+        never starts an HTTP server on worker ranks), so it does NOT mean the
+        group can serve requests — that can only be read off the LEADER's
+        Ready condition. Look the current leader pod up by label rather than
+        going through the Service, so a rolling replacement can't land on a
+        stale pod behind the ClusterIP.
         """
-        poll_start = datetime.now(timezone.utc)
-        url = f"http://{pod_ip}:30000/health" if role == "leader" else f"{kimi_service_url}/health"
         while time.time() < deadline:
-            try:
-                r = requests.get(url, timeout=5)
-                if r.status_code == 200:
-                    ready = datetime.now(timezone.utc)
-                    log.info(f"Kimi K3 /health OK at {ready} (via {url})")
-                    return poll_start, ready
-            except Exception:
-                pass
-            log.info(f"Waiting for kimi-k3 health at {url}...")
+            if role == "leader":
+                ready = pod_ready_time(v1, pod.metadata.namespace, pod.metadata.name)
+            else:
+                ready = None
+                leaders = v1.list_namespaced_pod(
+                    pod.metadata.namespace,
+                    label_selector="app=kimi-k3,role=leader",
+                ).items
+                for leader in leaders:
+                    for cond in leader.status.conditions or []:
+                        if cond.type == "Ready" and cond.status == "True":
+                            ready = cond.last_transition_time
+                            break
+            if ready:
+                log.info(f"Kimi K3 ({role}) group ready at {ready}")
+                return ready
+            log.info(f"Waiting for kimi-k3 ({role}) group readiness...")
             time.sleep(POLL)
         raise TimeoutError("Timed out waiting for kimi-k3 health")
 
 
     def container_state(pod, container_name: str):
-        """(started_at, pod_ip, restart_count) for the named container, or
-        (None, None, restart_count) if it isn't running right now."""
+        """(started_at, restart_count) for the named container, or
+        (None, restart_count) if it isn't running right now."""
         restart_count = 0
         for cs in pod.status.container_statuses or []:
             if cs.name == container_name:
                 restart_count = cs.restart_count
                 if cs.state and cs.state.running:
-                    return cs.state.running.started_at, pod.status.pod_ip, restart_count
-        return None, None, restart_count
+                    return cs.state.running.started_at, restart_count
+        return None, restart_count
 
 
     def trace_one_start(tracer, v1, node_name: str, app: str, pod, started_at,
-                         pod_ip: str, restart_count: int, is_new_pod: bool,
+                         restart_count: int, is_new_pod: bool,
                          health_check, extra_attrs: dict):
         """Build and emit a single trace for one observed container start —
         either a brand-new pod (a Deployment/LWS rollout) or a restart of an
@@ -291,7 +314,7 @@ data:
 
         deadline = time.time() + TIMEOUT
         try:
-            _, ready = health_check(pod_ip, deadline)
+            ready = health_check(pod, deadline)
         except TimeoutError:
             log.warning(f"{app} on {pod.metadata.name} did not become healthy after "
                         f"{'start' if is_new_pod else 'restart'}; skipping trace for this event")
@@ -332,7 +355,7 @@ data:
                     field_selector=f"spec.nodeName={node_name}",
                 ).items
                 for pod in pods:
-                    started_at, pod_ip, restart_count = container_state(pod, "qwen")
+                    started_at, restart_count = container_state(pod, "qwen")
                     if started_at is None:
                         continue
                     uid = pod.metadata.uid
@@ -342,15 +365,16 @@ data:
                     is_new_pod = uid not in seen
                     seen[uid] = key
                     trace_one_start(
-                        tracer, v1, node_name, "vllm", pod, started_at, pod_ip,
-                        restart_count, is_new_pod, wait_vllm_health, {},
+                        tracer, v1, node_name, "vllm", pod, started_at,
+                        restart_count, is_new_pod,
+                        lambda p, dl: wait_vllm_health(v1, p, dl), {},
                     )
             except Exception:
                 log.exception("Error while watching for vLLM pod restarts")
             time.sleep(POLL)
 
 
-    def watch_kimi_lifecycle(tracer, v1, node_name: str, kimi_service_url: str, seen: dict):
+    def watch_kimi_lifecycle(tracer, v1, node_name: str, seen: dict):
         """Same as watch_vllm_lifecycle, for the kimi-k3 LeaderWorkerSet."""
         while True:
             try:
@@ -359,7 +383,7 @@ data:
                     field_selector=f"spec.nodeName={node_name}",
                 ).items
                 for pod in pods:
-                    started_at, pod_ip, restart_count = container_state(pod, "sglang")
+                    started_at, restart_count = container_state(pod, "sglang")
                     if started_at is None:
                         continue
                     uid = pod.metadata.uid
@@ -369,9 +393,9 @@ data:
                     is_new_pod = uid not in seen
                     seen[uid] = key
                     role = pod.metadata.labels.get("role", "unknown")
-                    health_check = lambda ip, dl, role=role: wait_kimi_ready(ip, role, kimi_service_url, dl)
+                    health_check = lambda p, dl, role=role: wait_kimi_ready(v1, p, role, dl)
                     trace_one_start(
-                        tracer, v1, node_name, "kimi-k3", pod, started_at, pod_ip,
+                        tracer, v1, node_name, "kimi-k3", pod, started_at,
                         restart_count, is_new_pod, health_check, {"kimi.role": role},
                     )
             except Exception:
@@ -443,14 +467,13 @@ data:
         extra_attrs = {}
         if workload == "inference-nvlink":
             app = "kimi-k3"
-            kimi_service_url = os.environ.get("KIMI_SERVICE_URL", "http://kimi-k3.vllm.svc.cluster.local:30000")
-            app_scheduled, pull_start, pull_complete, app_started, pod_ip, role, first_pod_uid = wait_kimi_pod_on_node(v1, node_name, deadline)
-            _, app_ready = wait_kimi_ready(pod_ip, role, kimi_service_url, deadline)
+            app_scheduled, pull_start, pull_complete, app_started, app_pod, role, first_pod_uid = wait_kimi_pod_on_node(v1, node_name, deadline)
+            app_ready = wait_kimi_ready(v1, app_pod, role, deadline)
             extra_attrs["kimi.role"] = role
         else:
             app = "vllm"
-            app_scheduled, pull_start, pull_complete, app_started, pod_ip, first_pod_uid = wait_vllm_on_node(v1, node_name, deadline)
-            _, app_ready = wait_vllm_health(pod_ip, deadline)
+            app_scheduled, pull_start, pull_complete, app_started, app_pod, first_pod_uid = wait_vllm_on_node(v1, node_name, deadline)
+            app_ready = wait_vllm_health(v1, app_pod, deadline)
 
         spans = [
             ("node-launch-to-k8s-registered",          launch_time,    node_created,    {"phase": "infrastructure", "description": "userdata, kubelet start"}),
@@ -485,7 +508,7 @@ data:
         seen = {first_pod_uid: str(app_started)}
         log.info("Watching for further vLLM/Kimi pod rollouts and restarts on this node...")
         if workload == "inference-nvlink":
-            watch_kimi_lifecycle(tracer, v1, node_name, kimi_service_url, seen)
+            watch_kimi_lifecycle(tracer, v1, node_name, seen)
         else:
             watch_vllm_lifecycle(tracer, v1, node_name, seen)
 

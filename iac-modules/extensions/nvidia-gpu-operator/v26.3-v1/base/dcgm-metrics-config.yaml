@@ -45,7 +45,16 @@ data:
 
     # Errors and violations — MISSING from the operator's default set.
     # Alert on any of these being non-zero; see the Operations SLO section.
-    DCGM_FI_DEV_XID_ERRORS,         gauge, Value of the last XID error encountered.
+    #
+    # DCGM_FI_DEV_XID_ERRORS is a gauge holding the LAST XID seen — verified
+    # live against the running exporter: when no XID has fired, this series
+    # doesn't exist at all (not 0), so `> 0` alerting has nothing to compare
+    # against. DCGM_EXP_XID_ERRORS_COUNT is dcgm-exporter's own derived
+    # counter for exactly this gap (commented out in its default-counters.csv):
+    # it only creates a series once an XID actually fires, so alert on
+    # increase(DCGM_EXP_XID_ERRORS_COUNT[5m]) > 0 instead.
+    DCGM_FI_DEV_XID_ERRORS,         gauge,   Value of the last XID error encountered.
+    DCGM_EXP_XID_ERRORS_COUNT,      counter, Number of XID errors reported during the last window.
     DCGM_FI_DEV_ECC_SBE_VOL_TOTAL,  counter, Total number of single-bit (correctable) volatile ECC errors.
     DCGM_FI_DEV_ECC_DBE_VOL_TOTAL,  counter, Total number of double-bit (uncorrectable) volatile ECC errors.
     DCGM_FI_DEV_THERMAL_VIOLATION,  counter, Number of microseconds spent thermal-throttled.

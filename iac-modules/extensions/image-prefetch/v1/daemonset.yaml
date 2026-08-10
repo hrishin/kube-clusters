@@ -43,7 +43,11 @@ spec:
           # DaemonSets until its own pod finishes pulling nvcr.io/nvidia/gpu-operator,
           # which took ~5.5min from cold on nvcr.io with nothing cached yet.
           image: nvcr.io/nvidia/gpu-operator:v26.3.3
-          command: ["sleep", "infinity"]
+          # Unlike vllm-openai's GNU coreutils, this image's `sleep` is a
+          # BusyBox applet that doesn't understand "infinity" — it silently
+          # treats it as 0 and exits immediately, crash-looping forever.
+          # Loop a bounded sleep instead, which works on any sleep impl.
+          command: ["sh", "-c", "while true; do sleep 3600; done"]
           resources:
             requests:
               cpu: 10m

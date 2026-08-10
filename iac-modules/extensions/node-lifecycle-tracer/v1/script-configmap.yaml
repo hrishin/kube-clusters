@@ -119,15 +119,18 @@ data:
                         if cond.type == "Ready" and cond.status == "True":
                             log.info(f"DRA driver ready at {cond.last_transition_time} ({pod.metadata.name})")
                             return cond.last_transition_time, "dra"
-            # fallback: ResourceSlice exists for this node
+            # fallback: ResourceSlice exists for this node. Use its own
+            # creationTimestamp (a real historical event kubernetes already
+            # recorded), not datetime.now() — "now" would suffer the exact
+            # late-poll bug described above whenever this tracer starts late.
             try:
                 ra = k8s.CustomObjectsApi()
                 slices = ra.list_cluster_custom_object(
                     "resource.k8s.io", "v1", "resourceslices",
                     label_selector=f"resource.k8s.io/node-name={node_name}",
-                )
-                if slices.get("items"):
-                    t = datetime.now(timezone.utc)
+                ).get("items", [])
+                if slices:
+                    t = min(s["metadata"]["creationTimestamp"] for s in slices)
                     log.info(f"ResourceSlice appeared at {t}")
                     return t, "dra"
             except Exception:

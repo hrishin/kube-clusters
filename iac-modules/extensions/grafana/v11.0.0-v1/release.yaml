@@ -27,6 +27,19 @@ spec:
       GF_SERVER_ROOT_URL: "https://${NLB_DNS}/grafana"
       GF_SERVER_SERVE_FROM_SUB_PATH: "true"
 
+    # Dashboards are shipped as ConfigMaps (label grafana_dashboard: "1")
+    # co-located with the app they monitor, e.g.
+    # iac-modules/extensions/spegel/v0.7.4-v1/grafana-dashboard.yaml. The
+    # sidecar watches every namespace so a dashboard doesn't have to live in
+    # `monitoring` to be picked up; rbac.create (default true) already
+    # covers the ClusterRole this needs.
+    sidecar:
+      dashboards:
+        enabled: true
+        label: grafana_dashboard
+        labelValue: "1"
+        searchNamespace: ALL
+
     datasources:
       datasources.yaml:
         apiVersion: 1

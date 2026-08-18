@@ -4,3 +4,4 @@ resources:
   - repo.yaml
   - release.yaml
   - servicemonitor.yaml
+  - grafana-dashboard.yaml

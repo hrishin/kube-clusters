@@ -1,0 +1,202 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: spegel-grafana-dashboard
+  labels:
+    grafana_dashboard: "1"
+data:
+  spegel.json: |
+    {
+      "uid": "spegel-mirror",
+      "title": "Spegel",
+      "tags": ["spegel", "image-prefetch"],
+      "timezone": "utc",
+      "schemaVersion": 39,
+      "version": 1,
+      "editable": true,
+      "time": { "from": "now-6h", "to": "now" },
+      "refresh": "30s",
+      "templating": {
+        "list": [
+          {
+            "name": "DS_MIMIR",
+            "type": "datasource",
+            "query": "prometheus",
+            "current": { "text": "Mimir", "value": "Mimir" }
+          },
+          {
+            "name": "cluster",
+            "type": "query",
+            "datasource": { "type": "prometheus", "uid": "${DS_MIMIR}" },
+            "query": "label_values(spegel_mirror_requests_total, cluster)",
+            "refresh": 2,
+            "includeAll": false
+          },
+          {
+            "name": "registry",
+            "type": "query",
+            "datasource": { "type": "prometheus", "uid": "${DS_MIMIR}" },
+            "query": "label_values(spegel_mirror_requests_total{cluster=\"$cluster\"}, registry)",
+            "refresh": 2,
+            "includeAll": true,
+            "multi": true,
+            "current": { "text": "All", "value": "$__all" }
+          }
+        ]
+      },
+      "panels": [
+        {
+          "id": 1,
+          "type": "row",
+          "title": "Mirror cache effectiveness",
+          "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 }
+        },
+        {
+          "id": 2,
+          "type": "timeseries",
+          "title": "Mirror request rate by cache result",
+          "description": "spegel_mirror_requests_total — a P2P miss falls through to the origin registry.",
+          "datasource": { "type": "prometheus", "uid": "${DS_MIMIR}" },
+          "gridPos": { "h": 8, "w": 16, "x": 0, "y": 1 },
+          "fieldConfig": { "defaults": { "unit": "reqps", "custom": { "fillOpacity": 20, "stacking": { "mode": "normal" } } }, "overrides": [] },
+          "targets": [
+            {
+              "expr": "sum by (cache) (rate(spegel_mirror_requests_total{cluster=\"$cluster\", registry=~\"$registry\"}[5m]))",
+              "legendFormat": "{{cache}}"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "type": "stat",
+          "title": "Cache hit ratio",
+          "datasource": { "type": "prometheus", "uid": "${DS_MIMIR}" },
+          "gridPos": { "h": 8, "w": 8, "x": 16, "y": 1 },
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  { "color": "red", "value": null },
+                  { "color": "yellow", "value": 50 },
+                  { "color": "green", "value": 85 }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "options": { "reduceOptions": { "calcs": ["lastNotNull"] } },
+          "targets": [
+            {
+              "expr": "100 * sum(rate(spegel_mirror_requests_total{cluster=\"$cluster\", registry=~\"$registry\", cache=\"hit\"}[5m])) / sum(rate(spegel_mirror_requests_total{cluster=\"$cluster\", registry=~\"$registry\"}[5m]))",
+              "legendFormat": "hit ratio"
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "type": "row",
+          "title": "Peer resolve latency (justifies mirrorResolveTimeout/mirrorResolveRetries)",
+          "gridPos": { "h": 1, "w": 24, "x": 0, "y": 9 }
+        },
+        {
+          "id": 5,
+          "type": "timeseries",
+          "title": "Resolve duration percentiles by router",
+          "description": "spegel_resolve_duration_seconds. Per-attempt budget is mirrorResolveTimeout (currently 5s, dashed threshold) x mirrorResolveRetries (5). If p99 sits well under the threshold line, the 5s budget is oversized for genuine hits and only pays off on true cache-misses.",
+          "datasource": { "type": "prometheus", "uid": "${DS_MIMIR}" },
+          "gridPos": { "h": 9, "w": 24, "x": 0, "y": 10 },
+          "fieldConfig": {
+            "defaults": {
+              "unit": "s",
+              "custom": {
+                "thresholdsStyle": { "mode": "line" }
+              },
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  { "color": "green", "value": null },
+                  { "color": "red", "value": 5 }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "targets": [
+            {
+              "expr": "histogram_quantile(0.50, sum by (le, router) (rate(spegel_resolve_duration_seconds_bucket{cluster=\"$cluster\"}[5m])))",
+              "legendFormat": "p50 {{router}}"
+            },
+            {
+              "expr": "histogram_quantile(0.95, sum by (le, router) (rate(spegel_resolve_duration_seconds_bucket{cluster=\"$cluster\"}[5m])))",
+              "legendFormat": "p95 {{router}}"
+            },
+            {
+              "expr": "histogram_quantile(0.99, sum by (le, router) (rate(spegel_resolve_duration_seconds_bucket{cluster=\"$cluster\"}[5m])))",
+              "legendFormat": "p99 {{router}}"
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "type": "row",
+          "title": "Freshness & advertised inventory",
+          "gridPos": { "h": 1, "w": 24, "x": 0, "y": 19 }
+        },
+        {
+          "id": 7,
+          "type": "stat",
+          "title": "Time since last successful mirror, by node",
+          "description": "time() - spegel_mirror_last_success_timestamp_seconds. Climbing steadily on a node usually means its peer lookups are timing out or its containerd mirror config is broken.",
+          "datasource": { "type": "prometheus", "uid": "${DS_MIMIR}" },
+          "gridPos": { "h": 8, "w": 12, "x": 0, "y": 20 },
+          "fieldConfig": {
+            "defaults": {
+              "unit": "s",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  { "color": "green", "value": null },
+                  { "color": "yellow", "value": 300 },
+                  { "color": "red", "value": 1800 }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "options": { "reduceOptions": { "calcs": ["lastNotNull"] } },
+          "targets": [
+            {
+              "expr": "time() - max by (instance) (spegel_mirror_last_success_timestamp_seconds{cluster=\"$cluster\"})",
+              "legendFormat": "{{instance}}"
+            }
+          ]
+        },
+        {
+          "id": 8,
+          "type": "timeseries",
+          "title": "Advertised images by registry",
+          "description": "spegel_advertised_image_tags / _image_digests / _content_digests — how much each node has told the DHT it can serve.",
+          "datasource": { "type": "prometheus", "uid": "${DS_MIMIR}" },
+          "gridPos": { "h": 8, "w": 12, "x": 12, "y": 20 },
+          "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] },
+          "targets": [
+            {
+              "expr": "sum by (registry) (spegel_advertised_image_tags{cluster=\"$cluster\", registry=~\"$registry\"})",
+              "legendFormat": "tags/{{registry}}"
+            },
+            {
+              "expr": "sum by (registry) (spegel_advertised_image_digests{cluster=\"$cluster\", registry=~\"$registry\"})",
+              "legendFormat": "image digests/{{registry}}"
+            },
+            {
+              "expr": "sum by (registry) (spegel_advertised_content_digests{cluster=\"$cluster\", registry=~\"$registry\"})",
+              "legendFormat": "content digests/{{registry}}"
+            }
+          ]
+        }
+      ]
+    }

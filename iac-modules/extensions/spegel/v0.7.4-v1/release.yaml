@@ -50,8 +50,13 @@ spec:
       containerdMirrorAdd: false
       # Upstream default (20ms, x3 retries = ~60ms total budget) is too tight
       # for a DHT-based peer lookup, especially the first time a given digest
-      # is resolved.
-      mirrorResolveTimeout: "500ms"
+      # is resolved. 5s x5 retries (~25s worst-case budget) not yet
+      # justified against spegel_mirror_requests_total hit/miss data on this
+      # cluster — genuine cache-misses (image on no peer) now wait up to 25s
+      # before falling back to origin, so revisit if that metric shows
+      # misses aren't actually timeout-related.
+      mirrorResolveTimeout: "5s"
+      mirrorResolveRetries: 5
       # DEBUG surfaces more router/libp2p-level detail, but Spegel's own code
       # has no per-request success log line even at this level (registry.go
       # only logs on failure) — the actual "is P2P serving this pull" signal

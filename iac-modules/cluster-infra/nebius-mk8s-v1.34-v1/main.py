@@ -39,6 +39,19 @@ def _build_node_cloud_init() -> str:
     layers stay available for Spegel to serve to peers.
     https://spegel.dev/docs/getting-started/#containerd-configuration
 
+    use_local_image_pull must be true too: on containerd 2.1+, image pulls
+    route through the new io.containerd.transfer.v1 service by default,
+    which does not consult certs.d/hosts.toml at all — Spegel's mirror
+    config is silently ignored and every pull goes straight to origin, with
+    no error and no log line. Same failure shape as the hostNetwork/hostPort
+    issue below (spegel_mirror_requests_total sitting at zero with nothing
+    to explain why). Set unconditionally, on the assumption an unrecognized
+    key under this plugin is a no-op rather than fatal on containerd
+    versions that predate it — NOT verified against this node image's
+    actual containerd version; confirm via spegel_mirror_requests_total
+    (cache="hit" should be nonzero) and revisit if pulls start failing at
+    node bootstrap.
+
     The Helm release sets spegel.containerdMirrorAdd: false, so Spegel's own
     init container won't manage certs.d/_default/hosts.toml — it's written
     here instead, pointed at this node's own registry mirror port (30020,
@@ -70,6 +83,7 @@ def _build_node_cloud_init() -> str:
                     '  config_path = "/etc/containerd/certs.d"\n'
                     '[plugins."io.containerd.cri.v1.images"]\n'
                     '  discard_unpacked_layers = false\n'
+                    '  use_local_image_pull = true\n'
                 ),
             }
         ],

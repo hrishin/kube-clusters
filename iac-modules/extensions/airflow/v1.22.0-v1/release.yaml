@@ -83,9 +83,21 @@ spec:
         - name: dags
           configMap:
             name: airflow-dags
+      # subPath, not a directory mount: mounting the whole ConfigMap at
+      # /opt/airflow/dags gives kubelet its usual ..data -> ..<timestamp>
+      # symlink-based atomic-update layout, and Airflow's DAG-folder walker
+      # (which follows symlinks, for git-sync's sake) misreads that as a
+      # recursive loop and refuses to scan the directory at all — confirmed
+      # live: "RuntimeError: Detected recursive loop when walking DAG
+      # directory". subPath mounts a plain regular file instead, no symlink
+      # structure, at the cost of no live updates on ConfigMap change (a
+      # subPath-mounted file only re-syncs on pod restart) — acceptable
+      # here since a DAG content change already means a new Flux-driven
+      # Helm upgrade/rollout anyway.
       extraVolumeMounts:
         - name: dags
-          mountPath: /opt/airflow/dags
+          mountPath: /opt/airflow/dags/action_linux_llm_finetune.py
+          subPath: action_linux_llm_finetune.py
           readOnly: true
 
     dagProcessor:
@@ -93,9 +105,21 @@ spec:
         - name: dags
           configMap:
             name: airflow-dags
+      # subPath, not a directory mount: mounting the whole ConfigMap at
+      # /opt/airflow/dags gives kubelet its usual ..data -> ..<timestamp>
+      # symlink-based atomic-update layout, and Airflow's DAG-folder walker
+      # (which follows symlinks, for git-sync's sake) misreads that as a
+      # recursive loop and refuses to scan the directory at all — confirmed
+      # live: "RuntimeError: Detected recursive loop when walking DAG
+      # directory". subPath mounts a plain regular file instead, no symlink
+      # structure, at the cost of no live updates on ConfigMap change (a
+      # subPath-mounted file only re-syncs on pod restart) — acceptable
+      # here since a DAG content change already means a new Flux-driven
+      # Helm upgrade/rollout anyway.
       extraVolumeMounts:
         - name: dags
-          mountPath: /opt/airflow/dags
+          mountPath: /opt/airflow/dags/action_linux_llm_finetune.py
+          subPath: action_linux_llm_finetune.py
           readOnly: true
 
     nodeSelector:
@@ -125,7 +149,19 @@ spec:
         - name: dags
           configMap:
             name: airflow-dags
+      # subPath, not a directory mount: mounting the whole ConfigMap at
+      # /opt/airflow/dags gives kubelet its usual ..data -> ..<timestamp>
+      # symlink-based atomic-update layout, and Airflow's DAG-folder walker
+      # (which follows symlinks, for git-sync's sake) misreads that as a
+      # recursive loop and refuses to scan the directory at all — confirmed
+      # live: "RuntimeError: Detected recursive loop when walking DAG
+      # directory". subPath mounts a plain regular file instead, no symlink
+      # structure, at the cost of no live updates on ConfigMap change (a
+      # subPath-mounted file only re-syncs on pod restart) — acceptable
+      # here since a DAG content change already means a new Flux-driven
+      # Helm upgrade/rollout anyway.
       extraVolumeMounts:
         - name: dags
-          mountPath: /opt/airflow/dags
+          mountPath: /opt/airflow/dags/action_linux_llm_finetune.py
+          subPath: action_linux_llm_finetune.py
           readOnly: true

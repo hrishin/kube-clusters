@@ -66,3 +66,19 @@ spec:
         operator: Equal
         value: core
         effect: NoSchedule
+
+    # Served behind kgateway at /airflow (see httproute.yaml), not at
+    # domain root. Without base_url the API server doesn't know it's
+    # mounted under a sub-path, so the React UI emits asset/API URLs at
+    # "/" instead of "/airflow/" — confirmed live: GET
+    # /static/assets/index-*.js 404s because the request never carries
+    # the /airflow prefix the HTTPRoute matches on.
+    # https://airflow.apache.org/docs/apache-airflow/3.2.2/howto/run-behind-proxy.html
+    config:
+      api:
+        base_url: "https://cluster1.eu-north-1.kube.nebius.hrishi.dev/airflow"
+    apiServer:
+      args: ["bash", "-c", "exec airflow api-server --proxy-headers"]
+      env:
+        - name: FORWARDED_ALLOW_IPS
+          value: "*"

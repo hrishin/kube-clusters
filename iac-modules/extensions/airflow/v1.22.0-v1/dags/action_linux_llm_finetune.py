@@ -263,6 +263,15 @@ print("DONE: pushed to {model_repo}")
 #SBATCH --output=/tmp/linux-action-llm-%j.log
 set -euo pipefail
 
+# /home/slurm doesn't exist on this image at all, and /home itself is only
+# root-writable — confirmed live: "Permission denied: '/home/slurm'" from
+# pip trying to create it for --user installs. /tmp is the one confirmed
+# world-writable location (drwxrwxrwt), so point HOME there for the whole
+# job; pip's --user site-packages, its cache dir, and anything else that
+# keys off $HOME all follow along automatically.
+export HOME=/tmp/home
+mkdir -p "$HOME"
+
 cat > /tmp/train_lora.py <<'PYEOF'
 {train_script}
 PYEOF

@@ -14,6 +14,22 @@ spec:
         name: airflow
   interval: 2m
   timeout: 15m
+  # The chart's airflow-run-airflow-migrations/airflow-create-user Jobs are
+  # post-install hooks — they only run once Helm considers the main release
+  # Ready. But every Deployment/StatefulSet pod has a wait-for-migrations
+  # init container that blocks until those same migrations have already run.
+  # With the default wait behavior, helm-controller waits for pods to be
+  # Ready before running post-install hooks, and the pods wait for the hooks
+  # — a deadlock (confirmed live: release sat in Helm status
+  # "pending-install" indefinitely, and the migration Job was never even
+  # created). disableWait[ForJobs] lets Helm apply the release and fire the
+  # hooks without waiting on pod readiness first, breaking the cycle.
+  install:
+    disableWait: true
+    disableWaitForJobs: true
+  upgrade:
+    disableWait: true
+    disableWaitForJobs: true
   values:
     # KubernetesExecutor over the chart's default CeleryExecutor — runs each
     # task as its own pod instead of needing a standing Celery worker pool +

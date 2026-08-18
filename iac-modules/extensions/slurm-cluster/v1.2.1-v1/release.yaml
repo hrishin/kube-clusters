@@ -54,10 +54,13 @@ spec:
       # Left disabled + zero-replica: enabling this without carving out
       # dedicated capacity (or at least a shared priority/preemption policy)
       # would have Slurm batch jobs competing with live inference serving for
-      # the same preemptible GPU nodes.
+      # the same preemptible GPU nodes. Enabled at replicas: 1 for an
+      # end-to-end smoke test (sinfo/sbatch/squeue against a real node) —
+      # revisit before leaving this on, since gpu-inference is preemptible
+      # and shared with live vLLM/Kimi/Qwen serving.
       gpu:
-        enabled: false
-        replicas: 0
+        enabled: true
+        replicas: 1
         podSpec:
           nodeSelector:
             node-type: gpu

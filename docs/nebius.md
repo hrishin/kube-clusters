@@ -8,12 +8,13 @@ This document covers provisioning the `nebius-alpha` Nebius Managed Kubernetes c
 |---|---|
 | `pulumi` | Infrastructure provisioning |
 | `kubectl` | Kubernetes CLI |
+| `nebius` | Nebius CLI — cluster kubeconfig retrieval, ad-hoc resource inspection |
 | `sops` + `age` | Secret decryption |
 | `python3` | Pulumi runtime |
 
 ```bash
 # Verify all tools are available
-for cmd in pulumi kubectl sops age; do
+for cmd in pulumi kubectl nebius sops age; do
   command -v $cmd && echo "$cmd ✓" || echo "$cmd MISSING"
 done
 ```
@@ -29,7 +30,36 @@ pip install -r requirements.txt
 pulumi plugin install resource terraform-provider 1.2.1
 ```
 
-## 2. Nebius service account credentials
+## 2. Nebius CLI
+
+Separate from the Pulumi provider's service-account auth below — this is
+your personal, federated-login CLI, used for `nebius mk8s cluster
+get-credentials` (step 9) and any ad-hoc `nebius ...` inspection. Full
+reference: https://docs.nebius.com/cli/install
+
+```bash
+curl -sSL https://storage.eu-north1.nebius.cloud/cli/install.sh | bash
+exec -l $SHELL   # reload PATH, or open a new terminal
+
+nebius version   # verify
+```
+
+Create a profile against the project you'll be deploying into (same
+`project_id` as step 5 below — Nebius console: **IAM → Projects**):
+
+```bash
+nebius profile create \
+  --profile nebius-alpha \
+  --endpoint api.nebius.cloud \
+  --federation-endpoint auth.nebius.com \
+  --parent-id <project-id>
+```
+
+This opens a browser tab for federated login at `auth.nebius.com`; once it
+confirms "Login is successful", the CLI is authenticated and `nebius`
+commands will use this profile.
+
+## 3. Nebius service account credentials
 
 Create a service account in the Nebius console under **IAM → Service accounts**, grant it the `editor` role on the project, then generate an authorized key:
 
@@ -40,7 +70,7 @@ This gives you:
 - `public_key_id` — the key ID
 - A PEM private key file (download and store it locally, e.g. `~/.nebius/prod-sa.pem`)
 
-## 3. Pulumi login & stack
+## 4. Pulumi login & stack
 
 ```bash
 pulumi login          # or: pulumi login --local for local state
@@ -48,7 +78,7 @@ cd clusters/nebius-alpha/infra
 pulumi stack init nebius-alpha   # skip if stack already exists
 ```
 
-## 4. Stack configuration
+## 5. Stack configuration
 
 ```bash
 pulumi config set --secret nebius:account_id    <service-account-id>
@@ -62,7 +92,7 @@ Set the Nebius project ID in `clusters/nebius-alpha/config.yaml`:
 project_id: "project-<id>"   # from Nebius console: IAM → Projects
 ```
 
-## 5. SOPS age key
+## 6. SOPS age key
 
 Flux uses SOPS to decrypt `config/config.enc.yaml`, which contains the GitHub token for the `flux-system` GitRepository.
 
@@ -75,7 +105,7 @@ cat $SOPS_AGE_KEY_FILE | head -1
 
 The age public key must be in `.sops.yaml` at the repo root. If setting up fresh, generate a key, add the public key to `.sops.yaml`, then re-encrypt `config/config.enc.yaml`.
 
-## 6. Review node groups
+## 7. Review node groups
 
 Node group definitions are in `clusters/nebius-alpha/config.yaml`:
 
@@ -115,7 +145,7 @@ nodeSelector:
   node-type: mimir
 ```
 
-## 7. Deploy
+## 8. Deploy
 
 ```bash
 cd clusters/nebius-alpha/infra
@@ -132,7 +162,7 @@ Pulumi runs the following steps in sequence:
 
 Total time: ~10–15 minutes.
 
-## 8. Access the cluster
+## 9. Access the cluster
 
 ```bash
 # Fetch kubeconfig via the Nebius CLI

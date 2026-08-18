@@ -104,6 +104,10 @@ crds  ─┬─→ infra ─→ system ─→ crs
 
 ## Access the cluster
 
+Requires the Nebius CLI installed and a profile configured — see
+[docs/nebius.md](../../docs/nebius.md#2-nebius-cli) if `nebius` isn't on
+your `PATH` yet.
+
 ```bash
 nebius mk8s cluster get-credentials --id <cluster-id> --external
 # or:

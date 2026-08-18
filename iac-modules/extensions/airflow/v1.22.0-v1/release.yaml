@@ -1,0 +1,52 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: airflow
+  namespace: airflow
+spec:
+  releaseName: airflow
+  chart:
+    spec:
+      chart: airflow
+      version: "1.22.0"
+      sourceRef:
+        kind: HelmRepository
+        name: airflow
+  interval: 2m
+  timeout: 15m
+  values:
+    # KubernetesExecutor over the chart's default CeleryExecutor — runs each
+    # task as its own pod instead of needing a standing Celery worker pool +
+    # Redis broker, which is unused infra for what's otherwise a
+    # single-node/dev setup here.
+    executor: KubernetesExecutor
+    redis:
+      enabled: false
+
+    postgresql:
+      enabled: true
+      primary:
+        persistence:
+          storageClassName: local-path
+          size: 8Gi
+
+    dags:
+      persistence:
+        enabled: true
+        storageClassName: local-path
+        size: 10Gi
+      gitSync:
+        enabled: false
+        # Point at the actual DAGs repo and flip enabled: true once one
+        # exists. Left disabled rather than pointed at a placeholder URL.
+        # repo: https://github.com/<org>/<dags-repo>.git
+        # branch: main
+        # subPath: dags
+
+    nodeSelector:
+      node-type: core
+    tolerations:
+      - key: node-type
+        operator: Equal
+        value: core
+        effect: NoSchedule

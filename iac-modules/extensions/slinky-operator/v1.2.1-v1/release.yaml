@@ -1,0 +1,34 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: slurm-operator
+  namespace: slinky
+spec:
+  releaseName: slurm-operator
+  chart:
+    spec:
+      chart: slurm-operator
+      version: "1.2.1"
+      sourceRef:
+        kind: HelmRepository
+        name: slinky
+  interval: 2m
+  dependsOn:
+    - name: slurm-operator-crds
+  values:
+    operator:
+      nodeSelector:
+        node-type: core
+      tolerations:
+        - key: node-type
+          operator: Equal
+          value: core
+          effect: NoSchedule
+    webhook:
+      nodeSelector:
+        node-type: core
+      tolerations:
+        - key: node-type
+          operator: Equal
+          value: core
+          effect: NoSchedule

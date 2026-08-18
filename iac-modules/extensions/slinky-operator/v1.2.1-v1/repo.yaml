@@ -1,0 +1,9 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: slinky
+  namespace: slinky
+spec:
+  type: oci
+  interval: 20m
+  url: oci://ghcr.io/slinkyproject/charts

@@ -1,0 +1,135 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: slurm
+  namespace: slurm
+spec:
+  releaseName: slurm
+  chart:
+    spec:
+      chart: slurm
+      version: "1.2.1"
+      sourceRef:
+        kind: HelmRepository
+        name: slurm
+  interval: 2m
+  # slurm-operator (namespace slinky) must be Ready before its CRDs'
+  # controller exists to reconcile this SlurmCluster.
+  dependsOn:
+    - name: slurm-operator
+      namespace: slinky
+  values:
+    controller:
+      persistence:
+        # Only StorageClass this cluster has (see local-path-provisioner
+        # under core-infra). Single-node, not HA — same caveat as
+        # grafana/prometheus's local-path use elsewhere in this repo.
+        storageClassName: local-path
+      podSpec:
+        nodeSelector:
+          node-type: core
+        tolerations:
+          - key: node-type
+            operator: Equal
+            value: core
+            effect: NoSchedule
+
+    accounting:
+      # No MariaDB/mariadb-operator deployed yet. Flip on once accounting is
+      # actually needed — see docs/installation.md in the slurm-operator repo.
+      enabled: false
+
+    partitions:
+      all:
+        enabled: true
+        nodesets:
+          - ALL
+        configMap:
+          Default: "YES"
+          MaxTime: UNLIMITED
+
+    nodesets:
+      # Single-node GPU compute, targeting the same `gpu-inference` node pool
+      # (config.yaml) that vLLM/qwen/kimi inference already schedules onto.
+      # Left disabled + zero-replica: enabling this without carving out
+      # dedicated capacity (or at least a shared priority/preemption policy)
+      # would have Slurm batch jobs competing with live inference serving for
+      # the same preemptible GPU nodes.
+      gpu:
+        enabled: false
+        replicas: 0
+        podSpec:
+          nodeSelector:
+            node-type: gpu
+          tolerations:
+            - key: nvidia.com/gpu
+              operator: Exists
+              effect: NoSchedule
+            - key: workload
+              operator: Equal
+              value: inference
+              effect: NoSchedule
+        slurmd:
+          resources:
+            limits:
+              nvidia.com/gpu: 1
+          extraConfMap:
+            gres.conf: |
+              AutoDetect=nvml
+
+      # ---------------------------------------------------------------------
+      # RoCE / InfiniBand / RDMA placeholder — NOT wired up, do not enable
+      # as-is.
+      #
+      # Targets the multi-node H100 SXM pool (config.yaml `gpu-nvlink`, and
+      # the `gpu_clusters.h100-cluster` InfiniBand fabric it attaches to —
+      # both currently commented out in
+      # iac-modules/cluster-infra/nebius-mk8s-v1.34-v1's config, same as the
+      # kimi LeaderWorkerSet that also targets this pool). Three things need
+      # to be true before this is real, none of which exist yet:
+      #
+      #   1. The `gpu-nvlink` node group + `gpu_clusters.h100-cluster` are
+      #      actually provisioned (Pulumi config.yaml).
+      #   2. An RDMA device plugin is deployed and exposing a Kubernetes
+      #      extended resource — e.g. the NVIDIA Network Operator, or
+      #      Mellanox/NVIDIA's k8s-rdma-shared-dev-plugin. The `rdma/hca`
+      #      resource name below is a placeholder guess (that plugin's
+      #      default shared-pool name), not verified against anything
+      #      actually deployed on this cluster.
+      #   3. A topology.yaml matching Nebius's real IB switch layout is
+      #      written (https://slurm.schedmd.com/topology.yaml.html), and each
+      #      Kubernetes node carries the
+      #      `topology.slinky.slurm.net/spec: topo-switch:<id>,topo-block:<id>`
+      #      annotation the operator reads to populate it — see
+      #      https://github.com/SlinkyProject/slurm-operator/blob/main/docs/usage/topology.md
+      #
+      # gpu-nvlink:
+      #   enabled: false
+      #   replicas: 0
+      #   podSpec:
+      #     nodeSelector:
+      #       node-type: gpu-nvlink
+      #     tolerations:
+      #       - key: nvidia.com/gpu
+      #         operator: Exists
+      #         effect: NoSchedule
+      #       - key: workload
+      #         operator: Equal
+      #         value: inference-nvlink
+      #         effect: NoSchedule
+      #   slurmd:
+      #     resources:
+      #       limits:
+      #         nvidia.com/gpu: 8
+      #         rdma/hca: 1   # placeholder — see caveat (2) above
+      #     extraConfMap:
+      #       gres.conf: |
+      #         AutoDetect=nvml
+      #       topology.yaml: |
+      #         # Placeholder shape only — not derived from Nebius's actual
+      #         # IB switch layout. Replace before uncommenting.
+      #         Topologies:
+      #           - Name: nvlink-fabric
+      #             Switches:
+      #               - Name: s1
+      #                 Nodes: ALL

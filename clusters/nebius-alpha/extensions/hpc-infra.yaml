@@ -1,0 +1,37 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: hpc-infra
+  namespace: flux-system
+spec:
+  interval: 5m
+  retryInterval: 2m
+  timeout: 30m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: ./clusters/nebius-alpha/extensions/hpc-infra/
+  prune: true
+  # No wait: true — same rationale as llm-infra.yaml: the (currently
+  # zero-replica) GPU nodeset and Airflow's postgres/dags PVCs can sit
+  # pending during cold node/volume provisioning without blocking the rest
+  # of the cluster's reconciliation.
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
+  dependsOn:
+    - name: crds
+    - name: system-components
+    # core-infra: slurm-operator's webhook needs cert-manager (hard
+    # prerequisite unless certManager.enabled=false, which isn't set here).
+    - name: core-infra
+    # llm-infra: the (disabled-by-default) GPU nodeset assumes
+    # nvidia-gpu-operator's driver/device-plugin stack is already present
+    # for whenever it gets turned on.
+    - name: llm-infra
+  postBuild:
+    substituteFrom:
+      - kind: ConfigMap
+        name: infra-outputs
+        optional: false

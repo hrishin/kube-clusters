@@ -273,11 +273,13 @@ PYEOF
 # --break-system-packages installs into the user site-packages directly,
 # overriding this Ubuntu image's PEP 668 externally-managed-environment
 # guard, without needing apt/root access the job doesn't have anyway.
-pip install --quiet --user --break-system-packages --upgrade pip
+# python3 -m pip, not bare `pip` — confirmed live: "pip: command not
+# found" (python3 itself is on PATH, no standalone pip binary is).
+python3 -m pip install --quiet --user --break-system-packages --upgrade pip
 # Pinned loosely on purpose — first run, not yet locked. Once this has
 # actually trained successfully once, bake a real container image instead
 # of pip-installing several GB of deps on every run.
-pip install --quiet --user --break-system-packages unsloth "trl>=0.9" peft bitsandbytes accelerate datasets huggingface_hub
+python3 -m pip install --quiet --user --break-system-packages unsloth "trl>=0.9" peft bitsandbytes accelerate datasets huggingface_hub
 
 export HF_TOKEN="{hf_token}"
 python3 /tmp/train_lora.py

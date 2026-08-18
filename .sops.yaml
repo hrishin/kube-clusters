@@ -2,6 +2,15 @@ creation_rules:
   - path_regex:  ^config/.*\.enc\.yaml$
     age: age1ppc0g76en84sppjk7qxljz75wkdvryj87q852pmxuw8k8cwxevqsgpwz3l
   - path_regex:  ^iac-modules/extensions/.*\.enc\.yaml$
+    # Same reasoning as the clusters/ rule below — these are also
+    # Kubernetes-shaped Secret manifests (e.g. cert-manager's
+    # secret-cloudflare-api-token.enc.yaml), consumed by kustomize/Flux the
+    # same way. Without this, a plain `sops -e` here encrypts apiVersion/kind
+    # too, which renders as `kind: ENC[...]` under kustomize — confirmed via
+    # `kubectl kustomize` locally; Flux's kustomize-controller decrypts
+    # before build so it likely tolerates it, but there's no reason to rely
+    # on that when the fix is one line.
+    encrypted_regex: ^(data|stringData)$
     age: age1ppc0g76en84sppjk7qxljz75wkdvryj87q852pmxuw8k8cwxevqsgpwz3l
   - path_regex:  ^clusters/.*\.enc\.yaml$
     # Kubernetes-shaped manifests (Secrets applied via kustomize/Flux) — only

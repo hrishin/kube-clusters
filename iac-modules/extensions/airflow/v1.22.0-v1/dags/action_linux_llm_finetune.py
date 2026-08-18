@@ -16,9 +16,10 @@ Pipeline:
                        point to the Slurm job: the airflow and slurm
                        namespaces don't share a filesystem, so HF Hub is the
                        exchange bus rather than new shared-storage infra.
-  2. train_on_slurm — generate a self-contained sbatch script (creates a
-                       venv, pip-installs training deps, writes and runs the
-                       actual training script) and submit/poll it via
+  2. train_on_slurm — generate a self-contained sbatch script (bootstraps
+                       pip, installs training deps into user site-packages,
+                       writes and runs the actual training script — no venv,
+                       this image has no ensurepip) and submit/poll it via
                        `kubectl exec` into slurm-controller-0. No LoginSet or
                        REST API JWT flow — this cluster has neither deployed,
                        and exec into the controller pod (already used
@@ -169,17 +170,88 @@ def action_linux_llm_finetune():
         hf_token = os.environ["HF_TOKEN"]
 
         train_script = f'''#!/usr/bin/env python3
+import hashlib
+import json
 import os
+import urllib.request
 
-from datasets import load_dataset
-from trl import SFTConfig, SFTTrainer
+# unsloth first, before trl/transformers/peft — it patches those libraries
+# on import, and importing it later only partially applies the patches
+# ("Unsloth should be imported before [trl, transformers, peft]...").
 from unsloth import FastLanguageModel
 from unsloth.chat_templates import get_chat_template, train_on_responses_only
 
+import pyarrow.parquet as pq
+from datasets import Dataset
+from trl import SFTConfig, SFTTrainer
+
 MAX_SEQ_LENGTH = 2048
+HF_TOKEN = os.environ["HF_TOKEN"]
+
+
+def _fingerprint(*parts: str) -> str:
+    return hashlib.sha256(":".join(parts).encode()).hexdigest()[:16]
+
+
+def download_hf_repo(repo_id: str, local_dir: str) -> str:
+    # huggingface_hub's own downloader (Xet-preferring, with an in-process
+    # fallback to HF_HUB_DISABLE_XET=1) hangs indefinitely on this repo's
+    # model.safetensors — confirmed live, including with HF_HUB_DISABLE_XET=1
+    # set from process start (not just Unsloth's post-hoc runtime fallback,
+    # which doesn't work either: huggingface_hub.constants caches env vars
+    # at import time, before Unsloth's fallback code ever runs). Plain
+    # stdlib urllib has none of these issues — confirmed live pulling the
+    # full 5.5GB file in ~4-5 minutes with zero stalls. Bypass
+    # huggingface_hub's downloader entirely and fetch the repo ourselves.
+    os.makedirs(local_dir, exist_ok=True)
+    with urllib.request.urlopen(f"https://huggingface.co/api/models/{{repo_id}}", timeout=30) as resp:
+        info = json.load(resp)
+    for sib in info.get("siblings", []):
+        fname = sib["rfilename"]
+        if fname in ("README.md", ".gitattributes") or fname.endswith(".md"):
+            continue
+        dest = os.path.join(local_dir, fname)
+        os.makedirs(os.path.dirname(dest) or ".", exist_ok=True)
+        with urllib.request.urlopen(f"https://huggingface.co/{{repo_id}}/resolve/main/{{fname}}", timeout=60) as r, open(dest, "wb") as f:
+            while True:
+                chunk = r.read(1048576)
+                if not chunk:
+                    break
+                f.write(chunk)
+    return local_dir
+
+
+def load_hf_dataset(repo_id: str, filename: str, local_path: str) -> Dataset:
+    # datasets.Dataset construction (via load_dataset or any other
+    # constructor) unconditionally dill-pickles part of the call graph to
+    # compute a cache fingerprint — this crashes outright on this image's
+    # Python 3.14 + dill 0.4.0/0.4.1, with no working workaround at the
+    # datasets-library level (confirmed live: disable_caching(),
+    # keep_in_memory=True, and upgrading dill all still crash the same way;
+    # this is an open, unfixed upstream bug —
+    # huggingface/datasets#8373, "Pickler._batch_setitems() takes 2
+    # positional arguments but 3 were given"). Passing an explicit
+    # fingerprint skips that computation entirely — confirmed live this
+    # works — so fetch the parquet file ourselves (same proven urllib
+    # approach as the model download) and construct the Dataset directly.
+    req = urllib.request.Request(
+        f"https://huggingface.co/datasets/{{repo_id}}/resolve/main/{{filename}}",
+        headers={{"Authorization": f"Bearer {{HF_TOKEN}}"}},
+    )
+    with urllib.request.urlopen(req, timeout=120) as r, open(local_path, "wb") as f:
+        while True:
+            chunk = r.read(1048576)
+            if not chunk:
+                break
+            f.write(chunk)
+    table = pq.read_table(local_path)
+    return Dataset(table, fingerprint=_fingerprint(repo_id, filename))
+
+
+local_base_model = download_hf_repo("{base_model}", "/tmp/base_model")
 
 model, tokenizer = FastLanguageModel.from_pretrained(
-    model_name="{base_model}",
+    model_name=local_base_model,
     max_seq_length=MAX_SEQ_LENGTH,
     load_in_4bit=True,
 )
@@ -196,7 +268,9 @@ model = FastLanguageModel.get_peft_model(
     random_state=3407,
 )
 
-dataset = load_dataset("{dataset_repo}", split="train")
+dataset = load_hf_dataset(
+    "{dataset_repo}", "data/train-00000-of-00001.parquet", "/tmp/train_dataset.parquet"
+)
 
 
 def formatting_func(example):
@@ -207,15 +281,50 @@ def formatting_func(example):
     return {{"text": tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=False)}}
 
 
-dataset = dataset.map(formatting_func)
+dataset = dataset.map(formatting_func, new_fingerprint=_fingerprint("{dataset_repo}", "formatted"))
+
+# transformers' TrainingArguments.to_dict() redacts every field whose name
+# ends in "_token" (meant for secrets like hub_token) into a literal
+# "<FIELD_NAME>" placeholder string. SFTTrainer.__init__ round-trips its
+# args through to_dict() internally and then validates fields like
+# eos_token/pad_token against the tokenizer's vocabulary — so it ends up
+# checking whether the literal string "<EOS_TOKEN>"/"<PAD_TOKEN>" is a real
+# token, which it never is, and raises. Confirmed live for both eos_token
+# and pad_token (hit one after fixing the other), reproduced
+# deterministically against this exact script regardless of
+# dataset_num_proc/optim — it's unconditional, not something dodged by
+# omitting the field or changing unrelated SFTConfig fields. Rather than
+# special-case every "*_token" field TRL happens to validate, generically
+# redirect any "<..._TOKEN>" placeholder lookup to the tokenizer's real
+# attribute of the same name (e.g. "<PAD_TOKEN>" -> tokenizer.pad_token),
+# so validation always passes with the correct value.
+_orig_convert_tokens_to_ids = tokenizer.convert_tokens_to_ids
+
+
+def _redacted_token_safe_convert(tokens):
+    if isinstance(tokens, str) and tokens.startswith("<") and tokens.endswith("_TOKEN>"):
+        real_token = getattr(tokenizer, tokens[1:-1].lower(), None)
+        if real_token is not None:
+            return _orig_convert_tokens_to_ids(real_token)
+    return _orig_convert_tokens_to_ids(tokens)
+
+
+tokenizer.convert_tokens_to_ids = _redacted_token_safe_convert
 
 trainer = SFTTrainer(
     model=model,
-    tokenizer=tokenizer,
+    # processing_class, not tokenizer=; dataset_text_field/max_length live
+    # on SFTConfig now, not here — all renamed/moved upstream in this
+    # transformers/trl version, confirmed live one at a time:
+    # "SFTTrainer.__init__() got an unexpected keyword argument 'tokenizer'"
+    # then "... 'dataset_text_field'" (max_seq_length was never a valid
+    # SFTTrainer kwarg in this version either, just didn't error until the
+    # first two were fixed).
+    processing_class=tokenizer,
     train_dataset=dataset,
-    dataset_text_field="text",
-    max_seq_length=MAX_SEQ_LENGTH,
     args=SFTConfig(
+        dataset_text_field="text",
+        max_length=MAX_SEQ_LENGTH,
         per_device_train_batch_size=2,
         gradient_accumulation_steps=16,
         warmup_ratio=0.05,
@@ -241,14 +350,30 @@ trainer = train_on_responses_only(
 
 trainer.train()
 
-model.push_to_hub_merged(
-    "{model_repo}",
-    tokenizer,
-    save_method="merged_16bit",
-    token=os.environ["HF_TOKEN"],
-    private=True,
-)
-print("DONE: pushed to {model_repo}")
+# push_to_hub_merged tried and ruled out, in order:
+#   - save_method="merged_16bit": needs a 16-bit base to merge the LoRA
+#     delta into — this base model was loaded with load_in_4bit=True
+#     (nf4), so it fails outright ("base model should be a 16bit or mxfp4
+#     base model for a 16bit merge... Use save_method='forced_merged_4bit'
+#     instead" — confirmed live, Unsloth's own error message).
+#   - save_method="forced_merged_4bit": the LoRA merge itself succeeds,
+#     but writing the merged result out then hits an unrelated bug in this
+#     transformers version's newer weight-serialization path — confirmed
+#     live: NotImplementedError from transformers/core_model_loading.py's
+#     revert_weight_conversion, raised while save_pretrained() tries to
+#     reverse a quantization weight-conversion op that this transformers
+#     version doesn't support reversing. Not something to work around at
+#     the config level; it's a real gap in that code path.
+# Pushing just the LoRA adapter sidesteps both: it's PEFT's own well-worn
+# save/upload path (no merge, no quantization-reversal), the artifact is
+# ~300MB instead of several GB, and it's how LoRA fine-tunes are normally
+# distributed anyway — downstream consumers load the base model plus this
+# adapter with PEFT rather than a single merged checkpoint. Confirmed live
+# end-to-end (adapter_model.safetensors + tokenizer files uploaded,
+# repo created successfully).
+model.push_to_hub("{model_repo}", token=os.environ["HF_TOKEN"], private=True)
+tokenizer.push_to_hub("{model_repo}", token=os.environ["HF_TOKEN"], private=True)
+print("DONE: pushed LoRA adapter to {model_repo}")
 '''
 
         # No --gres= here — see module docstring: Slurm's AutoDetect=nvml
@@ -271,6 +396,17 @@ set -euo pipefail
 # keys off $HOME all follow along automatically.
 export HOME=/tmp/home
 mkdir -p "$HOME"
+
+# Unsloth's custom Triton kernels (e.g. RMSNorm) are JIT-compiled at
+# training time and need a C compiler plus the Python C headers to build
+# their launcher stub — this image ships neither (confirmed live: "Failed
+# to find C compiler", then after installing gcc alone, "fatal error:
+# Python.h: No such file or directory"). The container runs as root with
+# apt available, so install both directly; no separate download step
+# needed the way pip's bootstrap required.
+export DEBIAN_FRONTEND=noninteractive
+apt-get update -qq
+apt-get install -y -qq gcc python3-dev
 
 cat > /tmp/train_lora.py <<'PYEOF'
 {train_script}
@@ -314,7 +450,19 @@ python3 -m pip install --quiet --user --break-system-packages unsloth "trl>=0.9"
 export SSL_CERT_FILE="$(python3 -c 'import certifi; print(certifi.where())')"
 
 export HF_TOKEN="{hf_token}"
-python3 /tmp/train_lora.py
+# Retry once — generic resilience for a long-running job pulling from the
+# network (model/dataset downloads, PyPI installs above), not tied to any
+# specific known failure mode.
+for attempt in 1 2; do
+    if python3 /tmp/train_lora.py; then
+        break
+    fi
+    if [ "$attempt" = "2" ]; then
+        echo "train_lora.py failed twice, giving up" >&2
+        exit 1
+    fi
+    echo "train_lora.py failed (attempt $attempt), retrying once..." >&2
+done
 '''
 
         config.load_incluster_config()

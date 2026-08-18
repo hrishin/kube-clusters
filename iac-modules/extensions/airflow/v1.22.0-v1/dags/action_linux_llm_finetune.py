@@ -269,13 +269,25 @@ PYEOF
 
 # No venv: `python3 -m venv` fails on this image — ensurepip isn't
 # installed (confirmed live: "The virtual environment was not created
-# successfully because ensurepip is not available"). --user +
-# --break-system-packages installs into the user site-packages directly,
-# overriding this Ubuntu image's PEP 668 externally-managed-environment
-# guard, without needing apt/root access the job doesn't have anyway.
-# python3 -m pip, not bare `pip` — confirmed live: "pip: command not
-# found" (python3 itself is on PATH, no standalone pip binary is).
-python3 -m pip install --quiet --user --break-system-packages --upgrade pip
+# successfully because ensurepip is not available").
+#
+# No pip either, not even as a module ("No module named pip") — this is a
+# genuinely bare Python 3.14 install, confirmed live. No curl/wget and no
+# CA bundle on the image either (no /etc/ssl/certs, ssl.get_default_verify_paths()
+# all None), so bootstrapping pip needs Python's own stdlib urllib with TLS
+# verification disabled for this one download only — get-pip.py itself is
+# fetched insecurely, but pip vendors its own CA bundle (certifi) for every
+# install it does afterwards, so real package installs below still verify
+# TLS properly. --user + --break-system-packages installs into user
+# site-packages, overriding this image's PEP 668
+# externally-managed-environment guard, without needing apt/root access the
+# job doesn't have anyway.
+python3 -c "
+import ssl, urllib.request
+ssl._create_default_https_context = ssl._create_unverified_context
+urllib.request.urlretrieve('https://bootstrap.pypa.io/get-pip.py', '/tmp/get-pip.py')
+"
+python3 /tmp/get-pip.py --quiet --user --break-system-packages
 # Pinned loosely on purpose — first run, not yet locked. Once this has
 # actually trained successfully once, bake a real container image instead
 # of pip-installing several GB of deps on every run.

@@ -122,6 +122,28 @@ spec:
           subPath: action_linux_llm_finetune.py
           readOnly: true
 
+    # workers = the pod template KubernetesExecutor uses for every
+    # dynamically-spawned task pod (there's no standing worker
+    # Deployment under KubernetesExecutor, but the chart still renders this
+    # section as the template). Missing this was the actual root cause of
+    # action_linux_llm_finetune's preprocess task failing instantly on every
+    # attempt: task pods booted with no DAG file at all — confirmed live via
+    # "Dag not found during start up" in the task pod's own log, which only
+    # `kubectl logs` on a live pod could show (the scheduler/UI just saw an
+    # inconsistent pod-succeeded-but-task-failed state with no visible
+    # cause). scheduler/dagProcessor/apiServer had this mount; workers
+    # didn't.
+    workers:
+      extraVolumes:
+        - name: dags
+          configMap:
+            name: airflow-dags
+      extraVolumeMounts:
+        - name: dags
+          mountPath: /opt/airflow/dags/action_linux_llm_finetune.py
+          subPath: action_linux_llm_finetune.py
+          readOnly: true
+
     nodeSelector:
       node-type: core
     tolerations:

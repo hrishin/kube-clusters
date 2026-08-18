@@ -302,6 +302,17 @@ python3 /tmp/get-pip.py --quiet --user --break-system-packages
 # of pip-installing several GB of deps on every run.
 python3 -m pip install --quiet --user --break-system-packages unsloth "trl>=0.9" peft bitsandbytes accelerate datasets huggingface_hub
 
+# huggingface_hub's fast-download path (hf_xet) is a separate Rust HTTP
+# client that does its own TLS setup — it does NOT pick up Python's
+# certifi bundle the way pip/requests do, and fails outright on this
+# image's missing CA bundle: "RuntimeError: ... Reqwest error: builder
+# error" (confirmed live, from FastLanguageModel.from_pretrained trying to
+# download model.safetensors). SSL_CERT_FILE is a standard env var reqwest
+# (and most native/Rust TLS stacks) respect — point it at the same certifi
+# bundle pip just installed. Verified live: a hf_hub_download() call that
+# failed without this succeeds with it.
+export SSL_CERT_FILE="$(python3 -c 'import certifi; print(certifi.where())')"
+
 export HF_TOKEN="{hf_token}"
 python3 /tmp/train_lora.py
 '''

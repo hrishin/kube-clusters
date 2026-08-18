@@ -5,5 +5,5 @@ resources:
   - core-infra.yaml
   - system-components.yaml
   - llm-infra.yaml
-  - llm-workloads.yaml
+  # - llm-workloads.yaml
   - hpc-infra.yaml

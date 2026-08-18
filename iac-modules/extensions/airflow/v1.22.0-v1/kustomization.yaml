@@ -4,3 +4,4 @@ resources:
   - repo.yaml
   - release.yaml
   - httproute.yaml
+  - secret-admin-password.enc.yaml

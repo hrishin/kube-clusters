@@ -73,9 +73,17 @@ spec:
               value: inference
               effect: NoSchedule
         slurmd:
+          # gpu-inference nodes are MIG-partitioned (config.yaml
+          # nvidia.com/mig.config: 4g40gb-plus-3g40gb) and advertise
+          # nvidia.com/mig-4g.40gb / nvidia.com/mig-3g.40gb, not
+          # nvidia.com/gpu (allocatable 0 there) — confirmed live via
+          # `kubectl describe node`, after nvidia.com/gpu: 1 sat Pending
+          # forever with "Insufficient nvidia.com/gpu". The 4g.40gb slice is
+          # already used by qwen inference; 3g.40gb is the one config.yaml
+          # calls out as free for a second workload.
           resources:
             limits:
-              nvidia.com/gpu: 1
+              nvidia.com/mig-3g.40gb: 1
           extraConfMap:
             gres.conf: |
               AutoDetect=nvml

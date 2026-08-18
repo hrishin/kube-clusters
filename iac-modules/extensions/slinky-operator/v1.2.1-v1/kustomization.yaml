@@ -4,3 +4,5 @@ resources:
   - repo.yaml
   - crds-release.yaml
   - release.yaml
+  - servicemonitor.yaml
+  - grafana-dashboard.yaml

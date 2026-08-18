@@ -1,0 +1,142 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: slurm-operator-grafana-dashboard
+  labels:
+    grafana_dashboard: "1"
+data:
+  slurm-operator.json: |
+    {
+      "uid": "slurm-operator",
+      "title": "Slurm Operator",
+      "tags": ["slurm", "slinky"],
+      "timezone": "utc",
+      "schemaVersion": 39,
+      "version": 1,
+      "editable": true,
+      "time": { "from": "now-6h", "to": "now" },
+      "refresh": "30s",
+      "templating": {
+        "list": [
+          {
+            "name": "DS_MIMIR",
+            "type": "datasource",
+            "query": "prometheus",
+            "current": { "text": "Mimir", "value": "Mimir" }
+          }
+        ]
+      },
+      "panels": [
+        {
+          "id": 1,
+          "type": "text",
+          "title": "Scope of this dashboard",
+          "gridPos": { "h": 3, "w": 24, "x": 0, "y": 0 },
+          "options": {
+            "mode": "markdown",
+            "content": "**No native Slurm cluster metrics yet.** slurmctld/slurmrestd don't expose Prometheus metrics, and no dedicated exporter (e.g. prometheus-slurm-exporter polling sinfo/squeue/sacct) is deployed — confirmed live, only checked the operator's own /metrics. Panels below cover the **slurm-operator's own reconcile health** (is it successfully managing the SlurmCluster/NodeSet/Controller/etc. CRs), not job queue depth, node utilization, or job throughput. For that, use `kubectl exec -n slurm slurm-controller-0 -c slurmctld -- sinfo/squeue/sacct` directly, or add a real exporter."
+          }
+        },
+        {
+          "id": 2,
+          "type": "row",
+          "title": "Reconcile health",
+          "gridPos": { "h": 1, "w": 24, "x": 0, "y": 3 }
+        },
+        {
+          "id": 3,
+          "type": "timeseries",
+          "title": "Reconcile rate by controller and result",
+          "description": "controller_runtime_reconcile_total — success/error/requeue per Slinky controller (accounting, controller, loginset, nodeset, restapi, slurmclient, token).",
+          "datasource": { "type": "prometheus", "uid": "${DS_MIMIR}" },
+          "gridPos": { "h": 8, "w": 24, "x": 0, "y": 4 },
+          "fieldConfig": { "defaults": { "unit": "reqps", "custom": { "fillOpacity": 10 } }, "overrides": [] },
+          "targets": [
+            {
+              "expr": "sum by (controller, result) (rate(controller_runtime_reconcile_total{cluster=\"nebius-alpha\"}[5m]))",
+              "legendFormat": "{{controller}}/{{result}}"
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "type": "timeseries",
+          "title": "Reconcile errors, by controller",
+          "description": "controller_runtime_reconcile_errors_total. The nodeset-controller (manages the Slurm gpu worker's NodeSet CR) has shown at least one error live — worth a look if this keeps climbing.",
+          "datasource": { "type": "prometheus", "uid": "${DS_MIMIR}" },
+          "gridPos": { "h": 8, "w": 12, "x": 0, "y": 12 },
+          "fieldConfig": {
+            "defaults": {
+              "unit": "short",
+              "custom": { "fillOpacity": 20, "stacking": { "mode": "normal" } },
+              "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "red", "value": 1 }] }
+            },
+            "overrides": []
+          },
+          "targets": [
+            {
+              "expr": "controller_runtime_reconcile_errors_total{cluster=\"nebius-alpha\"}",
+              "legendFormat": "{{controller}}"
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "type": "stat",
+          "title": "Leader election status",
+          "description": "leader_election_master_status — 1 if this operator pod holds the lease. Should always be exactly 1 across the fleet (single replica here).",
+          "datasource": { "type": "prometheus", "uid": "${DS_MIMIR}" },
+          "gridPos": { "h": 8, "w": 12, "x": 12, "y": 12 },
+          "fieldConfig": {
+            "defaults": {
+              "unit": "short",
+              "thresholds": { "mode": "absolute", "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }
+            },
+            "overrides": []
+          },
+          "options": { "reduceOptions": { "calcs": ["lastNotNull"] } },
+          "targets": [
+            {
+              "expr": "leader_election_master_status{cluster=\"nebius-alpha\", name=\"slurm-operator\"}",
+              "legendFormat": "leader"
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "type": "row",
+          "title": "Work queue health",
+          "gridPos": { "h": 1, "w": 24, "x": 0, "y": 20 }
+        },
+        {
+          "id": 7,
+          "type": "timeseries",
+          "title": "Work queue depth, by controller",
+          "description": "workqueue_depth — items waiting to be reconciled. Sustained non-zero suggests the controller can't keep up or is stuck retrying.",
+          "datasource": { "type": "prometheus", "uid": "${DS_MIMIR}" },
+          "gridPos": { "h": 8, "w": 12, "x": 0, "y": 21 },
+          "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] },
+          "targets": [
+            {
+              "expr": "workqueue_depth{cluster=\"nebius-alpha\"}",
+              "legendFormat": "{{controller}}"
+            }
+          ]
+        },
+        {
+          "id": 8,
+          "type": "timeseries",
+          "title": "Work queue retry rate, by controller",
+          "description": "rate(workqueue_retries_total) — requeues after a failed reconcile attempt.",
+          "datasource": { "type": "prometheus", "uid": "${DS_MIMIR}" },
+          "gridPos": { "h": 8, "w": 12, "x": 12, "y": 21 },
+          "fieldConfig": { "defaults": { "unit": "reqps" }, "overrides": [] },
+          "targets": [
+            {
+              "expr": "sum by (controller) (rate(workqueue_retries_total{cluster=\"nebius-alpha\"}[5m]))",
+              "legendFormat": "{{controller}}"
+            }
+          ]
+        }
+      ]
+    }

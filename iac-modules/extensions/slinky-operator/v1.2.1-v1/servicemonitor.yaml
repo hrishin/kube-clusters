@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: slurm-operator
+  namespace: slinky
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: slurm-operator
+      app.kubernetes.io/instance: slurm-operator
+  endpoints:
+    - port: metrics
+      path: /metrics
+      interval: 30s

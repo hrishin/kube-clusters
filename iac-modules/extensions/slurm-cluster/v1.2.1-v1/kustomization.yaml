@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - repo.yaml
   - release.yaml
+  - rbac-airflow-exec.yaml

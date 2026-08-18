@@ -5,3 +5,18 @@ resources:
   - release.yaml
   - httproute.yaml
   - secret-admin-password.enc.yaml
+  - secret-hf-token.enc.yaml
+  - serviceaccount-slurm-exec.yaml
+
+# Mounted into scheduler/dagProcessor/apiServer at /opt/airflow/dags (see
+# release.yaml extraVolumes). disableNameSuffixHash so the name stays
+# predictable — release.yaml references it by exact name, and kustomize's
+# nameReference transformer doesn't reach into arbitrary paths inside a
+# HelmRelease's values blob to rewrite a hashed name.
+generatorOptions:
+  disableNameSuffixHash: true
+
+configMapGenerator:
+  - name: airflow-dags
+    files:
+      - dags/action_linux_llm_finetune.py

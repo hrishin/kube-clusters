@@ -1,0 +1,29 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: airflow-slurm-exec
+  namespace: slurm
+rules:
+  # action_linux_llm_finetune DAG (iac-modules/extensions/airflow) submits
+  # and polls sbatch jobs via `kubectl exec` into slurm-controller-0 — no
+  # LoginSet/REST-API JWT flow deployed for this cluster yet.
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get"]
+  - apiGroups: [""]
+    resources: ["pods/exec"]
+    verbs: ["create"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: airflow-slurm-exec
+  namespace: slurm
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: airflow-slurm-exec
+subjects:
+  - kind: ServiceAccount
+    name: airflow-slurm-exec
+    namespace: airflow

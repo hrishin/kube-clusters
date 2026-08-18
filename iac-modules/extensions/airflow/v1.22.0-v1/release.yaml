@@ -56,10 +56,12 @@ spec:
           size: 8Gi
 
     dags:
+      # No gitSync configured (see below), and DAGs are now delivered via a
+      # kustomize-generated ConfigMap (dags/*.py -> airflow-dags, mounted
+      # into scheduler/dagProcessor/apiServer below) instead — the PVC this
+      # was reserved for has no writer without gitSync.
       persistence:
-        enabled: true
-        storageClassName: local-path
-        size: 10Gi
+        enabled: false
       gitSync:
         enabled: false
         # Point at the actual DAGs repo and flip enabled: true once one
@@ -67,6 +69,34 @@ spec:
         # repo: https://github.com/<org>/<dags-repo>.git
         # branch: main
         # subPath: dags
+
+    # action_linux_llm_finetune (see dags/) needs a HuggingFace token to
+    # push the processed dataset and trained model — see
+    # secret-hf-token.enc.yaml (ships with a placeholder value, replace via
+    # sops before running the DAG).
+    extraEnvFrom: |
+      - secretRef:
+          name: hf-token
+
+    scheduler:
+      extraVolumes:
+        - name: dags
+          configMap:
+            name: airflow-dags
+      extraVolumeMounts:
+        - name: dags
+          mountPath: /opt/airflow/dags
+          readOnly: true
+
+    dagProcessor:
+      extraVolumes:
+        - name: dags
+          configMap:
+            name: airflow-dags
+      extraVolumeMounts:
+        - name: dags
+          mountPath: /opt/airflow/dags
+          readOnly: true
 
     nodeSelector:
       node-type: core
@@ -91,3 +121,11 @@ spec:
       env:
         - name: FORWARDED_ALLOW_IPS
           value: "*"
+      extraVolumes:
+        - name: dags
+          configMap:
+            name: airflow-dags
+      extraVolumeMounts:
+        - name: dags
+          mountPath: /opt/airflow/dags
+          readOnly: true

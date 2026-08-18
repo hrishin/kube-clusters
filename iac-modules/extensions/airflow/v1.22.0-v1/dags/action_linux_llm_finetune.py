@@ -57,7 +57,7 @@ from kubernetes.client import models as k8s
 # ---------------------------------------------------------------------------
 # Config — edit before running
 # ---------------------------------------------------------------------------
-HF_NAMESPACE = "<your-hf-username-or-org>"  # REQUIRED: real HF Hub namespace
+HF_NAMESPACE = "hriships"  # REQUIRED: real HF Hub namespace
 DATASET_REPO = f"{HF_NAMESPACE}/linux-action-sft"
 MODEL_REPO = f"{HF_NAMESPACE}/linux-action-qwen2.5-7b-lora"
 BASE_MODEL = "unsloth/Qwen2.5-7B-Instruct-bnb-4bit"  # verify against current Unsloth catalog

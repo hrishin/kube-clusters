@@ -10,9 +10,16 @@ rules:
   - apiGroups: [""]
     resources: ["pods"]
     verbs: ["get"]
+  # "get", not "create": the python kubernetes client's
+  # connect_get_namespaced_pod_exec (used by the DAG) issues an HTTP GET to
+  # establish the exec connection, which Kubernetes RBAC authorizes under
+  # the "get" verb — confirmed live via a 403 explicitly naming "get" as the
+  # denied verb. `kubectl exec` itself uses a different code path that maps
+  # to "create", which is why most RBAC examples online show only that —
+  # granting both covers either client.
   - apiGroups: [""]
     resources: ["pods/exec"]
-    verbs: ["create"]
+    verbs: ["get", "create"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding

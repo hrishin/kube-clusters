@@ -140,6 +140,17 @@ spec:
     config:
       api:
         base_url: "https://cluster1.eu-north-1.kube.nebius.hrishi.dev/airflow"
+      # Debugging action_linux_llm_finetune's `preprocess` task: the
+      # KubernetesJobWatcher logs the pod itself as "Succeeded", but the
+      # scheduler still marks the TaskInstance failed — a mismatch that
+      # needs to actually be seen. No remote/persistent task-log storage is
+      # configured yet (see the still-open gap noted below), and pods are
+      # deleted immediately on completion either way, so there's currently
+      # no way to retrieve *why*. Keep failed pods around temporarily to
+      # inspect via `kubectl logs`/`kubectl describe` — revert once
+      # diagnosed, this isn't meant to be permanent.
+      kubernetes_executor:
+        delete_worker_pods_on_failure: "False"
     apiServer:
       args: ["bash", "-c", "exec airflow api-server --proxy-headers"]
       env:

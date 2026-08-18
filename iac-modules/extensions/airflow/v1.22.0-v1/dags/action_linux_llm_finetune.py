@@ -65,6 +65,13 @@ BASE_MODEL = "unsloth/Qwen2.5-7B-Instruct-bnb-4bit"  # verify against current Un
 SLURM_NAMESPACE = "slurm"
 SLURM_CONTROLLER_POD = "slurm-controller-0"
 SLURM_CONTROLLER_CONTAINER = "slurmctld"
+# Job stdout (#SBATCH --output=...) lands on whichever node actually ran the
+# job, not the controller — confirmed live. Hardcoded to the one worker pod
+# this cluster's gpu nodeset currently runs (replicas: 1, see
+# slurm-cluster/v1.2.1-v1/release.yaml); revisit if that nodeset ever scales
+# past one replica.
+SLURM_WORKER_POD = "slurm-worker-gpu-0"
+SLURM_WORKER_CONTAINER = "slurmd"
 SLURM_TERMINAL_STATES = {"COMPLETED", "FAILED", "CANCELLED", "TIMEOUT", "NODE_FAIL", "OUT_OF_MEMORY"}
 
 # Dedicated ServiceAccount + RBAC for pods/exec into slurm-controller-0 — see
@@ -260,80 +267,98 @@ cat > /tmp/train_lora.py <<'PYEOF'
 {train_script}
 PYEOF
 
-python3 -m venv /tmp/venv
-source /tmp/venv/bin/activate
-pip install --quiet --upgrade pip
+# No venv: `python3 -m venv` fails on this image — ensurepip isn't
+# installed (confirmed live: "The virtual environment was not created
+# successfully because ensurepip is not available"). --user +
+# --break-system-packages installs into the user site-packages directly,
+# overriding this Ubuntu image's PEP 668 externally-managed-environment
+# guard, without needing apt/root access the job doesn't have anyway.
+pip install --quiet --user --break-system-packages --upgrade pip
 # Pinned loosely on purpose — first run, not yet locked. Once this has
 # actually trained successfully once, bake a real container image instead
 # of pip-installing several GB of deps on every run.
-pip install --quiet unsloth "trl>=0.9" peft bitsandbytes accelerate datasets huggingface_hub
+pip install --quiet --user --break-system-packages unsloth "trl>=0.9" peft bitsandbytes accelerate datasets huggingface_hub
 
 export HF_TOKEN="{hf_token}"
 python3 /tmp/train_lora.py
 '''
 
         config.load_incluster_config()
-        api = client.CoreV1Api()
+
+        def pod_exec(
+            command: str,
+            stdin_data: str | None = None,
+            pod: str = SLURM_CONTROLLER_POD,
+            container: str = SLURM_CONTROLLER_CONTAINER,
+        ) -> str:
+            # A fresh CoreV1Api/ApiClient per call, not shared — reusing one
+            # `client.CoreV1Api()` across multiple stream() calls was
+            # observed live to hang indefinitely on the second call (writing
+            # the sbatch script over stdin worked fine; the very next call,
+            # `sbatch /tmp/train.sbatch` on the same api object, never
+            # returned — despite that exact command completing in under a
+            # second run by hand). Root cause not fully isolated (likely
+            # connection/websocket-pool state left over from the manual
+            # stdin/_preload_content=False call), but a fresh client per
+            # call is cheap and reliably sidesteps it.
+            api = client.CoreV1Api()
+            if stdin_data is not None:
+                w = stream(
+                    api.connect_get_namespaced_pod_exec,
+                    pod,
+                    SLURM_NAMESPACE,
+                    container=container,
+                    command=["bash", "-c", command],
+                    stdin=True,
+                    stdout=True,
+                    stderr=True,
+                    tty=False,
+                    _preload_content=False,
+                )
+                w.write_stdin(stdin_data)
+                w.close()
+                return ""
+            return stream(
+                api.connect_get_namespaced_pod_exec,
+                pod,
+                SLURM_NAMESPACE,
+                container=container,
+                command=["bash", "-c", command],
+                stdin=False,
+                stdout=True,
+                stderr=True,
+                tty=False,
+            )
 
         # Written over stdin rather than as an exec argv string — this
         # heredoc-of-a-heredoc is multiple KB and would be a shell-quoting
         # nightmare (and likely exceed argv limits) passed as `-c "..."`.
-        writer = stream(
-            api.connect_get_namespaced_pod_exec,
-            SLURM_CONTROLLER_POD,
-            SLURM_NAMESPACE,
-            container=SLURM_CONTROLLER_CONTAINER,
-            command=["bash", "-c", "cat > /tmp/train.sbatch"],
-            stdin=True,
-            stdout=True,
-            stderr=True,
-            tty=False,
-            _preload_content=False,
-        )
-        writer.write_stdin(sbatch_script)
-        writer.close()
+        pod_exec("cat > /tmp/train.sbatch", stdin_data=sbatch_script)
 
-        submit_out = stream(
-            api.connect_get_namespaced_pod_exec,
-            SLURM_CONTROLLER_POD,
-            SLURM_NAMESPACE,
-            container=SLURM_CONTROLLER_CONTAINER,
-            command=["bash", "-c", "sbatch /tmp/train.sbatch"],
-            stdin=False,
-            stdout=True,
-            stderr=True,
-            tty=False,
-        )
+        submit_out = pod_exec("sbatch /tmp/train.sbatch")
         job_id = next((tok for tok in submit_out.split() if tok.isdigit()), None)
         if not job_id:
             raise AirflowException(f"couldn't parse job id from sbatch output: {submit_out!r}")
 
+        # scontrol, not sacct: accounting.enabled is false on this cluster
+        # (no slurmdbd deployed), so `sacct` fails outright ("Slurm
+        # accounting storage is disabled") — confirmed live. scontrol/squeue
+        # query slurmctld's live state directly, no accounting needed.
+        # scontrol keeps a finished job's record around for a while
+        # (MinJobAge, default 300s) before purging it, which is plenty given
+        # the 30s poll interval below.
         state = "PENDING"
         while state not in SLURM_TERMINAL_STATES:
             time.sleep(30)
-            state = stream(
-                api.connect_get_namespaced_pod_exec,
-                SLURM_CONTROLLER_POD,
-                SLURM_NAMESPACE,
-                container=SLURM_CONTROLLER_CONTAINER,
-                command=["bash", "-c", f"sacct -j {job_id} --format=State --noheader -X"],
-                stdin=False,
-                stdout=True,
-                stderr=True,
-                tty=False,
-            ).strip()
+            show = pod_exec(f"scontrol show job {job_id}")
+            match = next((tok for tok in show.split() if tok.startswith("JobState=")), None)
+            state = match.split("=", 1)[1] if match else "PENDING"
 
         if state != "COMPLETED":
-            log = stream(
-                api.connect_get_namespaced_pod_exec,
-                SLURM_CONTROLLER_POD,
-                SLURM_NAMESPACE,
-                container=SLURM_CONTROLLER_CONTAINER,
-                command=["bash", "-c", f"tail -n 200 /tmp/linux-action-llm-{job_id}.log 2>/dev/null || true"],
-                stdin=False,
-                stdout=True,
-                stderr=True,
-                tty=False,
+            log = pod_exec(
+                f"tail -n 200 /tmp/linux-action-llm-{job_id}.log 2>/dev/null || true",
+                pod=SLURM_WORKER_POD,
+                container=SLURM_WORKER_CONTAINER,
             )
             raise AirflowException(f"Slurm job {job_id} ended in state {state}:\n{log}")
 

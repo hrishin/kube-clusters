@@ -19,12 +19,41 @@ Pipeline:
   2. train_on_slurm — generate a self-contained sbatch script (bootstraps
                        pip, installs training deps into user site-packages,
                        writes and runs the actual training script — no venv,
-                       this image has no ensurepip) and submit/poll it via
-                       `kubectl exec` into slurm-controller-0. No LoginSet or
-                       REST API JWT flow — this cluster has neither deployed,
-                       and exec into the controller pod (already used
-                       manually all through this session) is simpler and
-                       just as reliable for one node/one job at a time.
+                       this image has no ensurepip), then submit/poll it via
+                       slurmrestd's REST API (job/submit, then poll
+                       job/{job_id}) instead of `kubectl exec`-ing `sbatch`/
+                       `scontrol show job` CLI output. slurmrestd is already
+                       deployed by chart default (restapi.* in
+                       slurm-cluster/v1.2.1-v1/release.yaml is untouched —
+                       there's no `enabled` gate, it just always renders),
+                       and jwtKey.create defaults to true, so auth/jwt is
+                       already wired into the controller. What REST doesn't
+                       remove: minting the JWT itself still needs
+                       `scontrol token`, which needs a shell with slurm.conf
+                       + the jwt key already configured — this cluster has
+                       no LoginSet/SSSD identity provisioning, so that one
+                       call still goes through `kubectl exec` into
+                       slurm-controller-0 (as root, which already has a
+                       valid Slurm identity — nothing extra to provision).
+                       That's now the *only* kubectl exec in the submit
+                       path, replacing what used to be a `kubectl exec` for
+                       every sbatch/scontrol call, including the fragile
+                       stdin-piped script write. Verified against this
+                       cluster's actual slurmrestd build (not guessed): the
+                       v0.0.45 API version, job/submit and job/{job_id}
+                       request/response schemas, and the job_state enum
+                       below were all pulled from
+                       `slurmrestd --generate-openapi-spec` run locally
+                       against the ghcr.io/slinkyproject/slurmrestd:
+                       26.05-ubuntu26.04 image (same image this cluster's
+                       restapi.slurmrestd.image defaults to). NOT verified:
+                       an actual end-to-end submit against a live
+                       slurmrestd + slurmctld pair (this was written while
+                       the cluster was down) — the Service name/port below
+                       (slurm-restapi.slurm.svc.cluster.local:6820) is
+                       derived from slurm-operator's own Go source
+                       (RestApi.Key() -> "<name>-restapi", SlurmrestdPort =
+                       6820), not observed live either.
 
 REQUIRED before running:
   - Set HF_NAMESPACE below to a real HF Hub username/org you can push to.
@@ -74,6 +103,15 @@ SLURM_CONTROLLER_CONTAINER = "slurmctld"
 SLURM_WORKER_POD = "slurm-worker-gpu-0"
 SLURM_WORKER_CONTAINER = "slurmd"
 SLURM_TERMINAL_STATES = {"COMPLETED", "FAILED", "CANCELLED", "TIMEOUT", "NODE_FAIL", "OUT_OF_MEMORY"}
+
+# slurm-restapi.slurm.svc.cluster.local:6820 — derived from slurm-operator's
+# RestApi.Key() ("<HelmRelease releaseName>-restapi", and releaseName is
+# "slurm" per slurm-cluster/v1.2.1-v1/release.yaml) and the operator's
+# hardcoded SlurmrestdPort=6820, not observed against a live Service (see
+# module docstring). v0.0.45 confirmed as this cluster's slurmd image's
+# newest supported API version via `slurmrestd --generate-openapi-spec`.
+SLURMRESTD_BASE_URL = "http://slurm-restapi.slurm.svc.cluster.local:6820/slurm/v0.0.45"
+JWT_LIFESPAN_SECONDS = 3600
 
 # Dedicated ServiceAccount + RBAC for pods/exec into slurm-controller-0 — see
 # serviceaccount-slurm-exec.yaml (this module) and
@@ -162,7 +200,10 @@ def action_linux_llm_finetune():
 
     @task(executor_config={"pod_override": _POD_OVERRIDE_EXEC_SA})
     def train_on_slurm(dataset_repo: str, model_repo: str, base_model: str) -> str:
+        import json
         import os
+        import urllib.error
+        import urllib.request
 
         from kubernetes import client, config
         from kubernetes.stream import stream
@@ -512,29 +553,73 @@ done
                 tty=False,
             )
 
-        # Written over stdin rather than as an exec argv string — this
-        # heredoc-of-a-heredoc is multiple KB and would be a shell-quoting
-        # nightmare (and likely exceed argv limits) passed as `-c "..."`.
-        pod_exec("cat > /tmp/train.sbatch", stdin_data=sbatch_script)
+        # Mint a short-lived JWT as the controller container's own identity
+        # (root — already a valid Slurm identity, nothing to provision).
+        # This is the one kubectl exec left in the submit path; every actual
+        # sbatch/scontrol call below goes through slurmrestd instead.
+        token_out = pod_exec(f"scontrol token lifespan={JWT_LIFESPAN_SECONDS}")
+        jwt = next(
+            (tok.split("=", 1)[1] for tok in token_out.split() if tok.startswith("SLURM_JWT=")), None
+        )
+        if not jwt:
+            raise AirflowException(f"couldn't parse JWT from `scontrol token` output: {token_out!r}")
 
-        submit_out = pod_exec("sbatch /tmp/train.sbatch")
-        job_id = next((tok for tok in submit_out.split() if tok.isdigit()), None)
+        def slurmrestd_request(method: str, path: str, body: dict | None = None) -> dict:
+            req = urllib.request.Request(
+                f"{SLURMRESTD_BASE_URL}{path}",
+                data=json.dumps(body).encode() if body is not None else None,
+                method=method,
+                headers={"X-SLURM-USER-TOKEN": jwt, "Content-Type": "application/json"},
+            )
+            try:
+                with urllib.request.urlopen(req, timeout=30) as resp:
+                    return json.loads(resp.read())
+            except urllib.error.HTTPError as e:
+                raise AirflowException(
+                    f"slurmrestd {method} {path} failed ({e.code}): {e.read().decode(errors='replace')}"
+                ) from e
+
+        # `script` is literally the sbatch script text (same content that
+        # used to go over kubectl-exec stdin to `sbatch`) — the #SBATCH
+        # lines inside it are redundant with name/partition/standard_output
+        # below, kept as belt-and-suspenders rather than relying on whether
+        # slurmrestd parses embedded #SBATCH pragmas from `script` the same
+        # way the sbatch CLI does (plausible but not verified live).
+        submit_resp = slurmrestd_request(
+            "POST",
+            "/job/submit",
+            {
+                "script": sbatch_script,
+                "job": {
+                    "name": "linux-action-llm",
+                    "partition": "all",
+                    "current_working_directory": "/tmp",
+                    "standard_output": "/tmp/linux-action-llm-%j.log",
+                    "environment": [
+                        "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+                    ],
+                },
+            },
+        )
+        if submit_resp.get("errors"):
+            raise AirflowException(f"job/submit returned errors: {submit_resp['errors']}")
+        job_id = submit_resp.get("job_id")
         if not job_id:
-            raise AirflowException(f"couldn't parse job id from sbatch output: {submit_out!r}")
+            raise AirflowException(f"job/submit response had no job_id: {submit_resp!r}")
 
-        # scontrol, not sacct: accounting.enabled is false on this cluster
-        # (no slurmdbd deployed), so `sacct` fails outright ("Slurm
-        # accounting storage is disabled") — confirmed live. scontrol/squeue
-        # query slurmctld's live state directly, no accounting needed.
-        # scontrol keeps a finished job's record around for a while
-        # (MinJobAge, default 300s) before purging it, which is plenty given
-        # the 30s poll interval below.
+        # accounting.enabled is false on this cluster (no slurmdbd
+        # deployed), so a job's record only lives in slurmctld's live state
+        # until MinJobAge (default 300s) purges it — plenty given the 30s
+        # poll interval below. job_state is an array (a job can carry
+        # compound states); take the first entry, matching how squeue/
+        # scontrol display the "primary" state.
         state = "PENDING"
         while state not in SLURM_TERMINAL_STATES:
             time.sleep(30)
-            show = pod_exec(f"scontrol show job {job_id}")
-            match = next((tok for tok in show.split() if tok.startswith("JobState=")), None)
-            state = match.split("=", 1)[1] if match else "PENDING"
+            status_resp = slurmrestd_request("GET", f"/job/{job_id}")
+            jobs = status_resp.get("jobs") or []
+            job_state = jobs[0].get("job_state") if jobs else None
+            state = job_state[0] if job_state else "PENDING"
 
         if state != "COMPLETED":
             log = pod_exec(

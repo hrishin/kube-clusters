@@ -1,0 +1,69 @@
+name: Build and Publish slurmd-pyxis-enroot Image
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - iac-modules/extensions/slurm-cluster/v1.2.1-v1/slurmd-pyxis-enroot.Dockerfile
+      - .github/workflows/docker-publish-slurmd-pyxis-enroot.yml
+  workflow_dispatch: {}
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: hrishin/slurmd-pyxis-enroot
+  # Keep this in sync with the pinned build args in the Dockerfile and with
+  # nodesets.gpu.slurmd.image.tag in
+  # iac-modules/extensions/slurm-cluster/v1.2.1-v1/release.yaml.
+  VERSION_TAG: 26.05-ubuntu26.04-pyxis0.24.0-enroot4.2.1
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=${{ env.VERSION_TAG }}
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=sha,prefix=
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: iac-modules/extensions/slurm-cluster/v1.2.1-v1
+          file: iac-modules/extensions/slurm-cluster/v1.2.1-v1/slurmd-pyxis-enroot.Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          # gpu-inference nodes are x86_64 only (no arm64 GPU pool in this
+          # cluster) — not building multi-arch.
+          platforms: linux/amd64
+          build-args: |
+            BUILDKIT_INLINE_CACHE=1
+
+      - name: Build status
+        run: |
+          echo "Docker image built and published successfully!"
+          echo "Image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}"

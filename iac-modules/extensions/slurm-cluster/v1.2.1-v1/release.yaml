@@ -39,6 +39,15 @@ spec:
       # actually needed — see docs/installation.md in the slurm-operator repo.
       enabled: false
 
+    # Pyxis SPANK plugin stack, for `srun --container-image=... python train.py`
+    # (Enroot-backed container submission). Neither Pyxis nor Enroot ship in
+    # the upstream slurmd image — the gpu NodeSet below runs a custom image
+    # (see slurmd-pyxis-enroot.Dockerfile in this directory) with both built
+    # in at /usr, matching this default path.
+    configFiles:
+      plugstack.conf: |
+        include /usr/share/pyxis/*
+
     partitions:
       all:
         enabled: true
@@ -87,6 +96,35 @@ spec:
           extraConfMap:
             gres.conf: |
               AutoDetect=nvml
+          # Custom image = ghcr.io/slinkyproject/slurmd:26.05-ubuntu26.04
+          # (nodesetDefaults.slurmd.image) + Enroot v4.2.1 + Pyxis v0.24.0
+          # baked in, built and verified locally against slurm 26.05.3 (the
+          # exact version this base image reports via `slurmd -V`). Source:
+          # slurmd-pyxis-enroot.Dockerfile in this directory. Built and
+          # pushed to GHCR by
+          # .github/workflows/docker-publish-slurmd-pyxis-enroot.yml on
+          # every change to that Dockerfile, using the workflow's own
+          # GITHUB_TOKEN — no extra secrets needed. The package is private
+          # by default on first publish; if slurmd's ImagePullSecrets isn't
+          # set up for it, either make the package public (repo → Packages →
+          # slurmd-pyxis-enroot → Package settings) or add a pull secret.
+          image:
+            repository: ghcr.io/hrishin/slurmd-pyxis-enroot
+            tag: 26.05-ubuntu26.04-pyxis0.24.0-enroot4.2.1
+          # Enroot needs to create nested user/mount namespaces + overlayfs
+          # mounts from inside an already-containerized slurmd pod.
+          # privileged:true is the "definitely works" option; NOT verified
+          # whether the unprivileged path (CAP_SYS_ADMIN + /dev/fuse) is
+          # sufficient on this cluster's actual kernel/PSA config. This also
+          # means gpu-inference now runs a privileged container alongside
+          # live vLLM/Qwen/Kimi inference on the same shared preemptible
+          # pool (see the nodesets comment above) — confirm that's
+          # acceptable before this merges, independent of image correctness.
+          securityContext:
+            privileged: true
+          env:
+            - name: ENROOT_RUNTIME_PATH
+              value: /run/enroot
 
       # ---------------------------------------------------------------------
       # RoCE / InfiniBand / RDMA placeholder — NOT wired up, do not enable

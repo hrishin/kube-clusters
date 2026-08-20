@@ -47,35 +47,34 @@ node_groups:
         value: mimir
         effect: NoSchedule
 
-
-  gpu-inference:
-    platform: gpu-h100-sxm
-    preset: 1gpu-16vcpu-200gb
-    desired_size: 1
-    min_size: 1
-    max_size: 4
-    preemptible: true
-    labels:
-      node-type: gpu
-      workload: inference
-      environment: production
-      accelerator: nvidia-h100-sxm
-      # Partitions the GPU into one 4g.40gb MIG slice (qwen) + one 3g.40gb
-      # slice (free for a second workload) instead of leaving it whole.
-      # Config defined in iac-modules/extensions/nvidia-gpu-operator's
-      # custom-mig-parted-config ConfigMap. Node-group label (not a
-      # one-off kubectl label) so it survives replacement of this
-      # preemptible node.
-      nvidia.com/mig.config: 4g40gb-plus-3g40gb
-      # Identifies DRA-consumer nodes to both gpu-operator's driver-manager
-      # (NODE_LABEL_FOR_GPU_POD_EVICTION, so it can evict DRA ResourceClaim
-      # pods before a driver reload) and the DRA driver's kubeletPlugin
-      # nodeSelector.
-      nvidia.com/dra-kubelet-plugin: "true"
-    taints:
-      - key: nvidia.com/gpu
-        value: "true"
-        effect: NoSchedule
+  # gpu-inference:
+  #   platform: gpu-h100-sxm
+  #   preset: 1gpu-16vcpu-200gb
+  #   desired_size: 1
+  #   min_size: 1
+  #   max_size: 4
+  #   preemptible: true
+  #   labels:
+  #     node-type: gpu
+  #     workload: inference
+  #     environment: production
+  #     accelerator: nvidia-h100-sxm
+  #     # Partitions the GPU into one 4g.40gb MIG slice (qwen) + one 3g.40gb
+  #     # slice (free for a second workload) instead of leaving it whole.
+  #     # Config defined in iac-modules/extensions/nvidia-gpu-operator's
+  #     # custom-mig-parted-config ConfigMap. Node-group label (not a
+  #     # one-off kubectl label) so it survives replacement of this
+  #     # preemptible node.
+  #     nvidia.com/mig.config: 4g40gb-plus-3g40gb
+  #     # Identifies DRA-consumer nodes to both gpu-operator's driver-manager
+  #     # (NODE_LABEL_FOR_GPU_POD_EVICTION, so it can evict DRA ResourceClaim
+  #     # pods before a driver reload) and the DRA driver's kubeletPlugin
+  #     # nodeSelector.
+  #     nvidia.com/dra-kubelet-plugin: "true"
+  #   taints:
+  #     - key: nvidia.com/gpu
+  #       value: "true"
+  #       effect: NoSchedule
 
   # Multi-node H100 SXM serving, clustered via InfiniBand (NOT cross-node NVLink —
   # NVLink Switch fabric across servers only exists for GB200/GB300 platforms.

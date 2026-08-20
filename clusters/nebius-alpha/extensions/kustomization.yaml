@@ -4,6 +4,6 @@ resources:
   - crds.yaml
   - core-infra.yaml
   - system-components.yaml
-  - llm-infra.yaml
+  # - llm-infra.yaml
   # - llm-workloads.yaml
-  - hpc-infra.yaml
+  # - hpc-infra.yaml

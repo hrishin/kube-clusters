@@ -19,6 +19,11 @@ terraform {
       source  = "hashicorp/local"
       version = "~> 2.5"
     }
+    # Round-robin A records for the hostNetwork kgateway on the core nodes.
+    cloudflare = {
+      source  = "cloudflare/cloudflare"
+      version = "~> 5.0"
+    }
     # Decrypts config/config.enc.yaml (GitHub token for the Flux GitRepository)
     # with the same age identity Flux/sops use everywhere else in this repo.
     sops = {

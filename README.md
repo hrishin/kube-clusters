@@ -43,6 +43,7 @@ This repository contains Pulumi programs (and, for Verda, a Terraform module) pl
 - Stock Ubuntu instances built in place with kubernetes-sigs/image-builder's Ansible roles (containerd, kubelet, kubeadm pinned)
 - Single-node kubeadm control plane, worker node groups joined with per-node bootstrap tokens
 - Cilium (kube-proxy replacement, vxlan) + Flux bootstrapped from the control plane, then GitOps from `clusters/verda-alpha/extensions`
+- kgateway on `hostNetwork` across the core nodes (no cloud LB on Verda) with round-robin Cloudflare A records managed by Terraform
 
 ## Node Groups
 

@@ -186,3 +186,22 @@ variable "kubeconfig_output_path" {
   description = "Where to write the admin kubeconfig (server rewritten to the control plane's public IP)."
   type        = string
 }
+
+# ── Gateway DNS ──────────────────────────────────────────────────────────────
+
+variable "dns" {
+  description = <<-EOT
+    Optional Cloudflare A records for the cluster gateway. Verda has no cloud
+    load balancer, so the kgateway proxies run hostNetwork on the nodes of
+    `node_group` and `<name>.<zone>` resolves round-robin to those nodes'
+    public IPs. Requires the cloudflare provider configured in the root.
+  EOT
+  type = object({
+    zone       = string
+    name       = string
+    node_group = optional(string, "core")
+    ttl        = optional(number, 300)
+    proxied    = optional(bool, false)
+  })
+  default = null
+}

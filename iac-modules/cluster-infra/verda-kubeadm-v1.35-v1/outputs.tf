@@ -41,3 +41,8 @@ output "kubeconfig_path" {
 output "startup_script_id" {
   value = verda_startup_script.node.id
 }
+
+output "gateway_hostname" {
+  description = "FQDN of the gateway A records (null when dns is not configured)."
+  value       = var.dns == null ? null : "${var.dns.name}.${var.dns.zone}"
+}

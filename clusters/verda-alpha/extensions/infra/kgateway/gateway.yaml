@@ -1,0 +1,76 @@
+---
+# Verda has no cloud load balancer / CCM, but every node has its own public
+# IP, so the Envoy proxies run hostNetwork on the core nodes and answer on
+# :80/:443 of those IPs directly. Terraform publishes the core nodes' public
+# IPs as round-robin A records (config.yaml: dns) — one node going away just
+# drops one record's worth of traffic until the next apply.
+apiVersion: gateway.kgateway.dev/v1alpha1
+kind: GatewayParameters
+metadata:
+  name: verda-hostnetwork-gw-params
+  namespace: kgateway-system
+spec:
+  kube:
+    service:
+      type: ClusterIP
+    deployment:
+      replicas: 2
+    deploymentOverlay:
+      spec:
+        template:
+          spec:
+            hostNetwork: true
+            dnsPolicy: ClusterFirstWithHostNet
+            nodeSelector:
+              node-type: core
+            tolerations:
+              - key: node-type
+                operator: Equal
+                value: core
+                effect: NoSchedule
+            # One proxy per node: two on the same host would fight over :80/:443.
+            affinity:
+              podAntiAffinity:
+                requiredDuringSchedulingIgnoredDuringExecution:
+                  - topologyKey: kubernetes.io/hostname
+                    labelSelector:
+                      matchLabels:
+                        gateway.networking.k8s.io/gateway-name: main-gateway
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: GatewayClass
+metadata:
+  name: kgateway-hostnetwork
+spec:
+  controllerName: kgateway.dev/kgateway
+  parametersRef:
+    group: gateway.kgateway.dev
+    kind: GatewayParameters
+    name: verda-hostnetwork-gw-params
+    namespace: kgateway-system
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: main-gateway
+  namespace: kgateway-system
+spec:
+  gatewayClassName: kgateway-hostnetwork
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 80
+      allowedRoutes:
+        namespaces:
+          from: All
+    - name: https
+      protocol: HTTPS
+      port: 443
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: main-gateway-tls
+            namespace: kgateway-system

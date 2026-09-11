@@ -18,6 +18,14 @@ ssh_key_ids:
   - 5ba6b5ca-a721-4d3a-ac47-9411cb900e67
 ssh_private_key_path: ~/.ssh/id_rsa
 
+# Gateway DNS: round-robin A records to the core nodes' public IPs (kgateway
+# runs hostNetwork there — Verda has no cloud load balancer). Must match the
+# Certificate dnsNames in extensions/infra/kgateway/gateway-certificate.yaml.
+dns:
+  zone: hrishi.dev
+  name: cluster1.fin-03.kube.verda
+  node_group: core
+
 pod_cidr: 192.168.0.0/16
 service_cidr: 10.96.0.0/12
 

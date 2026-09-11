@@ -164,8 +164,13 @@ terraform destroy
 - **Firewall**: Verda instances ship with no firewall; `6443` (API) and Cilium's ports
   are reachable on the public IP. Restrict with `ufw` or Verda's controls if that
   matters for your use.
-- **LoadBalancer Services** stay `<pending>` — there is no Verda CCM. Use NodePort or a
-  hostNetwork gateway.
+- **LoadBalancer Services** stay `<pending>` — there is no Verda CCM. The cluster's
+  kgateway (`extensions/infra/kgateway`) therefore runs its Envoy proxies `hostNetwork`
+  on the core nodes (one per node, ports 80/443 on each node's public IP), and Terraform
+  publishes those IPs as round-robin A records for `dns.name`.`dns.zone`
+  (`cluster1.fin-03.kube.verda.hrishi.dev`). TLS comes from the `letsencrypt-cloudflare`
+  ClusterIssuer; the Certificate's `dnsNames` must match `dns` in `config.yaml`.
+  Scaling the `core` group adds/removes records on the next `terraform apply`.
 - **Storage**: `local-path-provisioner` only (no CSI). Verda NVMe volumes can be
   attached with `verda_volume` if needed.
 - `private_ip` is documented as nullable; when Verda doesn't put an instance on a

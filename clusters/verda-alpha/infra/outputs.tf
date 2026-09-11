@@ -17,3 +17,7 @@ output "api_server_public_url" {
 output "kubeconfig_path" {
   value = module.cluster.kubeconfig_path
 }
+
+output "gateway_hostname" {
+  value = module.cluster.gateway_hostname
+}

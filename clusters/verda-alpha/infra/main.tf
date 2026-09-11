@@ -21,6 +21,7 @@ module "cluster" {
 
   control_plane = local.cfg.control_plane
   node_groups   = local.cfg.node_groups
+  dns           = try(local.cfg.dns, null)
 
   flux_values_path            = "${local.repo_root}/iac-modules/extensions/fluxcd/v2.17.1-v1/release.yaml"
   flux_git_url                = local.cfg.flux_git_url

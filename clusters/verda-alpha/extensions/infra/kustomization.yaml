@@ -4,3 +4,4 @@ resources:
   - ./cilium
   - ./cert-manager
   - ./local-path-provisioner
+  - ./kgateway

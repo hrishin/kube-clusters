@@ -1,0 +1,63 @@
+# Bootstrap values for the initial `helm install` from the control plane.
+# Mirrors iac-modules/extensions/cilium/<ver>/base/release.yaml + the verda
+# overlay; once Flux is up, the HelmRelease in the cluster's extensions tree
+# is the source of truth and reconciles this release.
+cluster:
+  name: ${cluster_name}
+  id: 1
+
+# kube-proxy is skipped at kubeadm init; Cilium fronts the API server itself.
+k8sServiceHost: ${endpoint_ip}
+k8sServicePort: 6443
+kubeProxyReplacement: true
+
+ipam:
+  mode: cluster-pool
+  operator:
+    clusterPoolIPv4PodCIDRList:
+      - ${pod_cidr}
+    clusterPoolIPv4MaskSize: 24
+
+# Verda gives no L2 guarantees between instances, so overlay rather than native routing.
+routingMode: tunnel
+tunnelProtocol: vxlan
+bpf:
+  masquerade: true
+enableIPv4Masquerade: true
+enableIPv6Masquerade: false
+
+loadBalancer:
+  algorithm: maglev
+nodePort:
+  enabled: true
+
+hubble:
+  enabled: true
+  relay:
+    enabled: true
+    tolerations:
+      - effect: NoSchedule
+        key: node-type
+        operator: Equal
+        value: core
+  ui:
+    enabled: true
+    tolerations:
+      - effect: NoSchedule
+        key: node-type
+        operator: Equal
+        value: core
+tolerations:
+  - operator: Exists
+
+operator:
+  prometheus:
+    enabled: true
+  replicas: 1
+  tolerations:
+    - effect: NoSchedule
+      key: node-type
+      operator: Equal
+      value: core
+prometheus:
+  enabled: true

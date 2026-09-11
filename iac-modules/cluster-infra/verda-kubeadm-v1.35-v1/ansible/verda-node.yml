@@ -1,0 +1,48 @@
+# Thin wrapper around kubernetes-sigs/image-builder's node roles, run against
+# localhost from the Verda startup script.
+#
+# Mirrors images/capi/ansible/node.yml minus the parts that only make sense
+# when producing a reusable image: `sysprep` (wipes machine-id, SSH host keys
+# and cloud-init state — destructive on a node that's already booted and is
+# about to run kubeadm) and the optional load_additional_components /
+# ecr_credential_provider roles. The play-level vars are copied verbatim from
+# node.yml because the roles depend on them (arch/system/node_environment).
+---
+- name: Provision Kubernetes node in place (image-builder roles)
+  hosts: all
+  become: true
+  vars:
+    node_custom_roles_pre: ""
+    node_custom_roles_post: ""
+    custom_role_names: ""
+    node_ansible_tmpdir: ""
+    system: linux
+    arch_uname: "{{ ansible_facts['architecture'] }}"
+    arch: "{{ {'x86_64': 'amd64', 'amd64': 'amd64', 'aarch64': 'arm64', 'arm64': 'arm64', 'ppc64le': 'ppc64le'}.get(arch_uname, 'unsupported') }}"
+    node_environment:
+      http_proxy: "{{ http_proxy | default('') }}"
+      https_proxy: "{{ https_proxy | default('') }}"
+      no_proxy: "{{ no_proxy | default('') }}"
+      HTTP_PROXY: "{{ http_proxy | default('') }}"
+      HTTPS_PROXY: "{{ https_proxy | default('') }}"
+      NO_PROXY: "{{ no_proxy | default('') }}"
+      PYTHONPATH: "{{ python_path }}"
+
+  tasks:
+    # `node` declares `setup` as a meta dependency (roles/node/meta/main.yml)
+    # with debs/rpms derived from common_debs + build_target; don't include
+    # `setup` directly — that runs it again with its empty defaults.
+    - name: Include node role
+      ansible.builtin.include_role:
+        name: node
+    - name: Include providers role
+      ansible.builtin.include_role:
+        name: providers
+    - name: Include containerd role
+      ansible.builtin.include_role:
+        name: containerd
+    - name: Include kubernetes role
+      ansible.builtin.include_role:
+        name: kubernetes
+
+  environment: "{{ node_environment }}"

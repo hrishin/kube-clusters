@@ -1,0 +1,38 @@
+# Namespace + the inputs Flux needs before the flux2 chart is installed.
+# Equivalent of bootstrap_flux() in the Pulumi modules.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: flux-system
+---
+# Consumed by Flux postBuild.substituteFrom in the cluster's Kustomizations.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: infra-outputs
+  namespace: flux-system
+data:
+  CLUSTER_NAME: "${cluster_name}"
+  CLUSTER_ENDPOINT: "${cluster_endpoint}"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ${git_secret_name}
+  namespace: flux-system
+type: Opaque
+stringData:
+  username: "${github_username}"
+  password: "${github_token}"
+%{ if sops_age_key != "" ~}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ${sops_secret_name}
+  namespace: flux-system
+type: Opaque
+stringData:
+  age.agekey: |
+    ${indent(4, sops_age_key)}
+%{ endif ~}

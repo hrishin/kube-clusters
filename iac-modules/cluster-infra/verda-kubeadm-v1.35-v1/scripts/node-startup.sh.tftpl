@@ -1,0 +1,76 @@
+#!/bin/bash
+# Verda startup script (runs once, as root, on first boot).
+#
+# Builds a Kubernetes node in place using kubernetes-sigs/image-builder's own
+# Ansible roles — the same roles that produce its CAPI Ubuntu images — because
+# Verda has no custom-image import to upload a prebuilt image into.
+# Terraform's kubeadm provisioners wait for the marker written at the end.
+set -uo pipefail
+
+MARKER_DIR=/var/lib/image-builder
+LOG=/var/log/verda-node-build.log
+mkdir -p "$MARKER_DIR"
+exec > >(tee -a "$LOG") 2>&1
+echo "=== verda node build started $(date -Is)"
+
+fail() {
+  echo "=== verda node build FAILED at line $1 $(date -Is)"
+  touch "$MARKER_DIR/verda-node.failed"
+  exit 1
+}
+trap 'fail $LINENO' ERR
+set -e
+
+# NOTE: Verda executes this script from cloud-init's runcmd (final stage), so
+# never `cloud-init status --wait` here — it would wait on itself. Contention
+# with unattended-upgrades/apt-daily is handled by retrying apt instead.
+export DEBIAN_FRONTEND=noninteractive
+apt_retry() {
+  for attempt in 1 2 3 4 5 6; do
+    if "$@"; then return 0; fi
+    echo "apt attempt $attempt failed; retrying in 15s"
+    sleep 15
+  done
+  return 1
+}
+apt_retry apt-get update
+apt_retry apt-get install -y --no-install-recommends git python3 python3-venv python3-pip curl ca-certificates
+
+# ── image-builder + ansible (pinned like images/capi/hack/ensure-ansible.sh) ──
+IB_DIR=/opt/image-builder
+if [ ! -d "$IB_DIR/.git" ]; then
+  git clone --depth 1 --branch '${image_builder_ref}' https://github.com/kubernetes-sigs/image-builder "$IB_DIR"
+fi
+
+VENV=/opt/image-builder-venv
+python3 -m venv "$VENV"
+"$VENV/bin/pip" install --quiet --disable-pip-version-check 'ansible-core==${ansible_core_version}'
+"$VENV/bin/ansible-galaxy" collection install 'community.general:<=12.0.0' 'ansible.posix'
+
+# ── Variables + playbook (rendered by Terraform) ─────────────────────────────
+WORK=/opt/image-builder-verda
+mkdir -p "$WORK"
+cat > "$WORK/vars.json" <<'VARS_EOF'
+${vars_json}
+VARS_EOF
+cat > "$WORK/verda-node.yml" <<'PLAYBOOK_EOF'
+${playbook}
+PLAYBOOK_EOF
+
+cd "$IB_DIR/images/capi/ansible"
+ANSIBLE_ROLES_PATH="$IB_DIR/images/capi/ansible/roles" \
+ANSIBLE_HOST_KEY_CHECKING=False \
+"$VENV/bin/ansible-playbook" -i 'localhost,' -c local \
+  -e "@$WORK/vars.json" \
+  "$WORK/verda-node.yml"
+
+# ── helm (used by the control plane to bootstrap Cilium + Flux) ──────────────
+if ! command -v helm >/dev/null 2>&1; then
+  curl -fsSL "https://get.helm.sh/helm-v${helm_version}-linux-amd64.tar.gz" \
+    | tar -xz -C /tmp linux-amd64/helm
+  install -m 0755 /tmp/linux-amd64/helm /usr/local/bin/helm
+  rm -rf /tmp/linux-amd64
+fi
+
+echo "=== verda node build finished $(date -Is)"
+touch "$MARKER_DIR/verda-node.done"

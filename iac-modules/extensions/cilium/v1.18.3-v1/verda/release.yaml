@@ -1,0 +1,20 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: cilium
+  namespace: kube-system
+spec:
+  values:
+    # Must stay in sync with templates/cilium-values.yaml.tftpl in
+    # iac-modules/cluster-infra/verda-kubeadm-*, which does the initial install
+    # before Flux exists; this HelmRelease adopts that release.
+    cluster:
+      id: 1
+    # kubeadm control-plane default (EKS uses 443). ${CLUSTER_ENDPOINT} (base)
+    # is the control plane's private IP from the infra-outputs ConfigMap.
+    k8sServicePort: 6443
+    # Verda instances share a private network but make no L2 promises, so
+    # overlay routing rather than the native mode Scaleway uses.
+    routingMode: tunnel
+    tunnelProtocol: vxlan
+    enableIPv6Masquerade: false

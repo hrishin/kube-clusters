@@ -1,0 +1,72 @@
+# Verda kubeadm cluster configuration (consumed by infra/main.tf via yamldecode).
+# Secrets never live here: Verda API creds come from the CLI's credentials file
+# (scripts/verda-env.sh), the GitHub token from config/config.enc.yaml (SOPS).
+cluster_name: verda-alpha
+kubernetes_version: "1.35.8"
+
+# Verda console project the cluster lives in. The API has no project field —
+# a project is the scope of the API key — so this is satisfied by exporting a
+# key created in that project: eval "$(scripts/verda-env.sh <profile>)".
+verda_project: k8s-gpu-cluster
+
+# Verda "location" is its region. `verda locations` lists them and
+# `verda availability` shows which instance types are currently in stock where.
+location: FIN-03
+
+# `verda ssh-key list` — mac-os-public-key
+ssh_key_ids:
+  - 5ba6b5ca-a721-4d3a-ac47-9411cb900e67
+ssh_private_key_path: ~/.ssh/id_rsa
+
+pod_cidr: 192.168.0.0/16
+service_cidr: 10.96.0.0/12
+
+# Single-node control plane. Stock Ubuntu; kubeadm/containerd/kubelet are
+# installed on first boot by kubernetes-sigs/image-builder's roles.
+control_plane:
+  instance_type: CPU.8V.32G
+  image: ubuntu-24.04
+  os_volume_size: 100
+
+node_groups:
+  # General-purpose compute: Flux, CoreDNS-adjacent system workloads, controllers.
+  core:
+    instance_type: CPU.8V.32G    # exact Verda type; see `verda instance-types`
+    image: ubuntu-24.04
+    size: 2
+    is_spot: false
+    os_volume_size: 100
+    labels:
+      node-type: core
+      workload: system
+      environment: production
+    taints:
+      - key: node-type
+        value: core
+        effect: NoSchedule
+
+  # GPU workers: uncomment and pick a type in stock at `location`. Use a
+  # `*-cuda-*` image so the NVIDIA driver is preinstalled, then run the
+  # nvidia-gpu-operator extension with driver.enabled=false.
+  # gpu-inference:
+  #   instance_type: 1RTXPRO6000.30V
+  #   image: ubuntu-24.04-cuda-12.8-open
+  #   size: 1
+  #   is_spot: true
+  #   os_volume_size: 200
+  #   labels:
+  #     node-type: gpu
+  #     workload: inference
+  #     environment: production
+  #   taints:
+  #     - key: nvidia.com/gpu
+  #       value: "true"
+  #       effect: NoSchedule
+
+flux_git_url: https://github.com/hrishin/kube-clusters
+flux_git_branch: main
+flux_git_path: ./clusters/verda-alpha/extensions
+flux_git_secret_name: flux-system
+flux_sops_secret_name: sops-age
+flux_git_interval: 1m0s
+flux_kustomization_interval: 10m0s

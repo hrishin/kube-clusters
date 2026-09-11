@@ -1,0 +1,34 @@
+# Rendered by Terraform; applied with `kubeadm join --config`.
+apiVersion: kubeadm.k8s.io/v1beta4
+kind: JoinConfiguration
+discovery:
+  bootstrapToken:
+    apiServerEndpoint: ${api_server_endpoint}
+    token: ${token}
+    caCertHashes:
+      - sha256:${ca_cert_hash}
+  tlsBootstrapToken: ${token}
+nodeRegistration:
+  name: ${hostname}
+  criSocket: unix:///var/run/containerd/containerd.sock
+  kubeletExtraArgs:
+    - name: node-ip
+      value: ${node_ip}
+%{ if length(labels) > 0 ~}
+    - name: node-labels
+      value: "${join(",", [for k, v in labels : "${k}=${v}"])}"
+%{ endif ~}
+%{ if length(taints) > 0 ~}
+  taints:
+%{ for t in taints ~}
+    - key: ${t.key}
+      value: "${t.value}"
+      effect: ${t.effect}
+%{ endfor ~}
+%{ else ~}
+  taints: []
+%{ endif ~}
+---
+apiVersion: kubelet.config.k8s.io/v1beta1
+kind: KubeletConfiguration
+cgroupDriver: systemd

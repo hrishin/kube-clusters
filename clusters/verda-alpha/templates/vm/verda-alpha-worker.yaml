@@ -1,0 +1,15 @@
+# Verda CLI template for an ad-hoc `core` worker shaped like config.yaml.
+# Install: cp clusters/verda-alpha/templates/vm/*.yaml ~/.verda/templates/vm/
+# Then:    verda vm create --from verda-alpha-worker
+# Ad-hoc nodes still need the cluster's startup script (see `terraform output
+# startup_script_id`) and a kubeadm join; prefer bumping node_groups.core.size.
+kind: cpu
+instance_type: CPU.8V.32G
+image: ubuntu-24.04
+location: FIN-03
+os_volume_size: 100
+ssh_keys:
+  - 5ba6b5ca-a721-4d3a-ac47-9411cb900e67
+hostname_pattern: "verda-alpha-core-{random}"
+storage_skip: true
+startup_script_skip: true

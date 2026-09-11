@@ -6,7 +6,7 @@ The target clouds range from AI/neo clouds such as **Nebius** and **CoreWeave** 
 
 ## Kubernetes Infrastructure
 
-This repository contains Pulumi programs and GitOps configuration for provisioning and managing Kubernetes clusters across **AWS EKS**, **Scaleway** (CAPS), and **Nebius AI Cloud** (MK8s).
+This repository contains Pulumi programs (and, for Verda, a Terraform module) plus GitOps configuration for provisioning and managing Kubernetes clusters across **AWS EKS**, **Scaleway** (CAPS), **Nebius AI Cloud** (MK8s), and **Verda** (kubeadm).
 
 ## Supported Providers
 
@@ -15,6 +15,7 @@ This repository contains Pulumi programs and GitOps configuration for provisioni
 | AWS EKS | `clusters/eks-alpha` | `iac-modules/cluster-infra/eks-v{k8s_version}-v1` |
 | Scaleway CAPS | `clusters/scw-alpha`, `clusters/scw-mgmt-alpha` | `iac-modules/cluster-infra/caps-v1` |
 | Nebius MK8s | `clusters/nebius-alpha` | `iac-modules/cluster-infra/nebius-mk8s-v{k8s_version}-v1` |
+| Verda kubeadm (Terraform) | `clusters/verda-alpha` | `iac-modules/cluster-infra/verda-kubeadm-v{k8s_version}-v1` |
 
 ## What Gets Provisioned
 
@@ -38,6 +39,11 @@ This repository contains Pulumi programs and GitOps configuration for provisioni
 - GPU node groups (`gpu-l40s-a`, NVIDIA L40S, preemptible) — inference
 - Cluster Autoscaler managed by Nebius
 
+**Verda kubeadm** (Terraform — Verda has no Pulumi provider)
+- Stock Ubuntu instances built in place with kubernetes-sigs/image-builder's Ansible roles (containerd, kubelet, kubeadm pinned)
+- Single-node kubeadm control plane, worker node groups joined with per-node bootstrap tokens
+- Cilium (kube-proxy replacement, vxlan) + Flux bootstrapped from the control plane, then GitOps from `clusters/verda-alpha/extensions`
+
 ## Node Groups
 
 All providers use the same config schema in each cluster's `config.yaml`:
@@ -56,6 +62,8 @@ All providers use the same config schema in each cluster's `config.yaml`:
 | `nebius-alpha` (Nebius) | `mimir` | `cpu-d3` 16vcpu-64gb | 1–3 | Metrics |
 | `nebius-alpha` (Nebius) | `gpu-inference` | `gpu-l40s-d` 1×L40S | 1–4 | Single-GPU inference (preemptible) |
 | `nebius-alpha` (Nebius) | `gpu-nvlink` | `gpu-h100-sxm` 8×H100 SXM | 2 | Multi-node NVLink serving (GB200 fabric) |
+| `verda-alpha` (Verda) | control plane | `CPU.8V.32G` | 1 | kubeadm control plane |
+| `verda-alpha` (Verda) | `core` | `CPU.8V.32G` | 2 | System workloads (Flux, controllers) |
 
 ## Extensions (all providers)
 
@@ -78,12 +86,14 @@ clusters/
   scw-alpha/       # Scaleway CAPS workload cluster
   scw-mgmt-alpha/  # Scaleway CAPS management cluster
   nebius-alpha/    # Nebius MK8s workload cluster
+  verda-alpha/     # Verda kubeadm workload cluster (Terraform)
 
 iac-modules/
   cluster-infra/
     eks-v1.36-v1/ # AWS EKS provisioning module (versioned per k8s release)
     caps-v1/       # Scaleway CAPS provisioning module
     nebius-mk8s-v1.34-v1/ # Nebius MK8s provisioning module (versioned per k8s release)
+    verda-kubeadm-v1.35-v1/ # Verda kubeadm Terraform module (versioned per k8s release)
   extensions/      # Helm/Flux extension definitions (base + provider overlays)
 
 config/            # SOPS-encrypted configuration values
@@ -104,6 +114,7 @@ Additional per provider:
 - **AWS:** AWS CLI configured with EKS permissions
 - **Scaleway:** `kind`, `clusterctl`, `sops`, `age`
 - **Nebius:** Nebius service account credentials (see below)
+- **Verda:** `terraform`, `verda` CLI (credentials via `verda auth login`), `jq`
 
 ---
 
@@ -188,6 +199,25 @@ pip install --upgrade pulumi-nebius
 ```
 
 See [docs/nebius.md](docs/nebius.md) for the full setup guide.
+
+---
+
+### Verda kubeadm (Terraform)
+
+```bash
+eval "$(scripts/verda-env.sh)"            # VERDA_CLIENT_ID/SECRET from the verda CLI credentials
+export SOPS_AGE_KEY_FILE=~/.age/k8s-key.age
+cd clusters/verda-alpha/infra
+terraform init
+terraform apply
+export KUBECONFIG=$PWD/kubeconfig.yaml
+```
+
+`clusters/verda-alpha/config.yaml` sets the location (Verda's region), the exact instance
+type per node group, and the Verda console project whose API key must be exported.
+
+See [docs/verda.md](docs/verda.md) for the full setup guide, including why kubeadm over
+Rancher and how image-builder is used without a custom-image import.
 
 For the NVLink multi-node serving design, see [docs/nvlink-multinode-serving.md](docs/nvlink-multinode-serving.md).
 For orchestration options (StatefulSet vs LeaderWorkerSet vs NVIDIA Dynamo), see [docs/multi-node-inference-options.md](docs/multi-node-inference-options.md).

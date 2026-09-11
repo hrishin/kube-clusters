@@ -142,6 +142,18 @@ kubectl get nodes -o wide
 flux get kustomizations
 ```
 
+## Observability
+
+`extensions/system` mirrors `nebius-alpha/system-components`: kube-prometheus-stack
+(Prometheus + operator, 2h local retention, remote_write to Mimir), Mimir (filesystem
+backend, single replica), Grafana (Mimir + Tempo datasources, dashboard sidecar),
+Tempo and the OTel collector DaemonSet. The one difference is placement — Nebius has
+a dedicated `mimir` node group; here everything runs on the tainted `core` nodes.
+
+- Grafana: <https://cluster1.fin-03.kube.verda.hrishi.dev/grafana>, user `admin`,
+  password: `kubectl -n grafana get secret grafana -o jsonpath='{.data.admin-password}' | base64 -d`
+- Mimir/Prometheus API via the gateway: `/mimir/prometheus`.
+
 ## Scaling / changing nodes
 
 - `node_groups.<g>.size` up/down → `terraform apply`. Removed workers are

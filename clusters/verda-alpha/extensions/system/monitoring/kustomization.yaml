@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: monitoring
+resources:
+  - ../../../../../iac-modules/extensions/namespace/v1/
+  - ../../../../../iac-modules/extensions/kube-prometheus-stack/v88.2.0-v1/
+patches:
+  - patch: |
+      - op: replace
+        path: /spec/values/prometheus/prometheusSpec/externalLabels/cluster
+        value: verda-alpha
+      # kubeadm cluster: CoreDNS runs in-cluster with the kube-dns Service the
+      # chart's ServiceMonitor expects, so scrape it (Nebius MK8s hides it).
+      # scheduler/controller-manager/etcd stay off: kubeadm binds them to
+      # 127.0.0.1 / etcd needs client certs — not worth reconfiguring here.
+      - op: replace
+        path: /spec/values/coreDns/enabled
+        value: true
+    target:
+      kind: HelmRelease
+      name: kube-prometheus-stack

@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - ./cert-manager
   - ../../../../iac-modules/extensions/crds/kgateway/v2.3.0/
+  - ../../../../iac-modules/extensions/crds/kube-prometheus-stack/v88.2.0/

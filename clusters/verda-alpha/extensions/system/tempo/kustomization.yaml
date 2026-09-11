@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: monitoring
+resources:
+  - ../../../../../iac-modules/extensions/tempo/v3.4-v1/
+patches:
+  # No `mimir` node group here — run on the core nodes.
+  - patch: |
+      - op: replace
+        path: /spec/values/nodeSelector/node-type
+        value: core
+      - op: replace
+        path: /spec/values/tolerations/0/value
+        value: core
+    target:
+      kind: HelmRelease
+      name: tempo

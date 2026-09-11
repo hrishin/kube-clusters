@@ -59,6 +59,19 @@ spec:
           operator: Equal
           value: core
           effect: NoSchedule
+      # The webhook cert-gen Jobs (pre-install/pre-upgrade hooks) don't
+      # inherit the operator's placement. On clusters where every worker is
+      # tainted (verda-alpha: only a tainted `core` group, no untainted
+      # default group like Nebius) they sat Pending and failed the install.
+      admissionWebhooks:
+        patch:
+          nodeSelector:
+            node-type: core
+          tolerations:
+            - key: node-type
+              operator: Equal
+              value: core
+              effect: NoSchedule
 
     kubeStateMetrics:
       enabled: true

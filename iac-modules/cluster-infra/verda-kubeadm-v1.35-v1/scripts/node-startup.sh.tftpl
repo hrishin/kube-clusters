@@ -64,6 +64,16 @@ ANSIBLE_HOST_KEY_CHECKING=False \
   -e "@$WORK/vars.json" \
   "$WORK/verda-node.yml"
 
+# ── hostNetwork gateway ──────────────────────────────────────────────────────
+# Verda has no cloud load balancer, so the cluster's kgateway Envoy proxies run
+# hostNetwork (non-root, uid 10101) on the core nodes and bind :80/:443 in the
+# host netns; pod-level sysctls are not allowed with hostNetwork, so the node
+# grants unprivileged port binding itself.
+cat > /etc/sysctl.d/90-unprivileged-ports.conf <<'SYSCTL_EOF'
+net.ipv4.ip_unprivileged_port_start = 0
+SYSCTL_EOF
+sysctl -q -p /etc/sysctl.d/90-unprivileged-ports.conf
+
 # ── helm (used by the control plane to bootstrap Cilium + Flux) ──────────────
 if ! command -v helm >/dev/null 2>&1; then
   curl -fsSL "https://get.helm.sh/helm-v${helm_version}-linux-amd64.tar.gz" \

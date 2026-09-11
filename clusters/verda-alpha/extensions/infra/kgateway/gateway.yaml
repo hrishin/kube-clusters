@@ -11,6 +11,21 @@ metadata:
   namespace: kgateway-system
 spec:
   kube:
+    # kgateway injects the pod sysctl net.ipv4.ip_unprivileged_port_start=0
+    # for listeners < 1024, and Kubernetes rejects pod sysctls together with
+    # hostNetwork. Omit the injected defaults and restate the ones we want;
+    # the node itself carries that sysctl instead (set by the cluster's
+    # startup script), since a hostNetwork pod binds in the host netns.
+    omitDefaultSecurityContext: true
+    envoyContainer:
+      securityContext:
+        allowPrivilegeEscalation: false
+        readOnlyRootFilesystem: true
+        runAsNonRoot: true
+        runAsUser: 10101
+        capabilities:
+          drop:
+            - ALL
     service:
       type: ClusterIP
     deployment:

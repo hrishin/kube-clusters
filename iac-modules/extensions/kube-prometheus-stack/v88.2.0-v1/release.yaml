@@ -31,6 +31,13 @@ spec:
     # and Alertmanager isn't wired to anything yet.
     grafana:
       enabled: false
+      # Still ship the chart's community dashboards (28 ConfigMaps labelled
+      # grafana_dashboard=1: node/pod/namespace/workload resources, kubelet,
+      # apiserver, CoreDNS, node-exporter, Prometheus, ...). The standalone
+      # Grafana's sidecar (searchNamespace: ALL) picks them up, and their
+      # $datasource variable resolves to the default datasource (Mimir).
+      forceDeployDashboards: true
+      defaultDashboardsTimezone: browser
     alertmanager:
       enabled: false
 
